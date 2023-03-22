@@ -18,9 +18,13 @@ public class Game {
 
     private void setChairOrder(){}
 
-    public Player getChair(){}
+    public Player getChair(){
+        return null;
+    }
 
-    public Player getCurrentPlayer(){};
+    public Player getCurrentPlayer(){
+        return null;
+    };
 
     private void setBothCommonObj(int numOfPlayers){}
 

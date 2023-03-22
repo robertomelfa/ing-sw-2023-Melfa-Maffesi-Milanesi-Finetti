@@ -10,13 +10,21 @@ public class GameLogic {
 
     public GameLogic(){}
 
-    public List<Card> getCardFromTable(){}
+    public List<Card> getCardFromTable(){
 
-    private boolean checkNear(int x1, int y1, int x2, int y2, int x3, int y3){}
+    }
 
-    private boolean checkNear(int x1, int y1, int x2, int y2){}
+    private boolean checkNear(int x1, int y1, int x2, int y2, int x3, int y3){
 
-    private boolean checkNear(int x1, int y1){}
+    }
+
+    private boolean checkNear(int x1, int y1, int x2, int y2){
+
+    }
+
+    private boolean checkNear(int x1, int y1){
+
+    }
 
     public void changeCurrentPlayer(){}
 

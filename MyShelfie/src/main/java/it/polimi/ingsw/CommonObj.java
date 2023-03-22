@@ -7,7 +7,9 @@ public class CommonObj {
 
     public CommonObj(){}
 
-    public boolean checkObj(int number, Library lib){}
+    public boolean checkObj(int number, Library lib){
+
+    }
 
     public void setPoint(int i){};
 

@@ -7,9 +7,11 @@ public class GameTable {
 
     public GameTable(int playerNumber) {}
 
-    private refill() {}
+    private void refill() {}
 
-    private boolean checkStatus() {}
+    private boolean checkStatus() {
+
+    }
 
     public void viewTable(Card[][] board) {}
 }
