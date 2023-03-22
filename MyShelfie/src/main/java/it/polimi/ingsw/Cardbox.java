@@ -5,7 +5,7 @@ import java.util.Random;
 public class Cardbox {
     int cardLeft, leftWhite, leftBlue, leftLightBlue, leftYellow, leftPurple, leftGreen;
 
-    private Cardbox(){
+    public Cardbox(){           // public to private
         cardLeft = 132;
         leftWhite = 22;
         leftBlue= 22;
