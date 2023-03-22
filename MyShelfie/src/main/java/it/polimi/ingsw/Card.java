@@ -1,13 +1,5 @@
 package it.polimi.ingsw;
-<<<<<<< HEAD
 
 public enum Card {
-    WHITE, LIGHTBLUE, BLUE, PURPLE, GREEN, YELLOW;
+    WHITE, BLUE, LIGHTBLUE, YELLOW, GREEN, PURPLE, NONE, NOT;
 }
-=======
-public enum Card {
-    WHITE, BLUE, LIGHTBLUE, YELLOW, GREEN, PURPLE;
-}
-
-
->>>>>>> origin/main
