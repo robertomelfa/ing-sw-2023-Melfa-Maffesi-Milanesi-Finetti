@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import java.util.Random;
+
 public class Cardbox {
     int cardLeft, leftWhite, leftBlue, leftLightBlue, leftYellow, leftPurple, leftGreen;
 
@@ -12,26 +14,26 @@ public class Cardbox {
         leftPurple = 22;
         leftGreen = 22;
     }
-    public Card getCard(){
+    public Card getCard() {
         Random rn = new Random();
-        int rand = rn.nextInt(1,cardLeft + 1);
+        int rand = rn.nextInt(1, cardLeft + 1);
         if (rand > 0 && rand <= leftWhite) {
             cardLeft--;
             leftWhite--;
             return Card.WHITE;
-        } else if(rand > leftWhite && rand <= leftWhite + leftBlue ) {
+        } else if (rand > leftWhite && rand <= leftWhite + leftBlue) {
             cardLeft--;
             leftBlue--;
             return Card.BLUE;
-        } else if(rand > leftWhite + leftBlue && rand <= leftWhite + leftBlue + leftLightBlue) {
+        } else if (rand > leftWhite + leftBlue && rand <= leftWhite + leftBlue + leftLightBlue) {
             cardLeft--;
             leftLightBlue--;
             return Card.LIGHTBLUE;
-        } else if(rand > leftWhite + leftBlue + leftLightBlue && rand <= leftWhite + leftBlue + leftLightBlue + leftYellow) {
+        } else if (rand > leftWhite + leftBlue + leftLightBlue && rand <= leftWhite + leftBlue + leftLightBlue + leftYellow) {
             cardLeft--;
             leftYellow--;
             return Card.YELLOW;
-        } else if(rand > leftWhite + leftBlue + leftLightBlue + leftYellow && rand <= leftWhite + leftBlue + leftLightBlue + leftYellow + leftPurple) {
+        } else if (rand > leftWhite + leftBlue + leftLightBlue + leftYellow && rand <= leftWhite + leftBlue + leftLightBlue + leftYellow + leftPurple) {
             cardLeft--;
             leftPurple--;
             return Card.PURPLE;
@@ -42,5 +44,5 @@ public class Cardbox {
         }
 
 
-
+    }
 }
