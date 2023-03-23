@@ -109,6 +109,10 @@ public class Game {
         System.out.println(str);
 
     }
+
+    public GameTable getGameTable(){
+        return  this.gameTable;
+    }
 }
 
 /**
