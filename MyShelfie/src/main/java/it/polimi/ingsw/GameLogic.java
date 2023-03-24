@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,7 +29,7 @@ public class GameLogic {
      * The method is used to draw from one to three cards from the board
      * the method continues to request cards from the player until they are actually drawable
      */
-    public List<Card> getCardFromTable(){
+    public ArrayList<Card> getCardFromTable(){
         int size = 0;
         Scanner in = new Scanner(System.in);
         ArrayList<Card> list = new ArrayList<Card>();
@@ -78,7 +79,7 @@ public class GameLogic {
             if(checkNear(x1, y1, x2, y2)){
                 list.add(gameTable.board[x1][y1]);
                 list.add(gameTable.board[x2][y2]);
-                System.out.print("Card " + gameTable.board[x1][y1] + " " + gameTable.board[x2][y2] + " drawn");
+                System.out.println("Card " + gameTable.board[x1][y1] + " " + gameTable.board[x2][y2] + " drawn");
                 gameTable.board[x1][y1] = NONE;
                 gameTable.board[x2][y2] = NONE;
             }
@@ -185,5 +186,4 @@ public class GameLogic {
     public void setEnd(){}
 
     public void checkCommObj(Player player){}
-
 }
