@@ -11,11 +11,23 @@ public class GameLogic {
 
     private boolean endGame;
 
+    /**
+     *
+     * @param game: the current game
+     * The method is the constructor for GameLogic class
+     * It takes the gameTable of the game
+     */
     public GameLogic(Game game){
         gameTable = game.getGameTable();
         endGame = false;
     }
 
+    /**
+     *
+     * @return the List of cards picked by player
+     * The method is used to draw from one to three cards from the board
+     * the method continues to request cards from the player until they are actually drawable
+     */
     public List<Card> getCardFromTable(){
         int size = 0;
         Scanner in = new Scanner(System.in);
@@ -108,35 +120,61 @@ public class GameLogic {
         return list;
     }
 
+    /**
+     *
+     * @param x1: x coordinate of Card 1
+     * @param y1: y coordinate of Card 2
+     * @return true if card has at least one free side
+     */
     // verify if card has free side
     private boolean checkNear(int x1, int y1){
         if(gameTable.board[x1][y1] == NONE || gameTable.board[x1][y1] == NOT){
             System.out.println("Card not exists");
             return false;
         }else if((gameTable.board[x1+1][y1] == NONE || gameTable.board[x1+1][y1] == NOT) || (gameTable.board[x1-1][y1] == NONE || gameTable.board[x1-1][y1] == NOT) || (gameTable.board[x1][y1+1] == NONE || gameTable.board[x1+1][y1+1] == NOT) || (gameTable.board[x1][y1-1] == NONE || gameTable.board[x1][y1-1] == NOT)){
-            System.out.println("Card has not free side");
             return true;
         }
+        System.out.println("Card has not free side");
         return false;
     }
 
+    /**
+     *
+     * @param x1: x coordinate of Card 1
+     * @param y1: y coordinate of Card 1
+     * @param x2: x coordinate of Card 2
+     * @param y2: y coordinate of Card 2
+     * @return true if the two selected cards are drawable
+     * the two cards must have a free side and must be adjacent
+     */
     private boolean checkNear(int x1, int y1, int x2, int y2){
         if(checkNear(x1, y1) && checkNear(x2, y2)){
             if((x1 == x2+1 && y1 == y2) || (x1 == x2-1 && y1 == y2) || (x1 == x2 && y1 == y2+1) || (x1 == x2 && y1 == y2-1)){
-                System.out.println("Card 2 has different x and y beside Card 1 (x or y must be the same)");
                 return true;
             }
         }
+        System.out.println("Card 2 has different x and y beside Card 1 (x or y must be the same)");
         return false;
     }
 
+    /**
+     *
+     * @param x1: x coordinate of Card 1
+     * @param y1: y coordinate of Card 1
+     * @param x2: x coordinate of Card 2
+     * @param y2: y coordinate of Card 2
+     * @param x3: x coordinate of Card 3
+     * @param y3: y coordinate of Card 3
+     * @return true if the three selected cards are drawable
+     * the three cards must have a free side and must be adjacent and must be on the same row or column
+     */
     private boolean checkNear(int x1, int y1, int x2, int y2, int x3, int y3){
         if(checkNear(x1, y1) && checkNear(x2, y2) && checkNear(x3, y3)){
             if(((checkNear(x1, y1, x2, y2) && checkNear(x2, y2, x3, y3)) || ((checkNear(x1, y1, x3, y3) && checkNear(x2, y2, x3, y3)))) && ((x1 == x2 && x2 == x3) || (y1 == y2 && y2 == y3))){
-                System.out.println("Cards must be in the same row or column");
                 return true;
             }
         }
+        System.out.println("Cards must be in the same row or column");
         return false;
     }
 

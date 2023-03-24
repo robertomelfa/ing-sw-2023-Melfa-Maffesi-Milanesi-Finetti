@@ -8,10 +8,15 @@ public class GameTable {
     Card[][] board = new Card[11][11];
     Cardbox cardbox = new Cardbox();
 
+    /**
+     *
+     * @param playerNumber: players in the game
+     * Constructor for GameTable: set the board for 2, 3 or 4 players
+     */
     public GameTable(int playerNumber) {
-
-
-        // all the game table is NOT (impossible to insert a card)
+        /** all the game table is NOT (impossible to insert a card)
+         *
+         */
 
         for(int i = 0; i < 11; i++){
             for(int j = 0; j < 11; j++){
@@ -55,11 +60,8 @@ public class GameTable {
         board[8][5] = NONE;
         board[8][6] = NONE;
 
-        // set the grid dependings on the players
-
         if(playerNumber != 2) {
             // these cases are good for 3 or 4 players
-
             board[1][4] = NONE;
             board[3][7] = NONE;
             board[4][9] = NONE;
@@ -67,7 +69,6 @@ public class GameTable {
             board[7][3] = NONE;
             board[7][7] = NONE;
             board[9][6] = NONE;
-
             // 4 players
             if (playerNumber == 4) {
                 board[1][5] = NONE;
@@ -79,6 +80,9 @@ public class GameTable {
         }
     }
 
+    /**
+     * This method inserts random cards into the board (refill the board)
+     */
     private void refill() {
         for(int i = 1; i < 10; i++){
             for(int j = 1; j < 10; j++){
@@ -89,8 +93,13 @@ public class GameTable {
         }
     }
 
+    /**
+     *
+     * @return true if it is necessary to refill the board
+     * In this method i and j start from 1 to 10 because it is not necessary to verify the frame
+     */
     private boolean checkStatus() {
-        for(int i = 1; i < 10; i++){    // from 1 to 10 to dodge the frame
+        for(int i = 1; i < 10; i++){
             for(int j = 1; j < 10; j++){
                 if((board[i][j] != NONE && board[i][j] != NOT) && ((board[i][j+1] != NONE && board[i][j+1] != NOT) || (board[i+1][j] != NONE && board[i+1][j] != NOT) || (board[i-1][j] != NONE && board[i-1][j] != NOT) || (board[i][j-1] != NONE && board[i][j-1] != NOT))){
                     return true;    // refill not necessary
@@ -100,6 +109,9 @@ public class GameTable {
         return false;       // refill is necessary
     }
 
+    /**
+     * This method prints the board. If there is no card (NOT or NONE), read space
+     */
     public void viewTable() {
         for(int i = 0; i < 11; i++){
             for(int j = 0; j < 11; j++){

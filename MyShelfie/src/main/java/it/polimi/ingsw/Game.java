@@ -110,6 +110,10 @@ public class Game {
 
     }
 
+    /**
+     *
+     * @return the game board
+     */
     public GameTable getGameTable(){
         return  this.gameTable;
     }
