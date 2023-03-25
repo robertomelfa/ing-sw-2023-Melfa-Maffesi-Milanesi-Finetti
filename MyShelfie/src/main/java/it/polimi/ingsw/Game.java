@@ -1,9 +1,6 @@
 package it.polimi.ingsw;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Game {
     private GameTable gameTable;
@@ -17,17 +14,23 @@ public class Game {
 
     /**
      *
-     * @param gametable
-     * @param numOfPlayers
-     * Constructor for the Game class: it sets the gametable, it initializes the players list, sets the cardbox and it calls
+     * Constructor for the Game class: it sets the gametable, it initialize the players list, sets the cardbox and it calls
      * setBothCommonObj
      *
      */
-    public Game(GameTable gametable, int numOfPlayers){
-        this.gameTable=gametable;
-        players=new LinkedList<>();
-        this.numOfPlayers=numOfPlayers;
-        this.cardbox=new Cardbox();
+    public Game(){
+        do{
+            System.out.println("Enter the number of players");
+            Scanner in = new Scanner(System.in);
+            numOfPlayers = in.nextInt();
+            if(numOfPlayers < 2 || numOfPlayers > 4){
+                System.out.println("the number of players must be between 2 and 4, try again!");
+            }
+        }while(numOfPlayers < 2 || numOfPlayers > 4);
+
+        this.gameTable = new GameTable(numOfPlayers);
+        players = new LinkedList<>();
+        this.cardbox = new Cardbox();
         setBothCommonObj(numOfPlayers);
     }
 
