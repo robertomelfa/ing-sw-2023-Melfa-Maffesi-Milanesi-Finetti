@@ -19,7 +19,7 @@ public class Game {
      *
      * @param gametable
      * @param numOfPlayers
-     * Constructor for the Game class: it sets the gametable, it initialize the players list, sets the cardbox and it calls
+     * Constructor for the Game class: it sets the gametable, it initializes the players list, sets the cardbox and it calls
      * setBothCommonObj
      *
      */

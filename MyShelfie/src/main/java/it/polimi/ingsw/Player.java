@@ -10,15 +10,15 @@ public class Player {
     /**
      *
      * @param nickname
-     * @param library, the library linked to the player
      * @param playerObj, the object linked to the player
      * The method is the constructor for the Player class
      * It sets the nickname, the library and the playerObject.
-     * It also initialize yourTurn and points
+     * It also initializes yourTurn and points
      */
-    public Player(String nickname, Library library, PlayerObj playerObj){
+    public Player(String nickname, PlayerObj playerObj){
         yourTurn=false;
         points=0;
+        library=new Library();
         this.nickname=nickname;
         this.library=library;
         this.playerObj=playerObj;
