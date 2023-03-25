@@ -113,12 +113,21 @@ public class GameTable {
      * This method prints the board. If there is no card (NOT or NONE), read space
      */
     public void viewTable() {
-        for(int i = 0; i < 11; i++){
-            for(int j = 0; j < 11; j++){
+        System.out.print("   ");
+        for(int i = 1; i < 10; i++){
+            System.out.printf("     %d     ", i);
+        }
+
+        System.out.print("\n");
+        System.out.print("\n");
+
+        for(int i = 1; i < 10; i++){
+            System.out.printf(" %d ", i);
+            for(int j = 1; j < 11; j++){
                 if(this.board[i][j] != NOT && this.board[i][j] != NONE){ // remove this if to view NONE and NOT on the gameTable
-                    System.out.printf("%s\t", board[i][j]);
+                    System.out.printf("%-11s", board[i][j]);
                 }else{
-                    System.out.print("\t");     // if there is no card, read space
+                    System.out.print("           ");     // if there is no card, read space
                 }
             }
             System.out.print("\n");
