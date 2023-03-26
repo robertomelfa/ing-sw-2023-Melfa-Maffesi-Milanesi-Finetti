@@ -98,15 +98,19 @@ public class GameTable {
      * @return true if it is necessary to refill the board
      * In this method i and j start from 1 to 10 because it is not necessary to verify the frame
      */
-    private boolean checkStatus() {
+    public void checkStatus() {
+        boolean check = false;
         for(int i = 1; i < 10; i++){
             for(int j = 1; j < 10; j++){
                 if((board[i][j] != NONE && board[i][j] != NOT) && ((board[i][j+1] != NONE && board[i][j+1] != NOT) || (board[i+1][j] != NONE && board[i+1][j] != NOT) || (board[i-1][j] != NONE && board[i-1][j] != NOT) || (board[i][j-1] != NONE && board[i][j-1] != NOT))){
-                    return true;    // refill not necessary
+                    check = true;    // refill not necessary
                 }
             }
         }
-        return false;       // refill is necessary
+        if(check == false){
+            refill(); // refill is necessary
+        }
+        viewTable();
     }
 
     /**
@@ -133,13 +137,5 @@ public class GameTable {
             System.out.print("\n");
         }
         System.out.print("\n");
-
-        /* test refill and check status
-        if(!checkStatus()){
-            System.out.println("Eseguo il refill\n");
-            refill();
-            viewTable();
-        }
-        */
     }
 }

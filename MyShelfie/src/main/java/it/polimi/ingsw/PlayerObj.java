@@ -39,9 +39,7 @@ public class PlayerObj {
      * with every single goal set on a different line
      */
     public PlayerObj(){
-
-        for(int i=0;i<6;i++){
-
+        for(int i=0; i < 6; i++){
             assert false;                               //lo ha messo java per completezza
             playerObjs.add(new SingleObj(i));
 

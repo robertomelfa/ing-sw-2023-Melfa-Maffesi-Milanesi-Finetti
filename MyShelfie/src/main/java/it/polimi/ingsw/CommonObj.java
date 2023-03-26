@@ -736,7 +736,6 @@ public class CommonObj {
 
         return (x1 == x2) && (y1 + 1 == y2) || (x1 + 1 == x2) && (y1 == y2) ||
                 (x1 == x2) && (y1 - 1 == y2) || (x1 - 1 == x2) && (y1 == y2);
-
     }
 
     /**

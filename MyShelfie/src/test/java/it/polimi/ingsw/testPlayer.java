@@ -10,7 +10,7 @@ public class testPlayer extends TestCase{
 
     @Before
     public void setUp(){
-        p1=new Player("player1",null);
+        p1 = new Player("player1",null);
     }
 
     @Test
@@ -21,7 +21,7 @@ public class testPlayer extends TestCase{
     @Test
     public void testaddPoints_10_10() throws Exception{
         p1.addPoints(10);
-        assertTrue(p1.getScore()==10);
+        assertTrue(p1.getScore() == 10);
 
     }
 

@@ -21,7 +21,7 @@ public class testLibrary extends TestCase
     Library lib=null;
     @Before
     public void setUp(){
-        lib =new Library();
+        lib = new Library();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class testLibrary extends TestCase
 
     @Test
     public void testgetPosException_00_NONE() throws Exception{
-        assertTrue(lib.getPos(0,0)==Card.NONE);
+        assertTrue(lib.getPos(0,0) == Card.NONE);
     }
 
     @Test

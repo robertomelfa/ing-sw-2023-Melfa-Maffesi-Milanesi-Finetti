@@ -28,8 +28,6 @@ public class Game {
             this.cardbox = new Cardbox();
             setBothCommonObj(numOfPlayers);
         }
-
-
     }
 
     /**

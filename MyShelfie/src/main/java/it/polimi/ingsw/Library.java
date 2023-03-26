@@ -87,6 +87,10 @@ public class Library {
      */
     private boolean checkFreeSpaces(int column, int size){
         int freeSpaces = 0;
+        if(column < 0 || column > 4){
+            System.out.println("This column does not exist, try again");
+            return false;
+        }
         for(int i = 0; i < 6; i++){
             if(grid[i][column] == NONE){
                 freeSpaces = freeSpaces + 1;
@@ -95,6 +99,7 @@ public class Library {
         if(freeSpaces >= size){
             return true;
         }else{
+            System.out.println("In this column there is not enough space, try again");
             return false;
         }
     }
@@ -119,31 +124,29 @@ public class Library {
      * This method insert into the player's library the cards picked from the table
      */
     public void insert(ArrayList<Card> list){
-        ArrayList<Card> copy= new ArrayList<>();
-        copy.addAll(list);
         Scanner in = new Scanner(System.in);
         int column = 0;
         viewGrid();
         System.out.println("Choose the column:");
         do{
             column = in.nextInt()-1;
-            if(!checkFreeSpaces(column, copy.size())){
-                System.out.println("There is not enough space. Try again");
-            }
-        }while(!checkFreeSpaces(column, copy.size()));
+        }while(!checkFreeSpaces(column, list.size()));
 
         int card = 0;
-        for(int i = copy.size(); i > 0; i--){
-            System.out.println("Which card do you want to insert?" + copy.toString());
-            card = in.nextInt() - 1;
-            grid[lastRowFree(column)][column] = copy.get(card);
-            copy.remove(card);
+        for(int i = list.size(); i > 0; i--){
+            do{
+                System.out.println("Which card do you want to insert?" + list.toString());
+                card = in.nextInt() - 1;
+                if(card < 0 || card > list.size() - 1){
+                    System.out.println("You have to select one of the card (1, 2 or 3), try again");
+                }
+            }while(card < 0 || card > list.size() - 1);
+            grid[lastRowFree(column)][column] = list.get(card);
+            list.remove(card);
         }
-        System.out.println("Now the grid is: ");
+        System.out.println("\nNow the grid is: ");
         viewGrid();
     }
-
-
 }
 
 

@@ -16,12 +16,11 @@ public class Player {
      * It also initializes yourTurn and points
      */
     public Player(String nickname, PlayerObj playerObj){
-        yourTurn=false;
-        points=0;
-        library=new Library();
-        this.nickname=nickname;
-        this.library=library;
-        this.playerObj=playerObj;
+        yourTurn = false;
+        points = 0;
+        library = new Library();
+        this.nickname = nickname;
+        this.playerObj = playerObj;
 
     }
 
@@ -32,11 +31,11 @@ public class Player {
      * addPoints is used for adding points to a player, it trows Exception if points is <=0
      */
     public void addPoints(int points) throws Exception {
-        if(points<=0){
+        if(points <= 0){
             throw new Exception();
         }
         else {
-            this.points=this.points+points;
+            this.points = this.points+points;
         }
 
     }

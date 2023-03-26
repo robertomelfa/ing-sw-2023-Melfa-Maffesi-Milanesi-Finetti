@@ -11,7 +11,7 @@ public class testGame extends TestCase{
     @Test
     public void testConstructor_1_exception(){
         try {
-            Game g1=new Game(1);
+            Game g1 = new Game(1);
             fail("Expected exception");
             assertTrue(g1.getGameTable()!=null && g1.getCardbox()!=null);
         }catch (Exception e){
