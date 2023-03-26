@@ -12,6 +12,8 @@ public class Game {
     private CommonObj commonObj1;
     private CommonObj commonObj2;
 
+    private int listIteration = 0;
+
     /**
      *
      * Constructor for the Game class: it sets the gametable, it initialize the players list, sets the cardbox and it calls
@@ -66,7 +68,7 @@ public class Game {
     /**
      * The method shuffles randomly the players list, it sets chair to 0 and sets currentPlayer on the head of the list
      */
-    private void setChairOrder(){
+    public void setChairOrder(){
         java.util.Collections.shuffle(players);
         chair=0;
         currentPlayer=players.get(0);
@@ -120,6 +122,32 @@ public class Game {
     public GameTable getGameTable(){
         return  this.gameTable;
     }
+
+    /**
+     *
+     * @return commonObj1
+     */
+    public CommonObj getCommonObj1(){ return commonObj1; }
+
+    /**
+     *
+     * @return commonObj2
+     */
+    public CommonObj getCommonObj2(){ return commonObj2; }
+
+    /**
+     * This method is used to update the current player
+     */
+    public void updateCurrentPlayer(){
+        listIteration++;
+        if(players.size() == listIteration){
+            listIteration = 0;
+            currentPlayer = players.get(listIteration);
+        }else {
+            currentPlayer = players.get(listIteration);
+        }
+    }
+
 }
 
 /**

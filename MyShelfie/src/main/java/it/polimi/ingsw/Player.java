@@ -42,6 +42,12 @@ public class Player {
 
     /**
      *
+     * @return playerObj
+     */
+    public PlayerObj getPlayerObj(){ return playerObj; }
+
+    /**
+     *
      * @return the player's nickname
      */
     public String getNickname() {

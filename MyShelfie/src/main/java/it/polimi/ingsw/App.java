@@ -1,17 +1,22 @@
 package it.polimi.ingsw;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws Exception {
         Game game = new Game();
         GameLogic gamelogic = new GameLogic(game);
-        game.getGameTable().viewTable();
         Player player1 = new Player("giovanni", null);
-        player1.getLibrary().insert(gamelogic.getCardFromTable());
+        Player player2 = new Player("luca", null);
+        Player player3 = new Player("marco", null);
+
+        game.addNewPlayer(player1);
+        game.addNewPlayer(player2);
+        game.addNewPlayer(player3);
+
+        game.setChairOrder();
+
+        while(true){
+            gamelogic.startTurn();
+        }
     }
 }

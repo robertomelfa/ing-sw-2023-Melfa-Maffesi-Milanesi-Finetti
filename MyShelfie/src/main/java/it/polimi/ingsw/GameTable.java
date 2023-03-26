@@ -78,6 +78,8 @@ public class GameTable {
                 board[9][5] = NONE;
             }
         }
+
+        refill();
     }
 
     /**

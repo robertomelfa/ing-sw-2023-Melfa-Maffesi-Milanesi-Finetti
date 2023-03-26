@@ -1,14 +1,21 @@
 package it.polimi.ingsw;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.Card.*;
 
 public class GameLogic {
     private GameTable gameTable;
+
+    /* salvataggio riferimento a game private*/
+    private Game game1;
 
     private boolean endGame;
 
@@ -19,6 +26,8 @@ public class GameLogic {
      * It takes the gameTable of the game
      */
     public GameLogic(Game game){
+        Game game1;
+        this.game1 = game;
         gameTable = game.getGameTable();
         endGame = false;
     }
@@ -186,4 +195,83 @@ public class GameLogic {
     public void setEnd(){}
 
     public void checkCommObj(Player player){}
+
+    /**
+     * This method is used to handle every turn of the game
+     * @throws Exception
+     */
+
+    public void startTurn() throws Exception {
+
+        Player currentPlayer = game1.getCurrentPlayer();
+
+        Scanner in = new Scanner(System.in);
+
+        System.out.printf("%s is your turn to play! Choose the cards you want form the game table\n", currentPlayer.getNickname());
+
+        TimeUnit.SECONDS.sleep(2);
+
+        gameTable.viewTable();
+
+        TimeUnit.SECONDS.sleep(2);
+
+        System.out.print("Insert 1 if you want to see your library or insert 2 if you want to pick the cards\n");
+
+        int i = 0;
+
+        while(i == 0){
+
+            switch (in.nextInt()){
+                case 1:
+                    currentPlayer.getLibrary().viewGrid();
+                    System.out.print("Insert 1 when you want to go back to the game table\n");
+                    while(true) {
+                        int input = in.nextInt();
+                        if (input == 1) {
+                            gameTable.viewTable();
+                            System.out.print("Insert 1 if you want to see your library or insert 2 if you want to pick the cards\n");
+                            break;
+                        } else {
+                            System.out.print("The input is not valid, please insert 1 when you want to go back to the game table\n");
+                        }
+                    }
+                    break;
+                case 2:
+                    i = 1;
+                    break;
+                default:
+
+                    System.out.print("The input is not valid, please insert 1 or 2\n");
+            }
+
+        }
+
+        ArrayList<Card> cards = new ArrayList<>();
+
+        cards = getCardFromTable();
+
+        System.out.print("Now you can insert the cards in your library\n");
+
+        currentPlayer.getLibrary().insert(cards);
+
+        // check dei commonObj
+
+        if(game1.getCommonObj1().checkObj(game1.getCommonObj1(), currentPlayer.getLibrary())){
+            currentPlayer.addPoints(game1.getCommonObj1().getPointCount());
+            System.out.print("Congratulations, you successfully completed a common goal\n");
+        }
+
+        if(game1.getCommonObj2().checkObj(game1.getCommonObj2(), currentPlayer.getLibrary())){
+            currentPlayer.addPoints(game1.getCommonObj2().getPointCount());
+            System.out.print("Congratulations, you successfully completed a common goal\n");
+        }
+
+        System.out.printf("%s your turn is ended!\n Preparing for the next turn...\n");
+
+
+         /* update the current player before ending*/
+        game1.updateCurrentPlayer();
+
+    }
+
 }

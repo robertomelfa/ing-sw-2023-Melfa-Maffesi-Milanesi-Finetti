@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static it.polimi.ingsw.Card.*;
@@ -14,7 +15,7 @@ public class Library {
      * It sets all elements in grid to NONE
      */
     public Library(){
-        for (int i=0;i<5;i++){
+        for (int i=0;i<6;i++){
             for (int j=0;j<5;j++){
                 grid[i][j] = NONE;
             }
@@ -38,7 +39,7 @@ public class Library {
     public void viewGrid(){
         for (int i=0;i<6;i++){
             for (int j=0;j<5;j++){
-                System.out.print(getPos(i,j).toString()+"   ");
+                System.out.printf("%-11s", getPos(i,j).toString());
             }
             System.out.print("\n");
         }
@@ -111,10 +112,24 @@ public class Library {
         }while(!checkFreeSpaces(column, List.size()));
 
         int card = 0;
-        for(int i = 0; i < List.size(); i++){
+        int listSize = List.size();
+        for(int i = 0; i < listSize; i++){
             System.out.println("Which card do you want to insert?" + List.toString());
-            card = in.nextInt() - 1;
-            grid[lastRowFree(column)][column] = List.get(card);
+            if(in.hasNextInt()) {
+                card = in.nextInt() - 1;
+                grid[lastRowFree(column)][column] = List.get(card);
+                List.remove(card);
+            } else {
+                String type = in.next().toUpperCase();
+                if(List.contains(Card.valueOf(type))){
+                  List.remove(Card.valueOf(type));
+                  grid[lastRowFree(column)][column] = Card.valueOf(type);
+                } else {
+                    System.out.print("The input is not valid\n");
+                    i--;
+                }
+
+            }
         }
         System.out.println("Now the grid is: ");
         viewGrid();
