@@ -97,7 +97,7 @@ public class CommonObj {
      * @return result, the result of the check of the goal
      * Method that check in a personalized way every goal and return the result
      */
-    public boolean checkObj(CommonObj obj, Library lib){
+    public boolean checkObj(CommonObj obj, Library lib) throws Exception{
 
 
         switch (obj.objNum) {
@@ -736,7 +736,6 @@ public class CommonObj {
 
         return (x1 == x2) && (y1 + 1 == y2) || (x1 + 1 == x2) && (y1 == y2) ||
                 (x1 == x2) && (y1 - 1 == y2) || (x1 - 1 == x2) && (y1 == y2);
-
     }
 
     /**

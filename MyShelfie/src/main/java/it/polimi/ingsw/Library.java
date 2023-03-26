@@ -29,20 +29,39 @@ public class Library {
      * @param y
      * @return the Card in position [x][y] in grid
      */
-    public Card getPos(int x, int y){
-        return grid[x][y];
+    public Card getPos(int x, int y)throws Exception{
+        if(x>6 || x<0 || y>5 || y<0){
+            throw new Exception();
+        }else {
+            return grid[x][y];
+        }
     }
 
     /**
      * This method prints the player's library
      */
     public void viewGrid(){
-        for (int i=0;i<6;i++){
-            for (int j=0;j<5;j++){
-                System.out.printf("%-11s", getPos(i,j).toString());
+        System.out.print("   ");
+        for(int i = 1; i < 6; i++){
+            System.out.printf("     %d     ", i);
+        }
+
+        System.out.print("\n");
+        System.out.print("\n");
+
+        for(int i = 0; i < 6; i++){
+            System.out.printf(" %d ", i+1);
+            for(int j = 0; j < 5; j++){
+                if(this.grid[i][j] != NOT && this.grid[i][j] != NONE){
+                    System.out.printf("%-11s", grid[i][j]);
+                }else{
+                    System.out.print("           ");
+                }
             }
             System.out.print("\n");
         }
+        System.out.print("\n");
+
     }
 
     /**
@@ -68,6 +87,10 @@ public class Library {
      */
     private boolean checkFreeSpaces(int column, int size){
         int freeSpaces = 0;
+        if(column < 0 || column > 4){
+            System.out.println("This column does not exist, try again");
+            return false;
+        }
         for(int i = 0; i < 6; i++){
             if(grid[i][column] == NONE){
                 freeSpaces = freeSpaces + 1;
@@ -76,6 +99,7 @@ public class Library {
         if(freeSpaces >= size){
             return true;
         }else{
+            System.out.println("In this column there is not enough space, try again");
             return false;
         }
     }
@@ -86,7 +110,7 @@ public class Library {
      * @return the last free row of the column
      */
     private int lastRowFree(int column){
-        for(int i = 5; i > 0; i--){
+        for(int i = 5; i >= 0; i--){
             if(grid[i][column] == NONE){
                 return i;
             }
@@ -96,20 +120,17 @@ public class Library {
 
     /**
      *
-     * @param List: list of the cards picked from the game table
+     * @param list: list of the cards picked from the game table
      * This method insert into the player's library the cards picked from the table
      */
-    public void insert(ArrayList<Card> List){
+    public void insert(ArrayList<Card> list){
         Scanner in = new Scanner(System.in);
         int column = 0;
         viewGrid();
         System.out.println("Choose the column:");
         do{
-            column = in.nextInt();
-            if(!checkFreeSpaces(column, List.size())){
-                System.out.println("There is not enough space. Try again");
-            }
-        }while(!checkFreeSpaces(column, List.size()));
+            column = in.nextInt()-1;
+        }while(!checkFreeSpaces(column, list.size()));
 
         int card = 0;
         int listSize = List.size();
@@ -131,7 +152,9 @@ public class Library {
 
             }
         }
-        System.out.println("Now the grid is: ");
+        System.out.println("\nNow the grid is: ");
         viewGrid();
     }
 }
+
+

@@ -13,13 +13,13 @@ public class Player {
      * @param playerObj, the object linked to the player
      * The method is the constructor for the Player class
      * It sets the nickname, the library and the playerObject.
-     * It also initialize yourTurn and points
+     * It also initializes yourTurn and points
      */
     public Player(String nickname, PlayerObj playerObj){
         yourTurn = false;
         points = 0;
+        library = new Library();
         this.nickname = nickname;
-        this.library = new Library();
         this.playerObj = playerObj;
 
     }
@@ -31,11 +31,11 @@ public class Player {
      * addPoints is used for adding points to a player, it trows Exception if points is <=0
      */
     public void addPoints(int points) throws Exception {
-        if(points<=0){
+        if(points <= 0){
             throw new Exception();
         }
         else {
-            this.points=this.points+points;
+            this.points = this.points+points;
         }
 
     }

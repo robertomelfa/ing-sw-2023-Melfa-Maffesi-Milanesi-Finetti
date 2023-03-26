@@ -14,7 +14,7 @@ public class PlayerObj {
      * @return POINT, differenze between the points reached and the points already taken
      * Method that check the status of the personal goal and return the points
      */
-    public int checkObj(Library library) {
+    public int checkObj(Library library) throws Exception{
 
         //contatore delle caselle obiettivo completate
         int count = 0;
@@ -39,9 +39,7 @@ public class PlayerObj {
      * with every single goal set on a different line
      */
     public PlayerObj(){
-
-        for(int i=0;i<6;i++){
-
+        for(int i=0; i < 6; i++){
             assert false;                               //lo ha messo java per completezza
             playerObjs.add(new SingleObj(i));
 

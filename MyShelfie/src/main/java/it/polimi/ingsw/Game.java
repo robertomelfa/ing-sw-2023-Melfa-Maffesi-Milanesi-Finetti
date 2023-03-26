@@ -20,20 +20,16 @@ public class Game {
      * setBothCommonObj
      *
      */
-    public Game(){
-        do{
-            System.out.println("Enter the number of players");
-            Scanner in = new Scanner(System.in);
-            numOfPlayers = in.nextInt();
-            if(numOfPlayers < 2 || numOfPlayers > 4){
-                System.out.println("the number of players must be between 2 and 4, try again!");
-            }
-        }while(numOfPlayers < 2 || numOfPlayers > 4);
-
-        this.gameTable = new GameTable(numOfPlayers);
-        players = new LinkedList<>();
-        this.cardbox = new Cardbox();
-        setBothCommonObj(numOfPlayers);
+    public Game(int numOfPlayers) throws Exception{
+        if(numOfPlayers < 2 || numOfPlayers > 4){
+            System.out.println("the number of players must be between 2 and 4, try again!");
+            throw new Exception();
+        }else {
+            this.gameTable = new GameTable(numOfPlayers);
+            players = new LinkedList<>();
+            this.cardbox = new Cardbox();
+            setBothCommonObj(numOfPlayers);
+        }
     }
 
     /**
@@ -92,7 +88,8 @@ public class Game {
     };
 
     private void setBothCommonObj(int numOfPlayers){
-
+        commonObj1=new CommonObj(numOfPlayers);
+        commonObj2=new CommonObj(numOfPlayers);
     }
 
     public void turn(Player player){
@@ -121,6 +118,14 @@ public class Game {
      */
     public GameTable getGameTable(){
         return  this.gameTable;
+    }
+
+    /**
+     *
+     * @return the cardbox linked to game
+     */
+    public Cardbox getCardbox() {
+        return cardbox;
     }
 
     /**
