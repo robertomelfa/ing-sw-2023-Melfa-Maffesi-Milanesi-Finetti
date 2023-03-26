@@ -41,7 +41,7 @@ public class Library {
      * This method prints the player's library
      */
     public void viewGrid(){
-        System.out.print("   ");
+        System.out.print("\n   ");
         for(int i = 1; i < 6; i++){
             System.out.printf("     %d     ", i);
         }

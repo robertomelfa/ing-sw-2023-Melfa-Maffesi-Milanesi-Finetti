@@ -19,9 +19,7 @@ public class CommonObj {
         //creo un numero randomico tra 1 e 12 per definire quale obiettivo creare
         Random random = new Random();
         this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
-
         switch (objNum) {
-
             case 1 -> this.descrizione = "6 coppie distinte di tessere adiacenti dello stesso tipo";
             case 2 -> this.descrizione = "5 tessere in diagonale dello stesso tipo";
             case 3 -> this.descrizione = "4 angoli dello stesso tipo";
@@ -92,15 +90,12 @@ public class CommonObj {
 
     /**
      *
-     * @param obj, identification number of the goal
      * @param lib, library to check for the goal
      * @return result, the result of the check of the goal
      * Method that check in a personalized way every goal and return the result
      */
-    public boolean checkObj(CommonObj obj, Library lib) throws Exception{
-
-
-        switch (obj.objNum) {
+    public boolean checkObj(Library lib) throws Exception{
+        switch (this.objNum) {
             case 1 -> {
 
                 /*
@@ -127,7 +122,6 @@ public class CommonObj {
                             outer1 : if (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna)) {
 
                                 for (i=0; i<30; i=i+2){
-
                                     if (checkOld[i]==-1) break;
                                     if ((riga == checkOld[i]) && (colonna ==checkOld [i+1])) break outer1;
                                     if ((riga + 1 == checkOld[i]) && (colonna ==checkOld [i+1])) break outer1;
@@ -566,9 +560,8 @@ public class CommonObj {
 
                         if (lib.getPos(riga, colonna1) == Card.NONE) break;
 
-                        for (int colonna2 = colonna1 + 1; colonna2 < 6; colonna2++) {
-
-                            if (lib.getPos(riga, colonna1) == lib.getPos(riga, colonna2)) break outer;
+                        for (int colonna2 = 0; colonna2 < 5; colonna2++) {
+                            if (lib.getPos(riga, colonna1) == lib.getPos(riga, colonna2) && colonna1 != colonna2) break outer;
                         }
 
 
@@ -653,9 +646,9 @@ public class CommonObj {
                 int count11YELLOW = 0;
                 int count11GREEN = 0;
                 int count11PURPLE = 0;
-                for (int riga = 0; riga < 5; riga++) {
+                for (int riga = 0; riga < 6; riga++) {
 
-                    for (int colonna = 0; colonna < 6; colonna++) {
+                    for (int colonna = 0; colonna < 5; colonna++) {
 
                         switch (lib.getPos(riga, colonna)) {
 
@@ -733,7 +726,6 @@ public class CommonObj {
      * @return result, if Card 1 and 2 are near
      */
     private boolean checkNearObj5(int x1, int y1, int x2, int y2) {
-
         return (x1 == x2) && (y1 + 1 == y2) || (x1 + 1 == x2) && (y1 == y2) ||
                 (x1 == x2) && (y1 - 1 == y2) || (x1 - 1 == x2) && (y1 == y2);
     }
