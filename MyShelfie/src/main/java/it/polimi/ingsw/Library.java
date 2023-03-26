@@ -105,7 +105,7 @@ public class Library {
      * @return the last free row of the column
      */
     private int lastRowFree(int column){
-        for(int i = 5; i > 0; i--){
+        for(int i = 5; i >= 0; i--){
             if(grid[i][column] == NONE){
                 return i;
             }
@@ -115,26 +115,29 @@ public class Library {
 
     /**
      *
-     * @param List: list of the cards picked from the game table
+     * @param list: list of the cards picked from the game table
      * This method insert into the player's library the cards picked from the table
      */
-    public void insert(ArrayList<Card> List){
+    public void insert(ArrayList<Card> list){
+        ArrayList<Card> copy= new ArrayList<>();
+        copy.addAll(list);
         Scanner in = new Scanner(System.in);
         int column = 0;
         viewGrid();
         System.out.println("Choose the column:");
         do{
-            column = in.nextInt();
-            if(!checkFreeSpaces(column, List.size())){
+            column = in.nextInt()-1;
+            if(!checkFreeSpaces(column, copy.size())){
                 System.out.println("There is not enough space. Try again");
             }
-        }while(!checkFreeSpaces(column, List.size()));
+        }while(!checkFreeSpaces(column, copy.size()));
 
         int card = 0;
-        for(int i = 0; i < List.size(); i++){
-            System.out.println("Which card do you want to insert?" + List.toString());
+        for(int i = copy.size(); i > 0; i--){
+            System.out.println("Which card do you want to insert?" + copy.toString());
             card = in.nextInt() - 1;
-            grid[lastRowFree(column)][column] = List.get(card);
+            grid[lastRowFree(column)][column] = copy.get(card);
+            copy.remove(card);
         }
         System.out.println("Now the grid is: ");
         viewGrid();

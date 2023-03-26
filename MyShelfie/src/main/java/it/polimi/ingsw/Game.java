@@ -88,8 +88,8 @@ public class Game {
     };
 
     private void setBothCommonObj(int numOfPlayers){
-        commonObj1=new CommonObj();
-        commonObj2=new CommonObj();
+        commonObj1=new CommonObj(numOfPlayers);
+        commonObj2=new CommonObj(numOfPlayers);
     }
 
     public void turn(Player player){
