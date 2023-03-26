@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static it.polimi.ingsw.Card.*;
@@ -14,7 +15,7 @@ public class Library {
      * It sets all elements in grid to NONE
      */
     public Library(){
-        for (int i=0;i<5;i++){
+        for (int i=0;i<6;i++){
             for (int j=0;j<5;j++){
                 grid[i][j] = NONE;
             }
@@ -28,20 +29,39 @@ public class Library {
      * @param y
      * @return the Card in position [x][y] in grid
      */
-    public Card getPos(int x, int y){
-        return grid[x][y];
+    public Card getPos(int x, int y)throws Exception{
+        if(x>6 || x<0 || y>5 || y<0){
+            throw new Exception();
+        }else {
+            return grid[x][y];
+        }
     }
 
     /**
      * This method prints the player's library
      */
     public void viewGrid(){
-        for (int i=0;i<6;i++){
-            for (int j=0;j<5;j++){
-                System.out.print(getPos(i,j).toString()+"   ");
+        System.out.print("   ");
+        for(int i = 1; i < 6; i++){
+            System.out.printf("     %d     ", i);
+        }
+
+        System.out.print("\n");
+        System.out.print("\n");
+
+        for(int i = 0; i < 6; i++){
+            System.out.printf(" %d ", i+1);
+            for(int j = 0; j < 5; j++){
+                if(this.grid[i][j] != NOT && this.grid[i][j] != NONE){
+                    System.out.printf("%-11s", grid[i][j]);
+                }else{
+                    System.out.print("           ");
+                }
             }
             System.out.print("\n");
         }
+        System.out.print("\n");
+
     }
 
     /**
@@ -119,4 +139,8 @@ public class Library {
         System.out.println("Now the grid is: ");
         viewGrid();
     }
+
+
 }
+
+
