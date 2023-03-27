@@ -136,11 +136,16 @@ public class Library {
         int listSize = list.size();
         for(int i = 0; i < listSize; i++){
             System.out.println("Which card do you want to insert?" + list.toString());
-            if(in.hasNextInt()) {
-                card = in.nextInt() - 1;
+        //    if(in.hasNextInt()) {
+                do{
+                    card = in.nextInt() - 1;
+                    if(card < 0 || card >= list.size()){
+                        System.out.println("This card does not exist, try again!");
+                    }
+                }while(card < 0 || card >= list.size());
                 grid[lastRowFree(column)][column] = list.get(card);
                 list.remove(card);
-            } else {
+      /*      }  else {
                 String type = in.next().toUpperCase();
                 if(list.contains(Card.valueOf(type))){
                   list.remove(Card.valueOf(type));
@@ -149,8 +154,7 @@ public class Library {
                     System.out.print("The input is not valid\n");
                     i--;
                 }
-
-            }
+            }   */
         }
         System.out.println("Now the grid is: \n");
         viewGrid();

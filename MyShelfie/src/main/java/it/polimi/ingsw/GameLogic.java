@@ -1,6 +1,5 @@
 package it.polimi.ingsw;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -256,17 +255,17 @@ public class GameLogic {
 
         // check dei commonObj
 
-        if(game1.getCommonObj1().checkObj(game1.getCommonObj1(), currentPlayer.getLibrary())){
+        if(game1.getCommonObj1().checkObj(currentPlayer.getLibrary())){
             currentPlayer.addPoints(game1.getCommonObj1().getPointCount());
             System.out.print("Congratulations, you successfully completed a common goal\n");
         }
 
-        if(game1.getCommonObj2().checkObj(game1.getCommonObj2(), currentPlayer.getLibrary())){
+        if(game1.getCommonObj2().checkObj(currentPlayer.getLibrary())){
             currentPlayer.addPoints(game1.getCommonObj2().getPointCount());
             System.out.print("Congratulations, you successfully completed a common goal\n");
         }
 
-        System.out.printf("%s your turn is ended!\n Preparing for the next turn...\n");
+        System.out.printf("%s your turn is ended!\n Preparing for the next turn...\n", currentPlayer);
 
 
          /* update the current player before ending*/

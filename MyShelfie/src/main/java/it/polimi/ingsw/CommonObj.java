@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import java.util.Random;
 
+import static it.polimi.ingsw.Card.NONE;
+
 public class CommonObj {
     private final int objNum;
     private int[] pointCount = new int[4];
@@ -18,7 +20,8 @@ public class CommonObj {
 
         //creo un numero randomico tra 1 e 12 per definire quale obiettivo creare
         Random random = new Random();
-        this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
+     //   this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
+        this.objNum = 1;
         switch (objNum) {
             case 1 -> this.descrizione = "6 coppie distinte di tessere adiacenti dello stesso tipo";
             case 2 -> this.descrizione = "5 tessere in diagonale dello stesso tipo";
@@ -96,7 +99,7 @@ public class CommonObj {
      */
     public boolean checkObj(Library lib) throws Exception{
         switch (this.objNum) {
-            case 1 -> {
+         /*   case 1 -> {
 
                 /*
                  * 6 coppie distinte di tessere adiacenti dello stesso tipo
@@ -106,14 +109,14 @@ public class CommonObj {
                  * se trovo controllo che non contenga posizioni già segnate
                  * se passa il check aumento il contatore e segno la posizione più avanti
                  *
-                 */
+                 *
 
                 int count1 = 0;
 
                 int[] checkOld = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
                 int i;
 
-                for (int riga = 0; riga < 6; riga++) {
+                for (int riga = 0; riga < 5; riga++) {
 
                     for (int colonna = 0; colonna < 5; colonna++) {
 
@@ -151,6 +154,44 @@ public class CommonObj {
                     }
                 }
                 return count1 >= 6;
+            }   */
+            case 1 -> {
+                // set the temporally grid
+                int[][] grid = new int[6][5];
+                int count = 0;
+
+                for(int i = 0; i < 6; i++){
+                    for(int j = 0; j < 5; j++){
+                        grid[i][j] = 0;
+                    }
+                }
+
+                // check row couple
+                for(int i = 0; i < 6; i++){
+                    for(int j = 0; j < 4; j++){
+                        if(lib.getPos(i, j) != NONE && (lib.getPos(i, j) == lib.getPos(i, j + 1) && (grid[i][j] == 0 && grid[i][j+1] == 0))){
+                            grid[i][j] = 1;
+                            grid[i][j+1] = 1;
+                            count ++;
+                        }
+                    }
+                }
+
+                // check column couple
+                for(int i = 0; i < 5; i++){
+                    for(int j = 0; j < 5; j++){
+                        if(lib.getPos(i, j) != NONE && (lib.getPos(i, j) == lib.getPos(i+1, j) && (grid[i][j] == 0 && grid[i+1][j] == 0))){
+                            grid[i][j] = 1;
+                            grid[i+1][j] = 1;
+                            count ++;
+                        }
+                    }
+                }
+
+                if(count >= 6){
+                    return true;
+                }
+                return false;
             }
             case 2 -> {
                 /*
@@ -164,22 +205,22 @@ public class CommonObj {
 
                 for (int i = 0; i < 5; i++) {
                     if (i == 4) return true;
-                    if ((lib.getPos(i, i) == Card.NONE)) break;
+                    if ((lib.getPos(i, i) == NONE)) break;
                     if (lib.getPos(i, i) != lib.getPos(i + 1, i + 1)) break;
                 }
                 for (int i = 0; i < 5; i++) {
                     if (i == 4) return true;
-                    if ((lib.getPos(i + 1, i) == Card.NONE)) break;
+                    if ((lib.getPos(i + 1, i) == NONE)) break;
                     if (lib.getPos(i + 1, i) != lib.getPos(i + 2, i + 1)) break;
                 }
                 for (int i = 0; i < 5; i++) {
                     if (i == 4) return true;
-                    if ((lib.getPos(i, 4 - i) == Card.NONE)) break;
+                    if ((lib.getPos(i, 4 - i) == NONE)) break;
                     if (lib.getPos(i, 4 - i) != lib.getPos(i + 1, 4 - i - 1 )) break;
                 }
                 for (int i = 0; i < 5; i++) {
                     if (i == 4) return true;
-                    if ((lib.getPos(i + 1, 4 - i) == Card.NONE)) break;
+                    if ((lib.getPos(i + 1, 4 - i) == NONE)) break;
                     if (lib.getPos(i + 1, 4 - i) != lib.getPos(i + 2, 4 - i  - 1)) break;
                 }
                 return false;
@@ -194,7 +235,7 @@ public class CommonObj {
                 return ((lib.getPos(0, 0) == lib.getPos(0, 4)) &&
                         (lib.getPos(0, 4) == lib.getPos(5, 4)) &&
                         (lib.getPos(5, 4) == lib.getPos(5, 0)) &&
-                        (lib.getPos(0, 0) != Card.NONE));
+                        (lib.getPos(0, 0) != NONE));
             }
             case 4 -> {
                 /*
@@ -208,21 +249,21 @@ public class CommonObj {
                  */
 
                 int count4 = 0;
-                Card[] countType = {Card.NONE,Card.NONE,Card.NONE};
+                Card[] countType = {NONE, NONE, NONE};
 
                 for (int riga = 0; riga < 6; riga++) {
 
                     for (int i=0; i<3; i++){
-                        countType[i]=Card.NONE;
+                        countType[i]= NONE;
                     }
 
                     outer: for (int colonna = 0; colonna < 5; colonna++) {
 
-                        if (lib.getPos(riga, colonna) == Card.NONE) break;
+                        if (lib.getPos(riga, colonna) == NONE) break;
 
                         for (int i=0; i<3; i++){
 
-                            if(countType[i]==Card.NONE) {
+                            if(countType[i]== NONE) {
 
                                 countType[i] = lib.getPos(riga, colonna);
                                 break;
@@ -466,7 +507,7 @@ public class CommonObj {
                     outer:
                     for (int riga1 = 0; riga1 < 6; riga1++) {
 
-                        if (lib.getPos(riga1, colonna) == Card.NONE) break;
+                        if (lib.getPos(riga1, colonna) == NONE) break;
 
                         for (int riga2 = riga1 + 1; riga2 < 6; riga2++) {
 
@@ -505,7 +546,7 @@ public class CommonObj {
 
                     outer : for (int colonna=0; colonna<5; colonna++){
 
-                        if(lib.getPos(riga,colonna) != Card.NONE){
+                        if(lib.getPos(riga,colonna) != NONE){
 
                             if((lib.getPos(riga,colonna) == lib.getPos(riga,colonna+1) )&&
                                     (lib.getPos(riga,colonna) == lib.getPos(riga+1,colonna)) &&
@@ -558,7 +599,7 @@ public class CommonObj {
 
                     outer:for (int colonna1 = 0; colonna1 < 5; colonna1++) {
 
-                        if (lib.getPos(riga, colonna1) == Card.NONE) break;
+                        if (lib.getPos(riga, colonna1) == NONE) break;
 
                         for (int colonna2 = 0; colonna2 < 5; colonna2++) {
                             if (lib.getPos(riga, colonna1) == lib.getPos(riga, colonna2) && colonna1 != colonna2) break outer;
@@ -579,21 +620,21 @@ public class CommonObj {
                  */
 
                 int count9 = 0;
-                Card[] countType = {Card.NONE,Card.NONE,Card.NONE};
+                Card[] countType = {NONE, NONE, NONE};
 
                 for (int colonna = 0; colonna < 5; colonna++) {
 
                     for (int i=0; i<3; i++){
-                        countType[i]=Card.NONE;
+                        countType[i]= NONE;
                     }
 
                     outer: for (int riga = 0; riga < 6; riga++) {
 
-                        if (lib.getPos(riga, colonna) == Card.NONE) break;
+                        if (lib.getPos(riga, colonna) == NONE) break;
 
                         for (int i=0; i<3; i++){
 
-                            if(countType[i]==Card.NONE) {
+                            if(countType[i]== NONE) {
 
                                 countType[i] = lib.getPos(riga, colonna);
                                 break;
@@ -616,11 +657,11 @@ public class CommonObj {
                  * scorro alla ricerca di una X tutta uguale
                  */
 
-                for (int riga = 0; riga < 6; riga++) {
+                for (int riga = 0; riga < 4; riga++) {
 
-                    for (int colonna = 0; colonna < 5; colonna++) {
+                    for (int colonna = 0; colonna < 3; colonna++) {
 
-                        if ((lib.getPos(riga, colonna) != Card.NONE) &&
+                        if ((lib.getPos(riga, colonna) != NONE) &&
                                 (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna + 1)) &&
                                 (lib.getPos(riga, colonna) == lib.getPos(riga + 2, colonna + 2)) &&
                                 (lib.getPos(riga, colonna) == lib.getPos(riga, colonna + 2)) &&
@@ -681,33 +722,33 @@ public class CommonObj {
 
                     if (i == 0){
 
-                        if (lib.getPos(i, i) == Card.NONE) break;
+                        if (lib.getPos(i, i) == NONE) break;
 
                     }else if (i == 4) return true;
 
-                    else if ((lib.getPos(i, i) == Card.NONE) || (lib.getPos(i - 1, i) != Card.NONE) || (lib.getPos(i, i + 1) != Card.NONE)) break;
+                    else if ((lib.getPos(i, i) == NONE) || (lib.getPos(i - 1, i) != NONE) || (lib.getPos(i, i + 1) != NONE)) break;
                 }
                 for (int i = 0; i < 5; i++) {
 
                     if (i == 4) return true;
 
-                    else if ((lib.getPos(i + 1, i) == Card.NONE) || (lib.getPos(i, i) != Card.NONE) || (lib.getPos(i + 1, i + 1) != Card.NONE) ) break;
+                    else if ((lib.getPos(i + 1, i) == NONE) || (lib.getPos(i, i) != NONE) || (lib.getPos(i + 1, i + 1) != NONE) ) break;
                 }
                 for (int i = 0; i < 5; i++) {
 
                     if (i == 0){
 
-                        if (lib.getPos(i,4 - i) == Card.NONE) break;
+                        if (lib.getPos(i,4 - i) == NONE) break;
 
                     }else if (i == 4) return true;
 
-                    else if ((lib.getPos(i, 4 - i) == Card.NONE) || (lib.getPos(i - 1, 4 - i) != Card.NONE) || (lib.getPos(i, 4 - i - 1) != Card.NONE)) break;
+                    else if ((lib.getPos(i, 4 - i) == NONE) || (lib.getPos(i - 1, 4 - i) != NONE) || (lib.getPos(i, 4 - i - 1) != NONE)) break;
                 }
                 for (int i = 0; i < 5; i++) {
 
                     if (i == 4) return true;
 
-                    else if ((lib.getPos(i + 1, 4 - i) == Card.NONE) || (lib.getPos(i, 4 - i) != Card.NONE) || (lib.getPos(i + 1, 4 - i - 1) != Card.NONE)) break;
+                    else if ((lib.getPos(i + 1, 4 - i) == NONE) || (lib.getPos(i, 4 - i) != NONE) || (lib.getPos(i + 1, 4 - i - 1) != NONE)) break;
                 }
                 return false;
             }

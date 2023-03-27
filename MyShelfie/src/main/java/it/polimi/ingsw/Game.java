@@ -25,6 +25,7 @@ public class Game {
             System.out.println("the number of players must be between 2 and 4, try again!");
             throw new Exception();
         }else {
+            this.numOfPlayers = numOfPlayers;
             this.gameTable = new GameTable(numOfPlayers);
             players = new LinkedList<>();
             this.cardbox = new Cardbox();
