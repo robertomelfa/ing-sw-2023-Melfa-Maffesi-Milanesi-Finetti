@@ -133,18 +133,26 @@ public class Library {
         }while(!checkFreeSpaces(column, list.size()));
 
         int card = 0;
-        for(int i = list.size(); i > 0; i--){
-            do{
-                System.out.println("Which card do you want to insert?" + list.toString());
+        int listSize = list.size();
+        for(int i = 0; i < listSize; i++){
+            System.out.println("Which card do you want to insert?" + list.toString());
+            if(in.hasNextInt()) {
                 card = in.nextInt() - 1;
-                if(card < 0 || card > list.size() - 1){
-                    System.out.println("You have to select one of the card (1, 2 or 3), try again");
+                grid[lastRowFree(column)][column] = list.get(card);
+                list.remove(card);
+            } else {
+                String type = in.next().toUpperCase();
+                if(list.contains(Card.valueOf(type))){
+                  list.remove(Card.valueOf(type));
+                  grid[lastRowFree(column)][column] = Card.valueOf(type);
+                } else {
+                    System.out.print("The input is not valid\n");
+                    i--;
                 }
-            }while(card < 0 || card > list.size() - 1);
-            grid[lastRowFree(column)][column] = list.get(card);
-            list.remove(card);
+
+            }
         }
-        System.out.println("\nNow the grid is: ");
+        System.out.println("Now the grid is: \n");
         viewGrid();
     }
 }
