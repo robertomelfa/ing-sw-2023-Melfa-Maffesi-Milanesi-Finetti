@@ -20,8 +20,7 @@ public class CommonObj {
 
         //creo un numero randomico tra 1 e 12 per definire quale obiettivo creare
         Random random = new Random();
-     //   this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
-        this.objNum = 1;
+        this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
         switch (objNum) {
             case 1 -> this.descrizione = "6 coppie distinte di tessere adiacenti dello stesso tipo";
             case 2 -> this.descrizione = "5 tessere in diagonale dello stesso tipo";

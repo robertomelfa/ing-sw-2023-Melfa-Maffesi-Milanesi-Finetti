@@ -187,13 +187,9 @@ public class GameLogic {
         return false;
     }
 
-    public void changeCurrentPlayer(){}
+    public void gameIsEnded(){} // usiamo checkFull (metodo di library)
 
-    public void gameIsEnded(){}
-
-    public void setEnd(){}
-
-    public void checkCommObj(Player player){}
+ //   public void checkCommObj(Player player){} sostituisce condizione if nella riga 258
 
     /**
      * This method is used to handle every turn of the game

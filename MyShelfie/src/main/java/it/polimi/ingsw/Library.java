@@ -8,7 +8,6 @@ import static it.polimi.ingsw.Card.*;
 
 public class Library {
     private Card[][] grid = new Card[6][5];
-    private boolean full;
 
     /**
      * Constructor for the Library class.
@@ -20,7 +19,6 @@ public class Library {
                 grid[i][j] = NONE;
             }
         }
-        full=false;
     }
 
     /**

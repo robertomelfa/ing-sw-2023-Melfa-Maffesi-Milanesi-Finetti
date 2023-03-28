@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PlayerObj {
     private List<SingleObj> playerObjs ;
-    private final int[] POINT = {12,9,6,4,2,1};
+    private final int[] POINT = {1, 2, 4, 6, 9, 12};
     private int i;
 
     /**
@@ -29,7 +29,7 @@ public class PlayerObj {
 
             this.i = count;
 
-            return POINT[count]-POINT[i];
+            return POINT[count-1] - POINT[i];
 
         }else return 0;
     }

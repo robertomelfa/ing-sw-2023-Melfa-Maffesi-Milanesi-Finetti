@@ -93,10 +93,6 @@ public class Game {
         commonObj2=new CommonObj(numOfPlayers);
     }
 
-    public void turn(Player player){
-
-    }
-
     /**
      * This method prints the leaderboard, that is the list of players and their points scored sorted by score
      */
@@ -110,7 +106,6 @@ public class Game {
             str.append(temp.get(i).getNickname()+"  "+temp.get(i).getScore()+" points\n");
         }
         System.out.println(str);
-
     }
 
     /**
