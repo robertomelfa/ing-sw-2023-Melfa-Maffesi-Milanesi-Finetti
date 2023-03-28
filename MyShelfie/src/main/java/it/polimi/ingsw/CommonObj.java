@@ -80,7 +80,7 @@ public class CommonObj {
      */
     public int getPointCount() {
         setPoint();
-        return pointCount[indexPoint];
+        return pointCount[indexPoint-1];
     }
 
     /**

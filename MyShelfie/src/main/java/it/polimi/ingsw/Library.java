@@ -27,11 +27,11 @@ public class Library {
      * @param y
      * @return the Card in position [x][y] in grid
      */
-    public Card getPos(int x, int y)throws Exception{
-        if(x>6 || x<0 || y>5 || y<0){
-            throw new Exception();
-        }else {
+    public Card getPos(int x, int y) throws ArrayIndexOutOfBoundsException{
+        try{
             return grid[x][y];
+        }catch(ArrayIndexOutOfBoundsException exception){
+            return NOT;
         }
     }
 
@@ -130,29 +130,45 @@ public class Library {
             column = in.nextInt()-1;
         }while(!checkFreeSpaces(column, list.size()));
 
+        int flag = 0;
+        String type = new String();
         int card = 0;
         int listSize = list.size();
         for(int i = 0; i < listSize; i++){
             System.out.println("Which card do you want to insert?" + list.toString());
-        //    if(in.hasNextInt()) {
-                do{
+            do{
+                flag = 0;
+                if(in.hasNextInt()){
                     card = in.nextInt() - 1;
-                    if(card < 0 || card >= list.size()){
+                    if (card >= 0 && card < list.size()) {
+                        flag = 1;
+                    }else {
                         System.out.println("This card does not exist, try again!");
                     }
-                }while(card < 0 || card >= list.size());
+                }else{
+                    type = in.next().toUpperCase();
+                    if(type.equals("YELLOW") || type.equals("PURPLE") || type.equals("WHITE") || type.equals("BLUE") || type.equals("LIGHTBLUE") || type.equals("GREEN")) {
+                        if(list.contains(Card.valueOf(type))) {
+                            flag = 2;
+                        }else{
+                            System.out.println("This card does not exist, try again!");
+                        }
+                    }else {
+                        System.out.println("This card does not exist, try again!");
+                    }
+
+                }
+            }while(flag == 0);
+            if(flag == 1){
                 grid[lastRowFree(column)][column] = list.get(card);
                 list.remove(card);
-      /*      }  else {
-                String type = in.next().toUpperCase();
-                if(list.contains(Card.valueOf(type))){
-                  list.remove(Card.valueOf(type));
-                  grid[lastRowFree(column)][column] = Card.valueOf(type);
-                } else {
-                    System.out.print("The input is not valid\n");
-                    i--;
-                }
-            }   */
+            }else if(flag == 2){
+                list.remove(Card.valueOf(type));
+                grid[lastRowFree(column)][column] = Card.valueOf(type);
+            }else{
+                System.out.println("This card does not exist, try again!");
+                i--;
+            }
         }
         System.out.println("Now the grid is: \n");
         viewGrid();

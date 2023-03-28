@@ -112,7 +112,6 @@ public class GameTable {
         if(check == false){
             refill(); // refill is necessary
         }
-        viewTable();
     }
 
     /**
