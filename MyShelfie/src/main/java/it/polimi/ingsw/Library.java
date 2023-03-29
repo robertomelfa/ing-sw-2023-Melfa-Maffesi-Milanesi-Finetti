@@ -9,11 +9,14 @@ import static it.polimi.ingsw.Card.*;
 public class Library {
     private Card[][] grid = new Card[6][5];
 
+    private int i;
+
     /**
      * Constructor for the Library class.
      * It sets all elements in grid to NONE
      */
     public Library(){
+        i = 0;
         for (int i=0;i<6;i++){
             for (int j=0;j<5;j++){
                 grid[i][j] = NONE;
@@ -172,6 +175,52 @@ public class Library {
         }
         System.out.println("Now the grid is: \n");
         viewGrid();
+    }
+
+    /**
+     *
+     * @param x: x position of the Card
+     * @param y: y position of the Card
+     * @param color: color of the group of cards
+     * This recursive method search the groups of same cards
+     */
+    private void group(int x, int y, Card color){
+        if(getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y) == color){
+            if(getPos(x, y) == getPos(x+1, y)){
+                group(x+1, y, color);
+            }
+            if(getPos(x, y) == getPos(x, y+1)){
+                group(x, y+1, color);
+            }
+            if(getPos(x, y) == color){
+                grid[x][y] = NONE;
+                this.i ++;
+            }
+        }
+    }
+
+    /**
+     *
+     * @return total points get from the groups of same cards
+     */
+    public int checkFinal(){
+        int points = 0;
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 5; j++){
+                if(getPos(i, j) != NONE){
+                    this.i = 0;
+                    group(i, j, getPos(i, j));
+                    if(this.i >= 3){
+                        if(this.i >= 6){    // if i have more than 6 cards, 8 points
+                            points = points + 8;
+                        }else{
+                            points = points + this.i;
+                        }
+                    }
+                }
+            }
+        }
+        return points;
     }
 }
 

@@ -266,6 +266,7 @@ public class GameLogic {
 
          /* update the current player before ending*/
         game1.updateCurrentPlayer();
+
         gameTable.checkStatus();
     }
 

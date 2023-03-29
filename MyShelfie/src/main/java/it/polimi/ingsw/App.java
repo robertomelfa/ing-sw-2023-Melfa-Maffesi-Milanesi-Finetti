@@ -18,5 +18,8 @@ public class App
         while(true){
             gamelogic.startTurn();
         }
+
+     // at the end of the game:
+     //   System.out.println("Hai totalizzato " + player1.getLibrary().checkFinal() + " punti dalle adiacenze");
     }
 }
