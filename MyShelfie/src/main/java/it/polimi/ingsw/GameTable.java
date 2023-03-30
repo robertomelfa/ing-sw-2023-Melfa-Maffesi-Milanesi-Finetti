@@ -2,11 +2,10 @@ package it.polimi.ingsw;
 
 
 import static it.polimi.ingsw.Card.*;
-import static it.polimi.ingsw.Cardbox.*;
 
 public class GameTable {
     Card[][] board = new Card[11][11];
-    Cardbox cardbox = new Cardbox();
+    CardBox cardbox = new CardBox();
 
     /**
      *

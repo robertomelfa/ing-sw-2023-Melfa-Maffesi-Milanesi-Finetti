@@ -8,7 +8,7 @@ public class Game {
     private int numOfPlayers;
     private int chair;
     private Player currentPlayer;
-    private Cardbox cardbox;
+    private CardBox cardbox;
     private CommonObj commonObj1;
     private CommonObj commonObj2;
 
@@ -28,7 +28,7 @@ public class Game {
             this.numOfPlayers = numOfPlayers;
             this.gameTable = new GameTable(numOfPlayers);
             players = new LinkedList<>();
-            this.cardbox = new Cardbox();
+            this.cardbox = new CardBox();
             setBothCommonObj(numOfPlayers);
         }
     }
@@ -89,8 +89,12 @@ public class Game {
     };
 
     private void setBothCommonObj(int numOfPlayers){
-        commonObj1=new CommonObj(numOfPlayers);
-        commonObj2=new CommonObj(numOfPlayers);
+        Random rn = new Random();
+        int rand = rn.nextInt(12)+1;
+        int rand1 = rn.nextInt(12)+1;
+        commonObj1=new CommonObj(numOfPlayers,rand);
+        while (rand1 == rand){ rand1 = rn.nextInt(12)+1;}
+        commonObj2=new CommonObj(numOfPlayers,rand1);
     }
 
     /**
@@ -120,7 +124,7 @@ public class Game {
      *
      * @return the cardbox linked to game
      */
-    public Cardbox getCardbox() {
+    public CardBox getCardbox() {
         return cardbox;
     }
 

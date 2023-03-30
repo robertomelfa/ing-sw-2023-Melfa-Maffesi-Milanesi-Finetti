@@ -9,20 +9,20 @@ public class CommonObj {
     private final int objNum;
     private int[] pointCount = new int[4];
     private int indexPoint = 0;
-    private String descrizione ;
+    private String descrizione;
 
 
     /**
-     *
      * @param numOfPlayer, the number of Player, is usefully for the Point set
-     * Constructor of common goal: take a random number of goal and set the array-Point and the description
+     *                     Constructor of common goal: take a random number of goal and set the array-Point and the description
      */
-    public CommonObj(int numOfPlayer){
+    public CommonObj(int numOfPlayer, int objNum) {
 
         //creo un numero randomico tra 1 e 12 per definire quale obiettivo creare
-        Random random = new Random();
-     //   this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
-        this.objNum = 5;
+//        Random random = new Random();
+//        this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
+//        this.objNum = 5;
+        this.objNum = objNum;
         switch (objNum) {
             case 1 -> this.descrizione = "6 coppie distinte di tessere adiacenti dello stesso tipo";
             case 2 -> this.descrizione = "5 tessere in diagonale dello stesso tipo";
@@ -61,7 +61,6 @@ public class CommonObj {
     }
 
     /**
-     *
      * @return objNum, the identification number of the goal
      */
     public int getObjNum() {
@@ -69,7 +68,6 @@ public class CommonObj {
     }
 
     /**
-     *
      * @return descrizione, the description of the goal
      */
     public String getDescrizione() {
@@ -77,29 +75,366 @@ public class CommonObj {
     }
 
     /**
-     *
      * @return Points, the points to give for complete the goal
      */
     public int getPointCount() {
         setPoint();
-        return pointCount[indexPoint-1];
+        return pointCount[indexPoint - 1];
     }
 
     /**
      * Method that update the array point when someone complete the goal
      */
-    private void setPoint(){
+    private void setPoint() {
         indexPoint++;
     }
 
     /**
-     *
      * @param lib, library to check for the goal
      * @return result, the result of the check of the goal
      * Method that check in a personalized way every goal and return the result
      */
-    public boolean checkObj(Library lib) throws Exception{
+    public boolean checkObj(Library lib) throws Exception {
+
         switch (this.objNum) {
+            case 1 -> {
+                return check1(lib);
+            }
+            case 2 -> {
+                return check2(lib);
+            }
+            case 3 -> {
+                return check3(lib);
+            }
+            case 4 -> {
+                return check4(lib);
+            }
+            case 5 -> {
+                return check5(lib);
+            }
+            case 6 -> {
+                return check6(lib);
+            }
+            case 7 -> {
+                return check7(lib);
+            }
+            case 8 -> {
+                return check8(lib);
+            }
+            case 9 -> {
+                return check9(lib);
+            }
+            case 10 -> {
+                return check10(lib);
+            }
+            case 11 -> {
+                return check11(lib);
+            }
+            case 12 -> {
+                return check12(lib);
+            }
+            default -> throw new Exception();
+        }
+    }
+
+    private boolean check1(Library lib) {
+        Library temp = new Library(lib);
+        int count = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (temp.getPos(i, j) != NONE) {
+                    temp.i = 0;
+                    temp.group(i, j, j, temp.getPos(i, j));
+                    if (temp.i >= 2) {
+                        count++;
+                    }
+                }
+            }
+        }
+
+        return count >= 6;
+    }
+
+    private boolean check2(Library lib) {
+        for (int i = 0; i < 5; i++) {
+            if (i == 4) return true;
+            if ((lib.getPos(i, i) == NONE)) break;
+            if (lib.getPos(i, i) != lib.getPos(i + 1, i + 1)) break;
+        }
+        for (int i = 0; i < 5; i++) {
+            if (i == 4) return true;
+            if ((lib.getPos(i + 1, i) == NONE)) break;
+            if (lib.getPos(i + 1, i) != lib.getPos(i + 2, i + 1)) break;
+        }
+        for (int i = 0; i < 5; i++) {
+            if (i == 4) return true;
+            if ((lib.getPos(i, 4 - i) == NONE)) break;
+            if (lib.getPos(i, 4 - i) != lib.getPos(i + 1, 4 - i - 1)) break;
+        }
+        for (int i = 0; i < 5; i++) {
+            if (i == 4) return true;
+            if ((lib.getPos(i + 1, 4 - i) == NONE)) break;
+            if (lib.getPos(i + 1, 4 - i) != lib.getPos(i + 2, 4 - i - 1)) break;
+        }
+        return false;
+
+    }
+
+    private boolean check3(Library lib) {
+        return ((lib.getPos(0, 0) == lib.getPos(0, 4)) &&
+                (lib.getPos(0, 4) == lib.getPos(5, 4)) &&
+                (lib.getPos(5, 4) == lib.getPos(5, 0)) &&
+                (lib.getPos(0, 0) != NONE));
+    }
+
+    private boolean check4(Library lib) {
+        int count4 = 0;
+        Card[] countType = {NONE, NONE, NONE};
+
+        for (int riga = 0; riga < 6; riga++) {
+            for (int i = 0; i < 3; i++) {
+                countType[i] = NONE;
+            }
+
+            outer:
+            for (int colonna = 0; colonna < 5; colonna++) {
+
+                if (lib.getPos(riga, colonna) == NONE) break;
+
+                for (int i = 0; i < 3; i++) {
+
+                    if (countType[i] == NONE) {
+
+                        countType[i] = lib.getPos(riga, colonna);
+                        break;
+                    } else if (lib.getPos(riga, colonna) == countType[i]) break;
+
+                    else if ((i == 2) && (lib.getPos(riga, colonna) != countType[i])) break outer;
+                }
+                if (colonna == 4) count4++;
+            }
+        }
+        return count4 >= 4;
+    }
+
+    private boolean check5(Library lib) {
+        Library temp = new Library(lib);
+        int count = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (temp.getPos(i, j) != NONE) {
+                    temp.i = 0;
+                    temp.group(i, j, j, temp.getPos(i, j));
+                    if (temp.i >= 4) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count >= 4;
+    }
+
+    private boolean check6(Library lib) {
+        int count6 = 0;
+        for (int colonna = 0; colonna < 5; colonna++) {
+
+            outer:
+            for (int riga1 = 0; riga1 < 6; riga1++) {
+
+                if (lib.getPos(riga1, colonna) == NONE) break;
+
+                for (int riga2 = riga1 + 1; riga2 < 6; riga2++) {
+
+                    if (lib.getPos(riga1, colonna) == lib.getPos(riga2, colonna)) break outer;
+                }
+
+                if (riga1 == 4) count6++;
+            }
+        }
+        return count6 >= 2;
+    }
+
+    private boolean check7(Library lib) {
+        int count7WHITE = 0;
+        int count7BLUE = 0;
+        int count7LIGHTBLUE = 0;
+        int count7YELLOW = 0;
+        int count7GREEN = 0;
+        int count7PURPLE = 0;
+
+        int[] checkOld = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        int i;
+
+        for (int riga = 0; riga < 6; riga++) {
+
+            outer:
+            for (int colonna = 0; colonna < 5; colonna++) {
+
+                if (lib.getPos(riga, colonna) != NONE) {
+
+                    if ((lib.getPos(riga, colonna) == lib.getPos(riga, colonna + 1)) &&
+                            (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna)) &&
+                            (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna + 1))) {
+
+                        for (i = 0; i < 12; i = i + 2) {
+
+                            if (checkOld[i] == -1) break;
+                            if ((riga == checkOld[i]) && (colonna == checkOld[i + 1])) break outer;
+                            if ((riga + 1 == checkOld[i]) && (colonna == checkOld[i + 1])) break outer;
+                            if ((riga == checkOld[i]) && (colonna + 1 == checkOld[i + 1])) break outer;
+                            if ((riga + 1 == checkOld[i]) && (colonna + 1 == checkOld[i + 1])) break outer;
+                        }
+
+                        checkOld[i] = riga + 1;
+                        checkOld[i + 1] = colonna + 1;
+
+                        switch (lib.getPos(riga, colonna)) {
+                            case WHITE -> count7WHITE++;
+                            case BLUE -> count7BLUE++;
+                            case LIGHTBLUE -> count7LIGHTBLUE++;
+                            case YELLOW -> count7YELLOW++;
+                            case GREEN -> count7GREEN++;
+                            case PURPLE -> count7PURPLE++;
+                        }
+                    }
+                }
+            }
+        }
+        return count7WHITE + count7BLUE + count7LIGHTBLUE + count7YELLOW + count7GREEN + count7PURPLE >= 2;
+    }
+
+    private boolean check8(Library lib) {
+        int count8 = 0;
+        for (int riga = 0; riga < 6; riga++) {
+            outer:
+            for (int colonna1 = 0; colonna1 < 5; colonna1++) {
+                if (lib.getPos(riga, colonna1) == NONE) break;
+                for (int colonna2 = 0; colonna2 < 5; colonna2++) {
+                    if (lib.getPos(riga, colonna1) == lib.getPos(riga, colonna2) && colonna1 != colonna2) break outer;
+                }
+                if (colonna1 == 4) count8++;
+            }
+        }
+        return count8 >= 2;
+    }
+
+    private boolean check9(Library lib) {
+        int count9 = 0;
+        Card[] countType = {NONE, NONE, NONE};
+
+        for (int colonna = 0; colonna < 5; colonna++) {
+            for (int i = 0; i < 3; i++) {
+                countType[i] = NONE;
+            }
+            outer:
+            for (int riga = 0; riga < 6; riga++) {
+
+                if (lib.getPos(riga, colonna) == NONE) break;
+
+                for (int i = 0; i < 3; i++) {
+
+                    if (countType[i] == NONE) {
+
+                        countType[i] = lib.getPos(riga, colonna);
+                        break;
+                    } else if (lib.getPos(riga, colonna) == countType[i]) break;
+
+                    else if ((i == 2) && (lib.getPos(riga, colonna) != countType[i])) break outer;
+                }
+                if (riga == 5) count9++;
+            }
+        }
+        return count9 >= 3;
+    }
+
+    private boolean check10(Library lib) {
+        for (int riga = 0; riga < 4; riga++) {
+            for (int colonna = 0; colonna < 3; colonna++) {
+                if ((lib.getPos(riga, colonna) != NONE) &&
+                        (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna + 1)) &&
+                        (lib.getPos(riga, colonna) == lib.getPos(riga + 2, colonna + 2)) &&
+                        (lib.getPos(riga, colonna) == lib.getPos(riga, colonna + 2)) &&
+                        (lib.getPos(riga, colonna) == lib.getPos(riga + 2, colonna))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean check11(Library lib) {
+        int count11WHITE = 0;
+        int count11BLUE = 0;
+        int count11LIGHTBLUE = 0;
+        int count11YELLOW = 0;
+        int count11GREEN = 0;
+        int count11PURPLE = 0;
+        for (int riga = 0; riga < 6; riga++) {
+            for (int colonna = 0; colonna < 5; colonna++) {
+                switch (lib.getPos(riga, colonna)) {
+                    case WHITE -> count11WHITE++;
+                    case BLUE -> count11BLUE++;
+                    case LIGHTBLUE -> count11LIGHTBLUE++;
+                    case YELLOW -> count11YELLOW++;
+                    case GREEN -> count11GREEN++;
+                    case PURPLE -> count11PURPLE++;
+                }
+            }
+        }
+        if (count11WHITE >= 8) return true;
+        else if (count11BLUE >= 8) return true;
+        else if (count11LIGHTBLUE >= 8) return true;
+        else if (count11YELLOW >= 8) return true;
+        else if (count11GREEN >= 8) return true;
+        else return count11PURPLE >= 8;
+    }
+
+    private boolean check12(Library lib) {
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) {
+                if (lib.getPos(i, i) == NONE) break;
+            } else if (i == 4) return true;
+
+            else if ((lib.getPos(i, i) == NONE) || (lib.getPos(i - 1, i) != NONE) || (lib.getPos(i, i + 1) != NONE))
+                break;
+        }
+        for (int i = 0; i < 5; i++) {
+
+            if (i == 4) return true;
+
+            else if ((lib.getPos(i + 1, i) == NONE) || (lib.getPos(i, i) != NONE) || (lib.getPos(i + 1, i + 1) != NONE))
+                break;
+        }
+        for (int i = 0; i < 5; i++) {
+
+            if (i == 0) {
+
+                if (lib.getPos(i, 4 - i) == NONE) break;
+
+            } else if (i == 4) return true;
+
+            else if ((lib.getPos(i, 4 - i) == NONE) || (lib.getPos(i - 1, 4 - i) != NONE) || (lib.getPos(i, 4 - i - 1) != NONE))
+                break;
+        }
+        for (int i = 0; i < 5; i++) {
+
+            if (i == 4) return true;
+
+            else if ((lib.getPos(i + 1, 4 - i) == NONE) || (lib.getPos(i, 4 - i) != NONE) || (lib.getPos(i + 1, 4 - i - 1) != NONE))
+                break;
+        }
+        return false;
+    }
+
+}
+
+
+
+
+
+// vecchie prove o commenti
+
+
          /*   case 1 -> {
 
                 /*
@@ -156,7 +491,6 @@ public class CommonObj {
                 }
                 return count1 >= 6;
             }   */
-            case 1 -> {
        /*         // set the temporally grid
                 int[][] grid = new int[6][5];
                 int count = 0;
@@ -193,116 +527,45 @@ public class CommonObj {
                     return true;
                 }
                 return false;   */
-                Library temp = new Library(lib);
-                int count = 0;
-                for(int i = 0; i < 6; i++){
-                    for(int j = 0; j < 5; j++){
-                        if(temp.getPos(i, j) != NONE){
-                            temp.i = 0;
-                            temp.group(i, j, j, temp.getPos(i, j));
-                            if(temp.i >= 2){
-                                count ++;
-                            }
-                        }
-                    }
-                }
-                if(count >= 6){
-                    return true;
-                }
-            }
-            case 2 -> {
-                /*
-                 * 5 tessere in diagonale dello stesso tipo
-                 *
-                 * 4 casi possibili
-                 * due diagonali destre e due sinistre
-                 * 4 for che escono quando non trovano corrispondenza
-                 * ed ritornano subito true se completano il for
-                 */
 
-                for (int i = 0; i < 5; i++) {
-                    if (i == 4) return true;
-                    if ((lib.getPos(i, i) == NONE)) break;
-                    if (lib.getPos(i, i) != lib.getPos(i + 1, i + 1)) break;
-                }
-                for (int i = 0; i < 5; i++) {
-                    if (i == 4) return true;
-                    if ((lib.getPos(i + 1, i) == NONE)) break;
-                    if (lib.getPos(i + 1, i) != lib.getPos(i + 2, i + 1)) break;
-                }
-                for (int i = 0; i < 5; i++) {
-                    if (i == 4) return true;
-                    if ((lib.getPos(i, 4 - i) == NONE)) break;
-                    if (lib.getPos(i, 4 - i) != lib.getPos(i + 1, 4 - i - 1 )) break;
-                }
-                for (int i = 0; i < 5; i++) {
-                    if (i == 4) return true;
-                    if ((lib.getPos(i + 1, 4 - i) == NONE)) break;
-                    if (lib.getPos(i + 1, 4 - i) != lib.getPos(i + 2, 4 - i  - 1)) break;
-                }
-                return false;
-            }
-            case 3 -> {
-                /*
-                 * 4 angoli dello stesso tipo
-                 *
-                 * controllo i 4 angoli
-                 */
+/*            case 2 -> {
 
-                return ((lib.getPos(0, 0) == lib.getPos(0, 4)) &&
-                        (lib.getPos(0, 4) == lib.getPos(5, 4)) &&
-                        (lib.getPos(5, 4) == lib.getPos(5, 0)) &&
-                        (lib.getPos(0, 0) != NONE));
-            }
-            case 4 -> {
-                /*
-                 * 4 righe da 5 tessere ciascuna con non più di 3 tipi differenti
-                 *
-                 * 2 for
-                 * uno scorre le righe e l'altro le colonne
-                 * per ogni riga controllo che non ci siano più di tre tessere diverse
-                 * salvando i tipi che incontro fino a 3, altrimenti passo alla prossima riga
-                 * conto che abbia successo almeno 4 volte
-                 */
+ * 5 tessere in diagonale dello stesso tipo
+ *
+ * 4 casi possibili
+ * due diagonali destre e due sinistre
+ * 4 for che escono quando non trovano corrispondenza
+ * ed ritornano subito true se completano il for
+ */
 
-                int count4 = 0;
-                Card[] countType = {NONE, NONE, NONE};
 
-                for (int riga = 0; riga < 6; riga++) {
-                    for (int i=0; i<3; i++){
-                        countType[i]= NONE;
-                    }
+/*case 3 -> {
 
-                    outer: for (int colonna = 0; colonna < 5; colonna++) {
+ * 4 angoli dello stesso tipo
+ *
+ * controllo i 4 angoli
+ */
 
-                        if (lib.getPos(riga, colonna) == NONE) break;
+/* case 4 -> {
+ *
+ * 4 righe da 5 tessere ciascuna con non più di 3 tipi differenti
+ *
+ * 2 for
+ * uno scorre le righe e l'altro le colonne
+ * per ogni riga controllo che non ci siano più di tre tessere diverse
+ * salvando i tipi che incontro fino a 3, altrimenti passo alla prossima riga
+ * conto che abbia successo almeno 4 volte
+ */
 
-                        for (int i=0; i<3; i++){
 
-                            if(countType[i]== NONE) {
-
-                                countType[i] = lib.getPos(riga, colonna);
-                                break;
-                            }
-
-                            else if(lib.getPos(riga,colonna) == countType[i]) break;
-
-                            else if (( i == 2 ) && (lib.getPos(riga,colonna) != countType[i])) break outer;
-                        }
-                        if (colonna == 4)count4++;
-                    }
-                }
-                return count4 >= 4;
-            }
-
-            case 5 ->{
-                /*
-                 * 4 gruppi distinti di 4 tessere adiacenti dello stesso tipo
-                 *
-                 * scorro la matrice e catalogo tutte le tessere mettendole nei rispettivi contatori
-                 * cerco tra le tessere uguali gruppi di tessere adiacenti
-                 * utilizzo metodi privati per gestire le caselle già utilizzate in gruppi dello stesso tipo e l'adiacenza delle caselle
-                 */
+/*case 5 ->{
+ *
+ * 4 gruppi distinti di 4 tessere adiacenti dello stesso tipo
+ *
+ * scorro la matrice e catalogo tutte le tessere mettendole nei rispettivi contatori
+ * cerco tra le tessere uguali gruppi di tessere adiacenti
+ * utilizzo metodi privati per gestire le caselle già utilizzate in gruppi dello stesso tipo e l'adiacenza delle caselle
+ */
 
     /*            int count5 = 0;
                 int[] posChecked = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
@@ -504,342 +767,135 @@ public class CommonObj {
                     }
                 }
                 return count5 >=4;  */
-                Library temp = new Library(lib);
-                int count = 0;
-                for(int i = 0; i < 6; i++){
-                    for(int j = 0; j < 5; j++){
-                        if(temp.getPos(i, j) != NONE){
-                            temp.i = 0;
-                            temp.group(i, j, j, temp.getPos(i, j));
-                            if(temp.i >= 4){
-                                count ++;
-                            }
-                        }
-                    }
-                }
-                if(count >= 4){
-                    return true;
-                }
-            }
-
-            case 6 -> {
-                /*
-                 * 2 colonne di tessere ciascuna di 6 tipi diversi (tutti i tipi)
-                 *
-                 * 3 for
-                 * un per colonne e due per righe
-                 * ad ogni posizione controllo che sia diversa da tutte le altre nella colonna
-                 * se trovo uguali esco dai cicli di riga (outer)
-                 * se trovo almeno 2 con successo ritorno true
-                 */
-
-                int count6 = 0;
-                for (int colonna = 0; colonna < 5; colonna++) {
-
-                    outer:
-                    for (int riga1 = 0; riga1 < 6; riga1++) {
-
-                        if (lib.getPos(riga1, colonna) == NONE) break;
-
-                        for (int riga2 = riga1 + 1; riga2 < 6; riga2++) {
-
-                            if (lib.getPos(riga1, colonna) == lib.getPos(riga2, colonna)) break outer;
-                        }
-
-                        if (riga1 == 4) count6++;
-                    }
-                }
-                return count6 >= 2;
-            }
-
-            case 7 ->{
-                /*
-                 * 2 quadrati 2x2 di tessere dello stesso tipo (//entrambi i quadrati stesso tipo, cambia il return)
-                 *
-                 * 2 for per scorrere la matrice
-                 * controllo un quadrato alla volta
-                 * controllo che non abbia preso pezzi già utilizzati
-                 *
-                 * mi segno le coordinate della casella in basso a sinistra di ogni quadrato, in modo da non contare doppio
-                 * aumento il contatore del tipo adeguato
-                 */
-
-                int count7WHITE = 0;
-                int count7BLUE = 0;
-                int count7LIGHTBLUE = 0;
-                int count7YELLOW = 0;
-                int count7GREEN = 0;
-                int count7PURPLE = 0;
-
-                int[] checkOld = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-                int i;
-
-                for (int riga=0; riga<6; riga++){
-
-                    outer : for (int colonna=0; colonna<5; colonna++){
-
-                        if(lib.getPos(riga,colonna) != NONE){
-
-                            if((lib.getPos(riga,colonna) == lib.getPos(riga,colonna+1) )&&
-                                    (lib.getPos(riga,colonna) == lib.getPos(riga+1,colonna)) &&
-                                    (lib.getPos(riga,colonna) == lib.getPos(riga+1,colonna+1))){
-
-                                for (i=0; i<12; i=i+2){
-
-                                    if (checkOld[i]==-1) break;
-                                    if ((riga == checkOld[i]) && (colonna ==checkOld [i+1])) break outer;
-                                    if ((riga+1 == checkOld[i]) && (colonna ==checkOld [i+1])) break outer;
-                                    if ((riga == checkOld[i]) && (colonna+1 ==checkOld [i+1])) break outer;
-                                    if ((riga+1 == checkOld[i]) && (colonna+1 ==checkOld [i+1])) break outer;
-                                }
-
-                                checkOld[i]= riga+1;
-                                checkOld[i+1]= colonna+1;
-
-                                switch (lib.getPos(riga,colonna)){
-                                    case WHITE -> count7WHITE++;
-                                    case BLUE -> count7BLUE++;
-                                    case LIGHTBLUE -> count7LIGHTBLUE++;
-                                    case YELLOW -> count7YELLOW++;
-                                    case GREEN -> count7GREEN++;
-                                    case PURPLE -> count7PURPLE++;
-                                }
-
-                            }
-                        }
-                    }
-                }
-//                if (count7WHITE >= 2) return true;
-//                else if (count7BLUE >= 2) return true;
-//                else if (count7LIGHTBLUE >= 2) return true;
-//                else if (count7YELLOW >= 2) return true;
-//                else if (count7GREEN >= 2) return true;
-//                else return count7PURPLE >= 2;
-
-                return count7WHITE+count7BLUE+count7LIGHTBLUE+count7YELLOW+count7GREEN+count7PURPLE >=2;
-            }
-
-            case 8 -> {
-                /*
-                 * 2 righe di tessere ciascuna di 5 tipi diversi
-                 *
-                 * analogo al 6
-                 */
-
-                int count8 = 0;
-                for (int riga = 0; riga < 6; riga++) {
-                    outer:for (int colonna1 = 0; colonna1 < 5; colonna1++) {
-                        if (lib.getPos(riga, colonna1) == NONE) break;
-                        for (int colonna2 = 0; colonna2 < 5; colonna2++) {
-                            if (lib.getPos(riga, colonna1) == lib.getPos(riga, colonna2) && colonna1 != colonna2) break outer;
-                        }
-                        if (colonna1 == 4) count8++;
-                    }
-                }
-                return count8 >= 2;
-            }
-
-            case 9 -> {
-                /*
-                 * 3 colonne di tessere ciascuna con non più di tre tipi diversi
-                 *
-                 * analogo al 4
-                 */
-
-                int count9 = 0;
-                Card[] countType = {NONE, NONE, NONE};
-
-                for (int colonna = 0; colonna < 5; colonna++) {
-                    for (int i=0; i<3; i++){
-                        countType[i]= NONE;
-                    }
-                    outer: for (int riga = 0; riga < 6; riga++) {
-
-                        if (lib.getPos(riga, colonna) == NONE) break;
-
-                        for (int i=0; i<3; i++){
-
-                            if(countType[i]== NONE) {
-
-                                countType[i] = lib.getPos(riga, colonna);
-                                break;
-                            }
-
-                            else if(lib.getPos(riga,colonna) == countType[i]) break;
-
-                            else if (( i == 2 ) && (lib.getPos(riga,colonna) != countType[i])) break outer;
-                        }
-                        if (riga == 5) count9++;
-                    }
-                }
-                return count9 >= 3;
-            }
-
-            case 10 -> {
-                /*
-                 * 5 tessere dello stesso tipo che formano una X
-                 *
-                 * scorro alla ricerca di una X tutta uguale
-                 */
-
-                for (int riga = 0; riga < 4; riga++) {
-                    for (int colonna = 0; colonna < 3; colonna++) {
-                        if ((lib.getPos(riga, colonna) != NONE) &&
-                                (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna + 1)) &&
-                                (lib.getPos(riga, colonna) == lib.getPos(riga + 2, colonna + 2)) &&
-                                (lib.getPos(riga, colonna) == lib.getPos(riga, colonna + 2)) &&
-                                (lib.getPos(riga, colonna) == lib.getPos(riga + 2, colonna))) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-            case 11 -> {
-                /*
-                 * 8 tessere dello stesso tipo (nessuna restrizione sulla posizione)
-                 *
-                 * scorro la matrice e conto le tessere uguali
-                 */
-
-                int count11WHITE = 0;
-                int count11BLUE = 0;
-                int count11LIGHTBLUE = 0;
-                int count11YELLOW = 0;
-                int count11GREEN = 0;
-                int count11PURPLE = 0;
-                for (int riga = 0; riga < 6; riga++) {
-                    for (int colonna = 0; colonna < 5; colonna++) {
-                        switch (lib.getPos(riga, colonna)) {
-                            case WHITE -> count11WHITE++;
-                            case BLUE -> count11BLUE++;
-                            case LIGHTBLUE -> count11LIGHTBLUE++;
-                            case YELLOW -> count11YELLOW++;
-                            case GREEN -> count11GREEN++;
-                            case PURPLE -> count11PURPLE++;
-                        }
-                    }
-                }
-                if (count11WHITE >= 8) return true;
-                else if (count11BLUE >= 8) return true;
-                else if (count11LIGHTBLUE >= 8) return true;
-                else if (count11YELLOW >= 8) return true;
-                else if (count11GREEN >= 8) return true;
-                else return count11PURPLE >= 8;
-            }
-
-            case 12 -> {
-                /*
-                 * cinque colonne di altezza crescente (+1 ad ogni colonna) a partire dagli estremi (destra o sinistra)
-                 *
-                 * 4 for,2 destra e 2 sinistra
-                 * guardo la riga prima e la colonna dopo che siano NONE e che la pos corr sia non vuota
-                 */
-
-                for (int i = 0; i < 5; i++) {
-                    if (i == 0){
-                        if (lib.getPos(i, i) == NONE) break;
-                    }else if (i == 4) return true;
-
-                    else if ((lib.getPos(i, i) == NONE) || (lib.getPos(i - 1, i) != NONE) || (lib.getPos(i, i + 1) != NONE)) break;
-                }
-                for (int i = 0; i < 5; i++) {
-
-                    if (i == 4) return true;
-
-                    else if ((lib.getPos(i + 1, i) == NONE) || (lib.getPos(i, i) != NONE) || (lib.getPos(i + 1, i + 1) != NONE) ) break;
-                }
-                for (int i = 0; i < 5; i++) {
-
-                    if (i == 0){
-
-                        if (lib.getPos(i,4 - i) == NONE) break;
-
-                    }else if (i == 4) return true;
-
-                    else if ((lib.getPos(i, 4 - i) == NONE) || (lib.getPos(i - 1, 4 - i) != NONE) || (lib.getPos(i, 4 - i - 1) != NONE)) break;
-                }
-                for (int i = 0; i < 5; i++) {
-
-                    if (i == 4) return true;
-
-                    else if ((lib.getPos(i + 1, 4 - i) == NONE) || (lib.getPos(i, 4 - i) != NONE) || (lib.getPos(i + 1, 4 - i - 1) != NONE)) break;
-                }
-                return false;
-            }
-        }
-        return false;           // non dovrebbe mai andare qui
-//        System.out.println("errore");
-    }
 
 
-    /**
-     *
-     * @param x1, x-position Card 1
-     * @param y1, y-position Card 1
-     * @param x2, x-position Card 2
-     * @param y2, y-position Card 2
-     * @return result, if Card 1 and 2 are near
-     */
-    private boolean checkNearObj5(int x1, int y1, int x2, int y2) {
-        return (x1 == x2) && (y1 + 1 == y2) || (x1 + 1 == x2) && (y1 == y2) ||
-                (x1 == x2) && (y1 - 1 == y2) || (x1 - 1 == x2) && (y1 == y2);
-    }
+/* case 6 -> {
+ *
+ * 2 colonne di tessere ciascuna di 6 tipi diversi (tutti i tipi)
+ *
+ * 3 for
+ * un per colonne e due per righe
+ * ad ogni posizione controllo che sia diversa da tutte le altre nella colonna
+ * se trovo uguali esco dai cicli di riga (outer)
+ * se trovo almeno 2 con successo ritorno true
+ */
 
-    /**
-     *
-     * @param x1, x-position Card 1
-     * @param y1, y-position Card 1
-     * @param x2, x-position Card 2
-     * @param y2, y-position Card 2
-     * @return result, if Card 1 and 2 are the same Card
-     */
-    private boolean checkSameObj5(int x1, int y1, int x2, int y2){
-        return (x1 == x2) && (y1 == y2);
-    }
 
-    /**
-     *
-     * @param x1, x-position Card 1
-     * @param y1, y-position Card 1
-     * @param x2, x-position Card 2
-     * @param y2, y-position Card 2
-     * @param x3, x-position Card 3
-     * @param y3, y-position Card 3
-     * @param x4, x-position Card 4
-     * @param y4, y-position Card 4
-     * @param old, the collection of position already used
-     * @param iOld, the length of the collection
-     * @return iOldNew, the new length of the collection
-     * Method that update the Old collection
-     */
-    private int setCheckedObj5(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int[] old, int iOld){
+/*case 7 ->{
+ *
+ * 2 quadrati 2x2 di tessere dello stesso tipo (//entrambi i quadrati stesso tipo, cambia il return)
+ *
+ * 2 for per scorrere la matrice
+ * controllo un quadrato alla volta
+ * controllo che non abbia preso pezzi già utilizzati
+ *
+ * mi segno le coordinate della casella in basso a sinistra di ogni quadrato, in modo da non contare doppio
+ * aumento il contatore del tipo adeguato
+ */
 
-        old[iOld]=x1;
-        old[iOld+1]=y1;
-        old[iOld+2]=x2;
-        old[iOld+3]=y2;
-        old[iOld+4]=x3;
-        old[iOld+5]=y3;
-        old[iOld+6]=x4;
-        old[iOld+7]=y4;
-        return iOld+8;
-    }
+/*case 8 -> {
+ *
+ * 2 righe di tessere ciascuna di 5 tipi diversi
+ *
+ * analogo al 6
+ */
 
-    /**
-     *
-     * @param x1, x-position Card
-     * @param y1, y-position Card
-     * @param old, the collection of position already used
-     * @param iOld, the length of the collection
-     * @return result, if Card is already in Old collection
-     */
-    private boolean checkOldObj5(int x1, int y1, int[] old, int iOld){
+/*case 9 -> {
+ *
+ * 3 colonne di tessere ciascuna con non più di tre tipi diversi
+ *
+ * analogo al 4
+ */
 
-        for (int i = 0; i<iOld; i += 2){
-            if ((x1==old[i]) && (y1==old[i+1]))return true;
-        }
-        return false;
-    }
-}
+/* case 10 -> {
+ *
+ * 5 tessere dello stesso tipo che formano una X
+ *
+ * scorro alla ricerca di una X tutta uguale
+ */
 
+/* case 11 -> {
+ *
+ * 8 tessere dello stesso tipo (nessuna restrizione sulla posizione)
+ *
+ * scorro la matrice e conto le tessere uguali
+ */
+
+/* case 12 -> {
+ *
+ * cinque colonne di altezza crescente (+1 ad ogni colonna) a partire dagli estremi (destra o sinistra)
+ *
+ * 4 for,2 destra e 2 sinistra
+ * guardo la riga prima e la colonna dopo che siano NONE e che la pos corr sia non vuota
+ */
+
+
+//
+//    /**
+//     *
+//     * @param x1, x-position Card 1
+//     * @param y1, y-position Card 1
+//     * @param x2, x-position Card 2
+//     * @param y2, y-position Card 2
+//     * @return result, if Card 1 and 2 are near
+//     */
+//    private boolean checkNearObj5(int x1, int y1, int x2, int y2) {
+//        return (x1 == x2) && (y1 + 1 == y2) || (x1 + 1 == x2) && (y1 == y2) ||
+//                (x1 == x2) && (y1 - 1 == y2) || (x1 - 1 == x2) && (y1 == y2);
+//    }
+//
+//    /**
+//     *
+//     * @param x1, x-position Card 1
+//     * @param y1, y-position Card 1
+//     * @param x2, x-position Card 2
+//     * @param y2, y-position Card 2
+//     * @return result, if Card 1 and 2 are the same Card
+//     */
+//    private boolean checkSameObj5(int x1, int y1, int x2, int y2){
+//        return (x1 == x2) && (y1 == y2);
+//    }
+//
+//    /**
+//     *
+//     * @param x1, x-position Card 1
+//     * @param y1, y-position Card 1
+//     * @param x2, x-position Card 2
+//     * @param y2, y-position Card 2
+//     * @param x3, x-position Card 3
+//     * @param y3, y-position Card 3
+//     * @param x4, x-position Card 4
+//     * @param y4, y-position Card 4
+//     * @param old, the collection of position already used
+//     * @param iOld, the length of the collection
+//     * @return iOldNew, the new length of the collection
+//     * Method that update the Old collection
+//     */
+//    private int setCheckedObj5(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int[] old, int iOld){
+//
+//        old[iOld]=x1;
+//        old[iOld+1]=y1;
+//        old[iOld+2]=x2;
+//        old[iOld+3]=y2;
+//        old[iOld+4]=x3;
+//        old[iOld+5]=y3;
+//        old[iOld+6]=x4;
+//        old[iOld+7]=y4;
+//        return iOld+8;
+//    }
+//
+//    /**
+//     *
+//     * @param x1, x-position Card
+//     * @param y1, y-position Card
+//     * @param old, the collection of position already used
+//     * @param iOld, the length of the collection
+//     * @return result, if Card is already in Old collection
+//     */
+//    private boolean checkOldObj5(int x1, int y1, int[] old, int iOld){
+//
+//        for (int i = 0; i<iOld; i += 2){
+//            if ((x1==old[i]) && (y1==old[i+1]))return true;
+//        }
+//        return false;
+//    }
