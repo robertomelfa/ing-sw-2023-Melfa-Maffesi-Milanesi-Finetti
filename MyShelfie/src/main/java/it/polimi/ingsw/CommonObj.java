@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import java.util.Random;
 
 import static it.polimi.ingsw.Card.NONE;
+import static it.polimi.ingsw.Card.NOT;
 
 public class CommonObj {
     private final int objNum;
@@ -20,7 +21,8 @@ public class CommonObj {
 
         //creo un numero randomico tra 1 e 12 per definire quale obiettivo creare
         Random random = new Random();
-        this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
+     //   this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
+        this.objNum = 5;
         switch (objNum) {
             case 1 -> this.descrizione = "6 coppie distinte di tessere adiacenti dello stesso tipo";
             case 2 -> this.descrizione = "5 tessere in diagonale dello stesso tipo";
@@ -155,7 +157,7 @@ public class CommonObj {
                 return count1 >= 6;
             }   */
             case 1 -> {
-                // set the temporally grid
+       /*         // set the temporally grid
                 int[][] grid = new int[6][5];
                 int count = 0;
 
@@ -190,7 +192,23 @@ public class CommonObj {
                 if(count >= 6){
                     return true;
                 }
-                return false;
+                return false;   */
+                Library temp = new Library(lib);
+                int count = 0;
+                for(int i = 0; i < 6; i++){
+                    for(int j = 0; j < 5; j++){
+                        if(temp.getPos(i, j) != NONE){
+                            temp.i = 0;
+                            temp.group(i, j, j, temp.getPos(i, j));
+                            if(temp.i >= 2){
+                                count ++;
+                            }
+                        }
+                    }
+                }
+                if(count >= 6){
+                    return true;
+                }
             }
             case 2 -> {
                 /*
@@ -251,7 +269,6 @@ public class CommonObj {
                 Card[] countType = {NONE, NONE, NONE};
 
                 for (int riga = 0; riga < 6; riga++) {
-
                     for (int i=0; i<3; i++){
                         countType[i]= NONE;
                     }
@@ -287,7 +304,7 @@ public class CommonObj {
                  * utilizzo metodi privati per gestire le caselle già utilizzate in gruppi dello stesso tipo e l'adiacenza delle caselle
                  */
 
-                int count5 = 0;
+    /*            int count5 = 0;
                 int[] posChecked = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
                 int ic;     //indexChecked
 
@@ -486,7 +503,23 @@ public class CommonObj {
                         }
                     }
                 }
-                return count5 >=4;
+                return count5 >=4;  */
+                Library temp = new Library(lib);
+                int count = 0;
+                for(int i = 0; i < 6; i++){
+                    for(int j = 0; j < 5; j++){
+                        if(temp.getPos(i, j) != NONE){
+                            temp.i = 0;
+                            temp.group(i, j, j, temp.getPos(i, j));
+                            if(temp.i >= 4){
+                                count ++;
+                            }
+                        }
+                    }
+                }
+                if(count >= 4){
+                    return true;
+                }
             }
 
             case 6 -> {
@@ -595,16 +628,11 @@ public class CommonObj {
 
                 int count8 = 0;
                 for (int riga = 0; riga < 6; riga++) {
-
                     outer:for (int colonna1 = 0; colonna1 < 5; colonna1++) {
-
                         if (lib.getPos(riga, colonna1) == NONE) break;
-
                         for (int colonna2 = 0; colonna2 < 5; colonna2++) {
                             if (lib.getPos(riga, colonna1) == lib.getPos(riga, colonna2) && colonna1 != colonna2) break outer;
                         }
-
-
                         if (colonna1 == 4) count8++;
                     }
                 }
@@ -622,11 +650,9 @@ public class CommonObj {
                 Card[] countType = {NONE, NONE, NONE};
 
                 for (int colonna = 0; colonna < 5; colonna++) {
-
                     for (int i=0; i<3; i++){
                         countType[i]= NONE;
                     }
-
                     outer: for (int riga = 0; riga < 6; riga++) {
 
                         if (lib.getPos(riga, colonna) == NONE) break;
@@ -657,18 +683,14 @@ public class CommonObj {
                  */
 
                 for (int riga = 0; riga < 4; riga++) {
-
                     for (int colonna = 0; colonna < 3; colonna++) {
-
                         if ((lib.getPos(riga, colonna) != NONE) &&
                                 (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna + 1)) &&
                                 (lib.getPos(riga, colonna) == lib.getPos(riga + 2, colonna + 2)) &&
                                 (lib.getPos(riga, colonna) == lib.getPos(riga, colonna + 2)) &&
                                 (lib.getPos(riga, colonna) == lib.getPos(riga + 2, colonna))) {
-
                             return true;
                         }
-
                     }
                 }
                 return false;
@@ -687,11 +709,8 @@ public class CommonObj {
                 int count11GREEN = 0;
                 int count11PURPLE = 0;
                 for (int riga = 0; riga < 6; riga++) {
-
                     for (int colonna = 0; colonna < 5; colonna++) {
-
                         switch (lib.getPos(riga, colonna)) {
-
                             case WHITE -> count11WHITE++;
                             case BLUE -> count11BLUE++;
                             case LIGHTBLUE -> count11LIGHTBLUE++;
@@ -718,11 +737,8 @@ public class CommonObj {
                  */
 
                 for (int i = 0; i < 5; i++) {
-
                     if (i == 0){
-
                         if (lib.getPos(i, i) == NONE) break;
-
                     }else if (i == 4) return true;
 
                     else if ((lib.getPos(i, i) == NONE) || (lib.getPos(i - 1, i) != NONE) || (lib.getPos(i, i + 1) != NONE)) break;
