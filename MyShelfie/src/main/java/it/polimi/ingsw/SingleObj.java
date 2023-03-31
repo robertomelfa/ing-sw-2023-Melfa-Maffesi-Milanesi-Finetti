@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import java.util.Random;
 
-public class SingleObj extends PlayerObj{
+public class SingleObj {
 
     int x;
 
@@ -32,6 +32,12 @@ public class SingleObj extends PlayerObj{
             case 6 -> this.type = Card.PURPLE;
         }
 
+    }
+
+    public SingleObj (int x, int y, Card type){
+        this.x=x;
+        this.y=y;
+        this.type=type;
     }
 
     /**

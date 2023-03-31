@@ -64,8 +64,8 @@ public class CardBox {
 
         if (cardBox.isEmpty()) return Card.NONE;
         else{
-            temp = cardBox.get(cardBox.size());
-            cardBox.remove(cardBox.size());
+            temp = cardBox.get(cardBox.size()-1);
+            cardBox.remove(cardBox.size()-1);
             return temp;
         }
     }

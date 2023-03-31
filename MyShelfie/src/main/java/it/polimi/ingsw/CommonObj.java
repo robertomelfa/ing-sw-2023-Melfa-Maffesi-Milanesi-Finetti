@@ -435,7 +435,7 @@ public class CommonObj {
 // vecchie prove o commenti
 
 
-         /*   case 1 -> {
+/*   case 1 -> {
 
                 /*
                  * 6 coppie distinte di tessere adiacenti dello stesso tipo
@@ -491,7 +491,7 @@ public class CommonObj {
                 }
                 return count1 >= 6;
             }   */
-       /*         // set the temporally grid
+/*         // set the temporally grid
                 int[][] grid = new int[6][5];
                 int count = 0;
 
@@ -567,7 +567,7 @@ public class CommonObj {
  * utilizzo metodi privati per gestire le caselle già utilizzate in gruppi dello stesso tipo e l'adiacenza delle caselle
  */
 
-    /*            int count5 = 0;
+/*            int count5 = 0;
                 int[] posChecked = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
                 int ic;     //indexChecked
 
