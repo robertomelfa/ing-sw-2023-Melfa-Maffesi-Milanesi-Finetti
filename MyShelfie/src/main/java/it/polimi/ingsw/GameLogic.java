@@ -202,7 +202,7 @@ public class GameLogic {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.printf("%s is your turn to play! Choose the cards you want form the game table\n", currentPlayer.getNickname());
+        System.out.print(currentPlayer.getNickname()+"is your turn to play! Choose the cards you want form the game table\n");
 
         TimeUnit.SECONDS.sleep(2);
 
@@ -261,7 +261,7 @@ public class GameLogic {
             System.out.print("Congratulations, you successfully completed a common goal\n");
         }
 
-        System.out.printf("%s your turn is ended!\n Preparing for the next turn...\n", currentPlayer);
+        System.out.println(currentPlayer.getNickname()+"your turn is ended!\n Preparing for the next turn...");
 
 
          /* update the current player before ending*/
@@ -269,5 +269,7 @@ public class GameLogic {
 
         gameTable.checkStatus();
     }
+
+
 
 }

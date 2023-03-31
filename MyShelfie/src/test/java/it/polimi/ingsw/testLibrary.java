@@ -60,17 +60,14 @@ public class testLibrary extends TestCase
 
     @Test
     public void testcheckFull_fullblue_true(){
-        ArrayList<Card> cards=new ArrayList<>();
-        cards.add(Card.BLUE);
-        cards.add(Card.BLUE);
-        cards.add(Card.BLUE);
         for(int i=1; i<=5;i++){
             StringBuilder builder = new StringBuilder();
-            builder.append(i+"\n");
-            for (int j=0;j<3;j++){
-                builder.append("1\n");
-            }
+            builder.append(i+"\n1\n1\n1\n");
             for (int k=0;k<2;k++){
+                ArrayList<Card> cards=new ArrayList<>();
+                cards.add(Card.BLUE);
+                cards.add(Card.BLUE);
+                cards.add(Card.BLUE);
                 InputStream input=new ByteArrayInputStream(builder.toString().getBytes());
                 System.setIn(input);
                 lib.insert(cards);
@@ -83,18 +80,15 @@ public class testLibrary extends TestCase
 
     @Test
     public void testcheckFull_fullmixedcolours_true(){
-        ArrayList<Card> cards=new ArrayList<>();
-        cards.add(Card.YELLOW);
-        cards.add(Card.PURPLE);
-        cards.add(Card.WHITE);
-        Collections.shuffle(cards);
         for(int i=1; i<=5;i++){
             StringBuilder builder = new StringBuilder();
-            builder.append(i+"\n");
-            for (int j=0;j<3;j++){
-                builder.append("1\n");
-            }
+            builder.append(i+"\n1\n1\n1\n");
             for (int k=0;k<2;k++){
+                ArrayList<Card> cards=new ArrayList<>();
+                cards.add(Card.LIGHTBLUE);
+                cards.add(Card.PURPLE);
+                cards.add(Card.WHITE);
+                Collections.shuffle(cards);
                 InputStream input=new ByteArrayInputStream(builder.toString().getBytes());
                 System.setIn(input);
                 lib.insert(cards);

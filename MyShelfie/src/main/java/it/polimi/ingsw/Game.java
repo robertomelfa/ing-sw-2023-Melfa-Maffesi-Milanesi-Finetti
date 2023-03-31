@@ -16,7 +16,7 @@ public class Game {
 
     /**
      *
-     * Constructor for the Game class: it sets the gametable, it initialize the players list, sets the cardbox and it calls
+     * Constructor for the Game class: it sets the gametable, it initializes the players list, sets the cardbox and it calls
      * setBothCommonObj
      *
      */
@@ -27,6 +27,7 @@ public class Game {
         }else {
             this.numOfPlayers = numOfPlayers;
             this.gameTable = new GameTable(numOfPlayers);
+            this.numOfPlayers=numOfPlayers;
             players = new LinkedList<>();
             this.cardbox = new CardBox();
             setBothCommonObj(numOfPlayers);
@@ -132,13 +133,21 @@ public class Game {
      *
      * @return commonObj1
      */
-    public CommonObj getCommonObj1(){ return commonObj1; }
+    public CommonObj getCommonObj1(){
+        return commonObj1;
+    }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
 
     /**
      *
      * @return commonObj2
      */
-    public CommonObj getCommonObj2(){ return commonObj2; }
+    public CommonObj getCommonObj2(){
+        return commonObj2;
+    }
 
     /**
      * This method is used to update the current player

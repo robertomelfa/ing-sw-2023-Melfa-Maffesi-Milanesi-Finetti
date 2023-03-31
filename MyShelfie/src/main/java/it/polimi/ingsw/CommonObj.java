@@ -1,9 +1,9 @@
 package it.polimi.ingsw;
 
+import java.util.EnumSet;
 import java.util.Random;
 
-import static it.polimi.ingsw.Card.NONE;
-import static it.polimi.ingsw.Card.NOT;
+import static it.polimi.ingsw.Card.*;
 
 public class CommonObj {
     private final int objNum;
@@ -255,53 +255,43 @@ public class CommonObj {
     }
 
     private boolean check7(Library lib) {
-        int count7WHITE = 0;
-        int count7BLUE = 0;
-        int count7LIGHTBLUE = 0;
-        int count7YELLOW = 0;
-        int count7GREEN = 0;
-        int count7PURPLE = 0;
-
-        int[] checkOld = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
-        int i;
-
-        for (int riga = 0; riga < 6; riga++) {
-
-            outer:
-            for (int colonna = 0; colonna < 5; colonna++) {
-
-                if (lib.getPos(riga, colonna) != NONE) {
-
-                    if ((lib.getPos(riga, colonna) == lib.getPos(riga, colonna + 1)) &&
-                            (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna)) &&
-                            (lib.getPos(riga, colonna) == lib.getPos(riga + 1, colonna + 1))) {
-
-                        for (i = 0; i < 12; i = i + 2) {
-
-                            if (checkOld[i] == -1) break;
-                            if ((riga == checkOld[i]) && (colonna == checkOld[i + 1])) break outer;
-                            if ((riga + 1 == checkOld[i]) && (colonna == checkOld[i + 1])) break outer;
-                            if ((riga == checkOld[i]) && (colonna + 1 == checkOld[i + 1])) break outer;
-                            if ((riga + 1 == checkOld[i]) && (colonna + 1 == checkOld[i + 1])) break outer;
-                        }
-
-                        checkOld[i] = riga + 1;
-                        checkOld[i + 1] = colonna + 1;
-
-                        switch (lib.getPos(riga, colonna)) {
-                            case WHITE -> count7WHITE++;
-                            case BLUE -> count7BLUE++;
-                            case LIGHTBLUE -> count7LIGHTBLUE++;
-                            case YELLOW -> count7YELLOW++;
-                            case GREEN -> count7GREEN++;
-                            case PURPLE -> count7PURPLE++;
+        Card[][] temp=new Card[8][7];
+        for (int k=0;k<8;k++){
+            for (int h=0;h<7;h++){
+                temp[k][h]=NONE;
+            }
+        }
+        for (int k=1;k<7;k++){
+            for (int h=1;h<6;h++){
+                temp[k][h]=lib.getPos(k-1,h-1);
+            }
+        }
+        for(Card i : EnumSet.range(WHITE,PURPLE)){
+            int count=0;
+            for (int k=1;k<7;k++){
+                for (int h=1;h<6;h++){
+                    if(temp[k][h]==i && temp[k][h+1]==i && temp[k+1][h]==i && temp[k+1][h+1]==i){
+                        temp[k][h]=NONE;
+                        temp[k][h+1]=NONE;
+                        temp[k+1][h]=NONE;
+                        temp[k+1][h+1]=NONE;
+                        boolean borders=(
+                                    temp[k-1][h]!=i && temp[k-1][h+1]!=i && temp[k+2][h]!=i && temp[k+2][h+1]!=i &&
+                                            temp[k][h-1]!=i && temp[k+1][h-1]!=i && temp[k][h+2]!=i && temp[k+1][h+2]!=i
+                                );
+                        if(borders){
+                            count++;
                         }
                     }
                 }
             }
+            if (count==2){
+                return true;
+            }
         }
-        return count7WHITE + count7BLUE + count7LIGHTBLUE + count7YELLOW + count7GREEN + count7PURPLE >= 2;
+        return false;
     }
+
 
     private boolean check8(Library lib) {
         int count8 = 0;

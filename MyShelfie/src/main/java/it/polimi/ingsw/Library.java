@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -243,6 +244,8 @@ public class Library {
         }
         return points;
     }
+
+
 }
 
 
