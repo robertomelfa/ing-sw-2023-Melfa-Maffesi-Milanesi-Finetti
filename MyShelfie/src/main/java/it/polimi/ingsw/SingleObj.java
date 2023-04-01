@@ -3,11 +3,11 @@ package it.polimi.ingsw;
 
 public class SingleObj {
 
-    int x;
+    private int x;
 
-    int y;
+    private int y;
 
-    Card type;
+    private Card type;
 
     /**
      *

@@ -16,7 +16,6 @@ public class GameLogic {
     /* salvataggio riferimento a game private*/
     private Game game1;
 
-    private boolean endGame;
 
     /**
      *
@@ -28,7 +27,6 @@ public class GameLogic {
         Game game1;
         this.game1 = game;
         gameTable = game.getGameTable();
-        endGame = false;
     }
 
     /**
@@ -187,9 +185,6 @@ public class GameLogic {
         return false;
     }
 
-    public void gameIsEnded(){} // usiamo checkFull (metodo di library)
-
- //   public void checkCommObj(Player player){} sostituisce condizione if nella riga 258
 
     /**
      * This method is used to handle every turn of the game
@@ -198,78 +193,102 @@ public class GameLogic {
 
     public void startTurn() throws Exception {
 
-        Player currentPlayer = game1.getCurrentPlayer();
+        if(game1.getCurrentPlayer()!=null){
+            Player currentPlayer = game1.getCurrentPlayer();
 
-        Scanner in = new Scanner(System.in);
+            Scanner in = new Scanner(System.in);
 
-        System.out.print(currentPlayer.getNickname()+"is your turn to play! Choose the cards you want form the game table\n");
+            System.out.print(currentPlayer.getNickname()+" is your turn to play! Choose the cards you want form the game table\n");
 
-        TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(2);
 
-        gameTable.viewTable();
+            game1.getCurrentPlayer().getLibrary().viewGrid();
+            System.out.print("\n");
+            gameTable.viewTable();
 
-        TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(2);
 
-        System.out.print("Insert 1 if you want to see your library or insert 2 if you want to pick the cards\n");
+            System.out.print("Insert 1 if you want to see your objectives or insert 2 if you want to pick the cards\n");
 
-        int i = 0;
+            int i = 0;
 
-        while(i == 0){
+            while(i == 0){
 
-            switch (in.nextInt()){
-                case 1:
-                    currentPlayer.getLibrary().viewGrid();
-                    System.out.print("Insert 1 when you want to go back to the game table\n");
-                    while(true) {
-                        int input = in.nextInt();
-                        if (input == 1) {
-                            gameTable.viewTable();
-                            System.out.print("Insert 1 if you want to see your library or insert 2 if you want to pick the cards\n");
-                            break;
-                        } else {
-                            System.out.print("The input is not valid, please insert 1 when you want to go back to the game table\n");
-                        }
-                    }
-                    break;
-                case 2:
-                    i = 1;
-                    break;
-                default:
+                switch (in.nextInt()){
+                    case 1:
+                        System.out.println("Player Object:");
+                        currentPlayer.getPlayerObj().print();
+                        System.out.println("Common Object 1:");
+                        System.out.println(game1.getCommonObj1().getDescrizione());
+                        System.out.println("Common Object 2:");
+                        System.out.println(game1.getCommonObj2().getDescrizione());
+                        System.out.print("\n");
+                        System.out.print("Insert 1 if you want to see your objectives or insert 2 if you want to pick the cards\n");
+                        break;
+                    case 2:
+                        i = 1;
+                        break;
+                    default:
+                        System.out.print("The input is not valid, please insert 1 or 2\n");
+                }
 
-                    System.out.print("The input is not valid, please insert 1 or 2\n");
             }
 
+
+            ArrayList<Card> cards = new ArrayList<>();
+
+            cards = getCardFromTable();
+
+            System.out.print("Now you can insert the cards in your library\n");
+
+            currentPlayer.getLibrary().insert(cards);
+
+            // check dei commonObj
+
+            if(!game1.getCurrentPlayer().getCommonObj1Completed()){
+                if(game1.getCommonObj1().checkObj(currentPlayer.getLibrary())){
+                    currentPlayer.addPoints(game1.getCommonObj1().getPointCount());
+                    System.out.print("Congratulations, you successfully completed a common goal\n");
+                    game1.getCurrentPlayer().setCommonObj1Completed();
+                }
+            }
+
+            if(!game1.getCurrentPlayer().getCommonObj2Completed()){
+                if(game1.getCommonObj2().checkObj(currentPlayer.getLibrary())){
+                    currentPlayer.addPoints(game1.getCommonObj2().getPointCount());
+                    System.out.print("Congratulations, you successfully completed a common goal\n");
+                    game1.getCurrentPlayer().setCommonObj2Completed();
+                }
+            }
+
+            if(!game1.getCurrentPlayer().getPlyObjCompleted()){
+                int points=game1.getCurrentPlayer().getPlayerObj().checkObj(game1.getCurrentPlayer().getLibrary());
+                if (points>0){
+                    game1.getCurrentPlayer().addPoints(points);
+                    System.out.print("\"Congratulations, you successfully completed your personal goal\\n\"");
+                }
+
+            }
+
+            if(game1.getCurrentPlayer().getLibrary().checkFull()){
+                game1.setEndGame();
+                game1.getCurrentPlayer().addPoints(1);
+                System.out.println(game1.getCurrentPlayer().getNickname()+"has finished the game");
+            }
+
+            System.out.println(currentPlayer.getNickname()+"your turn is ended!\n Preparing for the next turn...");
+
+
+            /* update the current player before ending*/
+            game1.updateCurrentPlayer();
+
+            gameTable.checkStatus();
+        }else {
+            System.out.println("GAME IS ENDED ");
         }
-
-        ArrayList<Card> cards = new ArrayList<>();
-
-        cards = getCardFromTable();
-
-        System.out.print("Now you can insert the cards in your library\n");
-
-        currentPlayer.getLibrary().insert(cards);
-
-        // check dei commonObj
-
-        if(game1.getCommonObj1().checkObj(currentPlayer.getLibrary())){
-            currentPlayer.addPoints(game1.getCommonObj1().getPointCount());
-            System.out.print("Congratulations, you successfully completed a common goal\n");
-        }
-
-        if(game1.getCommonObj2().checkObj(currentPlayer.getLibrary())){
-            currentPlayer.addPoints(game1.getCommonObj2().getPointCount());
-            System.out.print("Congratulations, you successfully completed a common goal\n");
-        }
-
-        System.out.println(currentPlayer.getNickname()+"your turn is ended!\n Preparing for the next turn...");
-
-
-         /* update the current player before ending*/
-        game1.updateCurrentPlayer();
-
-        gameTable.checkStatus();
     }
 
 
+//metodo da finire, voglio trovare un modo per eseguire l'ultimo turno dopo la fine del game da parte di un giocatore
 
 }

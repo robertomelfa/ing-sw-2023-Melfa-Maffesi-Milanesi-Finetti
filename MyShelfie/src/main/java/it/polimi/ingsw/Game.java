@@ -11,6 +11,7 @@ public class Game {
     private CardBox cardbox;
     private CommonObj commonObj1;
     private CommonObj commonObj2;
+    private boolean endGame;
 
     private int listIteration = 0;
 
@@ -152,16 +153,33 @@ public class Game {
     /**
      * This method is used to update the current player
      */
-    public void updateCurrentPlayer(){
-        listIteration++;
-        if(players.size() == listIteration){
-            listIteration = 0;
-            currentPlayer = players.get(listIteration);
+    public void updateCurrentPlayer() throws Exception{
+        if(!endGame){
+            listIteration++;
+            if(players.size() == listIteration){
+                listIteration = 0;
+                currentPlayer = players.get(listIteration);
+            }else {
+                currentPlayer = players.get(listIteration);
+            }
         }else {
-            currentPlayer = players.get(listIteration);
+            listIteration++;
+            if(players.size()==listIteration){
+                throw new Exception("GAME IS ENDED");
+            }
+            else {
+                currentPlayer = players.get(listIteration);
+            }
         }
     }
 
+    public void setEndGame() {
+        this.endGame = true;
+    }
+
+    public boolean getEndGame(){
+        return endGame;
+    }
 }
 
 /**

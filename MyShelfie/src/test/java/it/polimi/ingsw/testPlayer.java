@@ -9,8 +9,8 @@ public class testPlayer extends TestCase{
     Player p1=null;
 
     @Before
-    public void setUp(){
-        p1 = new Player("player1",null);
+    public void setUp() throws Exception{
+        p1 = new Player("player1");
     }
 
     @Test

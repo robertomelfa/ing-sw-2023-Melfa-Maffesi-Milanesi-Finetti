@@ -6,21 +6,26 @@ public class Player {
     private String  nickname;
     private Library library;
     private PlayerObj playerObj;
+    private boolean plyObjCompleted;
+    private boolean commonObj1Completed;
+    private boolean commonObj2Completed;
 
     /**
      *
      * @param nickname
-     * @param playerObj, the object linked to the player
      * The method is the constructor for the Player class
-     * It sets the nickname, the library and the playerObject.
+     * It sets the nickname, the library and initializes the playerObject.
      * It also initializes yourTurn and points
      */
-    public Player(String nickname, PlayerObj playerObj){
+    public Player(String nickname) throws Exception{
         yourTurn = false;
         points = 0;
         library = new Library();
         this.nickname = nickname;
-        this.playerObj = playerObj;
+        this.playerObj = new PlayerObj();
+        this.commonObj1Completed=false;
+        this.commonObj2Completed=false;
+        this.plyObjCompleted=false;
 
     }
 
@@ -70,4 +75,27 @@ public class Player {
         return points;
     }
 
+    public void setCommonObj1Completed() {
+        this.commonObj1Completed = true;
+    }
+
+    public void setCommonObj2Completed() {
+        this.commonObj1Completed = true;
+    }
+
+    public void setPlyObjCompleted(){
+        this.plyObjCompleted=true;
+    }
+
+    public boolean getCommonObj1Completed() {
+        return commonObj1Completed;
+    }
+
+    public boolean getCommonObj2Completed() {
+        return commonObj2Completed;
+    }
+
+    public boolean getPlyObjCompleted() {
+        return plyObjCompleted;
+    }
 }

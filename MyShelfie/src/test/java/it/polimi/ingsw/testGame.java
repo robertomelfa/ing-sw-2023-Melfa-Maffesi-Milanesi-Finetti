@@ -33,9 +33,9 @@ public class testGame extends TestCase{
     @Test
     public void testaddNewPlayer_3playersnumofPlayers2_exception() throws Exception{
         Game g1=new Game(2);
-        Player p1=new Player("player",null);
-        Player p2=new Player("player",null);
-        Player p3=new Player("player",null);
+        Player p1=new Player("player");
+        Player p2=new Player("player");
+        Player p3=new Player("player");
         try {
             g1.addNewPlayer(p1);
             g1.addNewPlayer(p2);
@@ -49,11 +49,11 @@ public class testGame extends TestCase{
     @Test
     public void testaddNewPlayer_5playersnumofPlayers4_exception() throws Exception{
         Game g1=new Game(4);
-        Player p1=new Player("player",null);
-        Player p2=new Player("player",null);
-        Player p3=new Player("player",null);
-        Player p4=new Player("player",null);
-        Player p5=new Player("player",null);
+        Player p1=new Player("player");
+        Player p2=new Player("player");
+        Player p3=new Player("player");
+        Player p4=new Player("player");
+        Player p5=new Player("player");
         try {
             g1.addNewPlayer(p1);
             g1.addNewPlayer(p2);
@@ -70,8 +70,8 @@ public class testGame extends TestCase{
     public void testaddNewPlayer_2playersnumofPlayers4(){
         try {
             Game g1=new Game(4);
-            Player p1=new Player("player",null);
-            Player p2=new Player("player",null);
+            Player p1=new Player("player");
+            Player p2=new Player("player");
             g1.addNewPlayer(p1);
             g1.addNewPlayer(p2);
         }catch (Exception e){
