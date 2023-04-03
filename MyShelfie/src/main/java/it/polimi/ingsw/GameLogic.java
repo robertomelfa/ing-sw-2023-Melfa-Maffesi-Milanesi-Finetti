@@ -35,8 +35,9 @@ public class GameLogic {
      * The method is used to draw from one to three cards from the board
      * the method continues to request cards from the player until they are actually drawable
      */
-    public ArrayList<Card> getCardFromTable(){
+    public ArrayList<Card> getCardFromTable(Player player){
         int size = 0;
+        int limit = 0;
         Scanner in = new Scanner(System.in);
         ArrayList<Card> list = new ArrayList<Card>();
         do{
@@ -45,8 +46,10 @@ public class GameLogic {
 
             if(size < 1 || size >3){
                 System.out.println("You can pick 1, 2 or 3 cards. Try again!");
+            }else if(!player.getLibrary().numberOfCards(size)){
+                System.out.println("There is not enough space in your library for " + size + " cards!");
             }
-        }while(size < 1 || size >3);
+        }while(size < 1 || size >3 || !player.getLibrary().numberOfCards(size));
         if(size == 1){  // case 1 card
             int x1, y1;
             // ask coordinates until a correct input
@@ -133,15 +136,14 @@ public class GameLogic {
      * @param y1: y coordinate of Card 2
      * @return true if card has at least one free side
      */
-    // verify if card has free side
     private boolean checkNear(int x1, int y1){
         if(gameTable.board[x1][y1] == NONE || gameTable.board[x1][y1] == NOT){
-            System.out.println("Card not exists");
+     //       System.out.println("Card not exists");
             return false;
         }else if((gameTable.board[x1+1][y1] == NONE || gameTable.board[x1+1][y1] == NOT) || (gameTable.board[x1-1][y1] == NONE || gameTable.board[x1-1][y1] == NOT) || (gameTable.board[x1][y1+1] == NONE || gameTable.board[x1+1][y1+1] == NOT) || (gameTable.board[x1][y1-1] == NONE || gameTable.board[x1][y1-1] == NOT)){
             return true;
         }
-        System.out.println("Card has not free side");
+     //   System.out.println("Card has not free side");
         return false;
     }
 
@@ -160,7 +162,7 @@ public class GameLogic {
                 return true;
             }
         }
-        System.out.println("Card 2 has different x and y beside Card 1 (x or y must be the same)");
+    //    System.out.println("Card 2 has different x and y beside Card 1 (x or y must be the same)");
         return false;
     }
 
@@ -181,7 +183,7 @@ public class GameLogic {
                 return true;
             }
         }
-        System.out.println("Cards must be in the same row or column");
+     //   System.out.println("Cards must be in the same row or column");
         return false;
     }
 
@@ -207,7 +209,6 @@ public class GameLogic {
             gameTable.viewTable();
 
             TimeUnit.SECONDS.sleep(2);
-
             System.out.print("Insert 1 if you want to see your objectives or insert 2 if you want to pick the cards\n");
 
             int i = 0;
@@ -237,7 +238,7 @@ public class GameLogic {
 
             ArrayList<Card> cards = new ArrayList<>();
 
-            cards = getCardFromTable();
+            cards = getCardFromTable(currentPlayer);
 
             System.out.print("Now you can insert the cards in your library\n");
 
@@ -248,7 +249,7 @@ public class GameLogic {
             if(!game1.getCurrentPlayer().getCommonObj1Completed()){
                 if(game1.getCommonObj1().checkObj(currentPlayer.getLibrary())){
                     currentPlayer.addPoints(game1.getCommonObj1().getPointCount());
-                    System.out.print("Congratulations, you successfully completed a common goal\n");
+                    System.out.println("Congratulations, you successfully completed a common goal. " + "Now your points are: " + currentPlayer.getScore());
                     game1.getCurrentPlayer().setCommonObj1Completed();
                 }
             }
@@ -256,7 +257,7 @@ public class GameLogic {
             if(!game1.getCurrentPlayer().getCommonObj2Completed()){
                 if(game1.getCommonObj2().checkObj(currentPlayer.getLibrary())){
                     currentPlayer.addPoints(game1.getCommonObj2().getPointCount());
-                    System.out.print("Congratulations, you successfully completed a common goal\n");
+                    System.out.println("Congratulations, you successfully completed a common goal. " + "Now your points are: " + currentPlayer.getScore());
                     game1.getCurrentPlayer().setCommonObj2Completed();
                 }
             }
@@ -285,6 +286,7 @@ public class GameLogic {
             gameTable.checkStatus();
         }else {
             System.out.println("GAME IS ENDED ");
+            game1.checkEnd();   // at the end of the game, check the library of each player and adds points
         }
     }
 

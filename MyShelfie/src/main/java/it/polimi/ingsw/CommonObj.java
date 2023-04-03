@@ -78,15 +78,8 @@ public class CommonObj {
      * @return Points, the points to give for complete the goal
      */
     public int getPointCount() {
-        setPoint();
+        indexPoint ++;
         return pointCount[indexPoint - 1];
-    }
-
-    /**
-     * Method that update the array point when someone complete the goal
-     */
-    private void setPoint() {
-        indexPoint++;
     }
 
     /**
@@ -95,7 +88,6 @@ public class CommonObj {
      * Method that check in a personalized way every goal and return the result
      */
     public boolean checkObj(Library lib) throws Exception {
-
         switch (this.objNum) {
             case 1 -> {
                 return check1(lib);
@@ -143,15 +135,14 @@ public class CommonObj {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
                 if (temp.getPos(i, j) != NONE) {
-                    temp.i = 0;
+                    temp.resetI();
                     temp.group(i, j, j, temp.getPos(i, j));
-                    if (temp.i >= 2) {
+                    if (temp.getI() >= 2) {
                         count++;
                     }
                 }
             }
         }
-
         return count >= 6;
     }
 
@@ -223,9 +214,9 @@ public class CommonObj {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
                 if (temp.getPos(i, j) != NONE) {
-                    temp.i = 0;
+                    temp.resetI();
                     temp.group(i, j, j, temp.getPos(i, j));
-                    if (temp.i >= 4) {
+                    if (temp.getI() >= 4) {
                         count++;
                     }
                 }

@@ -24,19 +24,13 @@ public class PlayerObj {
 
         //contatore delle caselle obiettivo completate
         int count = 0;
-
         //per ogni casella obiettivo controllo che nella stessa posizione della library ci sia la stessa carta e aggiorno il contatore
         for (SingleObj singleObj : playerObjs) {
             if (library.getPos(singleObj.getXPosition(), singleObj.getYPosition()) == singleObj.getType()) count++;
-
         }
-
         if (count > i) {
-
             this.i = count;
-
             return POINT[count-1] - POINT[i];
-
         }else return 0;
     }
 

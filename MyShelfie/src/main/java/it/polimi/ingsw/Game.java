@@ -94,9 +94,9 @@ public class Game {
         Random rn = new Random();
         int rand = rn.nextInt(12)+1;
         int rand1 = rn.nextInt(12)+1;
-        commonObj1=new CommonObj(numOfPlayers,rand);
+        commonObj1 = new CommonObj(numOfPlayers, rand);
         while (rand1 == rand){ rand1 = rn.nextInt(12)+1;}
-        commonObj2=new CommonObj(numOfPlayers,rand1);
+        commonObj2 = new CommonObj(numOfPlayers, rand1);
     }
 
     /**
@@ -179,6 +179,18 @@ public class Game {
 
     public boolean getEndGame(){
         return endGame;
+    }
+
+    /**
+     * This method adds points for each group of cards, for each player
+     */
+    public void checkEnd(){
+        for(int i = 0; i < players.size(); i++){
+            try{
+                players.get(i).addPoints(players.get(i).getLibrary().checkFinal());
+                System.out.println("Player " + players.get(i).getNickname() + " hai totalizzato " + players.get(i).getScore());  // stringa temporanea
+            }catch (Exception e){}
+        }
     }
 }
 

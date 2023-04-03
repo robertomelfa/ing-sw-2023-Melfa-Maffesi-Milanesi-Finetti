@@ -36,7 +36,7 @@ public class Player {
      * addPoints is used for adding points to a player, it trows Exception if points is <=0
      */
     public void addPoints(int points) throws Exception {
-        if(points <= 0){
+        if(points < 0){
             throw new Exception();
         }
         else {
@@ -80,7 +80,7 @@ public class Player {
     }
 
     public void setCommonObj2Completed() {
-        this.commonObj1Completed = true;
+        this.commonObj2Completed = true;
     }
 
     public void setPlyObjCompleted(){

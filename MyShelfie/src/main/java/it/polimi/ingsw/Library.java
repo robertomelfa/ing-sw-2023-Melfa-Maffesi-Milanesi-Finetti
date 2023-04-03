@@ -10,7 +10,7 @@ import static it.polimi.ingsw.Card.*;
 public class Library {
     private Card[][] grid = new Card[6][5];
 
-    public int i;
+    private int i;
 
     /**
      * Constructor for the Library class.
@@ -32,6 +32,18 @@ public class Library {
                 this.grid[i][j] = lib.getPos(i, j);
             }
         }
+    }
+
+    public void resetI(){
+        i = 0;
+    }
+    public void setI(){
+        this.i ++;
+
+    }
+
+    public int getI(){
+        return i;
     }
 
     /**
@@ -110,7 +122,6 @@ public class Library {
         if(freeSpaces >= size){
             return true;
         }else{
-            System.out.println("In this column there is not enough space, try again");
             return false;
         }
     }
@@ -131,6 +142,20 @@ public class Library {
 
     /**
      *
+     * @param size: how many cards
+     * @return true if there is enough space in the library
+     */
+    public boolean numberOfCards(int size){
+        for(int i = 0; i < 5; i++){
+            if(checkFreeSpaces(i, size)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
      * @param list: list of the cards picked from the game table
      * This method insert into the player's library the cards picked from the table
      */
@@ -141,6 +166,9 @@ public class Library {
         System.out.println("Choose the column:");
         do{
             column = in.nextInt()-1;
+            if(!checkFreeSpaces(column, list.size())){
+                System.out.println("There is no enough space in this column");
+            }
         }while(!checkFreeSpaces(column, list.size()));
 
         int flag = 0;
@@ -208,11 +236,11 @@ public class Library {
             }
             if(getPos(x, y) == color ){
                 grid[x][y] = NONE;
-                this.i ++;
+                setI();
             }
             if(getPos(x, y2) == color){
                 grid[x][y2] = NONE;
-                this.i ++;
+                setI();
             }
         }
     }
@@ -226,16 +254,16 @@ public class Library {
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 5; j++){
                 if(getPos(i, j) != NONE){
-                    this.i = 0;
+                    resetI();
                     group(i, j, j, getPos(i, j));
-                    if(this.i >= 3){
-                        if(this.i >= 6){    // if i have more than 6 cards, 8 points
+                    if(getI() >= 3){
+                        if(getI() >= 6){    // if i have more than 6 cards, 8 points
                             points = points + 8;
                         }else{
-                            if(this.i == 5) {
-                                points = points + this.i;
+                            if(getI() == 5) {
+                                points = points + getI();
                             }else{
-                                points = points + this.i - 1;
+                                points = points + getI() - 1;
                             }
                         }
                     }
@@ -244,8 +272,6 @@ public class Library {
         }
         return points;
     }
-
-
 }
 
 
