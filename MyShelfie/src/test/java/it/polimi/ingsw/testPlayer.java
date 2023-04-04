@@ -1,11 +1,11 @@
 package it.polimi.ingsw;
 
-import junit.framework.TestCase;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert.*;
-public class testPlayer extends TestCase{
+
+public class testPlayer {
     Player p1=null;
 
     @Before
@@ -15,13 +15,13 @@ public class testPlayer extends TestCase{
 
     @Test
     public void testConstructor_checkattributes(){
-        assertTrue(p1.getNickname().equals("player1") && p1.getScore()==0 && !p1.getLibrary().checkFull()); //library all NONE is checked in testLibrary class
+        Assert.assertTrue(p1.getNickname().equals("player1") && p1.getScore() == 0 && !p1.getLibrary().checkFull()); //library all NONE is checked in testLibrary class
     }
 
     @Test
     public void testaddPoints_10_10() throws Exception{
         p1.addPoints(10);
-        assertTrue(p1.getScore() == 10);
+        Assert.assertTrue(p1.getScore() == 10);
 
     }
 
@@ -31,7 +31,7 @@ public class testPlayer extends TestCase{
         p1.addPoints(5);
         p1.addPoints(40);
         p1.addPoints(5);
-        assertTrue(p1.getScore()==60);
+        Assert.assertTrue(p1.getScore() == 60);
 
     }
 
@@ -39,7 +39,7 @@ public class testPlayer extends TestCase{
     public void testaddPoints_0_exception() throws Exception{
         try{
             p1.addPoints(0);
-            fail("Expected exception");
+            Assert.fail("Expected exception");
         }catch (Exception e){
 
         }
@@ -50,7 +50,7 @@ public class testPlayer extends TestCase{
     public void testaddPoints_negativevalue_exception(){
         try{
             p1.addPoints(-10);
-            fail("Expected exception");
+            Assert.fail("Expected exception");
         }catch (Exception e){
 
         }
@@ -58,14 +58,14 @@ public class testPlayer extends TestCase{
 
     @Test
     public void testgetNickname(){
-        assertTrue(p1.getNickname()=="player1");
+        Assert.assertTrue(p1.getNickname() == "player1");
     }
 
     @Test
     public void testgetScore() throws Exception{
         p1.addPoints(20);
         p1.addPoints(10);
-        assertTrue(p1.getScore()==30);
+        Assert.assertTrue(p1.getScore() == 30);
     }
 
     @After

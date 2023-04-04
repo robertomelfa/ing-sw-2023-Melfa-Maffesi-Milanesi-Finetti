@@ -1,13 +1,12 @@
 package it.polimi.ingsw;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 import static it.polimi.ingsw.Card.*;
 
 public class CommonObj {
     private final int objNum;
-    private int[] pointCount = new int[4];
+    private final int[] pointCount = new int[4];
     private int indexPoint = 0;
     private String descrizione;
 
@@ -18,10 +17,6 @@ public class CommonObj {
      */
     public CommonObj(int numOfPlayer, int objNum) {
 
-        //creo un numero randomico tra 1 e 12 per definire quale obiettivo creare
-//        Random random = new Random();
-//        this.objNum = random.nextInt(12)+1;             //problema se esce lo stesso obiettivo per entrambi gli obiettivi ( forse posso spostare la randomicità e metterla come parametro)
-//        this.objNum = 5;
         this.objNum = objNum;
         switch (objNum) {
             case 1 -> this.descrizione = "6 coppie distinte di tessere adiacenti dello stesso tipo";
@@ -89,42 +84,18 @@ public class CommonObj {
      */
     public boolean checkObj(Library lib) throws Exception {
         switch (this.objNum) {
-            case 1 -> {
-                return check1(lib);
-            }
-            case 2 -> {
-                return check2(lib);
-            }
-            case 3 -> {
-                return check3(lib);
-            }
-            case 4 -> {
-                return check4(lib);
-            }
-            case 5 -> {
-                return check5(lib);
-            }
-            case 6 -> {
-                return check6(lib);
-            }
-            case 7 -> {
-                return check7(lib);
-            }
-            case 8 -> {
-                return check8(lib);
-            }
-            case 9 -> {
-                return check9(lib);
-            }
-            case 10 -> {
-                return check10(lib);
-            }
-            case 11 -> {
-                return check11(lib);
-            }
-            case 12 -> {
-                return check12(lib);
-            }
+            case 1 -> {return check1(lib);}
+            case 2 -> {return check2(lib);}
+            case 3 -> {return check3(lib);}
+            case 4 -> {return check4(lib);}
+            case 5 -> {return check5(lib);}
+            case 6 -> {return check6(lib);}
+            case 7 -> {return check7(lib);}
+            case 8 -> {return check8(lib);}
+            case 9 -> {return check9(lib);}
+            case 10 -> {return check10(lib);}
+            case 11 -> {return check11(lib);}
+            case 12 -> {return check12(lib);}
             default -> throw new Exception();
         }
     }

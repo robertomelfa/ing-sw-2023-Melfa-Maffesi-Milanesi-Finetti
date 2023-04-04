@@ -16,46 +16,45 @@ public class Library {
      * Constructor for the Library class.
      * It sets all elements in grid to NONE
      */
-    public Library(){
+    public Library() {
         i = 0;
-        for (int i=0;i<6;i++){
-            for (int j=0;j<5;j++){
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
                 grid[i][j] = NONE;
             }
         }
     }
 
-    public Library(Library lib){
+    public Library(Library lib) {
         i = 0;
-        for(int i = 0; i < 6; i++){
-            for(int j = 0; j < 5; j++){
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
                 this.grid[i][j] = lib.getPos(i, j);
             }
         }
     }
 
-    public void resetI(){
+    public void resetI() {
         i = 0;
     }
 
-    public void setI(){
-        this.i ++;
+    public void setI() {
+        this.i++;
     }
 
-    public int getI(){
+    public int getI() {
         return i;
     }
 
     /**
-     *
-     * @param x
-     * @param y
+     * @param x, x-position
+     * @param y, y-position
      * @return the Card in position [x][y] in grid
      */
-    public Card getPos(int x, int y) throws ArrayIndexOutOfBoundsException{
-        try{
+    public Card getPos(int x, int y) throws ArrayIndexOutOfBoundsException {
+        try {
             return this.grid[x][y];
-        }catch(ArrayIndexOutOfBoundsException exception){
+        } catch (ArrayIndexOutOfBoundsException exception) {
             return NOT;
         }
     }
@@ -63,21 +62,21 @@ public class Library {
     /**
      * This method prints the player's library
      */
-    public void viewGrid(){
+    public void viewGrid() {
         System.out.print("\n   ");
-        for(int i = 1; i < 6; i++){
+        for (int i = 1; i < 6; i++) {
             System.out.printf("     %d     ", i);
         }
 
         System.out.print("\n");
         System.out.print("\n");
 
-        for(int i = 0; i < 6; i++){
-            System.out.printf(" %d ", i+1);
-            for(int j = 0; j < 5; j++){
-                if(this.grid[i][j] != NOT && this.grid[i][j] != NONE){
+        for (int i = 0; i < 6; i++) {
+            System.out.printf(" %d ", i + 1);
+            for (int j = 0; j < 5; j++) {
+                if (this.grid[i][j] != NOT && this.grid[i][j] != NONE) {
                     System.out.printf("%-11s", grid[i][j]);
-                }else{
+                } else {
                     System.out.print("           ");
                 }
             }
@@ -87,13 +86,12 @@ public class Library {
     }
 
     /**
-     *
      * @return true if the player's library is full (end of the game)
      */
-    public boolean checkFull(){
-        for(int i = 0; i < 6; i ++){
-            for(int j = 0; j < 5; j++){
-                if(grid[i][j] == NONE){
+    public boolean checkFull() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (grid[i][j] == NONE) {
                     return false;
                 }
             }
@@ -102,37 +100,31 @@ public class Library {
     }
 
     /**
-     *
      * @param column: column to check
-     * @param size: number of cards to insert
+     * @param size:   number of cards to insert
      * @return true if the column has enough space to insert cards
      */
-    private boolean checkFreeSpaces(int column, int size){
+    private boolean checkFreeSpaces(int column, int size) {
         int freeSpaces = 0;
-        if(column < 0 || column > 4){
+        if (column < 0 || column > 4) {
             System.out.println("This column does not exist, try again");
             return false;
         }
-        for(int i = 0; i < 6; i++){
-            if(grid[i][column] == NONE){
+        for (int i = 0; i < 6; i++) {
+            if (grid[i][column] == NONE) {
                 freeSpaces = freeSpaces + 1;
             }
         }
-        if(freeSpaces >= size){
-            return true;
-        }else{
-            return false;
-        }
+        return freeSpaces >= size;
     }
 
     /**
-     *
      * @param column: verify last free row of this column
      * @return the last free row of the column
      */
-    private int lastRowFree(int column){
-        for(int i = 5; i >= 0; i--){
-            if(grid[i][column] == NONE){
+    private int lastRowFree(int column) {
+        for (int i = 5; i >= 0; i--) {
+            if (grid[i][column] == NONE) {
                 return i;
             }
         }
@@ -140,13 +132,12 @@ public class Library {
     }
 
     /**
-     *
      * @param size: how many cards
      * @return true if there is enough space in the library
      */
-    public boolean numberOfCards(int size){
-        for(int i = 0; i < 5; i++){
-            if(checkFreeSpaces(i, size)){
+    public boolean numberOfCards(int size) {
+        for (int i = 0; i < 5; i++) {
+            if (checkFreeSpaces(i, size)) {
                 return true;
             }
         }
@@ -154,58 +145,57 @@ public class Library {
     }
 
     /**
-     *
      * @param list: list of the cards picked from the game table
-     * This method insert into the player's library the cards picked from the table
+     *              This method insert into the player's library the cards picked from the table
      */
-    public void insert(ArrayList<Card> list){
+    public void insert(ArrayList<Card> list) {
         Scanner in = new Scanner(System.in);
         int column = 0;
         viewGrid();
         System.out.println("Choose the column:");
-        do{
-            column = in.nextInt()-1;
-            if(!checkFreeSpaces(column, list.size())){
+        do {
+            column = in.nextInt() - 1;
+            if (!checkFreeSpaces(column, list.size())) {
                 System.out.println("There is no enough space in this column");
             }
-        }while(!checkFreeSpaces(column, list.size()));
+        } while (!checkFreeSpaces(column, list.size()));
 
         int flag = 0;
         String type = new String();
         int card = 0;
         int listSize = list.size();
-        for(int i = 0; i < listSize; i++){
+        for (int i = 0; i < listSize; i++) {
             System.out.println("Which card do you want to insert?" + list.toString());
-            do{
+            do {
                 flag = 0;
-                if(in.hasNextInt()){
+                if (in.hasNextInt()) {
                     card = in.nextInt() - 1;
                     if (card >= 0 && card < list.size()) {
                         flag = 1;
-                    }else {
+                    } else {
                         System.out.println("This card does not exist, try again!");
                     }
-                }else{
+                } else {
                     type = in.next().toUpperCase();
-                    if(type.equals("YELLOW") || type.equals("PURPLE") || type.equals("WHITE") || type.equals("BLUE") || type.equals("LIGHTBLUE") || type.equals("GREEN")) {
-                        if(list.contains(Card.valueOf(type))) {
+                    if (type.equals("YELLOW") || type.equals("PURPLE") || type.equals("WHITE") || type.equals("BLUE") || type.equals("LIGHTBLUE") || type.equals("GREEN")) {
+                        if (list.contains(Card.valueOf(type))) {
                             flag = 2;
-                        }else{
+                        } else {
                             System.out.println("This card does not exist, try again!");
                         }
-                    }else {
+                    } else {
                         System.out.println("This card does not exist, try again!");
                     }
 
                 }
-            }while(flag == 0);
-            if(flag == 1){
+            } while (flag == 0);
+            if (flag == 1) {
                 grid[lastRowFree(column)][column] = list.get(card);
                 list.remove(card);
-            }else if(flag == 2){
+            } else if (flag == 2) {
                 list.remove(Card.valueOf(type));
                 grid[lastRowFree(column)][column] = Card.valueOf(type);
-            }else{
+            } else {
                 System.out.println("This card does not exist, try again!");
                 i--;
             }
@@ -215,29 +205,28 @@ public class Library {
     }
 
     /**
-     *
-     * @param x: x position of the Card
-     * @param y: y position of the Card to check the right side
-     * @param y2: y position to check the left side
+     * @param x:     x position of the Card
+     * @param y:     y position of the Card to check the right side
+     * @param y2:    y position to check the left side
      * @param color: color of the group of cards
-     * This recursive method search the groups of same cards
+     *               This recursive method search the groups of same cards
      */
-    public void group(int x, int y, int y2, Card color){
-        if(getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y) == color){
-            if(getPos(x, y) == getPos(x+1, y)){
-                group(x+1, y, y, color);
+    public void group(int x, int y, int y2, Card color) {
+        if (getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y) == color) {
+            if (getPos(x, y) == getPos(x + 1, y)) {
+                group(x + 1, y, y, color);
             }
-            if(getPos(x, y) == getPos(x, y+1)){
-                group(x, y+1, y, color);
+            if (getPos(x, y) == getPos(x, y + 1)) {
+                group(x, y + 1, y, color);
             }
-            if(getPos(x, y2) == getPos(x, y2-1)){
-                group(x, y, y2-1, color);
+            if (getPos(x, y2) == getPos(x, y2 - 1)) {
+                group(x, y, y2 - 1, color);
             }
-            if(getPos(x, y) == color ){
+            if (getPos(x, y) == color) {
                 grid[x][y] = NONE;
                 setI();
             }
-            if(getPos(x, y2) == color){
+            if (getPos(x, y2) == color) {
                 grid[x][y2] = NONE;
                 setI();
             }
@@ -245,23 +234,22 @@ public class Library {
     }
 
     /**
-     *
      * @return total points get from the groups of same cards
      */
-    public int checkFinal(){
+    public int checkFinal() {
         int points = 0;
-        for(int i = 0; i < 6; i++){
-            for(int j = 0; j < 5; j++){
-                if(getPos(i, j) != NONE){
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (getPos(i, j) != NONE) {
                     resetI();
                     group(i, j, j, getPos(i, j));
-                    if(getI() >= 3){
-                        if(getI() >= 6){    // if i have more than 6 cards, 8 points
+                    if (getI() >= 3) {
+                        if (getI() >= 6) {    // if i have more than 6 cards, 8 points
                             points = points + 8;
-                        }else{
-                            if(getI() == 5) {
+                        } else {
+                            if (getI() == 5) {
                                 points = points + getI();
-                            }else{
+                            } else {
                                 points = points + getI() - 1;
                             }
                         }
@@ -271,6 +259,9 @@ public class Library {
         }
         return points;
     }
+
+    //@test
+    public void setCard(int x, int y, Card type) {
+        this.grid[x][y] = type;
+    }
 }
-
-

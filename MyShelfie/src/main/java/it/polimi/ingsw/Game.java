@@ -28,7 +28,6 @@ public class Game {
         }else {
             this.numOfPlayers = numOfPlayers;
             this.gameTable = new GameTable(numOfPlayers);
-            this.numOfPlayers=numOfPlayers;
             players = new LinkedList<>();
             this.cardbox = new CardBox();
             setBothCommonObj(numOfPlayers);

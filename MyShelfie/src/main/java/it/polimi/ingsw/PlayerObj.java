@@ -10,7 +10,7 @@ import static it.polimi.ingsw.Card.NOT;
 
 public class PlayerObj {
     private final ArrayList<SingleObj> playerObjs ;
-    private static final ArrayList <Integer> avaliable = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
+    private static ArrayList <Integer> avaliable = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     private final int[] POINT = {1, 2, 4, 6, 9, 12};
     private int i;
 
@@ -20,26 +20,32 @@ public class PlayerObj {
      * @return POINT, difference between the points reached and the points already taken
      * Method that check the status of the personal goal and return the points
      */
-    public int checkObj(Player player, Library library) throws Exception{
+    public int checkObj(Player player, Library library){
 
         //contatore delle caselle obiettivo completate
         int count = 0;
+        int temp = i;
+
         //per ogni casella obiettivo controllo che nella stessa posizione della library ci sia la stessa carta e aggiorno il contatore
         for (SingleObj singleObj : playerObjs) {
             if (library.getPos(singleObj.getXPosition(), singleObj.getYPosition()) == singleObj.getType()) count++;
+
         }
         if(count == 6){     // if count == 6, does not verify the object during the next rounds
             player.setPlyObjCompleted();
         }
-        if (count > this.i) {
-            this.i = count;
-            if(count > 1){
-                return POINT[count-1] - POINT[count - 2];
-            }else{
-                return POINT[count-1];
-            }
-        }else return 0;
+        if ((count > i) && (i>0) ){
+
+            this.i = count-1;
+            return POINT[count-1] - POINT[temp];
+
+        } else if ((count > i) && (i==0)){
+
+            this.i = count-1;
+            return POINT[count-1];
+        } else return 0;
     }
+
     /**
      * Constructor for the PlayerObj class: choose randomly one of the personal goal of the game
      */
@@ -53,18 +59,18 @@ public class PlayerObj {
         int rand = rn.nextInt(avaliable.size());
         this.i = 0;
         switch (avaliable.get(rand)){
-            case 1 -> {this.playerObjs = obj1();}
-            case 2 -> {this.playerObjs = obj2();}
-            case 3 -> {this.playerObjs = obj3();}
-            case 4 -> {this.playerObjs = obj4();}
-            case 5 -> {this.playerObjs = obj5();}
-            case 6 -> {this.playerObjs = obj6();}
-            case 7 -> {this.playerObjs = obj7();}
-            case 8 -> {this.playerObjs = obj8();}
-            case 9 -> {this.playerObjs = obj9();}
-            case 10 -> {this.playerObjs = obj10();}
-            case 11 -> {this.playerObjs = obj11();}
-            case 12 -> {this.playerObjs = obj12();}
+            case 1 -> this.playerObjs = obj1();
+            case 2 -> this.playerObjs = obj2();
+            case 3 -> this.playerObjs = obj3();
+            case 4 -> this.playerObjs = obj4();
+            case 5 -> this.playerObjs = obj5();
+            case 6 -> this.playerObjs = obj6();
+            case 7 -> this.playerObjs = obj7();
+            case 8 -> this.playerObjs = obj8();
+            case 9 -> this.playerObjs = obj9();
+            case 10 -> this.playerObjs = obj10();
+            case 11 -> this.playerObjs = obj11();
+            case 12 -> this.playerObjs = obj12();
             default -> throw new Exception("error");
         }
         avaliable.remove(rand);
@@ -202,6 +208,7 @@ public class PlayerObj {
         return temp;
     }
 
+
     public void print(){
         Card[][] temp= new Card[6][5];
         for (int k=0;k<6;k++){
@@ -231,6 +238,48 @@ public class PlayerObj {
             System.out.print("\n");
         }
         System.out.print("\n");
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    //@test
+    public int[] getPOINT() {
+        return POINT;
+    }
+
+    //@test
+    public static ArrayList<Integer> getAvailable() {
+        return avaliable;
+    }
+
+    //@test
+    public ArrayList<SingleObj> getPlayerObjs() {
+        return playerObjs;
+    }
+
+    //@test
+    public PlayerObj(int numObj) throws Exception {
+        switch (numObj){
+            case 1 -> this.playerObjs = obj1();
+            case 2 -> this.playerObjs = obj2();
+            case 3 -> this.playerObjs = obj3();
+            case 4 -> this.playerObjs = obj4();
+            case 5 -> this.playerObjs = obj5();
+            case 6 -> this.playerObjs = obj6();
+            case 7 -> this.playerObjs = obj7();
+            case 8 -> this.playerObjs = obj8();
+            case 9 -> this.playerObjs = obj9();
+            case 10 -> this.playerObjs = obj10();
+            case 11 -> this.playerObjs = obj11();
+            case 12 -> this.playerObjs = obj12();
+            default -> throw new Exception("error");
+        }
+    }
+
+    public void resetAvaliable(){
+        avaliable = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     }
 }
 
