@@ -24,7 +24,6 @@ public class GameLogic {
      * It takes the gameTable of the game
      */
     public GameLogic(Game game){
-        Game game1;
         this.game1 = game;
         gameTable = game.getGameTable();
     }
@@ -235,13 +234,10 @@ public class GameLogic {
 
             }
 
-
             ArrayList<Card> cards = new ArrayList<>();
-
             cards = getCardFromTable(currentPlayer);
 
             System.out.print("Now you can insert the cards in your library\n");
-
             currentPlayer.getLibrary().insert(cards);
 
             // check dei commonObj
@@ -254,6 +250,15 @@ public class GameLogic {
                 }
             }
 
+            if(!game1.getCurrentPlayer().getPlyObjCompleted()){
+                int points=game1.getCurrentPlayer().getPlayerObj().checkObj(game1.getCurrentPlayer(), game1.getCurrentPlayer().getLibrary());
+                if (points>0){
+                    game1.getCurrentPlayer().addPoints(points);
+                    System.out.println("Congratulations, you successfully completed part of your personal goal. Now your points are: " + game1.getCurrentPlayer().getScore());
+                }
+
+            }
+
             if(!game1.getCurrentPlayer().getCommonObj2Completed()){
                 if(game1.getCommonObj2().checkObj(currentPlayer.getLibrary())){
                     currentPlayer.addPoints(game1.getCommonObj2().getPointCount());
@@ -262,27 +267,16 @@ public class GameLogic {
                 }
             }
 
-            if(!game1.getCurrentPlayer().getPlyObjCompleted()){
-                int points=game1.getCurrentPlayer().getPlayerObj().checkObj(game1.getCurrentPlayer().getLibrary());
-                if (points>0){
-                    game1.getCurrentPlayer().addPoints(points);
-                    System.out.print("\"Congratulations, you successfully completed your personal goal\\n\"");
-                }
-
-            }
-
             if(game1.getCurrentPlayer().getLibrary().checkFull()){
                 game1.setEndGame();
                 game1.getCurrentPlayer().addPoints(1);
                 System.out.println(game1.getCurrentPlayer().getNickname()+"has finished the game");
             }
 
-            System.out.println(currentPlayer.getNickname()+"your turn is ended!\n Preparing for the next turn...");
-
+            System.out.println(currentPlayer.getNickname()+" your turn is ended!\n Preparing for the next turn...");
 
             /* update the current player before ending*/
             game1.updateCurrentPlayer();
-
             gameTable.checkStatus();
         }else {
             System.out.println("GAME IS ENDED ");

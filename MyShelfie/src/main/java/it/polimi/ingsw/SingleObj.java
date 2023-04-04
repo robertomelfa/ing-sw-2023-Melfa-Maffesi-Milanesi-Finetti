@@ -16,9 +16,9 @@ public class SingleObj {
      */
 
     public SingleObj (int x, int y, Card type){
-        this.x=x;
-        this.y=y;
-        this.type=type;
+        this.x = x;
+        this.y = y;
+        this.type = type;
     }
 
     /**

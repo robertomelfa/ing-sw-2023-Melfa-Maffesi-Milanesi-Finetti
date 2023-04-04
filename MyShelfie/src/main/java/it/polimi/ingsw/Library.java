@@ -37,9 +37,9 @@ public class Library {
     public void resetI(){
         i = 0;
     }
+
     public void setI(){
         this.i ++;
-
     }
 
     public int getI(){
@@ -84,7 +84,6 @@ public class Library {
             System.out.print("\n");
         }
         System.out.print("\n");
-
     }
 
     /**

@@ -20,7 +20,7 @@ public class PlayerObj {
      * @return POINT, difference between the points reached and the points already taken
      * Method that check the status of the personal goal and return the points
      */
-    public int checkObj(Library library) throws Exception{
+    public int checkObj(Player player, Library library) throws Exception{
 
         //contatore delle caselle obiettivo completate
         int count = 0;
@@ -28,12 +28,18 @@ public class PlayerObj {
         for (SingleObj singleObj : playerObjs) {
             if (library.getPos(singleObj.getXPosition(), singleObj.getYPosition()) == singleObj.getType()) count++;
         }
-        if (count > i) {
+        if(count == 6){     // if count == 6, does not verify the object during the next rounds
+            player.setPlyObjCompleted();
+        }
+        if (count > this.i) {
             this.i = count;
-            return POINT[count-1] - POINT[i];
+            if(count > 1){
+                return POINT[count-1] - POINT[count - 2];
+            }else{
+                return POINT[count-1];
+            }
         }else return 0;
     }
-
     /**
      * Constructor for the PlayerObj class: choose randomly one of the personal goal of the game
      */
@@ -45,6 +51,7 @@ public class PlayerObj {
 
         Random rn = new Random();
         int rand = rn.nextInt(avaliable.size());
+        this.i = 0;
         switch (avaliable.get(rand)){
             case 1 -> {this.playerObjs = obj1();}
             case 2 -> {this.playerObjs = obj2();}
@@ -194,7 +201,6 @@ public class PlayerObj {
         temp.add(new SingleObj(5,0,Card.GREEN));
         return temp;
     }
-
 
     public void print(){
         Card[][] temp= new Card[6][5];

@@ -283,7 +283,6 @@ public class CommonObj {
         return false;
     }
 
-
     private boolean check8(Library lib) {
         int count8 = 0;
         for (int riga = 0; riga < 6; riga++) {

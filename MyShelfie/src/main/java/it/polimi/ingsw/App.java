@@ -16,9 +16,5 @@ public class App
         while(true){
             gamelogic.startTurn();
         }
-
-
-     // at the end of the game:
-     //   game.checkEnd();
     }
 }

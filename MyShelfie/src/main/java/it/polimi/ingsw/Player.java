@@ -26,7 +26,6 @@ public class Player {
         this.commonObj1Completed=false;
         this.commonObj2Completed=false;
         this.plyObjCompleted=false;
-
     }
 
     /**
@@ -42,7 +41,6 @@ public class Player {
         else {
             this.points = this.points+points;
         }
-
     }
 
     /**
