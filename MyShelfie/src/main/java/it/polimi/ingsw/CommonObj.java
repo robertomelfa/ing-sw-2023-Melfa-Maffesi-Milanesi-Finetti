@@ -80,7 +80,7 @@ public class CommonObj {
     /**
      * @param lib, library to check for the goal
      * @return result, the result of the check of the goal
-     * Method that check in a personalized way every goal and return the result
+     * Method that checks in a personalized way every goal and returns the result
      */
     public boolean checkObj(Library lib) throws Exception {
         switch (this.objNum) {

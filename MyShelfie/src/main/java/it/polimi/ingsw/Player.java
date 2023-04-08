@@ -85,14 +85,26 @@ public class Player {
         this.plyObjCompleted=true;
     }
 
+    /**
+     *
+     * @return commonObj1Completed
+     */
     public boolean getCommonObj1Completed() {
         return commonObj1Completed;
     }
 
+    /**
+     *
+     * @return commonObj2Completed
+     */
     public boolean getCommonObj2Completed() {
         return commonObj2Completed;
     }
 
+    /**
+     *
+     * @return plyObjCompleted
+     */
     public boolean getPlyObjCompleted() {
         return plyObjCompleted;
     }

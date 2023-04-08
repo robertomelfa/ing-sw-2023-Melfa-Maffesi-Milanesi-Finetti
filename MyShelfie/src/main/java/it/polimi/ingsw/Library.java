@@ -146,7 +146,7 @@ public class Library {
 
     /**
      * @param list: list of the cards picked from the game table
-     *              This method insert into the player's library the cards picked from the table
+     * This method insert into the player's library the cards picked from the table
      */
     public void insert(ArrayList<Card> list) {
         Scanner in = new Scanner(System.in);
@@ -209,7 +209,7 @@ public class Library {
      * @param y:     y position of the Card to check the right side
      * @param y2:    y position to check the left side
      * @param color: color of the group of cards
-     *               This recursive method search the groups of same cards
+     * This recursive method search the groups of same cards
      */
     public void group(int x, int y, int y2, Card color) {
         if (getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y) == color) {

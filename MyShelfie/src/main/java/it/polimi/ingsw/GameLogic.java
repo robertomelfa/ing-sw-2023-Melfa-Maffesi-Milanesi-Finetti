@@ -291,6 +291,5 @@ public class GameLogic {
     }
 
 
-//metodo da finire, voglio trovare un modo per eseguire l'ultimo turno dopo la fine del game da parte di un giocatore
 
 }

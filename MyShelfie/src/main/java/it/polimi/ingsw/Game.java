@@ -39,7 +39,7 @@ public class Game {
      * @param player
      * @throws Exception
      * The method adds a new player into the players list called players.
-     * It throws Exception if the size of the list equals the number of players in the game that means that the game is full
+     * It throws Exception if the size of the list equals the number of players in the game, meaning that the game is full
      */
     public void addNewPlayer(Player player) throws Exception{
         if(players.size()==numOfPlayers){
@@ -52,7 +52,7 @@ public class Game {
     }
 
     /**
-     * This method prints the player list
+     * Method that prints the player list
      */
     public void printPlayers(){
         StringBuilder str=new StringBuilder();
@@ -64,7 +64,7 @@ public class Game {
     }
 
     /**
-     * The method shuffles randomly the players list, it sets chair to 0 and sets currentPlayer on the head of the list
+     * Method that shuffles randomly the players list, it sets chair to 0 and sets currentPlayer on the head of the list
      */
     public void setChairOrder(){
         java.util.Collections.shuffle(players);
@@ -137,6 +137,10 @@ public class Game {
         return commonObj1;
     }
 
+    /**
+     *
+     * @return NumOfPlayers
+     */
     public int getNumOfPlayers() {
         return numOfPlayers;
     }
@@ -173,10 +177,17 @@ public class Game {
         }
     }
 
+    /**
+     * Method that sets endGame=true
+     */
     public void setEndGame() {
         this.endGame = true;
     }
 
+    /**
+     *
+     * @return endGame
+     */
     public boolean getEndGame(){
         return endGame;
     }

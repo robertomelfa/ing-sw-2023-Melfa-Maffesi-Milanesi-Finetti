@@ -6,6 +6,12 @@ public class CardBox {
 //    int cardLeft, leftWhite, leftBlue, leftLightBlue, leftYellow, leftPurple, leftGreen;
 
     List<Card> cardBox = new LinkedList<>();
+
+    /**
+     * Constructor for the CardBox class.
+     * It initializes a list of cards of different colors (22 cards for each color) and it shuffles the list
+     */
+
     public CardBox(){           // public to private
 //        cardLeft = 132;
 //        leftWhite = 22;
@@ -26,8 +32,12 @@ public class CardBox {
         Collections.shuffle(cardBox);
 
     }
+
+    /**
+     * Method that picks a card from the cardbox list
+     * @return the card picked from the cardbox
+     */
     public Card getCard() {
-        Random rn = new Random();
 
 
 //        int rand = rn.nextInt(1, cardLeft + 1);

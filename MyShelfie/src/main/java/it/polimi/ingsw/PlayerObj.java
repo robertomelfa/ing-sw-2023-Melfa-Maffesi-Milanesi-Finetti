@@ -15,7 +15,7 @@ public class PlayerObj {
     private int i;
 
     /**
-     *
+     * @param player, player to check
      * @param library, library to check
      * @return POINT, difference between the points reached and the points already taken
      * Method that check the status of the personal goal and return the points
@@ -209,6 +209,9 @@ public class PlayerObj {
     }
 
 
+    /**
+     * Method that prints playerObj
+     */
     public void print(){
         Card[][] temp= new Card[6][5];
         for (int k=0;k<6;k++){
