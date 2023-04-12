@@ -261,7 +261,7 @@ public class GameLogic {
                 }
             }
 
-            if(!game1.getCurrentPlayer().getPlyObjCompleted()){
+      /*      if(!game1.getCurrentPlayer().getPlyObjCompleted()){
                 int points=game1.getCurrentPlayer().getPlayerObj().checkObj(game1.getCurrentPlayer(),game1.getCurrentPlayer().getLibrary());
                 if (points>0){
                     game1.getCurrentPlayer().addPoints(points);
@@ -270,7 +270,7 @@ public class GameLogic {
 //                    if (game1.getCurrentPlayer().getPlayerObj().getI() >= 6) game1.getCurrentPlayer().setPlyObjCompleted();
                 }
 
-            }
+            }   */
 
             if(game1.getCurrentPlayer().getLibrary().checkFull()){
                 game1.setEndGame();

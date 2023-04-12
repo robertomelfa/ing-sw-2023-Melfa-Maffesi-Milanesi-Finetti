@@ -167,7 +167,7 @@ public class Game {
             }
         }else {
             listIteration++;
-            if(players.size()==listIteration){
+            if(players.size() == listIteration){
                 checkEnd();
                 throw new Exception("GAME IS ENDED");
             }
@@ -198,7 +198,7 @@ public class Game {
     public void checkEnd(){
         for(int i = 0; i < players.size(); i++){
             try{
-             //   players.get(i).addPoints(players.get(i).getPlayerObj().checkObj(players.get(i).getLibrary())); se vogliamo controllare solo alla fine
+                players.get(i).addPoints(players.get(i).getPlayerObj().checkObj(players.get(i), players.get(i).getLibrary())); // se vogliamo controllare solo alla fine
                 players.get(i).addPoints(players.get(i).getLibrary().checkFinal());
                 System.out.println("Player " + players.get(i).getNickname() + " hai totalizzato " + players.get(i).getScore());  // stringa temporanea
             }catch (Exception e){}

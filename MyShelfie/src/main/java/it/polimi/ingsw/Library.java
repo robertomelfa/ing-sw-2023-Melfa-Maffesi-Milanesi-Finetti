@@ -260,6 +260,7 @@ public class Library {
         return points;
     }
 
+
     //@test
     public void setCard(int x, int y, Card type) {
         this.grid[x][y] = type;
