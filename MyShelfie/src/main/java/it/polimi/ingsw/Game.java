@@ -73,6 +73,7 @@ public class Game {
 
     }
 
+
     /**
      *
      * @return the player that has the chair (the player index equals chair)

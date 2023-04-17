@@ -36,13 +36,9 @@ public class testPlayer {
     }
 
     @Test
-    public void testaddPoints_0_exception() throws Exception{
-        try{
-            p1.addPoints(0);
-            Assert.fail("Expected exception");
-        }catch (Exception e){
-
-        }
+    public void testaddPoints_0_added0points() throws Exception{
+        p1.addPoints(0);
+        Assert.assertTrue(p1.getScore()==0);
 
     }
 

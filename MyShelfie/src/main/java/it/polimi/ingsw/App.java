@@ -13,6 +13,7 @@ public class App
 
         game.setChairOrder();
 
+
         while(true){
             gamelogic.startTurn();
         }

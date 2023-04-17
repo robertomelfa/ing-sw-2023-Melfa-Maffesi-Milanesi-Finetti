@@ -59,6 +59,11 @@ public class Library {
         }
     }
 
+    public static void main(String[] args) {
+        Library l1=new Library();
+        System.out.println(l1.getPos(100,200));
+    }
+
     /**
      * This method prints the player's library
      */

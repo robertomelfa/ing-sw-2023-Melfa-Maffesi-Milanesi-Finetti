@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import junit.framework.TestCase;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert.*;
@@ -44,12 +45,7 @@ public class testLibrary extends TestCase
 
     @Test
     public void testgetPosException_76_exception(){
-        try{
-            lib.getPos(7,6);
-            fail("Expected Exception");
-        }catch (Exception e){
-
-        }
+        Assert.assertTrue(lib.getPos(7,6)==Card.NOT);
 
     }
 
