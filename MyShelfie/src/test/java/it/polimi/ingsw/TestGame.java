@@ -1,12 +1,9 @@
 package it.polimi.ingsw;
 
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert.*;
 
-public class testGame extends TestCase{
+public class TestGame extends TestCase{
 
     @Test
     public void testConstructor_1_exception(){

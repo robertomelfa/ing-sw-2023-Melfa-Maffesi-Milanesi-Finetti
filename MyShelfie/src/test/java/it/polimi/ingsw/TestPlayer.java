@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class testPlayer {
+public class TestPlayer {
     Player p1=null;
 
     @Before

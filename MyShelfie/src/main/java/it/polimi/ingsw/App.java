@@ -1,5 +1,17 @@
 package it.polimi.ingsw;
 
+
+// TODO fare Test CommonObj : Melfa
+// TODO fare Test GameLogic
+// TODO fare Test CardBox
+// TODO fare Test GameTable
+
+// TODO ModelViewController
+//  -mettere checkNear su client (getCardFromTable)
+//  -controller startTurn e Game (in parte)
+
+// TODO consiglio Patrick package, view - model -controller - network (client/server)
+
 public class App 
 {
     public static void main( String[] args ) throws Exception {

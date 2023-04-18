@@ -123,50 +123,51 @@ public class TestPlayerObj {
 
     }
 
-
-    @Test
-    public void testCheckObj_numObj_4to12Points() throws Exception {
-
-        testCheckObj_numObj_4Points();
-
-        for (int i=0; i<6; i++){
-            lib.setCard(obj.getPlayerObjs().get(i).getXPosition(),obj.getPlayerObjs().get(i).getYPosition(),obj.getPlayerObjs().get(i).getType());
-        }
-
-        Assert.assertEquals(12-4 ,obj.checkObj(player, lib));
-    }
-
-    @Test
-    public void testCheckObj_numObj_4to6Points() throws Exception {
-
-        lib = new Library();
-        obj= new PlayerObj(1);
-
-        for (int i=0; i<3; i++){
-            lib.setCard(obj.getPlayerObjs().get(i).getXPosition(),obj.getPlayerObjs().get(i).getYPosition(),obj.getPlayerObjs().get(i).getType());
-        }
-
-        obj.checkObj(player, lib);
-      //  Assert.assertEquals(2,obj.getI());
-
-        lib.setCard(obj.getPlayerObjs().get(3).getXPosition(),obj.getPlayerObjs().get(3).getYPosition(),obj.getPlayerObjs().get(3).getType());
-
-        Assert.assertEquals(6-4 ,obj.checkObj(player, lib));
-    }
-
-    @Test
-    public void testCheckObj_numObj_12to12Points() throws Exception {
-
-        testCheckObj_numObj_12Points();
-
-        Assert.assertEquals(12-12 ,obj.checkObj(player, lib));
-    }
     @Test
     public void testResetAvaliable_chekReset(){
 
         obj.resetAvaliable();
         Assert.assertEquals(12, PlayerObj.getAvailable().size());
     }
+// abbiamo messo che controlla solo alla fine della partita
+//
+//    @Test
+//    public void testCheckObj_numObj_4to12Points() throws Exception {
+//
+//        testCheckObj_numObj_4Points();
+//
+//        for (int i=0; i<6; i++){
+//            lib.setCard(obj.getPlayerObjs().get(i).getXPosition(),obj.getPlayerObjs().get(i).getYPosition(),obj.getPlayerObjs().get(i).getType());
+//        }
+//
+//        Assert.assertEquals(12-4 ,obj.checkObj(player, lib));
+//    }
+//
+//    @Test
+//    public void testCheckObj_numObj_4to6Points() throws Exception {
+//
+//        lib = new Library();
+//        obj= new PlayerObj(1);
+//
+//        for (int i=0; i<3; i++){
+//            lib.setCard(obj.getPlayerObjs().get(i).getXPosition(),obj.getPlayerObjs().get(i).getYPosition(),obj.getPlayerObjs().get(i).getType());
+//        }
+//
+//        obj.checkObj(player, lib);
+//      //  Assert.assertEquals(2,obj.getI());
+//
+//        lib.setCard(obj.getPlayerObjs().get(3).getXPosition(),obj.getPlayerObjs().get(3).getYPosition(),obj.getPlayerObjs().get(3).getType());
+//
+//        Assert.assertEquals(6-4 ,obj.checkObj(player, lib));
+//    }
+//
+//    @Test
+//    public void testCheckObj_numObj_12to12Points() throws Exception {
+//
+//        testCheckObj_numObj_12Points();
+//
+//        Assert.assertEquals(12-12 ,obj.checkObj(player, lib));
+//    }
 
 //    non so se serve a qualcosa
 //    @After

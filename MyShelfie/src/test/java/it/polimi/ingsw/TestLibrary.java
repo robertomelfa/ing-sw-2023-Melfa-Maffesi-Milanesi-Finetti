@@ -5,19 +5,16 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert.*;
 
-import javax.sound.sampled.AudioInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Unit test for Library.
  */
-public class testLibrary extends TestCase
+public class TestLibrary extends TestCase
 {
     Library lib=null;
     @Before
