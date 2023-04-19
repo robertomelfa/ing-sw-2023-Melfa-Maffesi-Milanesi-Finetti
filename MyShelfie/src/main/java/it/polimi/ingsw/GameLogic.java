@@ -200,13 +200,11 @@ public class GameLogic {
 
             System.out.print(currentPlayer.getNickname()+" is your turn to play! Choose the cards you want form the game table\n");
 
-            TimeUnit.SECONDS.sleep(2);
 
             game1.getCurrentPlayer().getLibrary().viewGrid();
             System.out.print("\n");
             gameTable.viewTable();
 
-            TimeUnit.SECONDS.sleep(2);
 
             System.out.print("Insert 1 if you want to see your objectives or insert 2 if you want to pick the cards\n");
 

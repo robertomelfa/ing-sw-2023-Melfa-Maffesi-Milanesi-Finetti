@@ -2,9 +2,6 @@ package it.polimi.ingsw;
 
 
 // TODO fare Test CommonObj : Melfa
-// TODO fare Test GameLogic
-// TODO fare Test CardBox
-// TODO fare Test GameTable
 
 // TODO ModelViewController
 //  -mettere checkNear su client (getCardFromTable)
