@@ -38,8 +38,8 @@ public class CardBox {
      * @return the card picked from the cardbox
      */
     public Card getCard() {
-
-
+//      simulation of the cardbox
+//
 //        int rand = rn.nextInt(1, cardLeft + 1);
 //
 //

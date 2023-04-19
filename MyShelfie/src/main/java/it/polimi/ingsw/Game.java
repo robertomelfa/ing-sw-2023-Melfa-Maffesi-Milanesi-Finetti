@@ -101,6 +101,7 @@ public class Game {
 
     /**
      * This method prints the leaderboard, that is the list of players and their points scored sorted by score
+     * This method will be in the view
      */
     public void printLeaderboard(){
         List<Player> temp = new LinkedList<>();
@@ -170,7 +171,7 @@ public class Game {
             listIteration++;
             if(players.size() == listIteration){
                 checkEnd();
-                throw new Exception("GAME IS ENDED");
+                throw new Exception("GAME IS ENDED");   // probably this will be in the view
             }
             else {
                 currentPlayer = players.get(listIteration);
@@ -199,9 +200,9 @@ public class Game {
     public void checkEnd(){
         for(int i = 0; i < players.size(); i++){
             try{
-                players.get(i).addPoints(players.get(i).getPlayerObj().checkObj(players.get(i), players.get(i).getLibrary())); // se vogliamo controllare solo alla fine
+                players.get(i).addPoints(players.get(i).getPlayerObj().checkObj(players.get(i), players.get(i).getLibrary()));
                 players.get(i).addPoints(players.get(i).getLibrary().checkFinal());
-                System.out.println("Player " + players.get(i).getNickname() + " hai totalizzato " + players.get(i).getScore());  // stringa temporanea
+          //      System.out.println("Player " + players.get(i).getNickname() + " hai totalizzato " + players.get(i).getScore());  // view
             }catch (Exception e){}
         }
     }

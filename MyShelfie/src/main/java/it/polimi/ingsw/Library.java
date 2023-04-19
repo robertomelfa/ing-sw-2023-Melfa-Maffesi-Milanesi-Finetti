@@ -59,13 +59,9 @@ public class Library {
         }
     }
 
-    public static void main(String[] args) {
-        Library l1=new Library();
-        System.out.println(l1.getPos(100,200));
-    }
-
     /**
      * This method prints the player's library
+     * This method will be in the view
      */
     public void viewGrid() {
         System.out.print("\n   ");
@@ -269,5 +265,15 @@ public class Library {
     //@test
     public void setCard(int x, int y, Card type) {
         this.grid[x][y] = type;
+    }
+
+    //@test
+
+    public void reset_lib(){
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 5; j ++){
+                this.grid[i][j] = NONE;
+            }
+        }
     }
 }

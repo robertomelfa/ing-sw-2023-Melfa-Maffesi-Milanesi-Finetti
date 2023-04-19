@@ -115,6 +115,7 @@ public class GameTable {
 
     /**
      * This method prints the board. If there is no card (NOT or NONE) it prints space
+     * This method will be in the view
      */
     public void viewTable() {
         System.out.print("   ");

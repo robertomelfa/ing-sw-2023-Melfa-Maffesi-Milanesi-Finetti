@@ -215,6 +215,7 @@ public class CommonObj {
         return count6 >= 2;
     }
 
+    // TODO bisogna fare in modo che vengano accettati anche due quadrati di colore diverso (uno blu e l'altro bianco ad esempio)
     private boolean check7(Library lib) {
         Card[][] temp=new Card[8][7];
         for (int k=0;k<8;k++){
