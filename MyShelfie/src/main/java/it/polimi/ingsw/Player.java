@@ -6,7 +6,6 @@ public class Player {
     private String  nickname;
     private Library library;
     private PlayerObj playerObj;
-    private boolean plyObjCompleted;
     private boolean commonObj1Completed;
     private boolean commonObj2Completed;
 
@@ -25,7 +24,6 @@ public class Player {
         this.playerObj = new PlayerObj();
         this.commonObj1Completed=false;
         this.commonObj2Completed=false;
-        this.plyObjCompleted=false;
     }
 
     /**
@@ -81,9 +79,6 @@ public class Player {
         this.commonObj2Completed = true;
     }
 
-    public void setPlyObjCompleted(){
-        this.plyObjCompleted=true;
-    }
 
     /**
      *
@@ -99,13 +94,5 @@ public class Player {
      */
     public boolean getCommonObj2Completed() {
         return commonObj2Completed;
-    }
-
-    /**
-     *
-     * @return plyObjCompleted
-     */
-    public boolean getPlyObjCompleted() {
-        return plyObjCompleted;
     }
 }

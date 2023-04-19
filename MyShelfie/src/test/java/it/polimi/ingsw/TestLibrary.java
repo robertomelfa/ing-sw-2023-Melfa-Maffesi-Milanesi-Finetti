@@ -120,6 +120,22 @@ public class TestLibrary extends TestCase
         assertTrue(lib.getPos(5,4)==Card.YELLOW && lib.getPos(4,4)==Card.PURPLE && lib.getPos(3,4)==Card.WHITE);
     }
 
+    @Test
+    public void test_column_full() throws Exception{
+        for(int i = 0; i < 6; i++){
+            lib.setCard(i, 0, Card.GREEN);
+        }
+        Assert.assertTrue(lib.numberOfCards(3));
+
+        // can't pick 1 card
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 5; j++){
+                lib.setCard(i, j, Card.GREEN);
+            }
+        }
+        Assert.assertFalse(lib.numberOfCards(1));
+    }
+
     @After
     public void teardown(){
         lib=null;

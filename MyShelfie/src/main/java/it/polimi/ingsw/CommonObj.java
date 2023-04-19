@@ -272,7 +272,6 @@ public class CommonObj {
     private boolean check9(Library lib) {
         int count9 = 0;
         Card[] countType = {NONE, NONE, NONE};
-
         for (int column = 0; column < 5; column++) {
             for (int i = 0; i < 3; i++) {
                 countType[i] = NONE;
@@ -281,11 +280,8 @@ public class CommonObj {
             for (int row = 0; row < 6; row++) {
 
                 if (lib.getPos(row, column) == NONE) break;
-
                 for (int i = 0; i < 3; i++) {
-
                     if (countType[i] == NONE) {
-
                         countType[i] = lib.getPos(row, column);
                         break;
                     } else if (lib.getPos(row, column) == countType[i]) break;
@@ -345,32 +341,23 @@ public class CommonObj {
             if (i == 0) {
                 if (lib.getPos(i, i) == NONE) break;
             } else if (i == 4) return true;
-
             else if ((lib.getPos(i, i) == NONE) || (lib.getPos(i - 1, i) != NONE) || (lib.getPos(i, i + 1) != NONE))
                 break;
         }
         for (int i = 0; i < 5; i++) {
-
             if (i == 4) return true;
-
             else if ((lib.getPos(i + 1, i) == NONE) || (lib.getPos(i, i) != NONE) || (lib.getPos(i + 1, i + 1) != NONE))
                 break;
         }
         for (int i = 0; i < 5; i++) {
-
             if (i == 0) {
-
                 if (lib.getPos(i, 4 - i) == NONE) break;
-
             } else if (i == 4) return true;
-
             else if ((lib.getPos(i, 4 - i) == NONE) || (lib.getPos(i - 1, 4 - i) != NONE) || (lib.getPos(i, 4 - i - 1) != NONE))
                 break;
         }
         for (int i = 0; i < 5; i++) {
-
             if (i == 4) return true;
-
             else if ((lib.getPos(i + 1, 4 - i) == NONE) || (lib.getPos(i, 4 - i) != NONE) || (lib.getPos(i + 1, 4 - i - 1) != NONE))
                 break;
         }

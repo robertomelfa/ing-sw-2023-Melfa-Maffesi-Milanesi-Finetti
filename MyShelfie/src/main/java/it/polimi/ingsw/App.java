@@ -1,8 +1,6 @@
 package it.polimi.ingsw;
 
 
-// TODO fare Test CommonObj : Melfa
-
 // TODO ModelViewController
 //  -mettere checkNear su client (getCardFromTable)
 //  -controller startTurn e Game (in parte)

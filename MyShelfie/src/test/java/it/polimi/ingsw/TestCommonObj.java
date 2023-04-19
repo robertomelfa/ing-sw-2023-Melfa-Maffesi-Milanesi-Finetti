@@ -204,6 +204,38 @@ public class TestCommonObj extends TestCase{
 
         Assert.assertTrue(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
+
+        p1.getLibrary().setCard(0, 0, GREEN);
+        p1.getLibrary().setCard(5, 0, WHITE);
+        p1.getLibrary().setCard(5, 4, GREEN);
+        p1.getLibrary().setCard(0, 4, GREEN);
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        p1.getLibrary().setCard(0, 0, GREEN);
+        p1.getLibrary().setCard(5, 0, GREEN);
+        p1.getLibrary().setCard(5, 4, WHITE);
+        p1.getLibrary().setCard(0, 4, GREEN);
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        p1.getLibrary().setCard(0, 0, WHITE);
+        p1.getLibrary().setCard(5, 0, GREEN);
+        p1.getLibrary().setCard(5, 4, GREEN);
+        p1.getLibrary().setCard(0, 4, GREEN);
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        p1.getLibrary().setCard(0, 0, NONE);
+        p1.getLibrary().setCard(5, 0, GREEN);
+        p1.getLibrary().setCard(5, 4, GREEN);
+        p1.getLibrary().setCard(0, 4, GREEN);
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
     }
 
     @Test
@@ -635,6 +667,8 @@ public class TestCommonObj extends TestCase{
         Assert.assertTrue(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
 
+
+
         // case false
 
         p1.getLibrary().setCard(3, 1, PURPLE);
@@ -676,13 +710,13 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().reset_lib();
 
         // the other cases are false:
-        for(int j = 0; j < 4; j++){
-            for(int i = 5; i > 4 - j; i--){
-                p1.getLibrary().setCard(i, j, WHITE);
+        for(int j = 0; j < 6; j++){
+            for(int i = 0; i < 5; i++){
+                p1.getLibrary().setCard(j, i, WHITE);
+                Assert.assertFalse(obj.checkObj(p1.getLibrary()));
             }
         }
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
     }
-
 }
