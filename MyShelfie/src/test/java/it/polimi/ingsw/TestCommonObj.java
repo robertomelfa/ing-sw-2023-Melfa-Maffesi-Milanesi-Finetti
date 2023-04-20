@@ -461,7 +461,6 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().reset_lib();
     }
 
-    // TODO dopo aver risolto la problematica di due quadrati di colore differente, aggiungere i test che coprano anche quei casi
 
     @Test
     public void test_check7() throws Exception{
@@ -497,6 +496,39 @@ public class TestCommonObj extends TestCase{
 
         Assert.assertTrue(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
+
+
+        //case true (two squares of different colors)
+
+        p1.getLibrary().setCard(0,0,PURPLE);
+        p1.getLibrary().setCard(1,0,PURPLE);
+        p1.getLibrary().setCard(0,1,PURPLE);
+        p1.getLibrary().setCard(1,1,PURPLE);
+
+        p1.getLibrary().setCard(3,2,BLUE);
+        p1.getLibrary().setCard(3,3,BLUE);
+        p1.getLibrary().setCard(4,2,BLUE);
+        p1.getLibrary().setCard(4,3,BLUE);
+
+        Assert.assertTrue(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        //case false(one perfect square and one square not perfect of different colors)
+
+        p1.getLibrary().setCard(0,0,PURPLE);
+        p1.getLibrary().setCard(1,0,PURPLE);
+        p1.getLibrary().setCard(0,1,PURPLE);
+        p1.getLibrary().setCard(1,1,PURPLE);
+
+        p1.getLibrary().setCard(3,2,BLUE);
+        p1.getLibrary().setCard(3,3,BLUE);
+        p1.getLibrary().setCard(4,2,BLUE);
+        p1.getLibrary().setCard(4,3,BLUE);
+        p1.getLibrary().setCard(2,2,BLUE);
+
+        Assert.assertTrue(!obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
     }
 
     @Test
