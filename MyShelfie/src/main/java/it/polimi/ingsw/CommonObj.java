@@ -215,9 +215,10 @@ public class CommonObj {
         return count6 >= 2;
     }
 
-    // TODO bisogna fare in modo che vengano accettati anche due quadrati di colore diverso (uno blu e l'altro bianco ad esempio)
+
     private boolean check7(Library lib) {
         Card[][] temp=new Card[8][7];
+        int count=0;
         for (int k=0;k<8;k++){
             for (int h=0;h<7;h++){
                 temp[k][h]=NONE;
@@ -229,7 +230,6 @@ public class CommonObj {
             }
         }
         for(Card i : EnumSet.range(WHITE,PURPLE)){
-            int count=0;
             for (int k=1;k<7;k++){
                 for (int h=1;h<6;h++){
                     if(temp[k][h]==i && temp[k][h+1]==i && temp[k+1][h]==i && temp[k+1][h+1]==i){
@@ -247,12 +247,13 @@ public class CommonObj {
                     }
                 }
             }
-            if (count==2){
-                return true;
-            }
+        }
+        if (count==2){
+            return true;
         }
         return false;
     }
+
 
     private boolean check8(Library lib) {
         int count8 = 0;
