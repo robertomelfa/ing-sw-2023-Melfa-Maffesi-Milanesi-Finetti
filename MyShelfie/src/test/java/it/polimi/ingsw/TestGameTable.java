@@ -1,5 +1,9 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Model.Card;
+import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.GameLogic;
+import it.polimi.ingsw.Model.Player;
 import junit.framework.TestCase;
 import org.junit.Test;
 

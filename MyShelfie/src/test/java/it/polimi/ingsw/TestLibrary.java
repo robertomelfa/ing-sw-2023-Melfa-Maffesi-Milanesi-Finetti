@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Model.Card;
+import it.polimi.ingsw.Model.Library;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,8 +16,7 @@ import java.util.Collections;
 /**
  * Unit test for Library.
  */
-public class TestLibrary extends TestCase
-{
+public class TestLibrary {
     Library lib=null;
     @Before
     public void setUp(){
@@ -27,7 +28,7 @@ public class TestLibrary extends TestCase
         for (int i=0;i<6;i++){
             for (int j=0;j<5;j++){
                 try{
-                    assertTrue(lib.getPos(i,j)==Card.NONE);
+                    Assert.assertSame(lib.getPos(i, j), Card.NONE);
                 }catch (Exception e){
 
                 }
@@ -37,18 +38,18 @@ public class TestLibrary extends TestCase
 
     @Test
     public void testgetPosException_00_NONE() throws Exception{
-        assertTrue(lib.getPos(0,0) == Card.NONE);
+        Assert.assertSame(lib.getPos(0, 0), Card.NONE);
     }
 
     @Test
     public void testgetPosException_76_exception(){
-        Assert.assertTrue(lib.getPos(7,6)==Card.NOT);
+        Assert.assertSame(lib.getPos(7, 6), Card.NOT);
 
     }
 
     @Test
     public void testcheckFull_notfull_false(){
-        assertTrue(lib.checkFull()==false);
+        Assert.assertFalse(lib.checkFull());
     }
 
     @Test
@@ -68,7 +69,7 @@ public class TestLibrary extends TestCase
 
 
         }
-        assertTrue(lib.checkFull()==true);
+        Assert.assertTrue(lib.checkFull());
     }
 
     @Test
@@ -89,7 +90,7 @@ public class TestLibrary extends TestCase
 
 
         }
-        assertTrue(lib.checkFull()==true);
+        Assert.assertTrue(lib.checkFull());
     }
 
     @Test
@@ -103,7 +104,7 @@ public class TestLibrary extends TestCase
         InputStream input=new ByteArrayInputStream(builder.toString().getBytes());
         System.setIn(input);
         lib.insert(cards);
-        assertTrue(lib.getPos(5,0)==Card.YELLOW && lib.getPos(4,0)==Card.PURPLE && lib.getPos(3,0)==Card.WHITE);
+        Assert.assertTrue(lib.getPos(5, 0) == Card.YELLOW && lib.getPos(4, 0) == Card.PURPLE && lib.getPos(3, 0) == Card.WHITE);
     }
 
     @Test
@@ -117,7 +118,7 @@ public class TestLibrary extends TestCase
         InputStream input=new ByteArrayInputStream(builder.toString().getBytes());
         System.setIn(input);
         lib.insert(cards);
-        assertTrue(lib.getPos(5,4)==Card.YELLOW && lib.getPos(4,4)==Card.PURPLE && lib.getPos(3,4)==Card.WHITE);
+        Assert.assertTrue(lib.getPos(5, 4) == Card.YELLOW && lib.getPos(4, 4) == Card.PURPLE && lib.getPos(3, 4) == Card.WHITE);
     }
 
     @Test
@@ -136,6 +137,18 @@ public class TestLibrary extends TestCase
         Assert.assertFalse(lib.numberOfCards(1));
     }
 
+    @Test
+    public void testCheckFinal (){
+
+        testcheckFull_fullblue_true();
+        Assert.assertEquals(8, lib.checkFinal());
+
+        testConstructor_allgridNONE();
+        Assert.assertEquals(0, lib.checkFinal());
+
+
+
+    }
     @After
     public void teardown(){
         lib=null;

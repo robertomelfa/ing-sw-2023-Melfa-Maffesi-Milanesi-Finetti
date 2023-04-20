@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 import java.util.*;
 
@@ -171,7 +171,7 @@ public class Game {
             listIteration++;
             if(players.size() == listIteration){
                 checkEnd();
-                throw new Exception("GAME IS ENDED");   // probably this will be in the view
+                throw new Exception("GAME IS ENDED");   // probably this will be in the view; metterei più un messaggio che un'eccezione che da meno problemi @simone
             }
             else {
                 currentPlayer = players.get(listIteration);

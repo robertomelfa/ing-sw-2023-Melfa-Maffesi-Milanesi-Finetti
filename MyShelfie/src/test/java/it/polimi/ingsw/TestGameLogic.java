@@ -1,8 +1,11 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Model.Card;
+import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.GameLogic;
+import it.polimi.ingsw.Model.Player;
 import junit.framework.TestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +14,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-public class TestGameLogic extends TestCase{
+public class TestGameLogic {
 
 
     @Test
@@ -40,7 +43,7 @@ public class TestGameLogic extends TestCase{
         System.out.flush();
         System.setOut(old);
         System.out.println("Out from console"+output.toString());
-        assertTrue(result.size()==1 && output.toString().contains(result.get(0).toString()));
+        Assert.assertTrue(result.size() == 1 && output.toString().contains(result.get(0).toString()));
     }
 
 
@@ -77,7 +80,7 @@ public class TestGameLogic extends TestCase{
             }
         }
 
-        assertTrue(result.size()==2 && containsColor);
+        Assert.assertTrue(result.size() == 2 && containsColor);
     }
 
 
@@ -114,7 +117,7 @@ public class TestGameLogic extends TestCase{
             }
         }
 
-        assertTrue(result.size()==3 && containsColor);
+        Assert.assertTrue(result.size() == 3 && containsColor);
     }
 
 
@@ -144,7 +147,7 @@ public class TestGameLogic extends TestCase{
         System.out.flush();
         System.setOut(old);
         System.out.println("Out from console"+output.toString());
-        assertTrue(output.toString().contains("Impossible to draw the card"));
+        Assert.assertTrue(output.toString().contains("Impossible to draw the card"));
     }
 
 
@@ -174,7 +177,7 @@ public class TestGameLogic extends TestCase{
         System.out.flush();
         System.setOut(old);
         System.out.println("Out from console"+output.toString());
-        assertTrue(output.toString().contains("Invalid coordinates, try again!"));
+        Assert.assertTrue(output.toString().contains("Invalid coordinates, try again!"));
     }
 
 
@@ -204,7 +207,7 @@ public class TestGameLogic extends TestCase{
         System.out.flush();
         System.setOut(old);
         System.out.println("Out from console"+output.toString());
-        assertTrue(output.toString().contains("Invalid coordinates, try again!"));
+        Assert.assertTrue(output.toString().contains("Invalid coordinates, try again!"));
     }
 
 }

@@ -1,14 +1,10 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.Card.*;
+import static it.polimi.ingsw.Model.Card.*;
 
 public class GameLogic {
     private GameTable gameTable;

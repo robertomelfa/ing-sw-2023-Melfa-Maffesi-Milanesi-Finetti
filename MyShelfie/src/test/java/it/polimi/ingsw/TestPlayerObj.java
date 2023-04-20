@@ -1,5 +1,9 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Model.Card;
+import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Model.PlayerObj;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +18,7 @@ public class TestPlayerObj {
     public void setUp() throws Exception {
         obj = new PlayerObj(1);
         player = new Player("Nick");
-        obj.resetAvaliable();
+        obj.resetAvailable();
     }
 
 //        avaliable si resetta ... (da capire dove metterlo) (esiste metodo resetAvaliable)
@@ -38,7 +42,7 @@ public class TestPlayerObj {
         for (int i=0; i<6; i++){
             Assert.assertTrue (obj.getPlayerObjs().get(i).getXPosition()>=0 && obj.getPlayerObjs().get(i).getXPosition()<6);
             Assert.assertTrue (obj.getPlayerObjs().get(i).getYPosition()>=0 && obj.getPlayerObjs().get(i).getYPosition()<5);
-            Assert.assertTrue (obj.getPlayerObjs().get(i).getType()!=Card.NONE && obj.getPlayerObjs().get(i).getType()!=Card.NOT && obj.getPlayerObjs().get(i).getType()!=null);
+            Assert.assertTrue (obj.getPlayerObjs().get(i).getType()!= Card.NONE && obj.getPlayerObjs().get(i).getType()!=Card.NOT && obj.getPlayerObjs().get(i).getType()!=null);
         }
     }
 
@@ -124,9 +128,9 @@ public class TestPlayerObj {
     }
 
     @Test
-    public void testResetAvaliable_chekReset(){
+    public void testResetAvailable_checkReset(){
 
-        obj.resetAvaliable();
+        obj.resetAvailable();
         Assert.assertEquals(12, PlayerObj.getAvailable().size());
     }
 // abbiamo messo che controlla solo alla fine della partita

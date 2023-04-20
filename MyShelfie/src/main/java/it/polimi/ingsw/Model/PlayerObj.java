@@ -1,16 +1,16 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import static it.polimi.ingsw.Card.NONE;
-import static it.polimi.ingsw.Card.NOT;
+import static it.polimi.ingsw.Model.Card.NONE;
+import static it.polimi.ingsw.Model.Card.NOT;
 
 
 public class PlayerObj {
     private final ArrayList<SingleObj> playerObjs ;
-    private static ArrayList <Integer> avaliable = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
+    private static ArrayList <Integer> available = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     private final int[] POINT = {1, 2, 4, 6, 9, 12};
   //  private int i;
 
@@ -61,9 +61,9 @@ public class PlayerObj {
 //        }
 
         Random rn = new Random();
-        int rand = rn.nextInt(avaliable.size());
+        int rand = rn.nextInt(available.size());
     //    this.i = 0;
-        switch (avaliable.get(rand)){
+        switch (available.get(rand)){
             case 1 -> this.playerObjs = obj1();
             case 2 -> this.playerObjs = obj2();
             case 3 -> this.playerObjs = obj3();
@@ -78,7 +78,8 @@ public class PlayerObj {
             case 12 -> this.playerObjs = obj12();
             default -> throw new Exception("error");
         }
-        avaliable.remove(rand);
+        if (available.size() <= 8) resetAvailable();
+        available.remove(rand);
     }
 
     private ArrayList <SingleObj>  obj1 (){
@@ -259,7 +260,7 @@ public class PlayerObj {
 
     //@test
     public static ArrayList<Integer> getAvailable() {
-        return avaliable;
+        return available;
     }
 
     //@test
@@ -286,8 +287,8 @@ public class PlayerObj {
         }
     }
 
-    public void resetAvaliable(){
-        avaliable = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
+    public void resetAvailable(){
+        available = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     }
 }
 

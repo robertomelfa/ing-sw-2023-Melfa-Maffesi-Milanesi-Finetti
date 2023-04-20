@@ -1,11 +1,12 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Model.CommonObj;
+import it.polimi.ingsw.Model.Player;
 import junit.framework.TestCase;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import static it.polimi.ingsw.Card.*;
+import static it.polimi.ingsw.Model.Card.*;
 
 // TODO revisionare i vari test
 
