@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 
 // TODO ModelViewController
@@ -7,7 +7,7 @@ package it.polimi.ingsw;
 
 // TODO consiglio Patrick package, view - model -controller - network (client/server)
 
-public class App 
+public class App
 {
     public static void main( String[] args ) throws Exception {
         Game game = new Game(2);

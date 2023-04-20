@@ -1,7 +1,7 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 
-import static it.polimi.ingsw.Card.*;
+import static it.polimi.ingsw.Model.Card.*;
 
 public class GameTable {
     Card[][] board = new Card[11][11];

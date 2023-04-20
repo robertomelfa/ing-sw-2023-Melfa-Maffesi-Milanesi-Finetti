@@ -1,8 +1,8 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 import java.util.EnumSet;
 
-import static it.polimi.ingsw.Card.*;
+import static it.polimi.ingsw.Model.Card.*;
 
 public class CommonObj {
     private final int objNum;
@@ -216,6 +216,7 @@ public class CommonObj {
     }
 
     // TODO bisogna fare in modo che vengano accettati anche due quadrati di colore diverso (uno blu e l'altro bianco ad esempio)
+    // non basta mettere fuori dal ciclo il count = 0   ??
     private boolean check7(Library lib) {
         Card[][] temp=new Card[8][7];
         for (int k=0;k<8;k++){

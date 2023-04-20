@@ -1,11 +1,9 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
 import java.util.Scanner;
 
-import static it.polimi.ingsw.Card.*;
+import static it.polimi.ingsw.Model.Card.*;
 
 public class Library {
     private Card[][] grid = new Card[6][5];
