@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static it.polimi.ingsw.Model.Card.*;
 
-// TODO revisionare i vari test
 
 public class TestCommonObj extends TestCase{
 
@@ -168,11 +167,11 @@ public class TestCommonObj extends TestCase{
 
         // fourth case
 
-        p1.getLibrary().setCard(4, 4, GREEN);
-        p1.getLibrary().setCard(3, 3, GREEN);
-        p1.getLibrary().setCard(2, 2, GREEN);
-        p1.getLibrary().setCard(1, 1, GREEN);
-        p1.getLibrary().setCard(0, 0, GREEN);
+        p1.getLibrary().setCard(5, 4, GREEN);
+        p1.getLibrary().setCard(4, 3, GREEN);
+        p1.getLibrary().setCard(3, 2, GREEN);
+        p1.getLibrary().setCard(2, 1, GREEN);
+        p1.getLibrary().setCard(1, 0, GREEN);
 
         Assert.assertTrue(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
@@ -298,6 +297,7 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(4, 3, YELLOW);
         p1.getLibrary().setCard(4, 4, WHITE);
 
+
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
 
@@ -324,6 +324,7 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(4, 2, NONE);
         p1.getLibrary().setCard(4, 3, YELLOW);
         p1.getLibrary().setCard(4, 4, WHITE);
+
 
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
@@ -355,8 +356,11 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(4, 3, YELLOW);
         p1.getLibrary().setCard(4, 4, WHITE);
 
+
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
+
+
     }
 
     @Test
@@ -388,6 +392,7 @@ public class TestCommonObj extends TestCase{
 
         p1.getLibrary().setCard(1, 3, PURPLE);
 
+
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
 
@@ -413,8 +418,146 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(4, 3, WHITE);
         p1.getLibrary().setCard(5, 3, WHITE);
 
+
         Assert.assertTrue(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
+
+        //test 1 group of 16 cards (horizontal)
+
+        p1.getLibrary().setCard(0, 0, PURPLE);
+        p1.getLibrary().setCard(0, 1, PURPLE);
+        p1.getLibrary().setCard(0, 2, PURPLE);
+        p1.getLibrary().setCard(0, 3, PURPLE);
+
+        p1.getLibrary().setCard(1, 0, PURPLE);
+        p1.getLibrary().setCard(1, 1, PURPLE);
+        p1.getLibrary().setCard(1, 2, PURPLE);
+        p1.getLibrary().setCard(1, 3, PURPLE);
+
+        p1.getLibrary().setCard(2, 0, PURPLE);
+        p1.getLibrary().setCard(2, 1, PURPLE);
+        p1.getLibrary().setCard(2, 2, PURPLE);
+        p1.getLibrary().setCard(2, 3, PURPLE);
+
+        p1.getLibrary().setCard(3, 0, PURPLE);
+        p1.getLibrary().setCard(3, 1, PURPLE);
+        p1.getLibrary().setCard(3, 2, PURPLE);
+        p1.getLibrary().setCard(3, 3, PURPLE);
+
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        //4 distinct groups of horizontal cards
+
+        p1.getLibrary().setCard(0, 0, PURPLE);
+        p1.getLibrary().setCard(0, 1, PURPLE);
+        p1.getLibrary().setCard(0, 2, PURPLE);
+        p1.getLibrary().setCard(0, 3, PURPLE);
+
+        p1.getLibrary().setCard(1, 0, BLUE);
+        p1.getLibrary().setCard(1, 1, BLUE);
+        p1.getLibrary().setCard(1, 2, BLUE);
+        p1.getLibrary().setCard(1, 3, BLUE);
+
+        p1.getLibrary().setCard(2, 0, YELLOW);
+        p1.getLibrary().setCard(2, 1, YELLOW);
+        p1.getLibrary().setCard(2, 2, YELLOW);
+        p1.getLibrary().setCard(2, 3, YELLOW);
+
+        p1.getLibrary().setCard(3, 0, LIGHTBLUE);
+        p1.getLibrary().setCard(3, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(3, 2, LIGHTBLUE);
+        p1.getLibrary().setCard(3, 3, LIGHTBLUE);
+
+
+        Assert.assertTrue(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        //4 distinct groups (mixed vertical and horizontal adjacency)
+
+        p1.getLibrary().setCard(0, 0, LIGHTBLUE);
+        p1.getLibrary().setCard(0, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(0, 2, LIGHTBLUE);
+        p1.getLibrary().setCard(1, 2, LIGHTBLUE);
+
+        p1.getLibrary().setCard(0, 3, BLUE);
+        p1.getLibrary().setCard(0, 4, BLUE);
+        p1.getLibrary().setCard(1, 3, BLUE);
+        p1.getLibrary().setCard(1, 4, BLUE);
+
+        p1.getLibrary().setCard(1, 0, YELLOW);
+        p1.getLibrary().setCard(1, 1, YELLOW);
+        p1.getLibrary().setCard(2, 0, YELLOW);
+        p1.getLibrary().setCard(2, 1, YELLOW);
+
+        p1.getLibrary().setCard(3, 0, PURPLE);
+        p1.getLibrary().setCard(3, 1, PURPLE);
+        p1.getLibrary().setCard(4, 1, PURPLE);
+        p1.getLibrary().setCard(4, 2, PURPLE);
+
+        p1.getLibrary().setCard(2, 2, WHITE);
+        p1.getLibrary().setCard(2, 3, WHITE);
+        p1.getLibrary().setCard(2, 4, WHITE);
+        p1.getLibrary().setCard(3, 2, WHITE);
+        p1.getLibrary().setCard(3, 3, WHITE);
+        p1.getLibrary().setCard(3, 4, WHITE);
+        p1.getLibrary().setCard(4, 3, WHITE);
+        p1.getLibrary().setCard(4, 4, WHITE);
+        p1.getLibrary().setCard(4, 0, WHITE);
+        p1.getLibrary().setCard(5, 0, WHITE);
+        p1.getLibrary().setCard(5, 1, WHITE);
+        p1.getLibrary().setCard(5, 2, WHITE);
+        p1.getLibrary().setCard(5, 3, WHITE);
+        p1.getLibrary().setCard(5, 4, WHITE);
+
+
+
+        Assert.assertTrue(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        //4 distinct groups mixed colors (mixed vertical and horizontal adjacency)
+
+        p1.getLibrary().setCard(0, 0, LIGHTBLUE);
+        p1.getLibrary().setCard(0, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(0, 2, LIGHTBLUE);
+        p1.getLibrary().setCard(1, 2, LIGHTBLUE);
+
+        p1.getLibrary().setCard(0, 3, BLUE);
+        p1.getLibrary().setCard(0, 4, BLUE);
+        p1.getLibrary().setCard(1, 3, BLUE);
+        p1.getLibrary().setCard(1, 4, BLUE);
+
+        p1.getLibrary().setCard(1, 0, YELLOW);
+        p1.getLibrary().setCard(1, 1, YELLOW);
+        p1.getLibrary().setCard(2, 0, YELLOW);
+        p1.getLibrary().setCard(2, 1, YELLOW);
+
+        p1.getLibrary().setCard(3, 0, BLUE);
+        p1.getLibrary().setCard(3, 1, BLUE);
+        p1.getLibrary().setCard(4, 1, BLUE);
+        p1.getLibrary().setCard(4, 2, BLUE);
+
+        p1.getLibrary().setCard(2, 2, WHITE);
+        p1.getLibrary().setCard(2, 3, WHITE);
+        p1.getLibrary().setCard(2, 4, WHITE);
+        p1.getLibrary().setCard(3, 2, WHITE);
+        p1.getLibrary().setCard(3, 3, WHITE);
+        p1.getLibrary().setCard(3, 4, WHITE);
+        p1.getLibrary().setCard(4, 3, WHITE);
+        p1.getLibrary().setCard(4, 4, WHITE);
+        p1.getLibrary().setCard(4, 0, WHITE);
+        p1.getLibrary().setCard(5, 0, WHITE);
+        p1.getLibrary().setCard(5, 1, WHITE);
+        p1.getLibrary().setCard(5, 2, WHITE);
+        p1.getLibrary().setCard(5, 3, WHITE);
+        p1.getLibrary().setCard(5, 4, WHITE);
+
+
+
+        Assert.assertTrue(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
     }
 
     @Test
@@ -550,6 +693,7 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(1, 3, WHITE);
         p1.getLibrary().setCard(1, 4, PURPLE);
 
+
         Assert.assertTrue(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
 
@@ -567,8 +711,45 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(1, 3, WHITE);
         p1.getLibrary().setCard(1, 4, GREEN);
 
+
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
+
+        //case one row not completed
+
+        p1.getLibrary().setCard(0, 0, BLUE);
+        p1.getLibrary().setCard(0, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(0, 2, YELLOW);
+        p1.getLibrary().setCard(0, 3, WHITE);
+
+        p1.getLibrary().setCard(1, 0, GREEN);
+        p1.getLibrary().setCard(1, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(1, 2, YELLOW);
+        p1.getLibrary().setCard(1, 3, WHITE);
+        p1.getLibrary().setCard(1, 4, PURPLE);
+
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        //case row with 2 different types
+
+        p1.getLibrary().setCard(0, 0, BLUE);
+        p1.getLibrary().setCard(0, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(0, 2, YELLOW);
+        p1.getLibrary().setCard(0, 3, WHITE);
+        p1.getLibrary().setCard(0, 4, GREEN);
+
+        p1.getLibrary().setCard(1, 0, GREEN);
+        p1.getLibrary().setCard(1, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(1, 2, YELLOW);
+        p1.getLibrary().setCard(1, 3, WHITE);
+        p1.getLibrary().setCard(1, 4, GREEN);
+
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
     }
 
     @Test
@@ -627,6 +808,60 @@ public class TestCommonObj extends TestCase{
 
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
+
+        // case false, one column not completed
+
+        p1.getLibrary().setCard(0, 0, NONE);
+        p1.getLibrary().setCard(1, 0, WHITE);
+        p1.getLibrary().setCard(2, 0, LIGHTBLUE);
+        p1.getLibrary().setCard(3, 0, YELLOW);
+        p1.getLibrary().setCard(4, 0, WHITE);
+        p1.getLibrary().setCard(5, 0, BLUE);
+
+        p1.getLibrary().setCard(0, 3, GREEN);
+        p1.getLibrary().setCard(1, 3, GREEN);
+        p1.getLibrary().setCard(2, 3, LIGHTBLUE);
+        p1.getLibrary().setCard(3, 3, GREEN);
+        p1.getLibrary().setCard(4, 3, GREEN);
+        p1.getLibrary().setCard(5, 3, LIGHTBLUE);
+
+        p1.getLibrary().setCard(0, 4, GREEN);
+        p1.getLibrary().setCard(1, 4, GREEN);
+        p1.getLibrary().setCard(2, 4, GREEN);
+        p1.getLibrary().setCard(3, 4, GREEN);
+        p1.getLibrary().setCard(4, 4, GREEN);
+        p1.getLibrary().setCard(5, 4, GREEN);
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+        //case false, one column with more than 3 different types of cards
+
+        p1.getLibrary().setCard(0, 0, WHITE);
+        p1.getLibrary().setCard(1, 0, WHITE);
+        p1.getLibrary().setCard(2, 0, LIGHTBLUE);
+        p1.getLibrary().setCard(3, 0, YELLOW);
+        p1.getLibrary().setCard(4, 0, WHITE);
+        p1.getLibrary().setCard(5, 0, WHITE);
+
+        p1.getLibrary().setCard(0, 3, GREEN);
+        p1.getLibrary().setCard(1, 3, WHITE);
+        p1.getLibrary().setCard(2, 3, LIGHTBLUE);
+        p1.getLibrary().setCard(3, 3, YELLOW);
+        p1.getLibrary().setCard(4, 3, GREEN);
+        p1.getLibrary().setCard(5, 3, LIGHTBLUE);
+
+        p1.getLibrary().setCard(0, 4, GREEN);
+        p1.getLibrary().setCard(1, 4, GREEN);
+        p1.getLibrary().setCard(2, 4, GREEN);
+        p1.getLibrary().setCard(3, 4, GREEN);
+        p1.getLibrary().setCard(4, 4, GREEN);
+        p1.getLibrary().setCard(5, 4, GREEN);
+
+        Assert.assertFalse(obj.checkObj(p1.getLibrary()));
+        p1.getLibrary().reset_lib();
+
+
     }
 
     @Test
@@ -751,5 +986,47 @@ public class TestCommonObj extends TestCase{
         }
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
+    }
+
+    @Test
+    public void testgetPointCount_2players_returncorrectpoints(){
+        CommonObj obj= new CommonObj(2,1);
+        int points;
+        points=obj.getPointCount();
+        assertTrue(points==8);
+        points=obj.getPointCount();
+        assertTrue(points==4);
+        points=obj.getPointCount();
+        assertTrue(points==0);
+        points=obj.getPointCount();
+        assertTrue(points==0);
+    }
+
+    @Test
+    public void testgetPointCount_3players_returncorrectpoints(){
+        CommonObj obj= new CommonObj(3,1);
+        int points;
+        points=obj.getPointCount();
+        assertTrue(points==8);
+        points=obj.getPointCount();
+        assertTrue(points==6);
+        points=obj.getPointCount();
+        assertTrue(points==4);
+        points=obj.getPointCount();
+        assertTrue(points==0);
+    }
+
+    @Test
+    public void testgetPointCount_4players_returncorrectpoints(){
+        CommonObj obj= new CommonObj(4,1);
+        int points;
+        points=obj.getPointCount();
+        assertTrue(points==8);
+        points=obj.getPointCount();
+        assertTrue(points==6);
+        points=obj.getPointCount();
+        assertTrue(points==4);
+        points=obj.getPointCount();
+        assertTrue(points==2);
     }
 }
