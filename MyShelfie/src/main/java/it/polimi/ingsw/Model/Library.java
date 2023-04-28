@@ -62,7 +62,7 @@ public class Library {
      * This method will be in the view
      */
     public void viewGrid() {
-        System.out.print("\n   ");
+        System.out.print("   ");
         for (int i = 1; i < 6; i++) {
             System.out.printf("     %d     ", i);
         }
@@ -74,7 +74,7 @@ public class Library {
             System.out.printf(" %d ", i + 1);
             for (int j = 0; j < 5; j++) {
                 if (this.grid[i][j] != NOT && this.grid[i][j] != NONE) {
-                    System.out.printf("%-11s", grid[i][j]);
+                    System.out.printf("%-22s", grid[i][j]);
                 } else {
                     System.out.print("           ");
                 }

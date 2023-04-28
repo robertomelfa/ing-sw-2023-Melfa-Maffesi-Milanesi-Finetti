@@ -130,9 +130,10 @@ public class GameTable {
             System.out.printf(" %d ", i);
             for(int j = 1; j < 11; j++){
                 if(this.board[i][j] != NOT && this.board[i][j] != NONE){ // remove this if to view NONE and NOT on the gameTable
-                    System.out.printf("%-11s", board[i][j]);
+                    System.out.printf("%-22s", board[i][j]);
                 }else{
                     System.out.print("           ");     // if there is no card, read space
+
                 }
             }
             System.out.print("\n");

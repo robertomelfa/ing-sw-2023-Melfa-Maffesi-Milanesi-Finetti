@@ -239,7 +239,7 @@ public class PlayerObj {
             System.out.printf(" %d ", i+1);
             for(int j = 0; j < 5; j++){
                 if(temp[i][j] != NOT && temp[i][j] != NONE){
-                    System.out.printf("%-11s", temp[i][j]);
+                    System.out.printf("%-22s", temp[i][j]);
                 }else{
                     System.out.print("           ");
                 }
