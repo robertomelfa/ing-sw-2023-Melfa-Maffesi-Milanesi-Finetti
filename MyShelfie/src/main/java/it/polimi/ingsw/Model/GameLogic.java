@@ -9,7 +9,7 @@ import static it.polimi.ingsw.Model.Card.*;
 public class GameLogic {
     private GameTable gameTable;
 
-    /* salvataggio riferimento a game private*/
+
     private Game game1;
 
 
