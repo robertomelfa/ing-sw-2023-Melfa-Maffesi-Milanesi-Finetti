@@ -6,6 +6,10 @@ import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import static it.polimi.ingsw.Model.Card.NONE;
 
 public class Client extends UnicastRemoteObject implements GameClientInterface {
     private Player player;
@@ -20,6 +24,10 @@ public class Client extends UnicastRemoteObject implements GameClientInterface {
 
     public void receiveGameTable(GameTable board) throws RemoteException{
         board.viewTable();
+    }
+
+    public void receiveLibrary(Library library) throws RemoteException{
+        library.viewGrid();
     }
 
 }

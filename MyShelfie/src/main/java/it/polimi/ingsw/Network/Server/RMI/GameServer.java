@@ -41,6 +41,10 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
 
     }
 
+    public List<GameClientInterface> getClientList() throws RemoteException {
+        return client;
+    }
+
     public void setGame(Game game, GameClientInterface c) throws RemoteException{
         this.game = game;
         for(int i = 0; i < client.size(); i++){
