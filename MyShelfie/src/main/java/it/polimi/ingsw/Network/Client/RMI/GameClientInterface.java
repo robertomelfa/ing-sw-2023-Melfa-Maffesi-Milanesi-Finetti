@@ -14,4 +14,6 @@ public interface GameClientInterface extends Remote{
 
     public void receiveGameTable(GameTable board) throws RemoteException;
 
+    public void Connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception;
+
 }

@@ -33,7 +33,7 @@ public class Server {
                 if(server.getClient(i) != null){
                     try{
                         System.out.println("Si e' connesso " + server.getClient(i).getPlayer().getNickname());
-                        server.messageToAll(server.getGame().getGameTable());
+                        server.GameTableToClient(server.getGame().getGameTable(), i);
                         i++;
                     }catch(Exception e){}
                 }

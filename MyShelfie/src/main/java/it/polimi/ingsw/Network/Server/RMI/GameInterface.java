@@ -14,9 +14,9 @@ public interface GameInterface extends Remote {
 
     public void setClient(GameClientInterface c) throws RemoteException;
     public GameClientInterface getClient(int i) throws RemoteException;
-
-    public void setGame(Game game, GameClientInterface c) throws RemoteException;
+    public void setGame(Game game) throws RemoteException;
     public Game getGame() throws RemoteException;
+    public void GameTableToAll(GameTable board) throws RemoteException;
 
-    public void messageToAll(GameTable board) throws RemoteException;
+    public void GameTableToClient(GameTable board, int i) throws RemoteException;
 }
