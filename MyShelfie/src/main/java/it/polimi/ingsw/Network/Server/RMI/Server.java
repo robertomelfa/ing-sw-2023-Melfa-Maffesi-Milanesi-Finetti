@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
+import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Model.*;
 
 import java.rmi.registry.LocateRegistry;
@@ -11,7 +12,7 @@ import java.rmi.RemoteException;
 
 public class Server {
 
-    public static void main(String[] argv) throws RemoteException{
+    public static void main(String[] argv) throws RemoteException, Exception{
         try{
             int i = 0, num = 0;
 /*
@@ -31,12 +32,16 @@ public class Server {
             System.out.println("[Server] is running");
             while(true){
                 if(server.getClient(i) != null){
-                    try{
-                        System.out.println("Si e' connesso " + server.getClient(i).getPlayer().getNickname());
-                        server.GameTableToClient(server.getGame().getGameTable(), i);
-                        i++;
-                    }catch(Exception e){}
+                    System.out.println("Si e' connesso " + server.getClient(i).getPlayer().getNickname());
+                    server.gameTableToClient(server.getGame().getGameTable(), i);
+                    i++;
+                    if(server.getGame().getNumOfPlayers() == server.getGame().numActualPlayers()){
+                        RMIController controller = new RMIController();
+                        controller.takeTurn();
+                    }
                 }
+
+
 
                 /*    if(server.getGame().getNumOfPlayers()-server.getGame().numActualPlayers() > 0){
                         System.out.println("Waiting players, " + (server.getGame().getNumOfPlayers()-server.getGame().numActualPlayers()) + " remaining");

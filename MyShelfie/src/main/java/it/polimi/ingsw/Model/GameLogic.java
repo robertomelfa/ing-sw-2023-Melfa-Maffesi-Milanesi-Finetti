@@ -25,6 +25,10 @@ public class GameLogic implements Serializable{
         gameTable = game.getGameTable();
     }
 
+    public Game getGame(){
+        return this.game1;
+    }
+
     /**
      *
      * @return the List of cards picked by player

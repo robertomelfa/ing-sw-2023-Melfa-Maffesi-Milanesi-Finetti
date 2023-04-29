@@ -4,11 +4,13 @@ import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Client extends UnicastRemoteObject implements GameClientInterface {
+public class Client extends UnicastRemoteObject implements GameClientInterface{
     private Player player;
 
     Client(String name) throws Exception{
@@ -23,42 +25,46 @@ public class Client extends UnicastRemoteObject implements GameClientInterface {
         board.viewTable();
     }
 
-    public void Connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception {
-        Scanner in = new Scanner(System.in);
-        String answer;
+    public void receiveLibrary(Library library) throws RemoteException{
+        library.viewGrid();
+    }
 
+    public void receiveGetCard(GameLogic gameLogic) throws RemoteException, Exception{
+        ArrayList<Card> cards = new ArrayList<>();
+
+        cards = gameLogic.getCardFromTable();
+
+        player.getLibrary().insert(cards);
+    }
+
+    public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception{
         if(server.getGame() == null){
-            System.out.println("Welcome in a new game");
-
+            Scanner in = new Scanner(System.in);
             System.out.println("How many players?");
             int num = in.nextInt();
             Game game = new Game(num);
             server.setGame(game);
             server.setClient(client);
 
-
-            //    client.receiveGameTable(server.getGame().getGameTable());
         }else{
-            //   System.out.println("Press J to join a game\nPress N to create a new game");
-            //   answer = in.nextLine();
+            String answer = "J"; // per ora teniamo che puoi solo joinare
 
-            answer = "J"; // per ora teniamo che puoi solo joinare
-
-            switch (answer){
-                case "N":
-                    // TODO implementare il caso di un nuovo game: veramente necessario?
-                    break;
-                case "J":
-                    System.out.println("You choose J");
-                    if(server.getGame().getNumOfPlayers() > server.getGame().numActualPlayers()){
+            if(server.getGame().getNumOfPlayers() > server.getGame().numActualPlayers()){
+                switch (answer){
+                    case "N":
+                        // TODO implementare il caso di un nuovo game: veramente necessario?
+                        break;
+                    case "J":
+                        System.out.println("You choose J");
                         server.setClient(client);
-                    }else{
-                        throw new Exception("troppi dispositivi connessi" + server.getGame().numActualPlayers() +", non puoi accedere");
-                    }
-                    break;
-                default: System.out.println("Invalid choice");
+                        break;
+                    default: System.out.println("Invalid choice");
+                }
+            }else{
+                throw new Exception("troppi dispositivi connessi, non puoi accedere");
             }
-        }
-    }
 
+        }
+        System.out.println("[System] connected!");
+    }
 }

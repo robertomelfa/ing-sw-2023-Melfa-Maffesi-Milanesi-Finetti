@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Client.RMI;
 
+import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Server.RMI.*;
 
@@ -24,7 +25,8 @@ public class GameClient {
             System.out.println("Enter the player's name");
             name = in.nextLine();
             GameClientInterface client = new Client(name);
-            client.Connection(server, client);
+            client.connection(server, client);
+
 
         }catch(Exception e){
             System.out.println("[System] Server failed: " + e);

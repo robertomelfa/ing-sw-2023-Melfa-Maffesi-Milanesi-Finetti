@@ -25,11 +25,9 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
     }
 
 
-    public void setClient(GameClientInterface c) throws RemoteException{
+    public void setClient(GameClientInterface c) throws RemoteException,Exception{
         client.add(c);
-        try{
-            game.addNewPlayer(c.getPlayer());
-        }catch(Exception e){}
+        game.addNewPlayer(c.getPlayer());
     }
 
     public  GameClientInterface getClient(int i) throws RemoteException{
@@ -45,26 +43,21 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
         return client;
     }
 
-    public void setGame(Game game, GameClientInterface c) throws RemoteException{
+    public void setGame(Game game) throws RemoteException{
         this.game = game;
-        for(int i = 0; i < client.size(); i++){
-            client.remove(i);
-            this.game.removePlayer(i);
-            UnicastRemoteObject.unexportObject(client.get(i), false);
-        }
-        client.add(c);
-        try{
-            this.game.addNewPlayer(c.getPlayer());
-        }catch(Exception e){}
     }
 
     public Game getGame() throws RemoteException{
         return this.game;
     }
 
-    public void messageToAll(GameTable board) throws RemoteException{
+    public void gameTableToAll(GameTable board) throws RemoteException{
         for(int i = 0; i < client.size(); i++){
             client.get(i).receiveGameTable(board);
         }
+    }
+
+    public void gameTableToClient(GameTable board, int i) throws RemoteException,Exception{
+        client.get(i).receiveGameTable(board);
     }
 }

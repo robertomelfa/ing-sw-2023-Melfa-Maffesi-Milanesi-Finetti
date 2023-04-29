@@ -78,6 +78,8 @@ public class Game implements Serializable{
     /**
      *
      * @return the player that has the chair (the player index equals chair)
+     *
+     * move to the Controller
      */
     public Player getChair(){
         return players.get(chair);
@@ -88,10 +90,12 @@ public class Game implements Serializable{
     /**
      *
      * @return currentPlayer
+     *
+     * move to the controller
      */
     public Player getCurrentPlayer(){
         return currentPlayer;
-    };
+    }
 
     private void setBothCommonObj(int numOfPlayers){
         Random rn = new Random();
@@ -160,6 +164,8 @@ public class Game implements Serializable{
 
     /**
      * This method is used to update the current player
+     *
+     * move to the controller
      */
     public void updateCurrentPlayer() throws Exception{
         if(!endGame){
