@@ -5,8 +5,8 @@ import static it.polimi.ingsw.Model.Card.*;
 import java.io.Serializable;
 
 public class GameTable implements Serializable{
-    Card[][] board = new Card[11][11];
-    CardBox cardbox = new CardBox();
+    private Card[][] board = new Card[11][11];
+    private CardBox cardbox = new CardBox();
 
     /**
      *
@@ -140,5 +140,14 @@ public class GameTable implements Serializable{
             System.out.print("\n");
         }
         System.out.print("\n");
+    }
+
+    public void setCardfromBoard(int x, int y, Card card){
+        board[x][y]=card;
+    }
+
+
+    public Card getCardfromBoard(int x,int y) {
+        return board[x][y];
     }
 }

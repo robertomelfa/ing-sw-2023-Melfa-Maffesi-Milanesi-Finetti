@@ -28,6 +28,7 @@ public class Client {
 
                 break;
             default:
+                System.out.println("Invalid choice");
         }
     }
 }

@@ -1,14 +1,20 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
+import it.polimi.ingsw.Network.Message;
+import it.polimi.ingsw.Network.MessageType;
+
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Client_Socket {
+public class Client_Socket implements Serializable {
 
+    private Socket serversocket;
 
-    public  void start() {
+    public  void start(){
         String ins;
         Scanner scanner=new Scanner(System.in);
         System.out.print("Make a choice:\nN: start a new game\nJ: join a game\n");
@@ -26,6 +32,17 @@ public class Client_Socket {
                 System.out.println("Insert server port");
                 port=scanner.nextInt();
                 connect("127.0.0.1",port);
+                try {
+                    clientlogic();
+                }catch (Exception e){
+                    try{
+                        serversocket.close();
+                    }catch (IOException i){
+                        System.out.println("Impossible to close socket");
+                    }
+
+                }
+
             break;
             default:
                 System.out.println("Invalid choice");
@@ -37,15 +54,35 @@ public class Client_Socket {
 
     }
 
-    public static void connect(String host,int port){
+    public  void connect(String host,int port){
         try {
             Socket socket = new Socket(host,port);
+            this.serversocket=socket;
             System.out.println("Client is running...");
 
 
 
         }catch(IOException e){
             System.out.println("Client fatal error");
+        }
+    }
+
+
+    public void clientlogic() throws Exception{
+        try {
+            ObjectInputStream ois=new ObjectInputStream(serversocket.getInputStream());
+            Message nickresponse= (Message) ois.readObject();
+            if (nickresponse.getType()!= MessageType.requestNickname){
+                throw new Exception("Message type not correct");
+            }
+            System.out.println("message type is correct");
+
+
+            ois.close();
+        }catch (IOException i){
+            System.out.println("IOException");
+        }catch (ClassNotFoundException c){
+            System.out.println("ClassNotFoundException");
         }
     }
 
