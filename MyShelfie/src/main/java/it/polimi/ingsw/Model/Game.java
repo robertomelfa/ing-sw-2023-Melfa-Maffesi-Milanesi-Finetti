@@ -83,6 +83,8 @@ public class Game implements Serializable{
         return players.get(chair);
     }
 
+    public void setChair(int i){ chair = i; }
+
     /**
      *
      * @return currentPlayer
