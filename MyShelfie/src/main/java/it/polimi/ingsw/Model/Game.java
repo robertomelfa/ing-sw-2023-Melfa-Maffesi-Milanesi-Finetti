@@ -211,6 +211,10 @@ public class Game implements Serializable{
     public int numActualPlayers(){
         return players.size();
     }
+
+    public void removePlayer(int i){
+        players.remove(i);
+    }
 }
 
 /**
