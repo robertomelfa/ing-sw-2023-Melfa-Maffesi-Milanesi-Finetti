@@ -6,9 +6,10 @@ import java.util.Random;
 
 import static it.polimi.ingsw.Model.Card.NONE;
 import static it.polimi.ingsw.Model.Card.NOT;
+import java.io.Serializable;
 
 
-public class PlayerObj {
+public class PlayerObj implements Serializable{
     private final ArrayList<SingleObj> playerObjs ;
     private static ArrayList <Integer> available = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     private final int[] POINT = {1, 2, 4, 6, 9, 12};

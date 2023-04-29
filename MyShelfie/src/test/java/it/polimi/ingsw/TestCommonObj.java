@@ -52,6 +52,7 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(4, 4, GREEN);
         p1.getLibrary().setCard(5, 4, GREEN);
 
+        p1.getLibrary().viewGrid();
         Assert.assertFalse(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
 
@@ -89,6 +90,7 @@ public class TestCommonObj extends TestCase{
         p1.getLibrary().setCard(4, 4, GREEN);
         p1.getLibrary().setCard(5, 4, GREEN);
 
+        p1.getLibrary().viewGrid();
         Assert.assertTrue(obj.checkObj(p1.getLibrary()));
         p1.getLibrary().reset_lib();
     }

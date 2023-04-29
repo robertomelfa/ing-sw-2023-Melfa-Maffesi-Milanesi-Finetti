@@ -1,7 +1,8 @@
 package it.polimi.ingsw.Model;
 
+import java.io.Serializable;
 
-public class SingleObj {
+public class SingleObj implements Serializable{
 
     private int x;
 

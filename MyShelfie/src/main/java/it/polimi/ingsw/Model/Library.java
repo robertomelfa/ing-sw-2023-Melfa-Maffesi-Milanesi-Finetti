@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static it.polimi.ingsw.Model.Card.*;
+import java.io.Serializable;
 
-public class Library {
+public class Library implements Serializable{
     private Card[][] grid = new Card[6][5];
 
     private int i;

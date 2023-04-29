@@ -3,8 +3,9 @@ package it.polimi.ingsw.Model;
 import java.util.EnumSet;
 
 import static it.polimi.ingsw.Model.Card.*;
+import java.io.Serializable;
 
-public class CommonObj {
+public class CommonObj implements Serializable{
     private final int objNum;
     private final int[] pointCount = new int[4];
     private int indexPoint = 0;

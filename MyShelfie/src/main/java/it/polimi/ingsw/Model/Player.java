@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
     private boolean yourTurn;
     private int points;
     private String  nickname;

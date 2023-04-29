@@ -2,8 +2,9 @@ package it.polimi.ingsw.Model;
 
 
 import static it.polimi.ingsw.Model.Card.*;
+import java.io.Serializable;
 
-public class GameTable {
+public class GameTable implements Serializable{
     Card[][] board = new Card[11][11];
     CardBox cardbox = new CardBox();
 

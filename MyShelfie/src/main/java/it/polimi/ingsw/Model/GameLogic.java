@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static it.polimi.ingsw.Model.Card.*;
+import java.io.Serializable;
 
-public class GameLogic {
+public class GameLogic implements Serializable{
     private GameTable gameTable;
 
 
@@ -20,7 +21,6 @@ public class GameLogic {
      * It takes the gameTable of the game
      */
     public GameLogic(Game game){
-        Game game1;
         this.game1 = game;
         gameTable = game.getGameTable();
     }
@@ -283,7 +283,5 @@ public class GameLogic {
             System.out.println("GAME IS ENDED ");
         }
     }
-
-
 
 }

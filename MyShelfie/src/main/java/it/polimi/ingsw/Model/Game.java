@@ -1,8 +1,9 @@
 package it.polimi.ingsw.Model;
 
 import java.util.*;
+import java.io.Serializable;
 
-public class Game {
+public class Game implements Serializable{
     private GameTable gameTable;
     private List<Player> players;
     private int numOfPlayers;
@@ -205,6 +206,10 @@ public class Game {
           //      System.out.println("Player " + players.get(i).getNickname() + " hai totalizzato " + players.get(i).getScore());  // view
             }catch (Exception e){}
         }
+    }
+
+    public int numActualPlayers(){
+        return players.size();
     }
 }
 

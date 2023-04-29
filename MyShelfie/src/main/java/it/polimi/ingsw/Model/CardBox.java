@@ -1,8 +1,9 @@
 package it.polimi.ingsw.Model;
 
 import java.util.*;
+import java.io.Serializable;
 
-public class CardBox {
+public class CardBox implements Serializable{
 //    int cardLeft, leftWhite, leftBlue, leftLightBlue, leftYellow, leftPurple, leftGreen;
 
     List<Card> cardBox = new LinkedList<>();
