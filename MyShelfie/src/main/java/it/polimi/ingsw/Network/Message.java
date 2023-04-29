@@ -1,11 +1,13 @@
 package it.polimi.ingsw.Network;
 
 
-public class Message{
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private MessageType type;
     private String message;
 
-    public void Message(MessageType type, String message){
+    public  Message(MessageType type, String message){
         this.type=type;
         this.message=message;
     }
@@ -22,8 +24,3 @@ public class Message{
 
 
 
-
-
- enum MessageType {
-    sendNickname, requestNickname, notifyBeginTurn, endTurn, ping
-}

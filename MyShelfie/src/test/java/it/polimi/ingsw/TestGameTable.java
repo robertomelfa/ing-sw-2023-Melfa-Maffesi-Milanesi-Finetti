@@ -175,9 +175,10 @@ public class TestGameTable extends TestCase {
         System.setIn(input);
         result=logic.getCardFromTable();
 
-        //a quanto pare non riesce a refillare la board
+
 
         g1.getGameTable().checkStatus();
+
 
         builder=new StringBuilder();
         builder.append("2\n2\n4\n2\n5\n");

@@ -56,9 +56,9 @@ public class GameLogic implements Serializable{
                 }
             }while(!checkNear(x1, y1));
             if(checkNear(x1, y1)){
-                list.add(gameTable.board[x1][y1]);
-                System.out.println("Card " + gameTable.board[x1][y1] + " drawn!");
-                gameTable.board[x1][y1] = NONE;
+                list.add(gameTable.getCardfromBoard(x1,y1));
+                System.out.println("Card " + gameTable.getCardfromBoard(x1,y1) + " drawn!");
+                gameTable.setCardfromBoard(x1,y1,NONE);
             }
             return list;
         }else if(size == 2){        // case 2 cards
@@ -79,11 +79,11 @@ public class GameLogic implements Serializable{
                 }
             }while(!checkNear(x1, y1, x2, y2));
             if(checkNear(x1, y1, x2, y2)){
-                list.add(gameTable.board[x1][y1]);
-                list.add(gameTable.board[x2][y2]);
-                System.out.println("Card " + gameTable.board[x1][y1] + " " + gameTable.board[x2][y2] + " drawn");
-                gameTable.board[x1][y1] = NONE;
-                gameTable.board[x2][y2] = NONE;
+                list.add(gameTable.getCardfromBoard(x1,y1));
+                list.add(gameTable.getCardfromBoard(x2,y2));
+                System.out.println("Card " + gameTable.getCardfromBoard(x1,y1) + " " + gameTable.getCardfromBoard(x2,y2) + " drawn");
+                gameTable.setCardfromBoard(x1,y1,NONE);
+                gameTable.setCardfromBoard(x2,y2,NONE);
             }
         }else{  // case 3 cards
             int x1, y1, x2, y2, x3, y3;
@@ -109,15 +109,16 @@ public class GameLogic implements Serializable{
 
             if(checkNear(x1, y1, x2, y2, x3, y3)){
                 // add cards on the list
-                list.add(gameTable.board[x1][y1]);
-                list.add(gameTable.board[x2][y2]);
-                list.add(gameTable.board[x3][y3]);
+                list.add(gameTable.getCardfromBoard(x1,y1));
+                list.add(gameTable.getCardfromBoard(x2,y2));
+                list.add(gameTable.getCardfromBoard(x3,y3));
 
-                System.out.print("Cards " + gameTable.board[x1][y1] + " " + gameTable.board[x2][y2] + " " + gameTable.board[x3][y3] + " drawn");
+                System.out.print("Cards " + gameTable.getCardfromBoard(x1,y1) + " " + gameTable.getCardfromBoard(x2,y2) + " " + gameTable.getCardfromBoard(x3,y3) + " drawn");
                 // set NONE on the table
-                gameTable.board[x1][y1] = NONE;
-                gameTable.board[x2][y2] = NONE;
-                gameTable.board[x3][y3] = NONE;
+                gameTable.setCardfromBoard(x1,y1,NONE);
+                gameTable.setCardfromBoard(x2,y2,NONE);
+                gameTable.setCardfromBoard(x3,y3,NONE);
+
             }
         }
         return list;
@@ -131,10 +132,10 @@ public class GameLogic implements Serializable{
      */
     // verify if card has free side
     private boolean checkNear(int x1, int y1){
-        if(gameTable.board[x1][y1] == NONE || gameTable.board[x1][y1] == NOT){
+        if(gameTable.getCardfromBoard(x1,y1) == NONE || gameTable.getCardfromBoard(x1,y1) == NOT){
             System.out.println("Card not exists");
             return false;
-        }else if((gameTable.board[x1+1][y1] == NONE || gameTable.board[x1+1][y1] == NOT) || (gameTable.board[x1-1][y1] == NONE || gameTable.board[x1-1][y1] == NOT) || (gameTable.board[x1][y1+1] == NONE || gameTable.board[x1+1][y1+1] == NOT) || (gameTable.board[x1][y1-1] == NONE || gameTable.board[x1][y1-1] == NOT)){
+        }else if((gameTable.getCardfromBoard(x1+1,y1) == NONE || gameTable.getCardfromBoard(x1+1,y1) == NOT) || (gameTable.getCardfromBoard(x1-1,y1) == NONE || gameTable.getCardfromBoard(x1-1,y1) == NOT) || (gameTable.getCardfromBoard(x1,y1+1) == NONE || gameTable.getCardfromBoard(x1+1,y1+1) == NOT) || (gameTable.getCardfromBoard(x1,y1-1) == NONE || gameTable.getCardfromBoard(x1,y1-1) == NOT)){
             return true;
         }
         System.out.println("Card has not free side");

@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class CardBox implements Serializable{
 //    int cardLeft, leftWhite, leftBlue, leftLightBlue, leftYellow, leftPurple, leftGreen;
 
-    List<Card> cardBox = new LinkedList<>();
+    private List<Card> cardBox = new LinkedList<>();
 
     /**
      * Constructor for the CardBox class.
@@ -79,5 +79,9 @@ public class CardBox implements Serializable{
             cardBox.remove(cardBox.size()-1);
             return temp;
         }
+    }
+
+    public List<Card> getCardBox() {
+        return cardBox;
     }
 }
