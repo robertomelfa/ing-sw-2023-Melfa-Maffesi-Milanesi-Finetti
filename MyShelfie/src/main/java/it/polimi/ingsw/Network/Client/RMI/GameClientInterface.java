@@ -15,7 +15,8 @@ public interface GameClientInterface extends Remote{
 
     public void receiveLibrary(Library library) throws RemoteException;
 
-    public void receiveGetCard(GameLogic gameLogic) throws RemoteException, Exception;
+    public void receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception;
+
 
     public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception;
 

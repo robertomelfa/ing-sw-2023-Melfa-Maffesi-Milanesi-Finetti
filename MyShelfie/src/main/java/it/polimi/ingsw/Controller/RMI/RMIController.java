@@ -14,6 +14,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static it.polimi.ingsw.Model.Card.NONE;
 
 // TODO implementare comunicazione client-server attraverso controller per la gestione del turno
 
@@ -41,6 +44,7 @@ public class RMIController {
             for(int i = 0; i < server.getClientList().size(); i++){
                 players.add(server.getClient(i));
             }
+            gameLogic = new GameLogic(server.getGame());
 
         } catch (AccessException e) {
             throw new RuntimeException(e);
@@ -61,14 +65,11 @@ public class RMIController {
 
     public void updateCurrentPlayer() throws RemoteException, Exception{
         if(!endGame){
-            System.out.println("ciao");
             listIterator++;
             if(players.size() == listIterator){
-                System.out.println("si");
                 listIterator = 0;
                 current_client = players.get(listIterator);
             }else {
-                System.out.println("ciao");
                 current_client = players.get(listIterator);
             }
         }else {
@@ -83,7 +84,6 @@ public class RMIController {
         }
     }
 
-
     public void shufflePlayers(List<GameClientInterface> players) throws RemoteException, Exception{
         try {
             java.util.Collections.shuffle(players);
@@ -97,23 +97,17 @@ public class RMIController {
 
     public void takeTurn() throws RemoteException, Exception{
         shufflePlayers(players);
-        while(true){ // test
-            gameLogic = new GameLogic(server.getGame());
 
+        while(true){ // test
             server.gameTableToAll(server.getGame().getGameTable());
 
             current_client.receiveLibrary(current_client.getPlayer().getLibrary());
 
-            current_client.receiveGetCard(gameLogic);
-
-            current_client.receiveLibrary(current_client.getPlayer().getLibrary());
+            current_client.receiveGetCard(gameLogic, server);
 
             updateCurrentPlayer();
         }
 
     }
-
-
-
 }
 

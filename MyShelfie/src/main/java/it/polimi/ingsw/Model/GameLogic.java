@@ -22,11 +22,24 @@ public class GameLogic implements Serializable{
      */
     public GameLogic(Game game){
         this.game1 = game;
-        gameTable = game.getGameTable();
+        this.gameTable = game.getGameTable();
     }
 
     public Game getGame(){
         return this.game1;
+    }
+
+    public void setGame(Game game){
+        this.game1 = game;
+    }
+
+    public void setGameTable(GameTable gameTable){
+        game1.setGameTable(gameTable);
+        this.gameTable = gameTable;
+    }
+
+    public GameTable getGameTable(){
+        return this.gameTable;
     }
 
     /**
@@ -62,7 +75,7 @@ public class GameLogic implements Serializable{
             if(checkNear(x1, y1)){
                 list.add(gameTable.getCardfromBoard(x1,y1));
                 System.out.println("Card " + gameTable.getCardfromBoard(x1,y1) + " drawn!");
-                gameTable.setCardfromBoard(x1,y1,NONE);
+                gameTable.setCardfromBoard(x1,y1, NONE);
             }
             return list;
         }else if(size == 2){        // case 2 cards
@@ -135,7 +148,7 @@ public class GameLogic implements Serializable{
      * @return true if card has at least one free side
      */
     // verify if card has free side
-    private boolean checkNear(int x1, int y1){
+    public boolean checkNear(int x1, int y1){
         if(gameTable.getCardfromBoard(x1,y1) == NONE || gameTable.getCardfromBoard(x1,y1) == NOT){
             System.out.println("Card not exists");
             return false;
@@ -155,7 +168,7 @@ public class GameLogic implements Serializable{
      * @return true if the two selected cards are drawable
      * the two cards must have a free side and must be adjacent
      */
-    private boolean checkNear(int x1, int y1, int x2, int y2){
+    public boolean checkNear(int x1, int y1, int x2, int y2){
         if(checkNear(x1, y1) && checkNear(x2, y2)){
             if((x1 == x2+1 && y1 == y2) || (x1 == x2-1 && y1 == y2) || (x1 == x2 && y1 == y2+1) || (x1 == x2 && y1 == y2-1)){
                 return true;
@@ -176,7 +189,7 @@ public class GameLogic implements Serializable{
      * @return true if the three selected cards are drawable
      * the three cards must have a free side and must be adjacent and must be on the same row or column
      */
-    private boolean checkNear(int x1, int y1, int x2, int y2, int x3, int y3){
+    public boolean checkNear(int x1, int y1, int x2, int y2, int x3, int y3){
         if(checkNear(x1, y1) && checkNear(x2, y2) && checkNear(x3, y3)){
             if(((checkNear(x1, y1, x2, y2) && checkNear(x2, y2, x3, y3)) || ((checkNear(x1, y1, x3, y3) && checkNear(x2, y2, x3, y3)))) && ((x1 == x2 && x2 == x3) || (y1 == y2 && y2 == y3))){
                 return true;

@@ -60,4 +60,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
     public void gameTableToClient(GameTable board, int i) throws RemoteException,Exception{
         client.get(i).receiveGameTable(board);
     }
+
+    public void receiveTable(GameTable board) throws RemoteException, Exception{
+        game.setGameTable(board);
+    }
 }

@@ -10,6 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Client extends UnicastRemoteObject implements GameClientInterface{
     private Player player;
 
@@ -29,12 +30,22 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
         library.viewGrid();
     }
 
-    public void receiveGetCard(GameLogic gameLogic) throws RemoteException, Exception{
+    public void receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
         ArrayList<Card> cards = new ArrayList<>();
 
         cards = gameLogic.getCardFromTable();
 
+        server.receiveTable(gameLogic.getGameTable());  // do al server il tabellone aggiornato
+
+        // TODO bisogna migliorare l'aggiornamento del tabellone, non so perchè funziona correttamente solo all'inizio
+
         player.getLibrary().insert(cards);
+        // TODO forse bisognerebbe aggiornare la libreria del client sul server (non so se necessario)
+    }
+
+    // potrebbe servire
+    public void receiveMessage(String msg) throws RemoteException{
+        System.out.println(msg);
     }
 
     public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception{

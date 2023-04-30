@@ -35,6 +35,10 @@ public class Game implements Serializable{
         }
     }
 
+    public void setGameTable(GameTable gameTable){
+        this.gameTable = gameTable;
+    }
+
     /**
      *
      * @param player
