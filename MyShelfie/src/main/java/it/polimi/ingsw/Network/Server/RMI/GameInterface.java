@@ -28,11 +28,12 @@ public interface GameInterface extends Remote {
 
     public void notifyEnd() throws RemoteException;
 
-    public void notifyTurnPlayer(String nick) throws RemoteException;
+    public void notifyTurnPlayer(GameClientInterface current_client) throws RemoteException;
 
     public boolean isFirstPlayer() throws RemoteException;
 
     public void setFirstPlayer() throws RemoteException; //useful while we manage only one game at time to avoid
                                                          //overlapping games
 
+    public void messageToAll(String msg) throws RemoteException;
 }

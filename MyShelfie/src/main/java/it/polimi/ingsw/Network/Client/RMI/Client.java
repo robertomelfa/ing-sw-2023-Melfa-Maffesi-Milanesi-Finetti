@@ -37,17 +37,10 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
 
         player.getLibrary().insert(cards);
 
-        //server.receiveTable(gameLogic.getGameTable());  // do al server il tabellone aggiornato
-        server.setGame(gameLogic.getGame());
-
         server.receiveTable(gameLogic.getGameTable());
-
-        // TODO bisogna migliorare l'aggiornamento del tabellone, non so perchè funziona correttamente solo all'inizio
-
-        // TODO forse bisognerebbe aggiornare la libreria del client sul server (non so se necessario)
     }
 
-    // potrebbe servire
+
     public void receiveMessage(String msg) throws RemoteException{
         System.out.println(msg);
     }
@@ -91,8 +84,13 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
         player.endGame();
     }
 
-    public void startTurnMessage(String nickname) throws RemoteException{
-        System.out.printf("It's the turn of " + nickname + "\n");
+    public int getIntFromClient(String msg) throws RemoteException{
+        Scanner in = new Scanner(System.in);
+        System.out.println(msg);
+        return in.nextInt();
     }
 
+    public void printPlayerObj() throws RemoteException{
+        this.player.getPlayerObj().print();
+    }
 }

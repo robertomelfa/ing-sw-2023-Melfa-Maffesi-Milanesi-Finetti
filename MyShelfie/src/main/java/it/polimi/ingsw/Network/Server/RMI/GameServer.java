@@ -73,9 +73,14 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
         }
     }
 
-    public void notifyTurnPlayer(String nick) throws RemoteException{
+    public void notifyTurnPlayer(GameClientInterface current_client) throws RemoteException{
         for(int i = 0; i < client.size(); i++){
-            client.get(i).startTurnMessage(nick);
+            if(client.get(i).equals(current_client)){
+                client.get(i).receiveMessage("It's your turn");
+            }else{
+                client.get(i).receiveMessage("Wait, it's " + current_client.getPlayer().getNickname() +"'s turn");
+            }
+
         }
     }
 
@@ -85,6 +90,12 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
 
     public void setFirstPlayer(){
         this.firstPlayer = false;
+    }
+
+    public void messageToAll(String msg) throws RemoteException{
+        for(int i = 0; i < client.size(); i++){
+            client.get(i).receiveMessage(msg);
+        }
     }
 
 }

@@ -17,11 +17,14 @@ public interface GameClientInterface extends Remote{
 
     public void receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception;
 
+    public void receiveMessage(String msg) throws RemoteException;
 
     public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception;
 
     public void endMessage() throws RemoteException;
 
-    public void startTurnMessage(String nickname) throws RemoteException;
+    public int getIntFromClient(String msg) throws RemoteException;
+
+    public void printPlayerObj() throws RemoteException;
 
 }

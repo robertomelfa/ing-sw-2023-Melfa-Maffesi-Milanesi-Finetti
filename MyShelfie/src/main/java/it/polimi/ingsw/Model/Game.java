@@ -210,13 +210,14 @@ public class Game implements Serializable{
     /**
      * This method adds points for each group of cards, for each player
      */
-    public void checkEnd(){
+    public void checkEnd() throws Exception{
         for(int i = 0; i < players.size(); i++){
-            try{
-                players.get(i).addPoints(players.get(i).getPlayerObj().checkObj(players.get(i), players.get(i).getLibrary()));
-                players.get(i).addPoints(players.get(i).getLibrary().checkFinal());
+            // check the player object
+            players.get(i).addPoints(players.get(i).getPlayerObj().checkObj(players.get(i), players.get(i).getLibrary()));
+
+            // check the final groups of cards
+            players.get(i).addPoints(players.get(i).getLibrary().checkFinal());
           //      System.out.println("Player " + players.get(i).getNickname() + " hai totalizzato " + players.get(i).getScore());  // view
-            }catch (Exception e){}
         }
     }
 

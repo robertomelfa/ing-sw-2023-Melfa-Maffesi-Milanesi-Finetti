@@ -14,13 +14,7 @@ public class Server {
 
     public static void main(String[] argv) throws RemoteException, Exception{
         try {
-            int i = 0, num = 0;
-/*
-            do{
-                System.out.println("How many players?");
-                Scanner in = new Scanner(System.in);
-                num = in.nextInt();
-            }while(num < 2 || num > 4); */
+            int i = 0;
 
             GameInterface server = new GameServer();
 

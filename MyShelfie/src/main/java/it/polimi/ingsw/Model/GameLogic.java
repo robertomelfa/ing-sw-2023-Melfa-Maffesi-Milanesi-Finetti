@@ -34,7 +34,6 @@ public class GameLogic implements Serializable{
     }
 
     public void setGameTable(GameTable gameTable){
-        game1.setGameTable(gameTable);
         this.gameTable = gameTable;
     }
 
