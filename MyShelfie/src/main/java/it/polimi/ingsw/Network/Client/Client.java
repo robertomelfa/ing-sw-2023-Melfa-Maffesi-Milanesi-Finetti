@@ -12,7 +12,7 @@ public class Client {
         System.out.println("[CLIENT] is running");
         Scanner scanner=new Scanner(System.in);
         String input;
-        System.out.println("Choose A to start a Socket server\nChoose B to start a RMI server");
+        System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
         input=scanner.next();
         switch(input.toUpperCase()){
             case "A":

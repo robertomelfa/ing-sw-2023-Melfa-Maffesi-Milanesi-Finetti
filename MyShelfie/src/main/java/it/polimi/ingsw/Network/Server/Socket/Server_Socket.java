@@ -1,10 +1,10 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.GameLogic;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 import it.polimi.ingsw.Network.Message;
 import it.polimi.ingsw.Network.MessageType;
+import it.polimi.ingsw.Controller.Socket.*;
 
 import java.awt.*;
 import java.io.*;
@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class Server_Socket implements Serializable {
 
     private  ArrayList<Socket> clientlist = new ArrayList<>();
+    private SocketController controller;
     public  void start() {
         try {
             int port=8080;
@@ -37,18 +38,16 @@ public class Server_Socket implements Serializable {
             }
             System.out.println("Game is starting");
             try {
-                Game game=new Game(numplayers);
-                GameLogic gameLogic=new GameLogic(game);
+                controller=new SocketController(serversocket,clientlist,numplayers);
                 System.out.println("Users:");
                 for (int k=0; k<clientlist.size();k++){
                     System.out.println(clientlist.get(k));
                 }
-                System.out.println("Requesting nicknames");
+                /*System.out.println("Requesting nicknames");
                 for (int k=0; k<clientlist.size();k++){
                     //requesting nickname
                     ObjectOutputStream oos =new ObjectOutputStream(clientlist.get(k).getOutputStream());
                     Message nickmessage=new Message(MessageType.requestNickname,null);
-                    System.out.println("Test");
                     oos.writeObject(nickmessage);
                     System.out.println("Message sent to "+clientlist.get(k));
                     oos.close();
@@ -56,9 +55,13 @@ public class Server_Socket implements Serializable {
                     //receiving nickname
                     /*ObjectInputStream ois=new ObjectInputStream(clientlist.get(k).getInputStream());
                     Message nickresponse= (Message) ois.readObject();
-                    System.out.println(nickresponse.toString());*/
+                    System.out.println(nickresponse.toString());
 
-                }
+                }*/
+                controller.shufflePlayers();
+                requestNicknames();
+                gameTableToAll();
+                sendLibrary();
 
 
                 //richiesta e creazione nickname ai client
@@ -76,6 +79,44 @@ public class Server_Socket implements Serializable {
             System.out.println("[SERVER] fatal error");
         }
     }
+
+
+    public void sendLibrary() throws IOException{
+        ObjectOutputStream oos =new ObjectOutputStream(controller.getCurrentPlayer().getOutputStream());
+        oos.writeObject(controller.getGameLogic().getGame().getCurrentPlayer().getLibrary());
+        System.out.println("Library sent to the current payer "+controller.getCurrentPlayer());
+        oos.close();
+    }
+
+    public void requestNicknames() throws IOException,ClassNotFoundException,Exception{
+        for (int i=0; i<clientlist.size(); i++){
+            ObjectOutputStream oos =new ObjectOutputStream(clientlist.get(i).getOutputStream());
+            Message message=new Message(MessageType.requestNickname,null);
+            oos.writeObject(message);
+            System.out.println("Message request sent to "+clientlist.get(i));
+            oos.close();
+            ObjectInputStream ois=new ObjectInputStream(clientlist.get(i).getInputStream());
+            Message response= (Message) ois.readObject();
+            if(response.getType()!=MessageType.sendNickname || response.getMessage()==null){
+                throw new Exception("Exception in messages");
+            }
+            System.out.println("Nickname: "+response.getMessage()+" sent from "+clientlist.get(i));
+            Player player=new Player(response.getMessage());
+            controller.getGameLogic().getGame().addNewPlayer(player);
+            ois.close();
+        }
+    }
+
+    public void gameTableToAll() throws IOException{
+        for (int i=0; i<clientlist.size(); i++){
+            ObjectOutputStream oos =new ObjectOutputStream(clientlist.get(i).getOutputStream());
+            oos.writeObject(controller.getGameLogic().getGame().getGameTable());
+            System.out.println("GameTable sent to "+clientlist.get(i));
+            oos.close();
+        }
+    }
+
+
 
 }
 
