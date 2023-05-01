@@ -97,4 +97,8 @@ public class Player implements Serializable{
     public boolean getCommonObj2Completed() {
         return commonObj2Completed;
     }
+
+    public void endGame(){
+        System.out.printf("[Server]: the game has come to the end! Please wait for the leaderboard...");
+    }
 }

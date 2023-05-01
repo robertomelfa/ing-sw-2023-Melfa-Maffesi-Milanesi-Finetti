@@ -44,13 +44,18 @@ public class RMIController {
             for(int i = 0; i < server.getClientList().size(); i++){
                 players.add(server.getClient(i));
             }
+
             gameLogic = new GameLogic(server.getGame());
+
+            shufflePlayers(players);
 
         } catch (AccessException e) {
             throw new RuntimeException(e);
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -74,9 +79,9 @@ public class RMIController {
             }
         }else {
             listIterator++;
-            if(players.size() == listIterator){
+            if(chair == listIterator){
                 gameLogic.getGame().checkEnd();
-                throw new Exception("GAME IS ENDED");   // probably this will be in the view; metterei più un messaggio che un'eccezione che da meno problemi @simone
+                server.notifyEnd();
             }
             else {
                 current_client = players.get(listIterator);
@@ -96,14 +101,23 @@ public class RMIController {
     }
 
     public void takeTurn() throws RemoteException, Exception{
-        shufflePlayers(players);
 
         while(true){ // test
+
+            server.notifyTurnPlayer(current_client.getPlayer().getNickname());
+
             server.gameTableToAll(server.getGame().getGameTable());
 
             current_client.receiveLibrary(current_client.getPlayer().getLibrary());
 
             current_client.receiveGetCard(gameLogic, server);
+
+            if(current_client.getPlayer().getLibrary().checkFull()){
+                server.getGame().setEndGame();
+                endGame = true;
+            }
+
+            gameLogic.getGameTable().checkStatus();
 
             updateCurrentPlayer();
         }

@@ -17,6 +17,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
     private GameInterface server;
 
     private Game game;
+
+    private boolean firstPlayer = true;
     public GameServer() throws RemoteException{
         super();
         try{
@@ -64,4 +66,25 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
     public void receiveTable(GameTable board) throws RemoteException, Exception{
         game.setGameTable(board);
     }
+
+    public void notifyEnd() throws RemoteException{
+        for(int i = 0; i < client.size(); i++){
+            client.get(i).endMessage();
+        }
+    }
+
+    public void notifyTurnPlayer(String nick) throws RemoteException{
+        for(int i = 0; i < client.size(); i++){
+            client.get(i).startTurnMessage(nick);
+        }
+    }
+
+    public boolean isFirstPlayer(){
+        return this.firstPlayer;
+    }
+
+    public void setFirstPlayer(){
+        this.firstPlayer = false;
+    }
+
 }

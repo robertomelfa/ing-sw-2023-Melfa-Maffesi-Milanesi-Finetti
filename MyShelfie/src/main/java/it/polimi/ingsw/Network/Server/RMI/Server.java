@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 public class Server {
 
     public static void main(String[] argv) throws RemoteException, Exception{
-        try{
+        try {
             int i = 0, num = 0;
 /*
             do{
@@ -27,33 +27,28 @@ public class Server {
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind("GameInterface", server);
 
-        //    System.out.println("[Server] is running, and is waiting players. " + num + " players remains");
+            //    System.out.println("[Server] is running, and is waiting players. " + num + " players remains");
 
             System.out.println("[Server] is running");
-            while(true){
-                if(server.getClient(i) != null){
+
+            while (true) {
+                if (server.getClient(i) != null) {
                     System.out.println("Si e' connesso " + server.getClient(i).getPlayer().getNickname());
-                    server.gameTableToClient(server.getGame().getGameTable(), i);
                     i++;
-                    if(server.getGame().getNumOfPlayers() == server.getGame().numActualPlayers()){
+                    if (server.getGame().getNumOfPlayers() == server.getGame().numActualPlayers()) {
                         RMIController controller = new RMIController();
                         controller.takeTurn();
                     }
                 }
-
-
-
-                /*    if(server.getGame().getNumOfPlayers()-server.getGame().numActualPlayers() > 0){
-                        System.out.println("Waiting players, " + (server.getGame().getNumOfPlayers()-server.getGame().numActualPlayers()) + " remaining");
-                    }else{
-                        System.out.println("All players are online, game is ready to start!");
-                    }
-                  //  server.getGame().getGameTable().viewTable();
-                    i++;
-                }   */
+                /*
+                if (server.getGame().getNumOfPlayers() - server.getGame().numActualPlayers() > 0) {
+                    System.out.println("Waiting players, " + (server.getGame().getNumOfPlayers() - server.getGame().numActualPlayers()) + " remaining");
+                } else {
+                    System.out.println("All players are online, game is ready to start!");
+                }
+                //  server.getGame().getGameTable().viewTable();
+                i++; */
             }
-
-
         }catch (Exception e){
             System.out.println("[System] Server failed: " + e);
         }

@@ -142,6 +142,14 @@ public class GameTable implements Serializable{
         System.out.print("\n");
     }
 
+    public void updateTable(GameTable gameTable){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                board[i][j] = gameTable.getCardfromBoard(i ,j);
+            }
+        }
+    }
+
     public void setCardfromBoard(int x, int y, Card card){
         board[x][y]=card;
     }

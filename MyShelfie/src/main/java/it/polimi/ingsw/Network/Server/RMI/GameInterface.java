@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
-import it.polimi.ingsw.Model.Card;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClient;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
@@ -28,5 +25,14 @@ public interface GameInterface extends Remote {
     public void gameTableToClient(GameTable board, int i) throws RemoteException,Exception;
 
     public void receiveTable(GameTable board) throws RemoteException, Exception;
+
+    public void notifyEnd() throws RemoteException;
+
+    public void notifyTurnPlayer(String nick) throws RemoteException;
+
+    public boolean isFirstPlayer() throws RemoteException;
+
+    public void setFirstPlayer() throws RemoteException; //useful while we manage only one game at time to avoid
+                                                         //overlapping games
 
 }

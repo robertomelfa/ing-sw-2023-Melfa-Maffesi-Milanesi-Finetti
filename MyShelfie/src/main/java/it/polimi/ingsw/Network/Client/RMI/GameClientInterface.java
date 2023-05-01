@@ -20,4 +20,8 @@ public interface GameClientInterface extends Remote{
 
     public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception;
 
+    public void endMessage() throws RemoteException;
+
+    public void startTurnMessage(String nickname) throws RemoteException;
+
 }

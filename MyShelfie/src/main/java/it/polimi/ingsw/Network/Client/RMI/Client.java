@@ -35,11 +35,15 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
 
         cards = gameLogic.getCardFromTable();
 
-        server.receiveTable(gameLogic.getGameTable());  // do al server il tabellone aggiornato
+        player.getLibrary().insert(cards);
+
+        //server.receiveTable(gameLogic.getGameTable());  // do al server il tabellone aggiornato
+        server.setGame(gameLogic.getGame());
+
+        server.receiveTable(gameLogic.getGameTable());
 
         // TODO bisogna migliorare l'aggiornamento del tabellone, non so perchè funziona correttamente solo all'inizio
 
-        player.getLibrary().insert(cards);
         // TODO forse bisognerebbe aggiornare la libreria del client sul server (non so se necessario)
     }
 
@@ -49,15 +53,19 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
     }
 
     public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception{
-        if(server.getGame() == null){
+        if(server.isFirstPlayer()) {
+            server.setFirstPlayer();
             Scanner in = new Scanner(System.in);
             System.out.println("How many players?");
             int num = in.nextInt();
             Game game = new Game(num);
             server.setGame(game);
             server.setClient(client);
-
         }else{
+            System.out.printf("wait for the game to start!");
+            while (server.getGame() == null){
+
+            }
             String answer = "J"; // per ora teniamo che puoi solo joinare
 
             if(server.getGame().getNumOfPlayers() > server.getGame().numActualPlayers()){
@@ -78,4 +86,13 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
         }
         System.out.println("[System] connected!");
     }
+
+    public void endMessage() throws RemoteException{
+        player.endGame();
+    }
+
+    public void startTurnMessage(String nickname) throws RemoteException{
+        System.out.printf("It's the turn of " + nickname + "\n");
+    }
+
 }

@@ -227,6 +227,7 @@ public class Game implements Serializable{
     public void removePlayer(int i){
         players.remove(i);
     }
+
 }
 
 /**
