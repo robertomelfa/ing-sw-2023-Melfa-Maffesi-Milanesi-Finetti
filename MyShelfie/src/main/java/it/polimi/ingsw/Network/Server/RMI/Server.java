@@ -28,6 +28,9 @@ public class Server {
             while (true) {
                 if (server.getClient(i) != null) {
                     System.out.println("Si e' connesso " + server.getClient(i).getPlayer().getNickname());
+                    if(i != 0){
+                        server.getClient(i).receiveMessage("wait for the game to start!");
+                    }
                     i++;
                     if (server.getGame().getNumOfPlayers() == server.getGame().numActualPlayers()) {
                         RMIController controller = new RMIController();
