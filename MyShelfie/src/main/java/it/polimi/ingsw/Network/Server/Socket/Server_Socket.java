@@ -1,12 +1,8 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
-import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
-import it.polimi.ingsw.Network.Message;
-import it.polimi.ingsw.Network.MessageType;
+import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Controller.Socket.*;
 
-import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,9 +11,9 @@ import java.util.Scanner;
 
 public class Server_Socket implements Serializable {
 
-    private  ArrayList<Socket> clientlist = new ArrayList<>();
+    private  ArrayList<ClientClass> clientlist = new ArrayList<>();
     private SocketController controller;
-    public  void start() {
+    public  void start() throws Exception{
         try {
             int port=8080;
             ServerSocket serversocket = new ServerSocket(port);
@@ -29,94 +25,55 @@ public class Server_Socket implements Serializable {
                 numplayers=input.nextInt();
             }while (numplayers<2 || numplayers>4);
             int i=0;
-            while (i<numplayers){
+            while (i < numplayers){
                 int remaining=numplayers-i;
                 System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
-                Socket socket =serversocket.accept();
-                clientlist.add(socket);
+                Socket socket = serversocket.accept();  // questo è il client
+                ClientClass client = new ClientClass(socket);   // associo il client ad un player
+                clientlist.add(client);
                 i++;
             }
+
+            // chiedo il nome a tutti i client (potrei fare una funzione unica)
+            for(int j = 0; j < clientlist.size(); j++){
+                sendMessage("Inserisci nome del giocatore: ", j);
+                clientlist.get(j).setPlayer(receiveString(clientlist.get(j).getSocket()));  // nomino il player
+                System.out.println("il giocatore " + clientlist.get(j).getPlayer().getNickname() + " aggiunto");
+            }
+
             System.out.println("Game is starting");
+
             try {
-                controller=new SocketController(serversocket,clientlist,numplayers);
-                System.out.println("Users:");
-                for (int k=0; k<clientlist.size();k++){
-                    System.out.println(clientlist.get(k));
-                }
-                /*System.out.println("Requesting nicknames");
-                for (int k=0; k<clientlist.size();k++){
-                    //requesting nickname
-                    ObjectOutputStream oos =new ObjectOutputStream(clientlist.get(k).getOutputStream());
-                    Message nickmessage=new Message(MessageType.requestNickname,null);
-                    oos.writeObject(nickmessage);
-                    System.out.println("Message sent to "+clientlist.get(k));
-                    oos.close();
-
-                    //receiving nickname
-                    /*ObjectInputStream ois=new ObjectInputStream(clientlist.get(k).getInputStream());
-                    Message nickresponse= (Message) ois.readObject();
-                    System.out.println(nickresponse.toString());
-
-                }*/
+                controller = new SocketController(serversocket,clientlist,numplayers);
                 controller.shufflePlayers();
-                requestNicknames();
                 gameTableToAll();
-                sendLibrary();
-
-
-                //richiesta e creazione nickname ai client
-                //aggiunta players al game
-                //Start turn
-
             }catch (Exception e){
                 System.out.println("Exception in game");
             }
-
-
-
 
         }catch (IOException e){
             System.out.println("[SERVER] fatal error");
         }
     }
 
-
-    public void sendLibrary() throws IOException{
-        ObjectOutputStream oos =new ObjectOutputStream(controller.getCurrentPlayer().getOutputStream());
-        oos.writeObject(controller.getGameLogic().getGame().getCurrentPlayer().getLibrary());
-        System.out.println("Library sent to the current payer "+controller.getCurrentPlayer());
-        oos.close();
-    }
-
-    public void requestNicknames() throws IOException,ClassNotFoundException,Exception{
-        for (int i=0; i<clientlist.size(); i++){
-            ObjectOutputStream oos =new ObjectOutputStream(clientlist.get(i).getOutputStream());
-            Message message=new Message(MessageType.requestNickname,null);
-            oos.writeObject(message);
-            System.out.println("Message request sent to "+clientlist.get(i));
-            oos.close();
-            ObjectInputStream ois=new ObjectInputStream(clientlist.get(i).getInputStream());
-            Message response= (Message) ois.readObject();
-            if(response.getType()!=MessageType.sendNickname || response.getMessage()==null){
-                throw new Exception("Exception in messages");
-            }
-            System.out.println("Nickname: "+response.getMessage()+" sent from "+clientlist.get(i));
-            Player player=new Player(response.getMessage());
-            controller.getGameLogic().getGame().addNewPlayer(player);
-            ois.close();
-        }
-    }
-
     public void gameTableToAll() throws IOException{
-        for (int i=0; i<clientlist.size(); i++){
-            ObjectOutputStream oos =new ObjectOutputStream(clientlist.get(i).getOutputStream());
+        for (int i=0; i < clientlist.size(); i++){
+            ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
             oos.writeObject(controller.getGameLogic().getGame().getGameTable());
-            System.out.println("GameTable sent to "+clientlist.get(i));
-            oos.close();
+            System.out.println("GameTable sent to " + clientlist.get(i).getPlayer().getNickname());
         }
     }
 
+    public String receiveString(Socket client) throws IOException, ClassNotFoundException{
+        InputStream in = client.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String line = reader.readLine();
+        return line;
+    }
 
-
+    public void sendMessage(String msg, int i) throws IOException, ClassNotFoundException{
+        PrintWriter outToClient = new PrintWriter(clientlist.get(i).getSocket().getOutputStream(), true);
+        outToClient.println(msg);
+    }
 }
 

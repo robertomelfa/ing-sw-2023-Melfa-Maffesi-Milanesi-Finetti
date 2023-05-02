@@ -1,5 +1,7 @@
-package it.polimi.ingsw.Network;
+package it.polimi.ingsw.Network.Messages;
 
+
+import it.polimi.ingsw.Network.Messages.MessageType;
 
 import java.io.Serializable;
 

@@ -1,12 +1,14 @@
 package it.polimi.ingsw.Network.Server;
 
+import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class Server {
+public class Server{
     public static void main(String[] args) {
         System.out.println("[SERVER] is running");
         Scanner scanner=new Scanner(System.in);
@@ -16,7 +18,7 @@ public class Server {
         switch (input.toUpperCase()){
             case "A":
                 System.out.println("Starting Socket");
-                startSocketServer thread=new startSocketServer();
+                startSocketServer thread = new startSocketServer();
                 thread.run();
 
                break;
@@ -38,6 +40,9 @@ class startSocketServer implements Runnable{
     public void run() {
         System.out.println("New Thread created");
         Server_Socket server=new Server_Socket();
-        server.start();
+        try{
+            server.start();
+        }catch(Exception e){}
+
     }
 }
