@@ -35,6 +35,13 @@ public class RMIController {
 
     private GameClientInterface current_client;
 
+    /**
+     * constructor of the RMIController
+     * call shufflePLayers to shuffle the arraylist stored in the controller to perform the turn in random order
+     * @throws AccessException
+     * @throws NotBoundException
+     * @throws Exception
+     */
     public RMIController() {
         try {
              Registry registry = LocateRegistry.getRegistry("localhost", 1099);
@@ -47,7 +54,7 @@ public class RMIController {
 
             gameLogic = new GameLogic(server.getGame());
 
-            shufflePlayers(players);
+            shufflePlayers();
 
         } catch (AccessException e) {
             throw new RuntimeException(e);
@@ -60,14 +67,30 @@ public class RMIController {
         }
     }
 
+    /**
+     *
+     * @return the client of the player who has the chair
+     * @throws RemoteException
+     */
     public GameClientInterface getChair() throws RemoteException{
         return players.get(chair);
     }
 
+    /**
+     *
+     * @return the client of the current player
+     * @throws RemoteException
+     */
     public GameClientInterface getCurrentPlayer() throws RemoteException{
         return current_client;
     }
 
+    /**
+     * update the current player following the order of the players list we randomized in the constructor
+     * it also deals with the end Game procedures
+     * @throws RemoteException
+     * @throws Exception
+     */
     public void updateCurrentPlayer() throws RemoteException, Exception{
         if(!endGame){
             listIterator++;
@@ -89,7 +112,12 @@ public class RMIController {
         }
     }
 
-    public void shufflePlayers(List<GameClientInterface> players) throws RemoteException, Exception{
+    /**
+     * shuffle the players list to create a random order then set up the chair and the listIterator
+     * @throws RemoteException
+     * @throws Exception
+     */
+    public void shufflePlayers() throws RemoteException, Exception{
         try {
             java.util.Collections.shuffle(players);
             chair = 0;
@@ -100,7 +128,13 @@ public class RMIController {
         }
     }
 
-    // TODO inserisce scelta per vedere obiettivi o pescare carte
+    /**
+     * perform the turn of the current player. At the end of the turn check the objectives, both personal and common,
+     * if the board needs to be refilled and if any of the players have a full library.
+     * Then proceed to update the current player.
+     * @throws RemoteException
+     * @throws Exception
+     */
     public void takeTurn() throws RemoteException, Exception{
 
         while(!endGame){ // test
