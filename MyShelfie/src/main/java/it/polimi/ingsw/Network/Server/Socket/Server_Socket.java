@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
+import it.polimi.ingsw.Model.Library;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Controller.Socket.*;
 import it.polimi.ingsw.Network.Messages.Message;
@@ -83,5 +84,11 @@ public class Server_Socket implements Serializable {
         ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
         oos.writeObject(msg);
     }
+
+    public void sendLibrary(int i, Library lib) throws IOException{
+        ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
+        oos.writeObject(lib);
+    }
+
 }
 
