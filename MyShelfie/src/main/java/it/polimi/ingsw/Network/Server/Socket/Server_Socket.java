@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
-import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Controller.Socket.*;
-import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageType;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -35,53 +35,53 @@ public class Server_Socket implements Serializable {
                 clientlist.add(client);
                 i++;
             }
+            for (int k=0;k<clientlist.size();k++){
+                System.out.println(clientlist.get(k).getSocket());
+            }
 
             // chiedo il nome a tutti i client (potrei fare una funzione unica)
             for(int j = 0; j < clientlist.size(); j++){
-                sendMessage("Inserisci nome del giocatore: ", j);
-                clientlist.get(j).setPlayer(receiveString(clientlist.get(j).getSocket()));  // nomino il player
-                System.out.println("il giocatore " + clientlist.get(j).getPlayer().getNickname() + " aggiunto");
+                Message msg=new Message(MessageType.requestNickname,null);
+                sendMessage(msg, j);
+                clientlist.get(j).setPlayer(receiveMessage(j).getMessage());  // nomino il player
+                System.out.println("Player " + clientlist.get(j).getPlayer().getNickname() + " added");
+            }
+
+            for (int j=0;j<clientlist.size();j++){
+                System.out.println(clientlist.get(j).getSocket()+" nickname: "+clientlist.get(j).getPlayer().getNickname());
             }
 
             System.out.println("Game is starting");
+
+            try {
+                controller = new SocketController(serversocket,clientlist,numplayers);
+                controller.shufflePlayers();
+                gameTableToAll();
+            }catch (Exception e){
+                System.out.println("Exception in game");
+            }
 
         }catch (IOException e){
             System.out.println("[SERVER] fatal error");
         }
     }
 
-    public void sendLibrary(ClientClass client) throws IOException, ClassNotFoundException{
-        ObjectOutputStream oos = new ObjectOutputStream(client.getSocket().getOutputStream());
-        oos.writeObject(client.getPlayer().getLibrary());
-    }
-    public void gameTableToAll(GameTable gameTable) throws IOException{
+    public void gameTableToAll() throws IOException{
         for (int i=0; i < clientlist.size(); i++){
             ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
-            oos.writeObject(gameTable);
+            oos.writeObject(controller.getGameLogic().getGame().getGameTable());
             System.out.println("GameTable sent to " + clientlist.get(i).getPlayer().getNickname());
         }
     }
 
-    public String receiveString(Socket client) throws IOException, ClassNotFoundException{
-        InputStream in = client.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String line = reader.readLine();
-        return line;
+    public Message receiveMessage(int i) throws IOException, ClassNotFoundException, Exception {
+        ObjectInputStream ois = new ObjectInputStream(clientlist.get(i).getSocket().getInputStream());
+        return (Message) ois.readObject();
     }
 
-    public void sendMessage(String msg, int i) throws IOException, ClassNotFoundException{
-        PrintWriter outToClient = new PrintWriter(clientlist.get(i).getSocket().getOutputStream(), true);
-        outToClient.println(msg);
-    }
-
-    public ArrayList<ClientClass> getClientlist(){
-        return this.clientlist;
-    }
-
-    public Client_Socket receiveClient(Socket client) throws IOException, ClassNotFoundException{
-        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
-        Client_Socket new_client = (Client_Socket) ois.readObject();
-        return new_client;
+    public void sendMessage(Message msg, int i) throws IOException, ClassNotFoundException{
+        ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
+        oos.writeObject(msg);
     }
 }
 

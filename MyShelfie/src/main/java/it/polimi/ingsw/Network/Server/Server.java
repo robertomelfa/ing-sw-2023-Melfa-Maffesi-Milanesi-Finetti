@@ -10,6 +10,11 @@ import java.net.ServerSocket;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+//TODO gametable to single socket
+//TODO library to single socket
+//TODO take cards from library
+
+
 public class Server{
     public static void main(String[] args) {
         System.out.println("[SERVER] is running");

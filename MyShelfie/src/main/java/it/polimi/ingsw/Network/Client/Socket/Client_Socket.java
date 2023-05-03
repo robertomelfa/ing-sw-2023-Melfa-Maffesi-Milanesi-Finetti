@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
 import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Network.Server.Server;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageType;
 
 import java.io.*;
 import java.net.Socket;
@@ -51,7 +51,6 @@ public class Client_Socket implements Serializable {
         try {
             Socket socket = new Socket(host,port);
             this.socket=socket;
-            sendCLient();
             System.out.println("Client is running...");
         }catch(IOException e){
             System.out.println("Client fatal error");
@@ -70,50 +69,30 @@ public class Client_Socket implements Serializable {
         }
     }
 
-    public void receiveLibrary(){
-        try{
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            Library library = (Library) ois.readObject();
-            library.viewGrid();
-        }catch (IOException i){
-            System.out.println("IOException");
-        }catch (ClassNotFoundException c){
-            System.out.println("ClassNotFoundException");
-        }
-    }
-
     public void clientlogic() throws Exception{
         // ricevo richiesta del nome e invio nome
-        receiveMessage();
+        Message msg;
+        msg=receiveMessage();
+        if (msg.getType()!=MessageType.requestNickname){
+            throw new Exception("Error in message type");
+        }
+        else {
+            System.out.println("Insert Player name");
+        }
         Scanner in = new Scanner(System.in);
         String name = in.nextLine();
-        sendNickName(name);
-
-        while (true) {
-            receiveGameTable();
-            receiveLibrary();
-        }
-
+        msg=new Message(MessageType.sendNickname,name);
+        sendMessage(msg);
+        receiveGameTable();
     }
-    public void receiveMessage() throws IOException, ClassNotFoundException, Exception{
-        InputStream input = socket.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String line = reader.readLine();
-        System.out.println(line);
+    public Message receiveMessage() throws IOException, ClassNotFoundException, Exception {
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        return (Message) ois.readObject();
     }
 
-    public void sendNickName(String name) throws IOException, ClassNotFoundException, Exception{
-        PrintWriter outToServer = new PrintWriter(socket.getOutputStream(), true);
-        outToServer.println(name);
-    }
-
-    public Socket getServer(){
-        return this.socket;
-    }
-
-    public void sendCLient() throws IOException{
+    public void sendMessage(Message msg) throws IOException, ClassNotFoundException, Exception{
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-        oos.writeObject(this);
+        oos.writeObject(msg);
     }
 }
 
