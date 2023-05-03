@@ -139,7 +139,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
             }else{
                 client.get(i).receiveMessage("Wait, it's " + current_client.getPlayer().getNickname() +"'s turn");
             }
-
         }
     }
 

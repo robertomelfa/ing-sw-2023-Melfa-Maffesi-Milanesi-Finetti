@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 
 import java.io.Serializable;
 import java.net.ServerSocket;
@@ -18,28 +19,28 @@ public class SocketController implements Serializable {
     private ServerSocket server;
     private  boolean endGame=false;
     private int chair;
-    private ArrayList<Socket> players= new ArrayList<>();
+    private ArrayList<ClientClass> players = new ArrayList<>();
     private int playersIterator;
     private GameLogic gameLogic;
-    private Socket current_client;
+    private ClientClass current_client;
 
-    public SocketController(ServerSocket server, ArrayList<Socket> players, int numOfPlayers) throws Exception{
-        this.server=server;
-        this.players=players;
+    public SocketController(ServerSocket server, ArrayList<ClientClass> players, int numOfPlayers) throws Exception{
+        this.server = server;
+        this.players = players;
         this.endGame=false;
         Game game=new Game(numOfPlayers);
         gameLogic=new GameLogic(game);
     }
 
-    public ArrayList<Socket> getPlayers(){
+    public ArrayList<ClientClass> getPlayers(){
         return players;
     }
 
-    public Socket getChair(){
+    public ClientClass getChair(){
         return players.get(chair);
     }
 
-    public Socket getCurrentPlayer(){
+    public ClientClass getCurrentPlayer(){
         return current_client;
     }
 
