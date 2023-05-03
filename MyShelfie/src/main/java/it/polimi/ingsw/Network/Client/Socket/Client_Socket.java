@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
 import it.polimi.ingsw.Model.GameTable;
+import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Network.Server.Server;
 
 import java.io.*;
 import java.net.Socket;
@@ -49,6 +51,7 @@ public class Client_Socket implements Serializable {
         try {
             Socket socket = new Socket(host,port);
             this.socket=socket;
+            sendCLient();
             System.out.println("Client is running...");
         }catch(IOException e){
             System.out.println("Client fatal error");
@@ -67,13 +70,30 @@ public class Client_Socket implements Serializable {
         }
     }
 
+    public void receiveLibrary(){
+        try{
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            Library library = (Library) ois.readObject();
+            library.viewGrid();
+        }catch (IOException i){
+            System.out.println("IOException");
+        }catch (ClassNotFoundException c){
+            System.out.println("ClassNotFoundException");
+        }
+    }
+
     public void clientlogic() throws Exception{
         // ricevo richiesta del nome e invio nome
         receiveMessage();
         Scanner in = new Scanner(System.in);
         String name = in.nextLine();
         sendNickName(name);
-        receiveGameTable();
+
+        while (true) {
+            receiveGameTable();
+            receiveLibrary();
+        }
+
     }
     public void receiveMessage() throws IOException, ClassNotFoundException, Exception{
         InputStream input = socket.getInputStream();
@@ -85,6 +105,15 @@ public class Client_Socket implements Serializable {
     public void sendNickName(String name) throws IOException, ClassNotFoundException, Exception{
         PrintWriter outToServer = new PrintWriter(socket.getOutputStream(), true);
         outToServer.println(name);
+    }
+
+    public Socket getServer(){
+        return this.socket;
+    }
+
+    public void sendCLient() throws IOException{
+        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos.writeObject(this);
     }
 }
 

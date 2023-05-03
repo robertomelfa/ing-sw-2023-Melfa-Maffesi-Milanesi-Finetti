@@ -9,8 +9,9 @@ public class ClientClass {
 
     private Socket socket;  // il client a cui è collegato il giocatore
 
+
     public ClientClass(Socket client){
-        socket = client;
+        this.socket = socket;
     }
 
     public void setPlayer(String name) throws Exception{
@@ -23,5 +24,9 @@ public class ClientClass {
 
     public Socket getSocket(){
         return socket;
+    }
+
+    public Socket getClient(){
+        return this.socket;
     }
 }

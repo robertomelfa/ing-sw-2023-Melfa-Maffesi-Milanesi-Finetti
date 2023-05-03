@@ -5,6 +5,8 @@ package it.polimi.ingsw.Network.Client;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class Client {
@@ -20,7 +22,6 @@ public class Client {
                 System.out.println("Starting Socket");
                 startSocketClient thread=new startSocketClient();
                 thread.run();
-
                 break;
             case "B":
                 break;

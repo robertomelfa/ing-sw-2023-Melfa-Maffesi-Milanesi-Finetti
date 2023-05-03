@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
+import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Controller.Socket.*;
+import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -43,23 +45,19 @@ public class Server_Socket implements Serializable {
 
             System.out.println("Game is starting");
 
-            try {
-                controller = new SocketController(serversocket,clientlist,numplayers);
-                controller.shufflePlayers();
-                gameTableToAll();
-            }catch (Exception e){
-                System.out.println("Exception in game");
-            }
-
         }catch (IOException e){
             System.out.println("[SERVER] fatal error");
         }
     }
 
-    public void gameTableToAll() throws IOException{
+    public void sendLibrary(ClientClass client) throws IOException, ClassNotFoundException{
+        ObjectOutputStream oos = new ObjectOutputStream(client.getSocket().getOutputStream());
+        oos.writeObject(client.getPlayer().getLibrary());
+    }
+    public void gameTableToAll(GameTable gameTable) throws IOException{
         for (int i=0; i < clientlist.size(); i++){
             ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
-            oos.writeObject(controller.getGameLogic().getGame().getGameTable());
+            oos.writeObject(gameTable);
             System.out.println("GameTable sent to " + clientlist.get(i).getPlayer().getNickname());
         }
     }
@@ -74,6 +72,16 @@ public class Server_Socket implements Serializable {
     public void sendMessage(String msg, int i) throws IOException, ClassNotFoundException{
         PrintWriter outToClient = new PrintWriter(clientlist.get(i).getSocket().getOutputStream(), true);
         outToClient.println(msg);
+    }
+
+    public ArrayList<ClientClass> getClientlist(){
+        return this.clientlist;
+    }
+
+    public Client_Socket receiveClient(Socket client) throws IOException, ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
+        Client_Socket new_client = (Client_Socket) ois.readObject();
+        return new_client;
     }
 }
 
