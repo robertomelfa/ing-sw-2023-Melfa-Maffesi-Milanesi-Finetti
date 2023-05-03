@@ -1,12 +1,9 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
 import it.polimi.ingsw.Controller.RMI.RMIController;
-import it.polimi.ingsw.Model.*;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Scanner;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 

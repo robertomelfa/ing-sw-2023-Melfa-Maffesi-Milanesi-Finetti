@@ -1,13 +1,10 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.RMI.Client;
-import it.polimi.ingsw.Network.Client.RMI.GameClient;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface GameInterface extends Remote {

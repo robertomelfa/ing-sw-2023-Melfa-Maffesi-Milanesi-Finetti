@@ -37,8 +37,8 @@ public class RMIController {
 
     public RMIController() {
         try {
-             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-             server = (GameInterface) registry.lookup("GameInterface");
+            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+            server = (GameInterface) registry.lookup("GameInterface");
 
 
             for(int i = 0; i < server.getClientList().size(); i++){
@@ -176,4 +176,3 @@ public class RMIController {
         server.notifyEnd();
     }
 }
-
