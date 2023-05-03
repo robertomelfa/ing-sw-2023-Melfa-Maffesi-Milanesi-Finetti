@@ -3,7 +3,6 @@ package it.polimi.ingsw.Network.Server.RMI;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
