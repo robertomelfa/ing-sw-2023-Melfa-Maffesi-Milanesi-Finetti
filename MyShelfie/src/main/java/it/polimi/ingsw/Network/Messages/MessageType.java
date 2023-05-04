@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network.Messages;
 
 public enum MessageType {
-    sendNickname, requestNickname, notifyBeginTurn, endTurn, ping
+    sendNickname, requestNickname, notifyBeginTurn, endTurn, ping, receiveGameTable, receiveLibrary, getCard
 
 }

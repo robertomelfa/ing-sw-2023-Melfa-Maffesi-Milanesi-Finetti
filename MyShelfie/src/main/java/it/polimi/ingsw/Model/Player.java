@@ -65,6 +65,10 @@ public class Player implements Serializable{
         return library;
     }
 
+    public void setLibrary(Library library){
+        this.library = library;
+    }
+
     /**
      *
      * @return the player's score

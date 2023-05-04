@@ -11,7 +11,7 @@ public class ClientClass {
 
 
     public ClientClass(Socket client){
-        this.socket = socket;
+        this.socket = client;
     }
 
     public void setPlayer(String name) throws Exception{

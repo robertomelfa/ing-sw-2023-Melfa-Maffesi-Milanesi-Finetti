@@ -1,13 +1,8 @@
 package it.polimi.ingsw.Network.Server;
 
 import it.polimi.ingsw.Controller.Socket.SocketController;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
 
-import javax.naming.ldap.Control;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
 

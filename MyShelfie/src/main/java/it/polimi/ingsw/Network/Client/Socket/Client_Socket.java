@@ -1,50 +1,35 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+//TODO sistemare le varie funzioni (troppo lunghe)
 public class Client_Socket implements Serializable {
 
     private Socket socket;  // è il server
 
     public  void start() throws Exception{
-        String ins;
         Scanner scanner=new Scanner(System.in);
-        System.out.print("Make a choice:\nN: start a new game\nJ: join a game\n");
-        ins=scanner.next();
-        switch (ins.toUpperCase()){
-            case "N":
-                System.out.println("You chose N");
-                //creare automaticamente una nuova istanza di server?
 
-            break;
-            case "J":
-                System.out.println("You chose J");
-                //ritornare la lista dei game attualmente attivi e permettere al client di scegliere una partita
-                int port;
-                System.out.println("Insert server port");
-                port=scanner.nextInt();
-                connect("127.0.0.1",port);
-
-                try {
-                    clientlogic();
-                }catch (Exception e){
-                    try{
-                        socket.close();
-                    }catch (IOException i){
-                        System.out.println("Impossible to close socket");
-                    }
-                }
-            break;
-            default:
-                System.out.println("Invalid choice");
-            break;
+        //ritornare la lista dei game attualmente attivi e permettere al client di scegliere una partita
+        int port;
+        System.out.println("Insert server port");
+        port=scanner.nextInt();
+        connect("127.0.0.1",port);
+        try {
+            clientlogic();
+        }catch (Exception e){
+            try{
+                socket.close();
+            }catch (IOException i){
+                System.out.println("Impossible to close socket");
+            }
         }
     }
 
@@ -61,8 +46,8 @@ public class Client_Socket implements Serializable {
     public void receiveGameTable(){
         try{
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            GameTable gametable = (GameTable) ois.readObject();
-            gametable.viewTable();
+            GameTable gameTable = (GameTable) ois.readObject();
+            gameTable.viewTable();
         }catch (IOException i){
             System.out.println("IOException");
         }catch (ClassNotFoundException c){
@@ -72,22 +57,37 @@ public class Client_Socket implements Serializable {
 
     public void clientlogic() throws Exception{
         // ricevo richiesta del nome e invio nome
-        Message msg;
-        msg=receiveMessage();
-        if (msg.getType()!=MessageType.requestNickname){
-            throw new Exception("Error in message type");
+        int i = 0;
+        while(i < 10){
+            Message msg;
+            msg=receiveMessage();
+            if (msg.getType()==MessageType.requestNickname){
+                System.out.println("Inserisci nome: ");
+                Scanner in = new Scanner(System.in);
+                String name = in.nextLine();
+                msg=new Message(MessageType.sendNickname,name);
+                sendMessage(msg);
+            }else if(msg.getType()==MessageType.receiveGameTable){
+                receiveGameTable();
+            }else if(msg.getType()==MessageType.receiveLibrary){
+                Library lib=receiveLibrary();
+                lib.viewGrid();
+            }else if(msg.getType()==MessageType.getCard){
+                System.out.println("devo pescare una carta");
+                ArrayList<Card> cards;
+                GameLogic gameLogic = receiveGameLogic();
+                Library library = receiveLibrary();
+                cards = gameLogic.getCardFromTable();
+                library.insert(cards);
+                sendLibrary(library);
+                sendGameLogic(gameLogic);
+            }else{
+
+                System.out.println("errore comunicazione");
+                break;
+            }
+            i++;        // per ora ho messo un while che si ripete per 6 volte
         }
-        else {
-            System.out.println("Insert Player name");
-        }
-        Scanner in = new Scanner(System.in);
-        String name = in.nextLine();
-        msg=new Message(MessageType.sendNickname,name);
-        sendMessage(msg);
-        receiveGameTable();
-        Library lib=receiveLibrary();
-        lib.viewGrid();
-        receiveGameTable();
     }
     public Message receiveMessage() throws IOException, ClassNotFoundException, Exception {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
@@ -102,6 +102,25 @@ public class Client_Socket implements Serializable {
     public Library receiveLibrary()throws IOException,ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Library) ois.readObject();
+    }
+
+    public GameLogic receiveGameLogic() throws IOException, ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        return (GameLogic) ois.readObject();
+    }
+
+    public void sendLibrary(Library library) throws IOException, ClassNotFoundException{
+        // dovro aggiungere tipologia messaggio
+
+        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos.writeObject(library);
+    }
+
+    public void sendGameLogic(GameLogic gameLogic) throws IOException, ClassNotFoundException{
+        // dovro aggiungere tipologia messaggio
+
+        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos.writeObject(gameLogic);
     }
 
 }

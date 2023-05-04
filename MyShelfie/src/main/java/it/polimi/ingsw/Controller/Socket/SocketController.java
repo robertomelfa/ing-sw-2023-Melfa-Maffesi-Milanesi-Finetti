@@ -4,6 +4,8 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.Socket.*;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.Socket.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 
@@ -16,9 +18,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// TODO sistemare la gestione del turno (per ora è una bozza)
 public class SocketController  implements Serializable {
 
-    private ServerSocket server;
+    private Server_Socket server;
     private  boolean endGame=false;
     private int chair;
     private ArrayList<ClientClass> players;
@@ -26,11 +29,11 @@ public class SocketController  implements Serializable {
     private GameLogic gameLogic;
     private ClientClass current_client;
 
-    public SocketController(ServerSocket server, ArrayList<ClientClass> players, int numOfPlayers) throws Exception{
+    public SocketController(Server_Socket server) throws Exception{
         this.server = server;
-        this.players = players;
+        this.players = server.getClientlist();
         this.endGame=false;
-        Game game=new Game(numOfPlayers);
+        Game game=new Game(server.getClientlist().size());
         gameLogic=new GameLogic(game);
     }
 
@@ -88,20 +91,18 @@ public class SocketController  implements Serializable {
         gameLogic.getGame().addNewPlayer(player);
     }
 
-    /*public void takeTurn() throws IOException, Exception {
+    public void takeTurn() throws IOException, Exception {
         shufflePlayers();
 
         while(true){ // test
 
+            server.gameTableToAll(gameLogic.getGameTable());
 
-            current_client.receiveLibrary(current_client.getPlayer().getLibrary());
+            server.sendLibrary(current_client.getSocket(), current_client.getPlayer().getLibrary());
 
-            current_client.receiveGetCard(gameLogic, server);
+            gameLogic = server.sendGameLogic(current_client, gameLogic);
 
             updateCurrentPlayer();
         }
-
-    }*/
-
-
+    }
 }

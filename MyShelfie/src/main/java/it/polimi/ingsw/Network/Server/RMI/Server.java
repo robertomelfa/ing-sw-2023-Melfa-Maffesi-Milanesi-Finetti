@@ -5,6 +5,7 @@ import it.polimi.ingsw.Controller.RMI.RMIController;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.RemoteException;
+import java.rmi.server.RMIClassLoader;
 
 
 public class Server {
