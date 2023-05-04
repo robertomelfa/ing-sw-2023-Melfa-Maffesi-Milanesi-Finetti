@@ -9,11 +9,19 @@ public class ClientClass {
 
     private Socket socket;  // il client a cui è collegato il giocatore
 
-
+    /**
+     * constructor for the ClientClass
+     * @param client the socket the client is connected to
+     */
     public ClientClass(Socket client){
         this.socket = client;
     }
 
+    /**
+     * initialize a new Player and set it to the local player variable
+     * @param name the username of the player in this client
+     * @throws Exception
+     */
     public void setPlayer(String name) throws Exception{
         player = new Player(name);
     }

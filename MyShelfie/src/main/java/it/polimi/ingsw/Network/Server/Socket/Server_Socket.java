@@ -60,22 +60,50 @@ public  class Server_Socket implements Serializable {
         }
     }
 
+    /**
+     *  send the gametable to all the clients connected
+     * @param gameTable that we want to send to all the plauers
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void gameTableToAll(GameTable gameTable) throws IOException, ClassNotFoundException{
         for (int i=0; i < clientlist.size(); i++){
             sendGameTable(clientlist.get(i).getSocket(), gameTable);
         }
     }
 
+    /**
+     * Received a message in input from the socket passed as a parameter
+     * @param socket the socket we wanto to recive the Message from
+     * @return Message
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws Exception
+     */
     public Message receiveMessage(Socket socket) throws IOException, ClassNotFoundException, Exception {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Message) ois.readObject();
     }
 
+    /**
+     * send a specific message to the socket. Both the message and the socket are specified when the method is called
+     * @param msg the Message we want to send to the socket passed to the method as a parameter
+     * @param socket
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void sendMessage(Message msg, Socket socket) throws IOException, ClassNotFoundException{
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(msg);
     }
 
+    /**
+     * send the library to the socket. Both the client and the library are specified when the method is called
+     * @param socket the socket we want to send the library to
+     * @param lib the library we want to send to the client
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void sendLibrary(Socket socket, Library lib) throws IOException, ClassNotFoundException{
         Message msg = new Message(MessageType.receiveLibrary, null);
         sendMessage(msg, socket);
@@ -83,6 +111,13 @@ public  class Server_Socket implements Serializable {
         oos.writeObject(lib);
     }
 
+    /**
+     * send the gametable to the socket
+     * @param socket the socket we want to send the gametable to
+     * @param gameTable the gametable we want to send to the socket
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void sendGameTable(Socket socket, GameTable gameTable) throws IOException, ClassNotFoundException{
         Message msg = new Message(MessageType.receiveGameTable, null);
         sendMessage(msg, socket);
@@ -90,6 +125,15 @@ public  class Server_Socket implements Serializable {
         oos.writeObject(gameTable);
     }
 
+    /**
+     * Handles part of the process of picking cards from the table. Sever send to the client the gamelogic, his library
+     * and a message of the "getCard" type, then receives the updated gamelogic and library from the client
+     * @param client we want to pick cards from the game table
+     * @param gameLogic the gamelogic we want to send to the client
+     * @return the updated gamelogic after the client picked its cards from the game table
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public GameLogic sendGameLogic(ClientClass client, GameLogic gameLogic) throws IOException, ClassNotFoundException{
         Message msg = new Message(MessageType.getCard, null);
         sendMessage(msg, client.getSocket());
@@ -111,6 +155,10 @@ public  class Server_Socket implements Serializable {
         return (GameLogic) ois.readObject();
     }
 
+    /**
+     *
+     * @return the list of all the client connected
+     */
     public ArrayList<ClientClass> getClientlist(){
         return clientlist;
     }

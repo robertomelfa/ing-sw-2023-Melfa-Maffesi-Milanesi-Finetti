@@ -33,6 +33,12 @@ public class SocketController  implements Serializable {
     private GameLogic gameLogic;
     private ClientClass current_client;
 
+    /**
+     * constructor for the controller
+     * @param server
+     * @throws Exception
+     */
+
     public SocketController(Server_Socket server) throws Exception{
         this.server = server;
         this.players = server.getClientlist();
@@ -41,22 +47,36 @@ public class SocketController  implements Serializable {
         gameLogic=new GameLogic(game);
     }
 
+    /**
+     * @return the list of all the Client connected
+     */
     public ArrayList<ClientClass> getPlayers(){
         return players;
     }
 
+    /**
+     * @return the client who has the chair
+     */
     public ClientClass getChair(){
         return players.get(chair);
     }
 
+    /**
+     * @return client corresponding to the current player
+     */
     public ClientClass getCurrentPlayer(){
         return current_client;
     }
+
 
     public GameLogic getGameLogic() {
         return gameLogic;
     }
 
+    /**
+     * update the current player and handles part of the end game procedures
+     * @throws Exception
+     */
     public void updateCurrentPlayer() throws Exception{
         if(!endGame){
             playersIterator++;
@@ -79,7 +99,10 @@ public class SocketController  implements Serializable {
 
     }
 
-
+    /**
+     * shuffle the player list to create a random order. Then set the chair to the player in the first position of
+     * of the list
+     */
     public void shufflePlayers(){
         try {
             Collections.shuffle(players);
@@ -91,6 +114,11 @@ public class SocketController  implements Serializable {
         }
     }
 
+    /**
+     * add a new player to the game
+     * @param player the player we want to add to the game
+     * @throws Exception
+     */
     public void addPlayerToGame(Player player) throws Exception{
         gameLogic.getGame().addNewPlayer(player);
     }
