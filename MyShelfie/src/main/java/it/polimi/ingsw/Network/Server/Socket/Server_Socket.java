@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
+import it.polimi.ingsw.Model.Library;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Controller.Socket.*;
 import it.polimi.ingsw.Network.Messages.Message;
@@ -11,7 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Server_Socket implements Serializable {
+public  class Server_Socket implements Serializable {
 
     private  ArrayList<ClientClass> clientlist = new ArrayList<>();
     private SocketController controller;
@@ -57,6 +58,11 @@ public class Server_Socket implements Serializable {
                 controller = new SocketController(serversocket,clientlist,numplayers);
                 controller.shufflePlayers();
                 gameTableToAll();
+                for (int j=0;j<clientlist.size();j++){
+                    sendLibrary(j,clientlist.get(j).getPlayer().getLibrary());
+                }
+                sendGameTable(0);
+
             }catch (Exception e){
                 System.out.println("Exception in game");
             }
@@ -83,5 +89,16 @@ public class Server_Socket implements Serializable {
         ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
         oos.writeObject(msg);
     }
+
+    public void sendLibrary(int i, Library lib) throws IOException{
+        ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
+        oos.writeObject(lib);
+    }
+
+    public void sendGameTable(int i) throws IOException{
+        ObjectOutputStream oos = new ObjectOutputStream(clientlist.get(i).getSocket().getOutputStream());
+        oos.writeObject(controller.getGameLogic().getGame().getGameTable());
+    }
+
 }
 

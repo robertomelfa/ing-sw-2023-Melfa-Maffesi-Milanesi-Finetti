@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
 import it.polimi.ingsw.Model.GameTable;
+import it.polimi.ingsw.Model.Library;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 
@@ -84,6 +85,9 @@ public class Client_Socket implements Serializable {
         msg=new Message(MessageType.sendNickname,name);
         sendMessage(msg);
         receiveGameTable();
+        Library lib=receiveLibrary();
+        lib.viewGrid();
+        receiveGameTable();
     }
     public Message receiveMessage() throws IOException, ClassNotFoundException, Exception {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
@@ -94,6 +98,12 @@ public class Client_Socket implements Serializable {
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(msg);
     }
+
+    public Library receiveLibrary()throws IOException,ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        return (Library) ois.readObject();
+    }
+
 }
 
 
