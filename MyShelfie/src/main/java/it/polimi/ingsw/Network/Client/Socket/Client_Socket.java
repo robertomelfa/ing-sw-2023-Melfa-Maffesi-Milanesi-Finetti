@@ -85,6 +85,8 @@ public class Client_Socket implements Serializable {
         msg=new Message(MessageType.sendNickname,name);
         sendMessage(msg);
         receiveGameTable();
+        Library lib=receiveLibrary();
+        lib.viewGrid();
     }
     public Message receiveMessage() throws IOException, ClassNotFoundException, Exception {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());

@@ -58,6 +58,10 @@ public class Server_Socket implements Serializable {
                 controller = new SocketController(serversocket,clientlist,numplayers);
                 controller.shufflePlayers();
                 gameTableToAll();
+                for (int j=0;j<clientlist.size();j++){
+                    sendLibrary(j,clientlist.get(j).getPlayer().getLibrary());
+                }
+
             }catch (Exception e){
                 System.out.println("Exception in game");
             }
