@@ -19,6 +19,10 @@ import java.util.Collections;
 import java.util.List;
 
 // TODO sistemare la gestione del turno (per ora è una bozza)
+// TODO gestione obiettivi
+// TODO scambio messaggi server-client per inizio/fine turno ed eventualmente per la gestione delle carte
+// TODO ping al client per disconnessioni
+
 public class SocketController  implements Serializable {
 
     private Server_Socket server;

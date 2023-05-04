@@ -7,10 +7,6 @@ package it.polimi.ingsw.Model;
 
 // TODO consiglio Patrick package, view - model -controller - network (client/server)
 
-//TODO impostare connessione RMI
-//TODO implementare Controller
-//TODO implementare comunicazione per messaggi
-//TODO implementare scambio oggetti
 
 public class App
 {

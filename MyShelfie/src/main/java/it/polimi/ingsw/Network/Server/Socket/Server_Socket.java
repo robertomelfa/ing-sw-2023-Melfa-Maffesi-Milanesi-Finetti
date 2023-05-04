@@ -47,7 +47,6 @@ public  class Server_Socket implements Serializable {
             for(int j = 0; j < clientlist.size(); j++){
                 Message msg=new Message(MessageType.requestNickname,null);
                 sendMessage(msg, clientlist.get(j).getSocket());
-                System.out.println("ciao");
                 clientlist.get(j).setPlayer(receiveMessage(clientlist.get(j).getSocket()).getMessage());  // nomino il player
                 System.out.println("Player " + clientlist.get(j).getPlayer().getNickname() + " added");
             }

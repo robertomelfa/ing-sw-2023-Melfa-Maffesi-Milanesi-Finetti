@@ -129,7 +129,7 @@ public class GameLogic implements Serializable{
                 list.add(gameTable.getCardfromBoard(x2,y2));
                 list.add(gameTable.getCardfromBoard(x3,y3));
 
-                System.out.print("Cards " + gameTable.getCardfromBoard(x1,y1) + " " + gameTable.getCardfromBoard(x2,y2) + " " + gameTable.getCardfromBoard(x3,y3) + " drawn");
+                System.out.println("Cards " + gameTable.getCardfromBoard(x1,y1) + " " + gameTable.getCardfromBoard(x2,y2) + " " + gameTable.getCardfromBoard(x3,y3) + " drawn");
                 // set NONE on the table
                 gameTable.setCardfromBoard(x1,y1,NONE);
                 gameTable.setCardfromBoard(x2,y2,NONE);
