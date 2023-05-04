@@ -3,9 +3,11 @@ package it.polimi.ingsw.Controller.Socket;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.Socket.*;
+import it.polimi.ingsw.Network.Server.Socket.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,12 +16,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SocketController implements Serializable {
+public class SocketController  implements Serializable {
 
     private ServerSocket server;
     private  boolean endGame=false;
     private int chair;
-    private ArrayList<ClientClass> players = new ArrayList<>();
+    private ArrayList<ClientClass> players;
     private int playersIterator;
     private GameLogic gameLogic;
     private ClientClass current_client;
@@ -86,20 +88,20 @@ public class SocketController implements Serializable {
         gameLogic.getGame().addNewPlayer(player);
     }
 
-    public void takeTurn(){
-        /*shufflePlayers();
+    /*public void takeTurn() throws IOException, Exception {
+        shufflePlayers();
 
         while(true){ // test
-            server.gameTableToAll();
+
 
             current_client.receiveLibrary(current_client.getPlayer().getLibrary());
 
             current_client.receiveGetCard(gameLogic, server);
 
             updateCurrentPlayer();
-        }*/
+        }
 
-    }
+    }*/
 
 
 }
