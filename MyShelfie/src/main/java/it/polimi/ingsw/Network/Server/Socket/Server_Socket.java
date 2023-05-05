@@ -20,32 +20,24 @@ public  class Server_Socket implements Serializable {
         try {
             int port=8080;
             ServerSocket serversocket = new ServerSocket(port);
-            System.out.println("[SERVER] is running on port "+port);
-            Scanner input= new Scanner(System.in);
             int numplayers;
-            do {
-                System.out.println("Insert player number");
-                numplayers=input.nextInt();
-            }while (numplayers<2 || numplayers>4);
-            int i=0;
+            int i=1;
+            numplayers = firstClient(serversocket);
             while (i < numplayers){
                 int remaining=numplayers-i;
                 System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
                 Socket socket = serversocket.accept();  // questo è il client
                 ClientClass client = new ClientClass(socket);   // associo il client ad un player
                 clientlist.add(client);
+
+                Message msg=new Message(MessageType.requestNickname,null);
+                sendMessage(msg, socket);
+                clientlist.get(i).setPlayer(receiveMessage(socket).getMessage());  // nomino il player
+                System.out.println("Player " + clientlist.get(i).getPlayer().getNickname() + " added");
                 i++;
             }
             for (int k=0;k<clientlist.size();k++){
                 System.out.println(clientlist.get(k).getSocket());
-            }
-
-            // chiedo il nome a tutti i client (potrei fare una funzione unica)
-            for(int j = 0; j < clientlist.size(); j++){
-                Message msg=new Message(MessageType.requestNickname,null);
-                sendMessage(msg, clientlist.get(j).getSocket());
-                clientlist.get(j).setPlayer(receiveMessage(clientlist.get(j).getSocket()).getMessage());  // nomino il player
-                System.out.println("Player " + clientlist.get(j).getPlayer().getNickname() + " added");
             }
 
             for (int j=0;j<clientlist.size();j++){
@@ -80,6 +72,11 @@ public  class Server_Socket implements Serializable {
     public Message receiveMessage(Socket socket) throws IOException, ClassNotFoundException, Exception {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Message) ois.readObject();
+    }
+
+    public int receiveInt(Socket socket) throws IOException, ClassNotFoundException, Exception {
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        return (int) ois.readObject();
     }
 
     /**
@@ -167,5 +164,21 @@ public  class Server_Socket implements Serializable {
         return clientlist;
     }
 
+    public int firstClient(ServerSocket serversocket) throws IOException, ClassNotFoundException, Exception{
+        Socket socket = serversocket.accept();  // questo è il client
+        ClientClass client = new ClientClass(socket);   // associo il client ad un player
+        clientlist.add(client);
+        // ask num of players
+        Message msg=new Message(MessageType.requestNumPlayer,null);
+        sendMessage(msg, socket);
+        // receive num of players
+        int num = receiveInt(socket);
+        System.out.println("num giocatori: " + num);
+        // ask name of player
+        msg=new Message(MessageType.requestNickname,null);
+        sendMessage(msg, socket);
+        clientlist.get(0).setPlayer(receiveMessage(clientlist.get(0).getSocket()).getMessage());
+        return num;
+    }
 }
 

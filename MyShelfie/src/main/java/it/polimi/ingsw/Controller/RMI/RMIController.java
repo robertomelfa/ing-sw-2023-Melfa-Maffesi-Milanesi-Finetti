@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller.RMI;
 
 import it.polimi.ingsw.Model.Card;
+import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
@@ -52,7 +53,8 @@ public class RMIController {
                 players.add(server.getClient(i));
             }
 
-            gameLogic = new GameLogic(server.getGame());
+            Game game = new Game(server.getClientList().size());
+            gameLogic = new GameLogic(game);
 
             shufflePlayers();
 
@@ -142,6 +144,9 @@ public class RMIController {
             // notify all players about the turn
             server.notifyTurnPlayer(current_client);
 
+            // send the gameTable to all players
+            server.gameTableToAll(gameLogic.getGameTable());
+
 
             int i = 0;
             while(i == 0){
@@ -151,9 +156,9 @@ public class RMIController {
                         current_client.receiveMessage("Player Object:");
                         current_client.printPlayerObj();
                         current_client.receiveMessage("Common Object 1:");
-                        current_client.receiveMessage(server.getGame().getCommonObj1().getDescrizione());
+                        current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescrizione());
                         current_client.receiveMessage("Common Object 2:");
-                        current_client.receiveMessage(server.getGame().getCommonObj2().getDescrizione());
+                        current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescrizione());
                         break;
                     case 2:
                         i = 1;
@@ -164,40 +169,40 @@ public class RMIController {
 
             }
 
-            // send the gameTable to all players
-            server.gameTableToAll(server.getGame().getGameTable());
-
             // send the library to the current player
             current_client.receiveLibrary(current_client.getPlayer().getLibrary());
 
             // get cards from table
-            current_client.receiveGetCard(gameLogic, server);
+            this.gameLogic = current_client.receiveGetCard(gameLogic, server);
+
+            // send the gameTable to all players
+            server.gameTableToAll(gameLogic.getGameTable());
 
             // update gameLogic table
-            gameLogic.setGameTable(server.getGame().getGameTable());
+         //   gameLogic.setGameTable(server.getGame().getGameTable());
 
             // check the commonObj
             if(!current_client.getPlayer().getCommonObj1Completed()){
-                if(server.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
+                if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
                     server.messageToAll(current_client.getPlayer().getNickname() + " successfully completed the first common goal");
-                    server.messageToAll(current_client.getPlayer().getNickname() + " now has the " + server.getGame().getCommonObj1().getPointCount() + " card");
-                    current_client.getPlayer().addPoints(server.getGame().getCommonObj1().getPointCount());
+                    server.messageToAll(current_client.getPlayer().getNickname() + " now has the " + gameLogic.getGame().getCommonObj1().getPointCount() + " card");
+                    current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj1().getPointCount());
                     current_client.getPlayer().setCommonObj2Completed();
                 }
             }
 
             if(!current_client.getPlayer().getCommonObj2Completed()){
-                if(server.getGame().getCommonObj2().checkObj(current_client.getPlayer().getLibrary())){
+                if(gameLogic.getGame().getCommonObj2().checkObj(current_client.getPlayer().getLibrary())){
                     server.messageToAll(current_client.getPlayer().getNickname() + " successfully completed the first common goal");
-                    server.messageToAll(current_client.getPlayer().getNickname() + " now has the " + server.getGame().getCommonObj1().getPointCount() + " card");
-                    current_client.getPlayer().addPoints(server.getGame().getCommonObj2().getPointCount());
+                    server.messageToAll(current_client.getPlayer().getNickname() + " now has the " + gameLogic.getGame().getCommonObj1().getPointCount() + " card");
+                    current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj2().getPointCount());
                     current_client.getPlayer().setCommonObj2Completed();
                 }
             }
 
             if(current_client.getPlayer().getLibrary().checkFull()){
-                server.getGame().setEndGame();
-                server.getGame().getCurrentPlayer().addPoints(1);
+                gameLogic.getGame().setEndGame();
+                gameLogic.getGame().getCurrentPlayer().addPoints(1);
                 endGame = true;
             }
 

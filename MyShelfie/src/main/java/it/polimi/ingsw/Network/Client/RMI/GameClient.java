@@ -27,7 +27,6 @@ public class GameClient {
             GameClientInterface client = new Client(name);
             client.connection(server, client);
 
-
         }catch(Exception e){
             System.out.println("[System] Server failed: " + e);
         }

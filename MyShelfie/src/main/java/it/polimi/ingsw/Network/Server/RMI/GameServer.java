@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
+import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
@@ -13,10 +14,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
 
     private List<GameClientInterface> client;
 
-    private GameInterface server;
-
-    private Game game;
-
+    private int numPlayers;
     private boolean firstPlayer = true;
 
     /**
@@ -31,6 +29,27 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
         }catch(Exception e){}
     }
 
+    public void start() throws RemoteException, Exception{
+        int i = 0;
+        while (true) {
+            if (getClient(i) != null) {
+                System.out.println("Si e' connesso " + getClient(i).getPlayer().getNickname());
+                if(i != 0){
+                    getClient(i).receiveMessage("wait for the game to start!");
+                }else{
+                    do{
+                        numPlayers = getClient(0).getIntFromClient("Enter num of players");
+                    }while(numPlayers < 2 || numPlayers > 4);
+                }
+                i++;
+                if (getClientList().size() == numPlayers) {
+                    RMIController controller = new RMIController();
+                    controller.takeTurn();
+                }
+            }
+        }
+    }
+
     /**
      * When a client connect to the server add it to the LinkedList and to the game
      * @param c , the client that connected
@@ -39,7 +58,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
      */
     public void setClient(GameClientInterface c) throws RemoteException,Exception{
         client.add(c);
-        game.addNewPlayer(c.getPlayer());
     }
 
     /**
@@ -66,24 +84,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
     }
 
     /**
-     * used to set the game in the server
-     * @param game that we want to set in the sever
-     * @throws RemoteException
-     */
-    public void setGame(Game game) throws RemoteException{
-        this.game = game;
-    }
-
-    /**
-     *
-     * @return the game stored in the server
-     * @throws RemoteException
-     */
-    public Game getGame() throws RemoteException{
-        return this.game;
-    }
-
-    /**
      * sent the game table to all the client connected to the game
      * @param board the game table we want to send to all the clients
      * @throws RemoteException
@@ -105,15 +105,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
         client.get(i).receiveGameTable(board);
     }
 
-    /**
-     * update the game table of the game stored in the server
-     * @param board the updated version of the board
-     * @throws RemoteException
-     * @throws Exception
-     */
-    public void receiveTable(GameTable board) throws RemoteException, Exception{
-        game.setGameTable(board);
-    }
 
     /**
      * used to notify all that the game has come to its end
@@ -163,6 +154,10 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
         for(int i = 0; i < client.size(); i++){
             client.get(i).receiveMessage(msg);
         }
+    }
+
+    public int getNumPlayers() throws RemoteException{
+        return this.numPlayers;
     }
 
 }

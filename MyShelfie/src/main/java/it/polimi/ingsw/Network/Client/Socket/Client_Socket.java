@@ -74,7 +74,18 @@ public class Client_Socket implements Serializable {
         while(true){
             Message msg;
             msg=receiveMessage();
-            if (msg.getType()==MessageType.requestNickname){
+            if(msg.getType()==MessageType.requestNumPlayer){
+                int numPlayers = 0;
+                Scanner in = new Scanner(System.in);
+                do{
+                    System.out.println("Inserisci numero di giocatori:");
+                    numPlayers = in.nextInt();
+                    if(numPlayers < 2 || numPlayers > 4){
+                        System.out.println("Il numero di giocatori deve essere compreso tra 2 e 4. Riprova");
+                    }
+                }while(numPlayers < 2 || numPlayers > 4);
+                sendInt(numPlayers);
+            }else if (msg.getType()==MessageType.requestNickname){
                 System.out.println("Inserisci nome: ");
                 Scanner in = new Scanner(System.in);
                 String name = in.nextLine();
@@ -94,8 +105,6 @@ public class Client_Socket implements Serializable {
                 library.insert(cards);
                 sendLibrary(library);
                 sendGameLogic(gameLogic);
-
-
 
             }else if (msg.getType()==MessageType.objectiveCompleted){
                 System.out.println(msg.getMessage());
@@ -182,6 +191,13 @@ public class Client_Socket implements Serializable {
 
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(library);
+    }
+
+    public void sendInt(int num) throws IOException, ClassNotFoundException{
+        // dovro aggiungere tipologia messaggio
+
+        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos.writeObject(num);
     }
 
     /**

@@ -58,7 +58,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
      * @throws RemoteException
      * @throws Exception
      */
-    public void receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
+    public GameLogic receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
         ArrayList<Card> cards = new ArrayList<>();
 
         cards = gameLogic.getCardFromTable();
@@ -67,7 +67,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
 
         player.getLibrary().insert(cards);
 
-        server.receiveTable(gameLogic.getGameTable());
+        return gameLogic;
     }
 
     /**
@@ -92,32 +92,14 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
         if(server.isFirstPlayer()) {
             server.setFirstPlayer();
             Scanner in = new Scanner(System.in);
-            System.out.println("How many players?");
-            int num = in.nextInt();
-            Game game = new Game(num);
-            server.setGame(game);
             server.setClient(client);
         }else{
-            while (server.getGame() == null){
 
-            }
-            String answer = "J"; // per ora teniamo che puoi solo joinare
-
-            if(server.getGame().getNumOfPlayers() > server.getGame().numActualPlayers()){
-                switch (answer){
-                    case "N":
-                        // TODO implementare il caso di un nuovo game: veramente necessario?
-                        break;
-                    case "J":
-                        System.out.println("You choose J");
-                        server.setClient(client);
-                        break;
-                    default: System.out.println("Invalid choice");
-                }
+            if(server.getNumPlayers() > server.getClientList().size()){
+                server.setClient(client);
             }else{
                 throw new Exception("troppi dispositivi connessi, non puoi accedere");
             }
-
         }
         System.out.println("[System] connected!");
     }
