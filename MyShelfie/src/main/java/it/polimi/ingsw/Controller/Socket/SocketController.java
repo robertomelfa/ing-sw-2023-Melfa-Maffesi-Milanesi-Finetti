@@ -123,18 +123,84 @@ public class SocketController  implements Serializable {
         gameLogic.getGame().addNewPlayer(player);
     }
 
+
+    public void checkObjectives() throws Exception{
+        if(!current_client.getPlayer().getCommonObj1Completed()){
+            if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
+                for (int i=0;i<players.size();i++){
+                    Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the first common goal\nnow has the " +gameLogic.getGame().getCommonObj1().getPointCount() +" card");
+                    server.sendMessage(message,players.get(i).getSocket());
+                }
+                current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj1().getPointCount());
+                current_client.getPlayer().setCommonObj2Completed();
+
+            }
+        }
+
+        if(!current_client.getPlayer().getCommonObj2Completed()){
+            if(gameLogic.getGame().getCommonObj2().checkObj(current_client.getPlayer().getLibrary())){
+                for (int i=0;i<players.size();i++){
+                    Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the second common goal\nnow has the " + gameLogic.getGame().getCommonObj2().getPointCount() + " card");
+                    server.sendMessage(message,players.get(i).getSocket());
+                }
+                current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj2().getPointCount());
+                current_client.getPlayer().setCommonObj2Completed();
+            }
+        }
+
+
+        if(current_client.getPlayer().getLibrary().checkFull()){
+            gameLogic.getGame().setEndGame();
+            gameLogic.getGame().getCurrentPlayer().addPoints(1);
+            endGame = true;
+        }
+
+        // check gameTable: in case refill
+
+    }
+
     public void takeTurn() throws IOException, Exception {
         shufflePlayers();
 
-        while(true){ // test
+        while(!endGame){ // test
 
-            server.gameTableToAll(gameLogic.getGameTable());
+            server.sendGameTable(current_client.getSocket(),gameLogic.getGameTable());
+            server.sendLibrary(current_client.getSocket(),current_client.getPlayer().getLibrary());
+            int i=0;
+            while(i==0){
+                server.sendMessage(new Message(MessageType.notifyBeginTurn,"\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards"),current_client.getSocket());
+                switch (server.receiveMessage(current_client.getSocket()).getMessage()){
 
-            server.sendLibrary(current_client.getSocket(), current_client.getPlayer().getLibrary());
+                    case "1":
+                        server.sendMessage(new Message(MessageType.printMessage,"Player Object:"),current_client.getSocket());
+                        server.sendPlayerObj(current_client.getSocket(),current_client.getPlayer().getPlayerObj());
+                        server.sendMessage(new Message(MessageType.printMessage,"Common Object 1:"),current_client.getSocket());
+                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj1().getDescrizione()),current_client.getSocket());
+                        server.sendMessage(new Message(MessageType.printMessage,"Common Object 2:"),current_client.getSocket());
+                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj2().getDescrizione()),current_client.getSocket());
+                        break;
+                    case "2":
+                        gameLogic = server.sendGameLogic(current_client, gameLogic);
+                        i=1;
+                        break;
+                    default:
+                        server.sendMessage(new Message(MessageType.printMessage,"The input is not valid, please insert 1 or 2\n"),current_client.getSocket());
 
-            gameLogic = server.sendGameLogic(current_client, gameLogic);
+                }
+            }
+            //server.gameTableToAll(gameLogic.getGameTable());
+
+            //server.sendLibrary(current_client.getSocket(), current_client.getPlayer().getLibrary());
+
+            //gameLogic = server.sendGameLogic(current_client, gameLogic);
+
+            checkObjectives();
+
+            //inserire checkFull sulla libreria del player che fa terminare il game
+            gameLogic.getGameTable().checkStatus();
 
             updateCurrentPlayer();
         }
+        //server.notifyEnd
     }
 }

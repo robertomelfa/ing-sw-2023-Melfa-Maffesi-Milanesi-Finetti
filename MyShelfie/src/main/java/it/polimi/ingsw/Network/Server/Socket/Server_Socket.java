@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Controller.Socket.*;
 import it.polimi.ingsw.Network.Messages.Message;
@@ -97,6 +94,13 @@ public  class Server_Socket implements Serializable {
         oos.writeObject(msg);
     }
 
+    public void sendPlayerObj(Socket socket, PlayerObj obj) throws IOException, ClassNotFoundException{
+        Message msg = new Message(MessageType.receivePlayerObj, null);
+        sendMessage(msg, socket);
+        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos.writeObject(obj);
+    }
+
     /**
      * send the library to the socket. Both the client and the library are specified when the method is called
      * @param socket the socket we want to send the library to
@@ -162,5 +166,6 @@ public  class Server_Socket implements Serializable {
     public ArrayList<ClientClass> getClientlist(){
         return clientlist;
     }
+
 }
 

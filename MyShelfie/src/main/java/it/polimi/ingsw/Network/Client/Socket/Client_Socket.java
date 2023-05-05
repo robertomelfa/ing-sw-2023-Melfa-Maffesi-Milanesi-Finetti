@@ -71,7 +71,7 @@ public class Client_Socket implements Serializable {
     public void clientlogic() throws Exception{
         // ricevo richiesta del nome e invio nome
         int i = 0;
-        while(i < 10){
+        while(true){
             Message msg;
             msg=receiveMessage();
             if (msg.getType()==MessageType.requestNickname){
@@ -94,8 +94,25 @@ public class Client_Socket implements Serializable {
                 library.insert(cards);
                 sendLibrary(library);
                 sendGameLogic(gameLogic);
-            }else{
 
+
+
+            }else if (msg.getType()==MessageType.objectiveCompleted){
+                System.out.println(msg.getMessage());
+
+            }else if (msg.getType()==MessageType.printMessage){
+                System.out.println(msg.getMessage());
+
+            }else if (msg.getType()==MessageType.receivePlayerObj){
+                PlayerObj obj=receivePlayerObj();
+                obj.print();
+
+            }else if (msg.getType()==MessageType.notifyBeginTurn){
+                System.out.println(msg.getMessage());
+                Scanner in =new Scanner(System.in);
+                String choice=in.nextLine();
+                sendMessage(new Message(MessageType.printMessage,choice));
+            }else {
                 System.out.println("errore comunicazione");
                 break;
             }
@@ -146,6 +163,12 @@ public class Client_Socket implements Serializable {
     public GameLogic receiveGameLogic() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (GameLogic) ois.readObject();
+    }
+
+
+    public PlayerObj receivePlayerObj() throws IOException, ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        return (PlayerObj) ois.readObject();
     }
 
     /**
