@@ -121,6 +121,9 @@ public class Client_Socket implements Serializable {
                 Scanner in =new Scanner(System.in);
                 String choice=in.nextLine();
                 sendMessage(new Message(MessageType.printMessage,choice));
+            }else if (msg.getType()==MessageType.endGame){
+                System.out.println("Game is ended");
+                break;
             }else {
                 System.out.println("errore comunicazione");
                 break;

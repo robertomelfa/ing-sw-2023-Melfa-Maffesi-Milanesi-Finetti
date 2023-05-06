@@ -20,6 +20,7 @@ public  class Server_Socket implements Serializable {
         try {
             int port=8080;
             ServerSocket serversocket = new ServerSocket(port);
+            System.out.println("[SERVER] started on port: "+port);
             int numplayers;
             int i=1;
             numplayers = firstClient(serversocket);
@@ -30,15 +31,17 @@ public  class Server_Socket implements Serializable {
                 ClientClass client = new ClientClass(socket);   // associo il client ad un player
                 clientlist.add(client);
 
-                Message msg=new Message(MessageType.requestNickname,null);
+                /*Message msg=new Message(MessageType.requestNickname,null);
                 sendMessage(msg, socket);
                 clientlist.get(i).setPlayer(receiveMessage(socket).getMessage());  // nomino il player
-                System.out.println("Player " + clientlist.get(i).getPlayer().getNickname() + " added");
+                System.out.println("Player " + clientlist.get(i).getPlayer().getNickname() + " added");*/
                 i++;
             }
             for (int k=0;k<clientlist.size();k++){
                 System.out.println(clientlist.get(k).getSocket());
             }
+
+            requestNicknameClients();
 
             for (int j=0;j<clientlist.size();j++){
                 System.out.println(clientlist.get(j).getSocket()+" nickname: "+clientlist.get(j).getPlayer().getNickname());
@@ -173,12 +176,44 @@ public  class Server_Socket implements Serializable {
         sendMessage(msg, socket);
         // receive num of players
         int num = receiveInt(socket);
-        System.out.println("num giocatori: " + num);
+        System.out.println("Players: " + num);
         // ask name of player
-        msg=new Message(MessageType.requestNickname,null);
+        /*msg=new Message(MessageType.requestNickname,null);
         sendMessage(msg, socket);
-        clientlist.get(0).setPlayer(receiveMessage(clientlist.get(0).getSocket()).getMessage());
+        clientlist.get(0).setPlayer(receiveMessage(clientlist.get(0).getSocket()).getMessage());*/
         return num;
     }
+
+
+    public void requestNicknameClients() throws IOException, ClassNotFoundException, Exception{
+        ArrayList<String> nicknames=new ArrayList<>();
+        for (int i=0;i<clientlist.size();i++){
+            boolean askagain=true;
+            Message message=null;
+            while (askagain){
+                sendMessage(new Message(MessageType.requestNickname,null),clientlist.get(i).getSocket());
+                message=receiveMessage(clientlist.get(i).getSocket());
+                if (message.getType()!=MessageType.sendNickname){
+                    throw new Exception("Invalid message type");
+                }
+                if (!nicknames.contains(message.getMessage())){
+                    askagain=false;
+                }else {
+                    sendMessage(new Message(MessageType.printMessage,message.getMessage()+" is already taken, choose another nickname"),clientlist.get(i).getSocket());
+                }
+            }
+            nicknames.add(message.getMessage());
+        }
+        for (int j=0; j<nicknames.size();j++){
+            clientlist.get(j).setPlayer(nicknames.get(j));
+        }
+    }
+
+    public void notifyEnd() throws IOException, ClassNotFoundException{
+        for (int i=0;i<clientlist.size();i++){
+            sendMessage(new Message(MessageType.endGame,null),clientlist.get(i).getSocket());
+        }
+    }
+
 }
 

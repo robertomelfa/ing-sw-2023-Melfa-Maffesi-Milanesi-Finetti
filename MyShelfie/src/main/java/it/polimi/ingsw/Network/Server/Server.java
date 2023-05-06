@@ -11,7 +11,6 @@ import java.rmi.registry.Registry;
 import java.util.Scanner;
 
 
-//TODO take cards from library
 
 
 public class Server{

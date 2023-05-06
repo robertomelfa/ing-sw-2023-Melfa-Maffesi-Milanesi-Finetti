@@ -155,7 +155,7 @@ public class SocketController  implements Serializable {
             endGame = true;
         }
 
-        // check gameTable: in case refill
+
 
     }
 
@@ -201,6 +201,6 @@ public class SocketController  implements Serializable {
 
             updateCurrentPlayer();
         }
-        //server.notifyEnd
+        server.notifyEnd();
     }
 }
