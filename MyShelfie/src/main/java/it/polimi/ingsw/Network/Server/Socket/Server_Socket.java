@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
+import it.polimi.ingsw.Controller.controllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
-import it.polimi.ingsw.Controller.Socket.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 
@@ -10,38 +10,44 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 //TODO sistemare le funzioni, specie sendGameLogic dove viene gestito il pescaggio carte
 public  class Server_Socket implements Serializable {
 
     private  ArrayList<ClientClass> clientlist = new ArrayList<>();
-    public  void start() throws Exception{
+    public  void start(controllerMain controller) throws Exception{
         try {
             int port=8080;
             ServerSocket serversocket = new ServerSocket(port);
             System.out.println("[SERVER] started on port: "+port);
             int numplayers;
-            int i=1;
-            numplayers = firstClient(serversocket);
-            while (i < numplayers){
-                int remaining=numplayers-i;
-                System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
-                Socket socket = serversocket.accept();  // questo è il client
+
+            Socket socket = serversocket.accept(); // trovo client
+            if(controller.getClientList().size()==0){
+                numplayers = firstClient(serversocket, socket, controller);
+                controller.setNumPlayers(numplayers);
+            }else{
                 ClientClass client = new ClientClass(socket);   // associo il client ad un player
-                clientlist.add(client);
-
-                /*Message msg=new Message(MessageType.requestNickname,null);
+                Message msg = new Message(MessageType.requestNickname, null);
                 sendMessage(msg, socket);
-                clientlist.get(i).setPlayer(receiveMessage(socket).getMessage());  // nomino il player
-                System.out.println("Player " + clientlist.get(i).getPlayer().getNickname() + " added");*/
-                i++;
-            }
-            for (int k=0;k<clientlist.size();k++){
-                System.out.println(clientlist.get(k).getSocket());
+                String name = receiveMessage(socket).getMessage();
+                client.setPlayer(name);
+                clientlist.add(client);
+                controller.addClient(client);
+                System.out.println(controller.getClientList().size());
             }
 
-            requestNicknameClients();
+            while (controller.getClientList().size() < controller.getNumPlayers()){
+            //    System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
+                Socket socket1 = serversocket.accept();  // questo è il client
+                Message msg = new Message(MessageType.requestNickname, null);
+                sendMessage(msg, socket1);
+                ClientClass client = new ClientClass(socket1);   // associo il client ad un player
+                String name = receiveMessage(socket1).getMessage();
+                client.setPlayer(name);
+                clientlist.add(client);
+                controller.addClient(client);
+            }
 
             for (int j=0;j<clientlist.size();j++){
                 System.out.println(clientlist.get(j).getSocket()+" nickname: "+clientlist.get(j).getPlayer().getNickname());
@@ -167,10 +173,9 @@ public  class Server_Socket implements Serializable {
         return clientlist;
     }
 
-    public int firstClient(ServerSocket serversocket) throws IOException, ClassNotFoundException, Exception{
-        Socket socket = serversocket.accept();  // questo è il client
+    public int firstClient(ServerSocket serversocket, Socket socket, controllerMain controller) throws IOException, ClassNotFoundException, Exception{
+          // questo è il client
         ClientClass client = new ClientClass(socket);   // associo il client ad un player
-        clientlist.add(client);
         // ask num of players
         Message msg=new Message(MessageType.requestNumPlayer,null);
         sendMessage(msg, socket);
@@ -178,9 +183,12 @@ public  class Server_Socket implements Serializable {
         int num = receiveInt(socket);
         System.out.println("Players: " + num);
         // ask name of player
-        /*msg=new Message(MessageType.requestNickname,null);
+        msg=new Message(MessageType.requestNickname,null);
         sendMessage(msg, socket);
-        clientlist.get(0).setPlayer(receiveMessage(clientlist.get(0).getSocket()).getMessage());*/
+        String name = receiveMessage(socket).getMessage();
+        client.setPlayer(name);
+        controller.addClient(client);
+        clientlist.add(client);
         return num;
     }
 

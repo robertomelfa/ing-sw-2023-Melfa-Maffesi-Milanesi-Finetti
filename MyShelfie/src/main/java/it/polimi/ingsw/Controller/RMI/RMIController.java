@@ -8,6 +8,7 @@ import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.RMI.GameServer;
 
+import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -21,16 +22,10 @@ import static it.polimi.ingsw.Model.Card.NONE;
 
 // TODO implementare comunicazione client-server attraverso controller per la gestione del turno
 
-public class RMIController {
+public class RMIController implements Serializable {
     private GameInterface server;
 
     private boolean endGame = false;
-
-    private int chair;
-
-    private List<GameClientInterface> players = new ArrayList<>();
-
-    private int listIterator = 0;
 
     private GameLogic gameLogic;
 
@@ -43,109 +38,19 @@ public class RMIController {
      * @throws NotBoundException
      * @throws Exception
      */
-    public RMIController() {
-        try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            server = (GameInterface) registry.lookup("GameInterface");
-
-
-            for(int i = 0; i < server.getClientList().size(); i++){
-                players.add(server.getClient(i));
-            }
-
-            Game game = new Game(server.getClientList().size());
-            gameLogic = new GameLogic(game);
-
-            shufflePlayers();
-
-        } catch (AccessException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public RMIController(GameLogic gameLogic, GameClientInterface current_client, GameInterface server) {
+        this.server = server;
+        this.gameLogic = gameLogic;
+        this.current_client = current_client;
     }
+    public GameLogic takeTurn() throws RemoteException, Exception{
 
-    /**
-     *
-     * @return the client of the player who has the chair
-     * @throws RemoteException
-     */
-    public GameClientInterface getChair() throws RemoteException{
-        return players.get(chair);
-    }
-
-    /**
-     *
-     * @return the client of the current player
-     * @throws RemoteException
-     */
-    public GameClientInterface getCurrentPlayer() throws RemoteException{
-        return current_client;
-    }
-
-    /**
-     * update the current player following the order of the players list we randomized in the constructor
-     * it also deals with the end Game procedures
-     * @throws RemoteException
-     * @throws Exception
-     */
-    public void updateCurrentPlayer() throws RemoteException, Exception{
-        if(!endGame){
-            listIterator++;
-            if(players.size() == listIterator){
-                listIterator = 0;
-                current_client = players.get(listIterator);
-            }else {
-                current_client = players.get(listIterator);
-            }
-        }else {
-            listIterator++;
-            if(chair == listIterator){
-                gameLogic.getGame().checkEnd();
-                server.notifyEnd();
-            }
-            else {
-                current_client = players.get(listIterator);
-            }
-        }
-    }
-
-    /**
-     * shuffle the players list to create a random order then set up the chair and the listIterator
-     * @throws RemoteException
-     * @throws Exception
-     */
-    public void shufflePlayers() throws RemoteException, Exception{
-        try {
-            java.util.Collections.shuffle(players);
-            chair = 0;
-            listIterator = 0;
-            current_client=players.get(0);
-        } catch (Exception e){
-            System.out.println("Error setting up order...");
-        }
-    }
-
-    /**
-     * perform the turn of the current player. At the end of the turn check the objectives, both personal and common,
-     * if the board needs to be refilled and if any of the players have a full library.
-     * Then proceed to update the current player.
-     * @throws RemoteException
-     * @throws Exception
-     */
-    public void takeTurn() throws RemoteException, Exception{
-
-        while(!endGame){ // test
 
             // notify all players about the turn
-            server.notifyTurnPlayer(current_client);
+
 
             // send the gameTable to all players
-            server.gameTableToAll(gameLogic.getGameTable());
+            server.gameTableToClient(gameLogic.getGameTable(), current_client);
 
 
             int i = 0;
@@ -205,13 +110,7 @@ public class RMIController {
                 gameLogic.getGame().getCurrentPlayer().addPoints(1);
                 endGame = true;
             }
-
-            // check gameTable: in case refill
-            gameLogic.getGameTable().checkStatus();
-
-            // update the current_player
-            updateCurrentPlayer();
+        return gameLogic;
         }
-        server.notifyEnd();
-    }
+
 }

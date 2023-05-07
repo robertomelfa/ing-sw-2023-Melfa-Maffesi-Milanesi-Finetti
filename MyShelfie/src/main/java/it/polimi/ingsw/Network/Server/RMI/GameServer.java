@@ -1,19 +1,21 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
-import it.polimi.ingsw.Controller.RMI.RMIController;
+import it.polimi.ingsw.Controller.controllerMain;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameServer extends UnicastRemoteObject implements GameInterface{
+public class GameServer extends UnicastRemoteObject implements GameInterface, Serializable {
 
     private List<GameClientInterface> client;
 
+    private controllerMain controller;
     private int numPlayers;
     private boolean firstPlayer = true;
 
@@ -29,24 +31,10 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
         }catch(Exception e){}
     }
 
-    public void start() throws RemoteException, Exception{
-        int i = 0;
-        while (true) {
-            if (getClient(i) != null) {
-                System.out.println("Si e' connesso " + getClient(i).getPlayer().getNickname());
-                if(i != 0){
-                    getClient(i).receiveMessage("wait for the game to start!");
-                }else{
-                    do{
-                        numPlayers = getClient(0).getIntFromClient("Enter num of players");
-                    }while(numPlayers < 2 || numPlayers > 4);
-                }
-                i++;
-                if (getClientList().size() == numPlayers) {
-                    RMIController controller = new RMIController();
-                    controller.takeTurn();
-                }
-            }
+    public void start(controllerMain controller) throws RemoteException, Exception{
+        this.controller = controller;
+        while(controller.getClientList().size() < controller.getNumPlayers()){
+
         }
     }
 
@@ -97,12 +85,12 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
     /**
      * send the game table only to a specific client
      * @param board the game table we want to send to the client
-     * @param i int corresponding to the position in the LinkedList of the client we want to send the board to
+
      * @throws RemoteException
      * @throws Exception
      */
-    public void gameTableToClient(GameTable board, int i) throws RemoteException,Exception{
-        client.get(i).receiveGameTable(board);
+    public void gameTableToClient(GameTable board, GameClientInterface client) throws RemoteException,Exception{
+        client.receiveGameTable(board);
     }
 
 
@@ -158,6 +146,18 @@ public class GameServer extends UnicastRemoteObject implements GameInterface{
 
     public int getNumPlayers() throws RemoteException{
         return this.numPlayers;
+    }
+
+    public controllerMain getController() throws RemoteException{
+        return this.controller;
+    }
+
+    public void updateNumPlayers(int num) throws RemoteException{
+        this.controller.setNumPlayers(num);
+    }
+
+    public void updatePlayers(ClientClass client) throws RemoteException{
+        this.controller.addClient(client);
     }
 
 }

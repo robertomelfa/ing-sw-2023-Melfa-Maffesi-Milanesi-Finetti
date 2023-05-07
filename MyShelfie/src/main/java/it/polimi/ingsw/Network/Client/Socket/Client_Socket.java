@@ -70,7 +70,6 @@ public class Client_Socket implements Serializable {
      */
     public void clientlogic() throws Exception{
         // ricevo richiesta del nome e invio nome
-        int i = 0;
         while(true){
             Message msg;
             msg=receiveMessage();
@@ -86,7 +85,7 @@ public class Client_Socket implements Serializable {
                 }while(numPlayers < 2 || numPlayers > 4);
                 sendInt(numPlayers);
             }else if (msg.getType()==MessageType.requestNickname){
-                System.out.println("Inserisci nome: ");
+                System.out.println("Insert name: ");
                 Scanner in = new Scanner(System.in);
                 String name = in.nextLine();
                 msg=new Message(MessageType.sendNickname,name);
@@ -97,7 +96,6 @@ public class Client_Socket implements Serializable {
                 Library lib=receiveLibrary();
                 lib.viewGrid();
             }else if(msg.getType()==MessageType.getCard){
-                System.out.println("devo pescare una carta");
                 ArrayList<Card> cards;
                 GameLogic gameLogic = receiveGameLogic();
                 Library library = receiveLibrary();
@@ -125,10 +123,9 @@ public class Client_Socket implements Serializable {
                 System.out.println("Game is ended");
                 break;
             }else {
-                System.out.println("errore comunicazione");
+                System.out.println("Comunication error");
                 break;
             }
-            i++;        // per ora ho messo un while che si ripete per 6 volte
         }
     }
 

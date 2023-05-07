@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Network.Client.RMI;
 
+import it.polimi.ingsw.Controller.controllerMain;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 
 import java.io.Serializable;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Client extends UnicastRemoteObject implements GameClientInterface{
+public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
     private Player player;
 
     /**
@@ -19,7 +21,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
      * @param name username of the player
      * @throws Exception
      */
-    Client(String name) throws Exception{
+    public Client(String name) throws Exception{
         this.player = new Player(name);
     }
 
@@ -102,6 +104,27 @@ public class Client extends UnicastRemoteObject implements GameClientInterface{
             }
         }
         System.out.println("[System] connected!");
+    }
+
+    public void connection2(GameInterface server, GameClientInterface client, controllerMain controller) throws RemoteException, Exception{
+        Scanner in = new Scanner(System.in);
+            if(controller.getNumPlayers() == 0) {
+                System.out.println("Inserisci numero giocatori");
+                int num = in.nextInt();
+                server.updateNumPlayers(num);
+                ClientClass client1 = new ClientClass(client);
+                client1.setPlayer(this.player);
+                server.updatePlayers(client1);
+            }else{
+                if(controller.getClientList().size() < controller.getNumPlayers()){
+                    ClientClass client1 = new ClientClass(client);
+                    client1.setPlayer(this.player);
+                    server.updatePlayers(client1);
+                }else{
+                    throw new Exception("troppi dispositivi connessi, non puoi accedere");
+                }
+            }
+            System.out.println("[System] connected!");
     }
 
     /**

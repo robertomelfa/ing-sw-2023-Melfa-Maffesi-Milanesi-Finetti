@@ -1,15 +1,18 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
+import it.polimi.ingsw.Controller.controllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public interface GameInterface extends Remote {
+public interface GameInterface extends Remote{
 
-    public void start() throws RemoteException, Exception;
+    public void start(controllerMain controller) throws RemoteException, Exception;
 
     public void setClient(GameClientInterface c) throws RemoteException, Exception;
     public GameClientInterface getClient(int i) throws RemoteException;
@@ -18,7 +21,7 @@ public interface GameInterface extends Remote {
 
     public void gameTableToAll(GameTable board) throws RemoteException;
 
-    public void gameTableToClient(GameTable board, int i) throws RemoteException,Exception;
+    public void gameTableToClient(GameTable board, GameClientInterface client) throws RemoteException,Exception;
 
 
     public void notifyEnd() throws RemoteException;
@@ -33,4 +36,9 @@ public interface GameInterface extends Remote {
     public void messageToAll(String msg) throws RemoteException;
 
     public int getNumPlayers() throws RemoteException;
+
+    public controllerMain getController() throws RemoteException;
+    public void updateNumPlayers(int num) throws RemoteException;
+
+    public void updatePlayers(ClientClass client) throws RemoteException;
 }
