@@ -18,7 +18,6 @@ public interface GameClientInterface extends Remote{
 
     public void receiveMessage(String msg) throws RemoteException;
 
-    public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception;
 
     public void endMessage() throws RemoteException;
 

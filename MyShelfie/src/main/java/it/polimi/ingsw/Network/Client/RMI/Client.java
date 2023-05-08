@@ -80,31 +80,6 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         System.out.println(msg);
     }
 
-    /**
-     * establish connection between client and server, if it is the first client to connect to the server
-     * creates a new game and choose how many players are allowed to play in that game.
-     * If it isn't the first player to connect it'll wait until the game is created by the first player
-     * @param server server we want to connect the client to
-     * @param client client that we want to connect to the server
-     * @throws RemoteException
-     * @throws Exception
-     */
-    public void connection(GameInterface server, GameClientInterface client) throws RemoteException, Exception{
-        if(server.isFirstPlayer()) {
-            server.setFirstPlayer();
-            Scanner in = new Scanner(System.in);
-            server.setClient(client);
-        }else{
-
-            if(server.getNumPlayers() > server.getClientList().size()){
-                server.setClient(client);
-            }else{
-                throw new Exception("troppi dispositivi connessi, non puoi accedere");
-            }
-        }
-        System.out.println("[System] connected!");
-    }
-
     public void connection2(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
             if(controller.getNumPlayers() == 0) {

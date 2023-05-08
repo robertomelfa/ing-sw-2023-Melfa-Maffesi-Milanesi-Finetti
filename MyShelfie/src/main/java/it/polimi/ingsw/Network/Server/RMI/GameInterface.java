@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+import it.polimi.ingsw.Network.Lock;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -41,4 +42,10 @@ public interface GameInterface extends Remote{
     public void updateNumPlayers(int num) throws RemoteException;
 
     public void updatePlayers(ClientClass client) throws RemoteException;
+
+    public Lock getLock() throws RemoteException;
+
+    public void block() throws RemoteException, InterruptedException;
+
+    public void release() throws RemoteException, InterruptedException;
 }

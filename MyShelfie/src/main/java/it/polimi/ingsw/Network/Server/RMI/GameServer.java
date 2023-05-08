@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+import it.polimi.ingsw.Network.Lock;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -19,6 +20,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     private int numPlayers;
     private boolean firstPlayer = true;
 
+    private static Lock lock;
+
     /**
      * constructor for the game server: create a LinkedList to save all the client connected
      *
@@ -33,8 +36,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     public void start(ControllerMain controller) throws RemoteException, Exception{
         this.controller = controller;
+        lock = new Lock();
         while(controller.getClientList().size() < controller.getNumPlayers()){
-
         }
     }
 
@@ -163,6 +166,18 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     public void updatePlayers(ClientClass client) throws RemoteException{
         this.controller.addClient(client);
+    }
+
+    public Lock getLock() throws RemoteException{
+        return lock;
+    }
+
+    public void block() throws RemoteException, InterruptedException{
+        lock.acquire();
+    }
+
+    public void release() throws RemoteException, InterruptedException{
+        lock.release();
     }
 
 }

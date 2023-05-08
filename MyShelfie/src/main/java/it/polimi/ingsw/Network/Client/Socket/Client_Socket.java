@@ -3,6 +3,7 @@ package it.polimi.ingsw.Network.Client.Socket;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
+import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 
 import java.io.*;
 import java.net.Socket;
@@ -18,7 +19,7 @@ public class Client_Socket implements Serializable {
      * The client choose the game he want to connect to choosing the corresponding port
      * @throws Exception
      */
-    public  void start() throws Exception{
+    public  void start(GameInterface server) throws Exception{
         Scanner scanner=new Scanner(System.in);
 
         //ritornare la lista dei game attualmente attivi e permettere al client di scegliere una partita
@@ -27,7 +28,7 @@ public class Client_Socket implements Serializable {
         port=scanner.nextInt();
         connect("127.0.0.1",port);
         try {
-            clientlogic();
+            clientlogic(server);
         }catch (Exception e){
             try{
                 socket.close();
@@ -68,7 +69,7 @@ public class Client_Socket implements Serializable {
      * receiving the library, picking the cards from the table.
      * @throws Exception
      */
-    public void clientlogic() throws Exception{
+    public void clientlogic(GameInterface server) throws Exception{
         // ricevo richiesta del nome e invio nome
         while(true){
             Message msg;
@@ -90,6 +91,7 @@ public class Client_Socket implements Serializable {
                 String name = in.nextLine();
                 msg=new Message(MessageType.sendNickname,name);
                 sendMessage(msg);
+                server.release();   // tolgo il lock
             }else if(msg.getType()==MessageType.receiveGameTable){
                 receiveGameTable();
             }else if(msg.getType()==MessageType.receiveLibrary){
