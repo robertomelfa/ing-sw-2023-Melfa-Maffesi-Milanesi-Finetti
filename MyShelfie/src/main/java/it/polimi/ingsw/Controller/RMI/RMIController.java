@@ -51,7 +51,7 @@ public class RMIController implements Serializable {
 
             // send the gameTable to all players
             server.gameTableToClient(gameLogic.getGameTable(), current_client);
-            //TODO aggiungere visualizzazione libreria giocatore all'inizio di ogni turno
+            current_client.receiveLibrary(current_client.getPlayer().getLibrary());
 
 
             int i = 0;
