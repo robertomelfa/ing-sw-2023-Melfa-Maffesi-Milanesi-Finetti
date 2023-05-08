@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
-import it.polimi.ingsw.Controller.controllerMain;
+import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Messages.Message;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public  class Server_Socket implements Serializable {
 
     private  ArrayList<ClientClass> clientlist = new ArrayList<>();
-    public  void start(controllerMain controller) throws Exception{
+    public  void start(ControllerMain controller) throws Exception{
         try {
             int port=8080;
             ServerSocket serversocket = new ServerSocket(port);
@@ -38,7 +38,7 @@ public  class Server_Socket implements Serializable {
             }
 
             while (controller.getClientList().size() < controller.getNumPlayers()){
-            //    System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
+            //  System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
                 Socket socket1 = serversocket.accept();  // questo è il client
                 Message msg = new Message(MessageType.requestNickname, null);
                 sendMessage(msg, socket1);
@@ -173,7 +173,7 @@ public  class Server_Socket implements Serializable {
         return clientlist;
     }
 
-    public int firstClient(ServerSocket serversocket, Socket socket, controllerMain controller) throws IOException, ClassNotFoundException, Exception{
+    public int firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller) throws IOException, ClassNotFoundException, Exception{
           // questo è il client
         ClientClass client = new ClientClass(socket);   // associo il client ad un player
         // ask num of players
@@ -190,6 +190,10 @@ public  class Server_Socket implements Serializable {
         controller.addClient(client);
         clientlist.add(client);
         return num;
+    }
+
+    public ArrayList<ClientClass> getClientList(){
+        return clientlist;
     }
 
 

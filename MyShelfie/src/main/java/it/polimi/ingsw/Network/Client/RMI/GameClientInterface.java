@@ -1,13 +1,11 @@
 package it.polimi.ingsw.Network.Client.RMI;
 
-import it.polimi.ingsw.Controller.controllerMain;
+import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 public interface GameClientInterface extends Remote{
     public Player getPlayer() throws RemoteException;
@@ -28,6 +26,6 @@ public interface GameClientInterface extends Remote{
 
     public void printPlayerObj() throws RemoteException;
 
-    public void connection2(GameInterface server, GameClientInterface client, controllerMain controller) throws RemoteException, Exception;
+    public void connection2(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception;
 
 }

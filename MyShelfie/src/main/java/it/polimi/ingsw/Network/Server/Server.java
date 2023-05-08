@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network.Server;
 
-import it.polimi.ingsw.Controller.controllerMain;
+import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.RMI.GameServer;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
@@ -13,13 +13,13 @@ import java.rmi.registry.Registry;
 
 public class Server implements Serializable {
 
-    private static controllerMain controller;
+    private static ControllerMain controller;
 
     private static Server_Socket serverSocket;
 
     private static GameInterface serverRMI;
 
-    public controllerMain getController(){
+    public ControllerMain getController(){
         return this.controller;
     }
 
@@ -31,7 +31,7 @@ public class Server implements Serializable {
         serverRMI = new GameServer();
         Registry registry = LocateRegistry.createRegistry(1099);
         registry.rebind("GameInterface", serverRMI);
-        controller = new controllerMain(serverSocket, serverRMI);
+        controller = new ControllerMain(serverSocket, serverRMI);
         Runnable task1 = new startSocketServer();
         Runnable task2 = new startRMIServer();
         Thread thread1 = new Thread(task1);
@@ -77,7 +77,7 @@ class startController extends Server implements Runnable{
             while(!getController().getStart()){
 
             }
-            System.out.println("ghe sem");
+            System.out.println("Starting controller");
             getController().startGame();
         }catch (Exception e){}
     }

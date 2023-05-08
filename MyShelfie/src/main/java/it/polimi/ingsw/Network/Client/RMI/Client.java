@@ -1,12 +1,11 @@
 package it.polimi.ingsw.Network.Client.RMI;
 
-import it.polimi.ingsw.Controller.controllerMain;
+import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -106,10 +105,10 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         System.out.println("[System] connected!");
     }
 
-    public void connection2(GameInterface server, GameClientInterface client, controllerMain controller) throws RemoteException, Exception{
+    public void connection2(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
             if(controller.getNumPlayers() == 0) {
-                System.out.println("Inserisci numero giocatori");
+                System.out.println("Insert players number");
                 int num = in.nextInt();
                 server.updateNumPlayers(num);
                 ClientClass client1 = new ClientClass(client);
@@ -121,7 +120,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
                     client1.setPlayer(this.player);
                     server.updatePlayers(client1);
                 }else{
-                    throw new Exception("troppi dispositivi connessi, non puoi accedere");
+                    throw new Exception("too many connected clients, you can't log in");
                 }
             }
             System.out.println("[System] connected!");

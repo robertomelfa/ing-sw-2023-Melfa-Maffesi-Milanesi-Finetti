@@ -77,10 +77,10 @@ public class Client_Socket implements Serializable {
                 int numPlayers = 0;
                 Scanner in = new Scanner(System.in);
                 do{
-                    System.out.println("Inserisci numero di giocatori:");
+                    System.out.println("Insert players number:");
                     numPlayers = in.nextInt();
                     if(numPlayers < 2 || numPlayers > 4){
-                        System.out.println("Il numero di giocatori deve essere compreso tra 2 e 4. Riprova");
+                        System.out.println("Players number must be between 2 and 4. Retry");
                     }
                 }while(numPlayers < 2 || numPlayers > 4);
                 sendInt(numPlayers);

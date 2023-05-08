@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network.Server.RMI;
 
-import it.polimi.ingsw.Controller.controllerMain;
+import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
@@ -15,7 +15,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     private List<GameClientInterface> client;
 
-    private controllerMain controller;
+    private ControllerMain controller;
     private int numPlayers;
     private boolean firstPlayer = true;
 
@@ -31,7 +31,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         }catch(Exception e){}
     }
 
-    public void start(controllerMain controller) throws RemoteException, Exception{
+    public void start(ControllerMain controller) throws RemoteException, Exception{
         this.controller = controller;
         while(controller.getClientList().size() < controller.getNumPlayers()){
 
@@ -138,6 +138,11 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
      * @param msg string that we want to send to all the clients
      * @throws RemoteException
      */
+
+    public void messageToClient(String msg, GameClientInterface client) throws RemoteException{
+        client.receiveMessage(msg);
+    }
+
     public void messageToAll(String msg) throws RemoteException{
         for(int i = 0; i < client.size(); i++){
             client.get(i).receiveMessage(msg);
@@ -148,7 +153,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         return this.numPlayers;
     }
 
-    public controllerMain getController() throws RemoteException{
+    public ControllerMain getController() throws RemoteException{
         return this.controller;
     }
 

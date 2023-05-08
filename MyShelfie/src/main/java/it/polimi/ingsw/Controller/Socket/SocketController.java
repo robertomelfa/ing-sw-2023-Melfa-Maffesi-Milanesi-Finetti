@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller.Socket;
 
+import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.Player;
@@ -23,7 +24,7 @@ import java.util.List;
 // TODO scambio messaggi server-client per inizio/fine turno ed eventualmente per la gestione delle carte
 // TODO ping al client per disconnessioni
 
-public class SocketController  implements Serializable {
+public class SocketController implements Serializable {
 
     private Server_Socket server;
     private  boolean endGame=false;
@@ -43,15 +44,13 @@ public class SocketController  implements Serializable {
         this.gameLogic = gameLogic;
     }
 
-    /*
 
-    public void checkObjectives() throws Exception{
+
+    /*public void checkObjectives() throws Exception{
         if(!current_client.getPlayer().getCommonObj1Completed()){
             if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
-                for (int i=0;i<players.size();i++){
-                    Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the first common goal\nnow has the " +gameLogic.getGame().getCommonObj1().getPointCount() +" card");
-                    server.sendMessage(message,players.get(i).getSocket());
-                }
+                Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the first common goal\nnow has the " +gameLogic.getGame().getCommonObj1().getPointCount() +" card");
+
                 current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj1().getPointCount());
                 current_client.getPlayer().setCommonObj2Completed();
 
@@ -60,9 +59,9 @@ public class SocketController  implements Serializable {
 
         if(!current_client.getPlayer().getCommonObj2Completed()){
             if(gameLogic.getGame().getCommonObj2().checkObj(current_client.getPlayer().getLibrary())){
-                for (int i=0;i<players.size();i++){
+                for (int i=0;i<server.getClientList().size();i++){
                     Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the second common goal\nnow has the " + gameLogic.getGame().getCommonObj2().getPointCount() + " card");
-                    server.sendMessage(message,players.get(i).getSocket());
+                    server.sendMessage(message,server.getClientList().get(i).getSocket());
                 }
                 current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj2().getPointCount());
                 current_client.getPlayer().setCommonObj2Completed();
@@ -78,12 +77,13 @@ public class SocketController  implements Serializable {
 
 
 
-    }   */
+    }*/
 
     public GameLogic takeTurn() throws IOException, Exception {
 
 
             server.sendGameTable(current_client.getSocket(), gameLogic.getGameTable());
+            server.sendLibrary(current_client.getSocket(),current_client.getPlayer().getLibrary());
 
             int i=0;
             while(i==0){
@@ -113,7 +113,7 @@ public class SocketController  implements Serializable {
 
             //gameLogic = server.sendGameLogic(current_client, gameLogic);
 
-       //     checkObjectives();
+            //checkObjectives();
             return gameLogic;
         }
 }

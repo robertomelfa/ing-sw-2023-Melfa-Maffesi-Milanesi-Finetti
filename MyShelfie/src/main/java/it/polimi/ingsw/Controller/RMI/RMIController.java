@@ -51,6 +51,7 @@ public class RMIController implements Serializable {
 
             // send the gameTable to all players
             server.gameTableToClient(gameLogic.getGameTable(), current_client);
+            //TODO aggiungere visualizzazione libreria giocatore all'inizio di ogni turno
 
 
             int i = 0;
@@ -87,7 +88,7 @@ public class RMIController implements Serializable {
          //   gameLogic.setGameTable(server.getGame().getGameTable());
 
             // check the commonObj
-            if(!current_client.getPlayer().getCommonObj1Completed()){
+            /*if(!current_client.getPlayer().getCommonObj1Completed()){
                 if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
                     server.messageToAll(current_client.getPlayer().getNickname() + " successfully completed the first common goal");
                     server.messageToAll(current_client.getPlayer().getNickname() + " now has the " + gameLogic.getGame().getCommonObj1().getPointCount() + " card");
@@ -109,7 +110,7 @@ public class RMIController implements Serializable {
                 gameLogic.getGame().setEndGame();
                 gameLogic.getGame().getCurrentPlayer().addPoints(1);
                 endGame = true;
-            }
+            }*/
         return gameLogic;
         }
 
