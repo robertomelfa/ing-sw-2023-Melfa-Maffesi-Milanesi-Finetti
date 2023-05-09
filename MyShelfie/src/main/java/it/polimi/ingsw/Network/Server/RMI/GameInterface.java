@@ -48,4 +48,5 @@ public interface GameInterface extends Remote{
     public void block() throws RemoteException, InterruptedException;
 
     public void release() throws RemoteException, InterruptedException;
+    public boolean isLocked() throws RemoteException, InterruptedException;
 }

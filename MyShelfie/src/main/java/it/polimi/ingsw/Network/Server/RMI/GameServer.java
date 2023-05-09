@@ -180,4 +180,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         lock.release();
     }
 
+    public boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
+
 }

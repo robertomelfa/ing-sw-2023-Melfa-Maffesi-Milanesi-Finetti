@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Lock implements Serializable {
     private boolean isLocked = false;
 
+    public synchronized boolean getLock(){ return isLocked; }
+
     public synchronized void acquire() throws InterruptedException {
         while (isLocked) {
             wait();

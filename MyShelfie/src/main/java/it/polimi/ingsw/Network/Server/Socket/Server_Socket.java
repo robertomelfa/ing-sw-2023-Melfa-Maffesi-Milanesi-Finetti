@@ -38,7 +38,7 @@ public  class Server_Socket implements Serializable {
             }
 
             while (controller.getClientList().size() < controller.getNumPlayers()){
-            //  System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
+                //  System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
                 Socket socket1 = serversocket.accept();  // questo è il client
                 Message msg = new Message(MessageType.requestNickname, null);
                 sendMessage(msg, socket1);
@@ -174,7 +174,7 @@ public  class Server_Socket implements Serializable {
     }
 
     public int firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller) throws IOException, ClassNotFoundException, Exception{
-          // questo è il client
+        // questo è il client
         ClientClass client = new ClientClass(socket);   // associo il client ad un player
         // ask num of players
         Message msg=new Message(MessageType.requestNumPlayer,null);

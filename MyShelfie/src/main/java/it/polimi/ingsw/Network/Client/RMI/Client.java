@@ -82,23 +82,23 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
 
     public void connection2(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
-            if(controller.getNumPlayers() == 0) {
-                System.out.println("Insert players number");
-                int num = in.nextInt();
-                server.updateNumPlayers(num);
+        if(controller.getNumPlayers() == 0) {
+            System.out.println("Insert players number");
+            int num = in.nextInt();
+            server.updateNumPlayers(num);
+            ClientClass client1 = new ClientClass(client);
+            client1.setPlayer(this.player);
+            server.updatePlayers(client1);
+        }else{
+            if(controller.getClientList().size() < controller.getNumPlayers()){
                 ClientClass client1 = new ClientClass(client);
                 client1.setPlayer(this.player);
                 server.updatePlayers(client1);
             }else{
-                if(controller.getClientList().size() < controller.getNumPlayers()){
-                    ClientClass client1 = new ClientClass(client);
-                    client1.setPlayer(this.player);
-                    server.updatePlayers(client1);
-                }else{
-                    throw new Exception("too many connected clients, you can't log in");
-                }
+                throw new Exception("too many connected clients, you can't log in");
             }
-            System.out.println("[System] connected!");
+        }
+        System.out.println("[System] connected!");
     }
 
     /**

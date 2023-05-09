@@ -216,5 +216,3 @@ public class Client_Socket implements Serializable {
     }
 
 }
-
-

@@ -112,6 +112,7 @@ public class ControllerMain implements Serializable {
         gameLogic = new GameLogic(game);
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         shufflePlayers();
+        sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
         //requestNickname();        da terminare e bisogna eliminare tutti i riferimenti e le chiamate per i nickname nelle classi
         while(true){
             if(current_client.getClient() == null){
