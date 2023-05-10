@@ -23,9 +23,6 @@ public interface GameInterface extends Remote{
 
     public void gameTableToClient(GameTable board, GameClientInterface client) throws RemoteException,Exception;
 
-    public void notifyEnd() throws RemoteException;
-
-    public void notifyTurnPlayer(GameClientInterface current_client) throws RemoteException;
 
     public boolean isFirstPlayer() throws RemoteException;
 

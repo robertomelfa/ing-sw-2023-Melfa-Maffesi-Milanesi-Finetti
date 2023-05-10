@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 public class Game implements Serializable{
     private GameTable gameTable;
-    private List<Player> players;
     private int numOfPlayers;
     private int chair;
     private Player currentPlayer;
@@ -29,7 +28,6 @@ public class Game implements Serializable{
         }else {
             this.numOfPlayers = numOfPlayers;
             this.gameTable = new GameTable(numOfPlayers);
-            players = new LinkedList<>();
             this.cardbox = new CardBox();
             setBothCommonObj(numOfPlayers);
         }
@@ -41,61 +39,10 @@ public class Game implements Serializable{
 
     /**
      *
-     * @param player
+     * @param
      * @throws Exception
      * The method adds a new player into the players list called players.
      * It throws Exception if the size of the list equals the number of players in the game, meaning that the game is full
-     */
-    public void addNewPlayer(Player player) throws Exception{
-        if(players.size()==numOfPlayers){
-            throw new Exception();
-        }
-        else
-        {
-           players.add(player);
-        }
-    }
-
-    /**
-     * Method that prints the player list
-     */
-    public void printPlayers(){
-        StringBuilder str=new StringBuilder();
-        for (int i=0; i<players.size();i++){
-            str.append(players.get(i).getNickname());
-            str.append("    ");
-        }
-        System.out.println(str);
-    }
-
-    /**
-     * Method that shuffles randomly the players list, it sets chair to 0 and sets currentPlayer on the head of the list
-     */
-    public void setChairOrder(){
-        java.util.Collections.shuffle(players);
-        chair=0;
-        currentPlayer=players.get(0);
-
-    }
-
-
-    /**
-     *
-     * @return the player that has the chair (the player index equals chair)
-     *
-     * move to the Controller
-     */
-    public Player getChair(){
-        return players.get(chair);
-    }
-
-    public void setChair(int i){ chair = i; }
-
-    /**
-     *
-     * @return currentPlayer
-     *
-     * move to the controller
      */
     public Player getCurrentPlayer(){
         return currentPlayer;
@@ -113,22 +60,6 @@ public class Game implements Serializable{
     /**
      * This method prints the leaderboard, that is the list of players and their points scored sorted by score
      * This method will be in the view
-     */
-    public void printLeaderboard(){
-        List<Player> temp = new LinkedList<>();
-        temp.addAll(players);
-        ScoreComparator comparator = new ScoreComparator();
-        Collections.sort(temp, comparator);
-        StringBuilder str = new StringBuilder();
-        for (int i=0; i < temp.size(); i++){
-            str.append(temp.get(i).getNickname() + "  " + temp.get(i).getScore() + " points\n");
-        }
-        System.out.println(str);
-    }
-
-    /**
-     *
-     * @return the game board
      */
     public GameTable getGameTable(){
         return  this.gameTable;
@@ -166,68 +97,10 @@ public class Game implements Serializable{
         return commonObj2;
     }
 
-    /**
-     * This method is used to update the current player
-     *
-     * move to the controller
-     */
-    public void updateCurrentPlayer() throws Exception{
-        if(!endGame){
-            listIteration++;
-            if(players.size() == listIteration){
-                listIteration = 0;
-                currentPlayer = players.get(listIteration);
-            }else {
-                currentPlayer = players.get(listIteration);
-            }
-        }else {
-            listIteration++;
-            if(players.size() == listIteration){
-                checkEnd();
-                throw new Exception("GAME IS ENDED");   // probably this will be in the view; metterei più un messaggio che un'eccezione che da meno problemi @simone
-            }
-            else {
-                currentPlayer = players.get(listIteration);
-            }
-        }
+    public void setCurrentPlayer(Player player){
+        this.currentPlayer = player;
     }
 
-    /**
-     * Method that sets endGame=true
-     */
-    public void setEndGame() {
-        this.endGame = true;
-    }
-
-    /**
-     *
-     * @return endGame
-     */
-    public boolean getEndGame(){
-        return endGame;
-    }
-
-    /**
-     * This method adds points for each group of cards, for each player
-     */
-    public void checkEnd() throws Exception{
-        for(int i = 0; i < players.size(); i++){
-            // check the player object
-            players.get(i).addPoints(players.get(i).getPlayerObj().checkObj(players.get(i), players.get(i).getLibrary()));
-
-            // check the final groups of cards
-            players.get(i).addPoints(players.get(i).getLibrary().checkFinal());
-          //      System.out.println("Player " + players.get(i).getNickname() + " hai totalizzato " + players.get(i).getScore());  // view
-        }
-    }
-
-    public int numActualPlayers(){
-        return players.size();
-    }
-
-    public void removePlayer(int i){
-        players.remove(i);
-    }
 
 }
 

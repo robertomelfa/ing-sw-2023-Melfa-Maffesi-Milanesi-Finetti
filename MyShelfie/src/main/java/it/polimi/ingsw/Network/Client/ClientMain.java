@@ -63,12 +63,9 @@ public class ClientMain implements Serializable {
                 case "B":
                     try {
                         timer.cancel();
-                        Scanner in = new Scanner(System.in);
-                        String name;
-                        System.out.println("Enter the player's name");
-                        name = in.nextLine();
-                        GameClientInterface clientR = new Client(name);
-                        clientR.connection2(server, clientR, server.getController());
+
+                        GameClientInterface clientR = new Client();
+                        clientR.connection(server, clientR, server.getController());
                         server.release();
 
 

@@ -1,35 +1,27 @@
 package it.polimi.ingsw.Controller.RMI;
 
-import it.polimi.ingsw.Model.Card;
-import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.Network.Server.RMI.GameServer;
+import it.polimi.ingsw.View.CLIView;
 
 import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-import static it.polimi.ingsw.Model.Card.NONE;
 
 // TODO implementare comunicazione client-server attraverso controller per la gestione del turno
 
 public class RMIController implements Serializable {
     private GameInterface server;
 
-    private boolean endGame = false;
-
     private GameLogic gameLogic;
 
     private GameClientInterface current_client;
+
+
 
     /**
      * constructor of the RMIController
@@ -38,29 +30,27 @@ public class RMIController implements Serializable {
      * @throws NotBoundException
      * @throws Exception
      */
-    public RMIController(GameLogic gameLogic, GameClientInterface current_client, GameInterface server) {
+    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server) {
         this.server = server;
         this.gameLogic = gameLogic;
-        this.current_client = current_client;
+        this.current_client = current_client.getClient();
     }
     public GameLogic takeTurn() throws RemoteException, Exception{
 
-
-            // notify all players about the turn
-
-
-            // send the gameTable to all players
+            // send the gameTable to client
             server.gameTableToClient(gameLogic.getGameTable(), current_client);
-            current_client.receiveLibrary(current_client.getPlayer().getLibrary());
 
+            // send library to client
+            current_client.receiveLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
 
             int i = 0;
             while(i == 0){
 
                 switch (current_client.getIntFromClient("\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards")){
                     case 1:
+                        // print object
                         current_client.receiveMessage("Player Object:");
-                        current_client.printPlayerObj();
+                        gameLogic.getGame().getCurrentPlayer().getPlayerObj().print();
                         current_client.receiveMessage("Common Object 1:");
                         current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescrizione());
                         current_client.receiveMessage("Common Object 2:");
@@ -76,7 +66,7 @@ public class RMIController implements Serializable {
             }
 
             // send the library to the current player
-            current_client.receiveLibrary(current_client.getPlayer().getLibrary());
+            current_client.receiveLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
 
             // get cards from table
             this.gameLogic = current_client.receiveGetCard(gameLogic, server);
@@ -84,34 +74,6 @@ public class RMIController implements Serializable {
             // send the gameTable to all players
             server.gameTableToAll(gameLogic.getGameTable());
 
-            // update gameLogic table
-         //   gameLogic.setGameTable(server.getGame().getGameTable());
-
-            // check the commonObj
-            /*if(!current_client.getPlayer().getCommonObj1Completed()){
-                if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
-                    server.messageToAll(current_client.getPlayer().getNickname() + " successfully completed the first common goal");
-                    server.messageToAll(current_client.getPlayer().getNickname() + " now has the " + gameLogic.getGame().getCommonObj1().getPointCount() + " card");
-                    current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj1().getPointCount());
-                    current_client.getPlayer().setCommonObj2Completed();
-                }
-            }
-
-            if(!current_client.getPlayer().getCommonObj2Completed()){
-                if(gameLogic.getGame().getCommonObj2().checkObj(current_client.getPlayer().getLibrary())){
-                    server.messageToAll(current_client.getPlayer().getNickname() + " successfully completed the first common goal");
-                    server.messageToAll(current_client.getPlayer().getNickname() + " now has the " + gameLogic.getGame().getCommonObj1().getPointCount() + " card");
-                    current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj2().getPointCount());
-                    current_client.getPlayer().setCommonObj2Completed();
-                }
-            }
-
-            if(current_client.getPlayer().getLibrary().checkFull()){
-                gameLogic.getGame().setEndGame();
-                gameLogic.getGame().getCurrentPlayer().addPoints(1);
-                endGame = true;
-            }*/
         return gameLogic;
         }
-
 }

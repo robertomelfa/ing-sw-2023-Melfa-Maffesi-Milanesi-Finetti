@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import it.polimi.ingsw.View.CLIView;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -13,25 +14,11 @@ import java.util.Scanner;
 
 
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
-    private Player player;
 
-    /**
-     * constructor of the client
-     * @param name username of the player
-     * @throws Exception
-     */
-    public Client(String name) throws Exception{
-        this.player = new Player(name);
+    public Client() throws RemoteException{
+        super();
     }
 
-    /**
-     *
-     * @return the player corresponding to the client
-     * @throws RemoteException
-     */
-    public Player getPlayer() throws RemoteException {
-        return this.player;
-    }
 
     /**
      * call the viewTable() method to print the game table on the client command line
@@ -60,13 +47,9 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws Exception
      */
     public GameLogic receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
-        ArrayList<Card> cards = new ArrayList<>();
+        CLIView view = new CLIView();
 
-        cards = gameLogic.getCardFromTable();
-
-        System.out.print("\n");
-
-        player.getLibrary().insert(cards);
+        gameLogic = view.getCardFromTable(gameLogic);
 
         return gameLogic;
     }
@@ -80,19 +63,26 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         System.out.println(msg);
     }
 
-    public void connection2(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
+    public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
+        ClientClass client1;
         if(controller.getNumPlayers() == 0) {
             System.out.println("Insert players number");
             int num = in.nextInt();
             server.updateNumPlayers(num);
-            ClientClass client1 = new ClientClass(client);
-            client1.setPlayer(this.player);
+
+            System.out.println("Enter the player's name");
+            String name;
+            name = in.next();
+            client1 = new ClientClass(client);
+            client1.setPlayer(name);
             server.updatePlayers(client1);
         }else{
             if(controller.getClientList().size() < controller.getNumPlayers()){
-                ClientClass client1 = new ClientClass(client);
-                client1.setPlayer(this.player);
+                System.out.println("Enter the player's name");
+                String name = in.nextLine();
+                client1 = new ClientClass(client);
+                client1.setPlayer(name);
                 server.updatePlayers(client1);
             }else{
                 throw new Exception("too many connected clients, you can't log in");
@@ -101,13 +91,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         System.out.println("[System] connected!");
     }
 
-    /**
-     * set the end of the game and it's called by the server to print the end of the game to the client
-     * @throws RemoteException
-     */
-    public void endMessage() throws RemoteException{
-        player.endGame();
-    }
+
 
     /**
      * print a string and return an int that correspond to the answer of a question present in the sting
@@ -122,11 +106,4 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         return in.nextInt();
     }
 
-    /**
-     * print the player objective using the corresponding method defined in the model
-     * @throws RemoteException
-     */
-    public void printPlayerObj() throws RemoteException{
-        this.player.getPlayerObj().print();
-    }
 }

@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import it.polimi.ingsw.View.CLIView;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,6 +16,7 @@ public class Client_Socket implements Serializable {
 
     private Socket socket;  // è il server
 
+
     /**
      * The client choose the game he want to connect to choosing the corresponding port
      * @throws Exception
@@ -22,12 +24,12 @@ public class Client_Socket implements Serializable {
     public  void start(GameInterface server) throws Exception{
         Scanner scanner=new Scanner(System.in);
 
-        //ritornare la lista dei game attualmente attivi e permettere al client di scegliere una partita
         int port;
         System.out.println("Insert server port");
         port=scanner.nextInt();
         connect("127.0.0.1",port);
         try {
+            // start the logic of the client
             clientlogic(server);
         }catch (Exception e){
             try{
@@ -38,6 +40,11 @@ public class Client_Socket implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param host server we want to connect
+     * @param port port of the server
+     */
     public  void connect(String host,int port){
         try {
             Socket socket = new Socket(host,port);
@@ -98,12 +105,9 @@ public class Client_Socket implements Serializable {
                 Library lib=receiveLibrary();
                 lib.viewGrid();
             }else if(msg.getType()==MessageType.getCard){
-                ArrayList<Card> cards;
+                CLIView view = new CLIView();
                 GameLogic gameLogic = receiveGameLogic();
-                Library library = receiveLibrary();
-                cards = gameLogic.getCardFromTable();
-                library.insert(cards);
-                sendLibrary(library);
+                gameLogic = view.getCardFromTable(gameLogic);
                 sendGameLogic(gameLogic);
 
             }else if (msg.getType()==MessageType.objectiveCompleted){
@@ -176,7 +180,12 @@ public class Client_Socket implements Serializable {
         return (GameLogic) ois.readObject();
     }
 
-
+    /**
+     *
+     * @return the player's object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public PlayerObj receivePlayerObj() throws IOException, ClassNotFoundException{
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (PlayerObj) ois.readObject();
@@ -195,6 +204,12 @@ public class Client_Socket implements Serializable {
         oos.writeObject(library);
     }
 
+    /**
+     *
+     * @param num number we want to send
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void sendInt(int num) throws IOException, ClassNotFoundException{
         // dovro aggiungere tipologia messaggio
 

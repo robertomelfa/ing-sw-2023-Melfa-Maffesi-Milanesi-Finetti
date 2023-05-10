@@ -9,6 +9,7 @@ import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
+import it.polimi.ingsw.View.CLIView;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,6 +34,7 @@ public class ControllerMain implements Serializable {
     private GameLogic gameLogic;
 
     private ClientClass current_client;
+
 
 
 
@@ -106,8 +108,13 @@ public class ControllerMain implements Serializable {
         return this.numPlayers;
     }
 
+    /**
+     * this method control the game
+     * @throws Exception
+     * @throws ArrayIndexOutOfBoundsException
+     */
     public void startGame() throws Exception, ArrayIndexOutOfBoundsException{
-        // creo game
+        // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
@@ -115,20 +122,30 @@ public class ControllerMain implements Serializable {
         sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
         //requestNickname();        da terminare e bisogna eliminare tutti i riferimenti e le chiamate per i nickname nelle classi
         while(true){
+            gameLogic.getGame().setCurrentPlayer(current_client.getPlayer());
+            gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
             if(current_client.getClient() == null){
                 SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic);
                 gameLogic = controllerS.takeTurn();
+                current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
             }else{
-                RMIController controllerR = new RMIController(gameLogic, current_client.getClient(), serverRMI);
+                RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI);
                 gameLogic = controllerR.takeTurn();
+                current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
+                current_client.getPlayer().getLibrary().viewGrid();
             }
             checkObjectives();
             updateCurrentPlayer();
         }
-        // TODO sistemare il turno con tutte le verifiche del caso
     }
 
+    /**
+     * This method checks all the objects
+     * @throws Exception
+     */
     public void checkObjectives() throws Exception{
+
+        // check common object 1
         if(!current_client.getPlayer().getCommonObj1Completed()){
             if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
                 Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the first common goal\nnow has the " +gameLogic.getGame().getCommonObj1().getPointCount() +" card");
@@ -139,6 +156,7 @@ public class ControllerMain implements Serializable {
             }
         }
 
+        // check common object 2
         if(!current_client.getPlayer().getCommonObj2Completed()){
             if(gameLogic.getGame().getCommonObj2().checkObj(current_client.getPlayer().getLibrary())){
                 Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the second common goal\nnow has the " + gameLogic.getGame().getCommonObj2().getPointCount() + " card");
@@ -148,18 +166,20 @@ public class ControllerMain implements Serializable {
             }
         }
 
-
+        // check player object
         if(current_client.getPlayer().getLibrary().checkFull()){
             //gameLogic.getGame().setEndGame();
             gameLogic.getGame().getCurrentPlayer().addPoints(1);
             endGame = true;
         }
-
-
-
     }
 
-
+    /**
+     *
+     * @param msg is the message controller wants to send to the client
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void sendGeneralMessage(Message msg) throws IOException, ClassNotFoundException {
         for (int i=0; i<clientList.size();i++){
             if(clientList.get(i).getClient() == null){
@@ -170,6 +190,10 @@ public class ControllerMain implements Serializable {
         }
     }
 
+    /**
+     * this method check the final groups of card of the same colore
+     * @throws Exception
+     */
     public void checkEnd() throws Exception{
         for(int i = 0; i < clientList.size(); i++){
                 // check the player object
@@ -181,7 +205,8 @@ public class ControllerMain implements Serializable {
         }
     }
 
-    public void requestNickname() throws IOException, ClassNotFoundException, Exception{
+    // potrebbe servire
+ /*   public void requestNickname() throws IOException, ClassNotFoundException, Exception{
         ArrayList<String> nicknames=new ArrayList<>();
         for (int i=0;i<clientList.size();i++){
             boolean askagain=true;
@@ -212,6 +237,5 @@ public class ControllerMain implements Serializable {
         for (int j=0; j<nicknames.size();j++){
             clientList.get(j).setPlayer(nicknames.get(j));
         }
-    }
-
+    }   */
 }

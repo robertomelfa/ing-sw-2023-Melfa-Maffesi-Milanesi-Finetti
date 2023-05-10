@@ -33,6 +33,10 @@ public class Library implements Serializable{
         }
     }
 
+    public Card[][] getGrid(){
+        return this.grid;
+    }
+
     public void resetI() {
         i = 0;
     }
@@ -104,7 +108,7 @@ public class Library implements Serializable{
      * @param size:   number of cards to insert
      * @return true if the column has enough space to insert cards
      */
-    private boolean checkFreeSpaces(int column, int size) {
+    public boolean checkFreeSpaces(int column, int size) {
         int freeSpaces = 0;
         if (column < 0 || column > 4) {
             System.out.println("This column does not exist, try again");
@@ -122,7 +126,7 @@ public class Library implements Serializable{
      * @param column: verify last free row of this column
      * @return the last free row of the column
      */
-    private int lastRowFree(int column) {
+    public int lastRowFree(int column) {
         for (int i = 5; i >= 0; i--) {
             if (grid[i][column] == NONE) {
                 return i;

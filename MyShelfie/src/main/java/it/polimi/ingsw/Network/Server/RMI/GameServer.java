@@ -37,8 +37,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     public void start(ControllerMain controller) throws RemoteException, Exception{
         this.controller = controller;
         lock = new Lock();
-        while(controller.getClientList().size() < controller.getNumPlayers()){
-        }
+        while(controller.getClientList().size() < controller.getNumPlayers()){ }
     }
 
     /**
@@ -96,32 +95,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         client.receiveGameTable(board);
     }
 
-
-    /**
-     * used to notify all that the game has come to its end
-     * @throws RemoteException
-     */
-    public void notifyEnd() throws RemoteException{
-        for(int i = 0; i < client.size(); i++){
-            client.get(i).endMessage();
-        }
-    }
-
-    /**
-     * notify the turn player that it's its turn and all the other clients that they need to wait
-     * until the end of the current player turn
-     * @param current_client the client who needs to perform its turn
-     * @throws RemoteException
-     */
-    public void notifyTurnPlayer(GameClientInterface current_client) throws RemoteException{
-        for(int i = 0; i < client.size(); i++){
-            if(client.get(i).equals(current_client)){
-                client.get(i).receiveMessage("It's your turn");
-            }else{
-                client.get(i).receiveMessage("Wait, it's " + current_client.getPlayer().getNickname() +"'s turn");
-            }
-        }
-    }
 
     /**
      * return the value of the firstPlayer variable, used to understand who's the player who need to perform

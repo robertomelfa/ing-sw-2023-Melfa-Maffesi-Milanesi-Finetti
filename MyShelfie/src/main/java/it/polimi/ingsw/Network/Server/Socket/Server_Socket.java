@@ -15,6 +15,12 @@ import java.util.ArrayList;
 public  class Server_Socket implements Serializable {
 
     private  ArrayList<ClientClass> clientlist = new ArrayList<>();
+
+    /**
+     *
+     * @param controller the controller who handle the game
+     * @throws Exception
+     */
     public  void start(ControllerMain controller) throws Exception{
         try {
             int port=8080;
@@ -38,11 +44,11 @@ public  class Server_Socket implements Serializable {
             }
 
             while (controller.getClientList().size() < controller.getNumPlayers()){
-                //  System.out.println("Waiting for a client...\n"+remaining+" Clients remaining");
-                Socket socket1 = serversocket.accept();  // questo è il client
+                Socket socket1 = serversocket.accept();  // this is the client
                 Message msg = new Message(MessageType.requestNickname, null);
                 sendMessage(msg, socket1);
-                ClientClass client = new ClientClass(socket1);   // associo il client ad un player
+                // create a new object ClientClass related to the client
+                ClientClass client = new ClientClass(socket1);
                 String name = receiveMessage(socket1).getMessage();
                 client.setPlayer(name);
                 clientlist.add(client);
@@ -100,6 +106,13 @@ public  class Server_Socket implements Serializable {
         oos.writeObject(msg);
     }
 
+    /**
+     *
+     * @param socket the server
+     * @param obj player's object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void sendPlayerObj(Socket socket, PlayerObj obj) throws IOException, ClassNotFoundException{
         Message msg = new Message(MessageType.receivePlayerObj, null);
         sendMessage(msg, socket);
@@ -147,21 +160,13 @@ public  class Server_Socket implements Serializable {
     public GameLogic sendGameLogic(ClientClass client, GameLogic gameLogic) throws IOException, ClassNotFoundException{
         Message msg = new Message(MessageType.getCard, null);
         sendMessage(msg, client.getSocket());
-        // invio il gamelogic
+        // send Gamelogic
         ObjectOutputStream oos = new ObjectOutputStream(client.getSocket().getOutputStream());
         oos.writeObject(gameLogic);
 
-        // invio libreria
-        oos = new ObjectOutputStream(client.getSocket().getOutputStream());
-        oos.writeObject(client.getPlayer().getLibrary());
 
-        // ricevo libreria current_client aggiornata
+        // send the updated gameLogic
         ObjectInputStream ois = new ObjectInputStream(client.getSocket().getInputStream());
-        client.getPlayer().setLibrary((Library) ois.readObject());
-
-
-        // ricevo il game logic aggiornato
-        ois = new ObjectInputStream(client.getSocket().getInputStream());
         return (GameLogic) ois.readObject();
     }
 
@@ -173,8 +178,18 @@ public  class Server_Socket implements Serializable {
         return clientlist;
     }
 
+    /**
+     *
+     * @param serversocket server
+     * @param socket client
+     * @param controller controller of the game
+     * @return number of players
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws Exception
+     */
     public int firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller) throws IOException, ClassNotFoundException, Exception{
-        // questo è il client
+          // questo è il client
         ClientClass client = new ClientClass(socket);   // associo il client ad un player
         // ask num of players
         Message msg=new Message(MessageType.requestNumPlayer,null);
@@ -190,41 +205,6 @@ public  class Server_Socket implements Serializable {
         controller.addClient(client);
         clientlist.add(client);
         return num;
-    }
-
-    public ArrayList<ClientClass> getClientList(){
-        return clientlist;
-    }
-
-
-    public void requestNicknameClients() throws IOException, ClassNotFoundException, Exception{
-        ArrayList<String> nicknames=new ArrayList<>();
-        for (int i=0;i<clientlist.size();i++){
-            boolean askagain=true;
-            Message message=null;
-            while (askagain){
-                sendMessage(new Message(MessageType.requestNickname,null),clientlist.get(i).getSocket());
-                message=receiveMessage(clientlist.get(i).getSocket());
-                if (message.getType()!=MessageType.sendNickname){
-                    throw new Exception("Invalid message type");
-                }
-                if (!nicknames.contains(message.getMessage())){
-                    askagain=false;
-                }else {
-                    sendMessage(new Message(MessageType.printMessage,message.getMessage()+" is already taken, choose another nickname"),clientlist.get(i).getSocket());
-                }
-            }
-            nicknames.add(message.getMessage());
-        }
-        for (int j=0; j<nicknames.size();j++){
-            clientlist.get(j).setPlayer(nicknames.get(j));
-        }
-    }
-
-    public void notifyEnd() throws IOException, ClassNotFoundException{
-        for (int i=0;i<clientlist.size();i++){
-            sendMessage(new Message(MessageType.endGame,null),clientlist.get(i).getSocket());
-        }
     }
 
 }
