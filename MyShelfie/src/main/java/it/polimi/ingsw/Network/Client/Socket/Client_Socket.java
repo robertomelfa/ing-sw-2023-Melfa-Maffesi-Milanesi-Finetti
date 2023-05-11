@@ -89,12 +89,19 @@ public class Client_Socket implements Serializable {
                 }while(numPlayers < 2 || numPlayers > 4);
                 sendInt(numPlayers);
             }else if (msg.getType()==MessageType.requestNickname){
-                view.viewString("Insert name: ");
                 Scanner in = new Scanner(System.in);
-                String name = in.nextLine();
+                String name;
+                do{
+                    view.viewString("Insert name: ");
+                    name = in.next();
+
+                    if(server.getController().checkExistingName(name)){
+                        view.viewString("This name is used, try again");
+                    }
+                }while(server.getController().checkExistingName(name));
                 msg=new Message(MessageType.sendNickname,name);
                 sendMessage(msg);
-                server.release();   // tolgo il lock
+                server.release();
             }else if(msg.getType()==MessageType.receiveGameTable){
                 GameTable table=receiveGameTable();
                 view.viewGameTable(table);
@@ -188,19 +195,6 @@ public class Client_Socket implements Serializable {
     }
 
     /**
-     * send the library to the server
-     * @param library the library we want to send
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    public void sendLibrary(Library library) throws IOException, ClassNotFoundException{
-        // dovro aggiungere tipologia messaggio
-
-        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-        oos.writeObject(library);
-    }
-
-    /**
      *
      * @param num number we want to send
      * @throws IOException
@@ -225,5 +219,4 @@ public class Client_Socket implements Serializable {
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(gameLogic);
     }
-
 }

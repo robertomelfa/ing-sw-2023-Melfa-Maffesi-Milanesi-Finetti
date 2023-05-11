@@ -8,11 +8,11 @@ import java.io.Serializable;
 import java.net.Socket;
 
 public class ClientClass implements Serializable {
-    private Player player; // giocatore
+    private Player player; // player match to the client
 
-    private transient Socket socket;  // il client a cui è collegato il giocatore
+    private transient Socket socket;  // socket client
 
-    private GameClientInterface RMIclient;
+    private GameClientInterface RMIclient;  // rmi client
 
     /**
      * constructor for the ClientClass
@@ -23,6 +23,10 @@ public class ClientClass implements Serializable {
         this.RMIclient = null;
     }
 
+    /**
+     * constructor for ClientClass
+     * @param client the interface the client is connected to
+     */
     public ClientClass(GameClientInterface client){
         this.RMIclient = client;
         this.socket = null;
@@ -37,18 +41,35 @@ public class ClientClass implements Serializable {
         player = new Player(name);
     }
 
+    /**
+     *
+     * @param player the player we want to set in the client
+     * @throws Exception
+     */
     public void setPlayer(Player player) throws Exception{
         this.player = player;
     }
 
+    /**
+     *
+     * @return the player of the client
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     *
+     * @return the Socket client
+     */
     public Socket getSocket(){
         return socket;
     }
 
+    /**
+     *
+     * @return the RMI client
+     */
     public GameClientInterface getClient(){
         return this.RMIclient;
     }

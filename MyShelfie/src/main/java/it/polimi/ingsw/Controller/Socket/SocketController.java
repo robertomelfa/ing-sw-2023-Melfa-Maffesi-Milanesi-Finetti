@@ -75,5 +75,5 @@ public class SocketController implements Serializable {
             }
             // return the updated gamelogic
             return gameLogic;
-        }
+    }
 }

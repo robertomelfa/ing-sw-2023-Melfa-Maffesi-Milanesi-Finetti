@@ -439,7 +439,7 @@ public class CLIView implements ViewClient, Serializable {
         }
 
 
-        // implementa l'inserimento del giocatore
+        // the player will insert the picked cards
         gameLogic = insert(list, gameLogic);
 
         // return gameLogic

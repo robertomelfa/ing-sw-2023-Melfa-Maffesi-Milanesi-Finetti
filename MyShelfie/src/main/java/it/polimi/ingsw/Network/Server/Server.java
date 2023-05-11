@@ -47,7 +47,6 @@ class startSocketServer extends Server implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("New Thread created");
         Server_Socket server = getServerSocket();
         try{
             server.start(getController());
@@ -73,6 +72,7 @@ class startController extends Server implements Runnable{
     @Override
     public void run(){
         try{
+            // wait all the players before starting the game
             while(!getController().getStart()){
 
             }

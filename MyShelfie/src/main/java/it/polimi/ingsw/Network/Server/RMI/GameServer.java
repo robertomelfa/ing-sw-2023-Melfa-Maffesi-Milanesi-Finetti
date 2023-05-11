@@ -37,6 +37,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     public void start(ControllerMain controller) throws RemoteException, Exception{
         this.controller = controller;
         lock = new Lock();
+        // wait clients
         while(controller.getClientList().size() < controller.getNumPlayers()){ }
     }
 
