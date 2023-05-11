@@ -6,6 +6,7 @@ import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
@@ -15,11 +16,11 @@ import java.rmi.RemoteException;
 // TODO implementare comunicazione client-server attraverso controller per la gestione del turno
 
 public class RMIController implements Serializable {
-    private GameInterface server;
+    private GameInterface server;   // RMIServer
 
     private GameLogic gameLogic;
 
-    private GameClientInterface current_client;
+    private GameClientInterface current_client; // RMI Client
 
 
 
@@ -35,6 +36,13 @@ public class RMIController implements Serializable {
         this.gameLogic = gameLogic;
         this.current_client = current_client.getClient();
     }
+
+    /**
+     * This method handler the turn of a socket client
+     * @return  gameLogic updated
+     * @throws IOException
+     * @throws Exception
+     */
     public GameLogic takeTurn() throws RemoteException, Exception{
 
             // send the gameTable to client
@@ -75,5 +83,5 @@ public class RMIController implements Serializable {
             server.gameTableToAll(gameLogic.getGameTable());
 
         return gameLogic;
-        }
+    }
 }

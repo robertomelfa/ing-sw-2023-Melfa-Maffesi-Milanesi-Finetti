@@ -29,10 +29,8 @@ public class ClientMain implements Serializable {
         if (server.isLocked()) {
             System.out.println("Another client is connecting");
         }
-        while (server.isLocked()) {
-        }
-        System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
         server.block();
+        System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -67,7 +65,6 @@ public class ClientMain implements Serializable {
                         GameClientInterface clientR = new Client();
                         clientR.connection(server, clientR, server.getController());
                         server.release();
-
 
                     } catch (Exception e) {
                         System.out.println("[System] Server failed: " + e);

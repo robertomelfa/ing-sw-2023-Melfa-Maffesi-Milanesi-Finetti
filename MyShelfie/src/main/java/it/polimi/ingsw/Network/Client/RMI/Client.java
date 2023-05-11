@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
 
-    private CLIView view=new CLIView();
+    private CLIView view=new CLIView(); // view
 
     public Client() throws RemoteException{
         super();
@@ -40,6 +40,11 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         view.viewLibrary(library);
     }
 
+    /**
+     *
+     * @param obj the player object
+     * @throws RemoteException
+     */
     public void receivePlayerObj(PlayerObj obj) throws RemoteException{
         view.viewPlayerObj(obj);
     }
@@ -67,6 +72,14 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         view.viewString(msg);
     }
 
+    /**
+     *
+     * @param server RMI server where the client will connect
+     * @param client client wants to connect to the server
+     * @param controller controller of the game
+     * @throws RemoteException
+     * @throws Exception
+     */
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
         ClientClass client1;
@@ -74,7 +87,6 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
             view.viewString("Insert players number");
             int num = in.nextInt();
             server.updateNumPlayers(num);
-
             view.viewString("Enter the player's name");
             String name;
             name = in.next();
@@ -83,8 +95,14 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
             server.updatePlayers(client1);
         }else{
             if(controller.getClientList().size() < controller.getNumPlayers()){
-                view.viewString("Enter the player's name");
-                String name = in.nextLine();
+                String name;
+                do{
+                    view.viewString("Enter the player's name");
+                    name = in.nextLine();
+                    if(controller.checkExistingName(name)){
+                        System.out.println("This name is used. Try again");
+                    }
+                }while(controller.checkExistingName(name));
                 client1 = new ClientClass(client);
                 client1.setPlayer(name);
                 server.updatePlayers(client1);

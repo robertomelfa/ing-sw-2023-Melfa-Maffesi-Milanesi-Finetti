@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Card;
 import it.polimi.ingsw.Model.Game;
@@ -22,10 +22,6 @@ public class TestGameTable extends TestCase {
     public void testrefill_usingcontructor2player() throws Exception{
         Game g1=new Game(2);
         GameLogic logic=new GameLogic(g1);
-        Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
         ArrayList<Card> result = new ArrayList<>();
         StringBuilder builder=new StringBuilder();
         builder.append("1\n2\n4\n");
@@ -39,12 +35,6 @@ public class TestGameTable extends TestCase {
     public void testrefill_usingcontructor3player() throws Exception{
         Game g1=new Game(3);
         GameLogic logic=new GameLogic(g1);
-        Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        Player p3=new Player("Player 3");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.addNewPlayer(p3);
         ArrayList<Card> result = new ArrayList<>();
         StringBuilder builder=new StringBuilder();
         builder.append("1\n1\n4\n");
@@ -58,14 +48,6 @@ public class TestGameTable extends TestCase {
     public void testrefill_usingcontructor4player() throws Exception{
         Game g1=new Game(4);
         GameLogic logic=new GameLogic(g1);
-        Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        Player p3=new Player("Player 3");
-        Player p4=new Player("Player 4");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.addNewPlayer(p3);
-        g1.addNewPlayer(p4);
         ArrayList<Card> result = new ArrayList<>();
         StringBuilder builder=new StringBuilder();
         builder.append("1\n1\n5\n");
@@ -79,10 +61,6 @@ public class TestGameTable extends TestCase {
     public void testCheckStatus_emptyboard_refill() throws Exception{
         Game g1=new Game(2);
         GameLogic logic=new GameLogic(g1);
-        Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
 
         StringBuilder builder=new StringBuilder();
         builder.append("2\n2\n4\n2\n5\n");

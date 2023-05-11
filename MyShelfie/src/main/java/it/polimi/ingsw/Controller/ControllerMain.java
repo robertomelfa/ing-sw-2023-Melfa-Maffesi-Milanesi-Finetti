@@ -36,13 +36,38 @@ public class ControllerMain implements Serializable {
     private ClientClass current_client;
 
 
-
-
+    /**
+     * constructor of the class: the controller is connected to both servers
+     * @param serverSocket Socket Server
+     * @param serverRMI RMI Server
+     */
     public ControllerMain(Server_Socket serverSocket, GameInterface serverRMI){
         this.serverSocket = serverSocket;
         this.serverRMI = serverRMI;
     }
 
+    /**
+     *
+     * @param name name e want to check
+     * @return true if the name is already used in the game, false if not
+     */
+    public boolean checkExistingName(String name){
+        if(clientList.size() == 0){
+            return false;
+        }else{
+            for(int i = 0; i < clientList.size(); i++){
+                if(name.equals(clientList.get(i).getPlayer().getNickname())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return true if all the players are connected and the game will start
+     */
     public synchronized boolean getStart(){
         if(numPlayers == clientList.size() && numPlayers > 1 && numPlayers < 5){
             return true;
@@ -58,8 +83,14 @@ public class ControllerMain implements Serializable {
         return current_client;
     }
 
+    /**
+     * this method update the current player and check if the game is ended
+     * @throws RemoteException
+     * @throws Exception
+     */
     public void updateCurrentPlayer() throws RemoteException, Exception{
         if(!endGame){
+            // update the current player
             listIterator++;
             if(clientList.size() == listIterator){
                 listIterator = 0;
@@ -70,10 +101,9 @@ public class ControllerMain implements Serializable {
         }else {
             listIterator++;
             if(chair == listIterator){
+                // the game is ended
                 checkEnd();
                 sendGeneralMessage(new Message(MessageType.endGame,"Game is ended"));
-
-                // TODO aggiungere che si informano i client della fine del gioco
             }
             else {
                 current_client = clientList.get(listIterator);
@@ -81,6 +111,9 @@ public class ControllerMain implements Serializable {
         }
     }
 
+    /**
+     * this method is used to mix the list with the players, before starting the game
+     */
     public void shufflePlayers(){
         try {
             java.util.Collections.shuffle(clientList);
@@ -92,18 +125,34 @@ public class ControllerMain implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param clientList the client we want to add to the client list
+     */
      public synchronized void addClient(ClientClass clientList){
         this.clientList.add(clientList);
     }
 
+    /**
+     *
+     * @return the client list
+     */
      public synchronized ArrayList<ClientClass> getClientList(){
         return this.clientList;
     }
 
+    /**
+     *
+     * @param numPlayers num of players of the game (asked to the first client)
+     */
     public synchronized void setNumPlayers(int numPlayers){
         this.numPlayers = numPlayers;
     }
 
+    /**
+     *
+     * @return num of game players
+     */
     public synchronized int getNumPlayers(){
         return this.numPlayers;
     }
@@ -120,10 +169,8 @@ public class ControllerMain implements Serializable {
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         shufflePlayers();
         sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
-        //requestNickname();        da terminare e bisogna eliminare tutti i riferimenti e le chiamate per i nickname nelle classi
         while(true){
             gameLogic.getGame().setCurrentPlayer(current_client.getPlayer());
-            gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
             if(current_client.getClient() == null){
                 SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic);
                 gameLogic = controllerS.takeTurn();
@@ -204,38 +251,4 @@ public class ControllerMain implements Serializable {
 
         }
     }
-
-    // potrebbe servire
- /*   public void requestNickname() throws IOException, ClassNotFoundException, Exception{
-        ArrayList<String> nicknames=new ArrayList<>();
-        for (int i=0;i<clientList.size();i++){
-            boolean askagain=true;
-            Message message=null;
-            while (askagain){
-                if(clientList.get(i).getClient()==null){
-                    serverSocket.sendMessage(new Message(MessageType.requestNickname,null),clientList.get(i).getSocket());
-                    message=serverSocket.receiveMessage(clientList.get(i).getSocket());
-                    if (message.getType()!=MessageType.sendNickname){
-                        throw new Exception("Invalid message type");
-                    }
-                    if (!nicknames.contains(message.getMessage())){
-                        askagain=false;
-                    }else {
-                        serverSocket.sendMessage(new Message(MessageType.printMessage,message.getMessage()+" is already taken, choose another nickname"),clientList.get(i).getSocket());
-                    }
-                }else {
-                    //inserire controllo per RMI
-                }
-            }
-            if (clientList.get(i).getClient()==null){
-                nicknames.add(message.getMessage());
-            }else {
-                //aggiunta nickname a RMI
-            }
-
-        }
-        for (int j=0; j<nicknames.size();j++){
-            clientList.get(j).setPlayer(nicknames.get(j));
-        }
-    }   */
 }

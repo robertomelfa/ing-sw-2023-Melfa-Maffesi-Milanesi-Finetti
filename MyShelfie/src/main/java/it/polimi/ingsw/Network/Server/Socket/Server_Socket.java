@@ -9,12 +9,10 @@ import it.polimi.ingsw.Network.Messages.MessageType;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 //TODO sistemare le funzioni, specie sendGameLogic dove viene gestito il pescaggio carte
 public  class Server_Socket implements Serializable {
 
-    private  ArrayList<ClientClass> clientlist = new ArrayList<>();
 
     /**
      *
@@ -24,11 +22,12 @@ public  class Server_Socket implements Serializable {
     public  void start(ControllerMain controller) throws Exception{
         try {
             int port=8080;
-            ServerSocket serversocket = new ServerSocket(port);
+            ServerSocket serversocket = new ServerSocket(port); // create the server
             System.out.println("[SERVER] started on port: "+port);
             int numplayers;
 
-            Socket socket = serversocket.accept(); // trovo client
+            // first Socket connection
+            Socket socket = serversocket.accept();
             if(controller.getClientList().size()==0){
                 numplayers = firstClient(serversocket, socket, controller);
                 controller.setNumPlayers(numplayers);
@@ -38,25 +37,19 @@ public  class Server_Socket implements Serializable {
                 sendMessage(msg, socket);
                 String name = receiveMessage(socket).getMessage();
                 client.setPlayer(name);
-                clientlist.add(client);
                 controller.addClient(client);
-                System.out.println(controller.getClientList().size());
             }
 
+            // other Socket connections
             while (controller.getClientList().size() < controller.getNumPlayers()){
                 Socket socket1 = serversocket.accept();  // this is the client
+                ClientClass client = new ClientClass(socket1);
                 Message msg = new Message(MessageType.requestNickname, null);
                 sendMessage(msg, socket1);
                 // create a new object ClientClass related to the client
-                ClientClass client = new ClientClass(socket1);
                 String name = receiveMessage(socket1).getMessage();
                 client.setPlayer(name);
-                clientlist.add(client);
                 controller.addClient(client);
-            }
-
-            for (int j=0;j<clientlist.size();j++){
-                System.out.println(clientlist.get(j).getSocket()+" nickname: "+clientlist.get(j).getPlayer().getNickname());
             }
 
         }catch (IOException e){
@@ -64,17 +57,6 @@ public  class Server_Socket implements Serializable {
         }
     }
 
-    /**
-     *  send the gametable to all the clients connected
-     * @param gameTable that we want to send to all the plauers
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    public void gameTableToAll(GameTable gameTable) throws IOException, ClassNotFoundException{
-        for (int i=0; i < clientlist.size(); i++){
-            sendGameTable(clientlist.get(i).getSocket(), gameTable);
-        }
-    }
 
     /**
      * Received a message in input from the socket passed as a parameter
@@ -89,6 +71,14 @@ public  class Server_Socket implements Serializable {
         return (Message) ois.readObject();
     }
 
+    /**
+     *
+     * @param socket the client
+     * @return int from client (we use that for the number of the players)
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws Exception
+     */
     public int receiveInt(Socket socket) throws IOException, ClassNotFoundException, Exception {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (int) ois.readObject();
@@ -172,14 +162,6 @@ public  class Server_Socket implements Serializable {
 
     /**
      *
-     * @return the list of all the client connected
-     */
-    public ArrayList<ClientClass> getClientlist(){
-        return clientlist;
-    }
-
-    /**
-     *
      * @param serversocket server
      * @param socket client
      * @param controller controller of the game
@@ -203,7 +185,6 @@ public  class Server_Socket implements Serializable {
         String name = receiveMessage(socket).getMessage();
         client.setPlayer(name);
         controller.addClient(client);
-        clientlist.add(client);
         return num;
     }
 
