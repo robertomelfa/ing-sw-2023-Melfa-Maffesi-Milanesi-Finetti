@@ -22,10 +22,8 @@ public class TestGameLogic {
         Game g1=new Game(2);
         GameLogic gameLogic=new GameLogic(g1);
         Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.setChairOrder();
+        g1.setCurrentPlayer(p1);
+        //setchairorder
         StringBuilder builder=new StringBuilder();
         builder.append("1\n2\n4\n");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
@@ -52,10 +50,7 @@ public class TestGameLogic {
         Game g1=new Game(2);
         GameLogic gameLogic=new GameLogic(g1);
         Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.setChairOrder();
+        g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
         builder.append("2\n2\n4\n2\n5");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
@@ -89,10 +84,7 @@ public class TestGameLogic {
         Game g1=new Game(2);
         GameLogic gameLogic=new GameLogic(g1);
         Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.setChairOrder();
+        g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
         builder.append("3\n8\n4\n8\n5\n8\n6");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
@@ -126,10 +118,7 @@ public class TestGameLogic {
         Game g1=new Game(2);
         GameLogic gameLogic=new GameLogic(g1);
         Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.setChairOrder();
+        g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
         builder.append("1\n3\n4\n3\n3");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
@@ -156,10 +145,7 @@ public class TestGameLogic {
         Game g1=new Game(2);
         GameLogic gameLogic=new GameLogic(g1);
         Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.setChairOrder();
+        g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
         builder.append("2\n4\n4\n4\n5\n2\n4\n2\n5");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
@@ -186,10 +172,7 @@ public class TestGameLogic {
         Game g1=new Game(2);
         GameLogic gameLogic=new GameLogic(g1);
         Player p1=new Player("Player 1");
-        Player p2=new Player("Player 2");
-        g1.addNewPlayer(p1);
-        g1.addNewPlayer(p2);
-        g1.setChairOrder();
+        g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
         builder.append("3\n4\n3\n4\n4\n4\n5\n8\n4\n8\n5\n8\n6");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
