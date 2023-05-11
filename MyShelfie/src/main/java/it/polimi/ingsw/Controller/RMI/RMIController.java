@@ -50,7 +50,7 @@ public class RMIController implements Serializable {
                     case 1:
                         // print object
                         current_client.receiveMessage("Player Object:");
-                        gameLogic.getGame().getCurrentPlayer().getPlayerObj().print();
+                        current_client.receivePlayerObj(gameLogic.getGame().getCurrentPlayer().getPlayerObj());
                         current_client.receiveMessage("Common Object 1:");
                         current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescrizione());
                         current_client.receiveMessage("Common Object 2:");

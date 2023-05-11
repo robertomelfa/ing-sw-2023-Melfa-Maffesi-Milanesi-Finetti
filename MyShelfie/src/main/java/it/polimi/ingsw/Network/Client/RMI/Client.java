@@ -15,6 +15,8 @@ import java.util.Scanner;
 
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
 
+    private CLIView view=new CLIView();
+
     public Client() throws RemoteException{
         super();
     }
@@ -26,7 +28,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException
      */
     public void receiveGameTable(GameTable board) throws RemoteException{
-        board.viewTable();
+        view.viewGameTable(board);
     }
 
     /**
@@ -35,7 +37,11 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException
      */
     public void receiveLibrary(Library library) throws RemoteException{
-        library.viewGrid();
+        view.viewLibrary(library);
+    }
+
+    public void receivePlayerObj(PlayerObj obj) throws RemoteException{
+        view.viewPlayerObj(obj);
     }
 
     /**
@@ -47,8 +53,6 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws Exception
      */
     public GameLogic receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
-        CLIView view = new CLIView();
-
         gameLogic = view.getCardFromTable(gameLogic);
 
         return gameLogic;
@@ -60,18 +64,18 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException
      */
     public void receiveMessage(String msg) throws RemoteException{
-        System.out.println(msg);
+        view.viewString(msg);
     }
 
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
         ClientClass client1;
         if(controller.getNumPlayers() == 0) {
-            System.out.println("Insert players number");
+            view.viewString("Insert players number");
             int num = in.nextInt();
             server.updateNumPlayers(num);
 
-            System.out.println("Enter the player's name");
+            view.viewString("Enter the player's name");
             String name;
             name = in.next();
             client1 = new ClientClass(client);
@@ -79,7 +83,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
             server.updatePlayers(client1);
         }else{
             if(controller.getClientList().size() < controller.getNumPlayers()){
-                System.out.println("Enter the player's name");
+                view.viewString("Enter the player's name");
                 String name = in.nextLine();
                 client1 = new ClientClass(client);
                 client1.setPlayer(name);
@@ -88,7 +92,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
                 throw new Exception("too many connected clients, you can't log in");
             }
         }
-        System.out.println("[System] connected!");
+        view.viewString("[System] connected!");
     }
 
 
@@ -102,7 +106,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      */
     public int getIntFromClient(String msg) throws RemoteException{
         Scanner in = new Scanner(System.in);
-        System.out.println(msg);
+        view.viewString(msg);
         return in.nextInt();
     }
 

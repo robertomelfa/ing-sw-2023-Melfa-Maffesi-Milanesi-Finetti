@@ -1,9 +1,9 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.Model.CommonObj;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.PlayerObj;
+import it.polimi.ingsw.Model.*;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class GUIView implements ViewClient{
 
@@ -14,28 +14,36 @@ public class GUIView implements ViewClient{
     }
 
     @Override
-    public void displayLibrary(Library library) {
+    public void viewLibrary(Library library) {
 
     }
 
     @Override
-    public void displayGameTable(GameTable gameTable) {
+    public void viewGameTable(GameTable gameTable) {
 
     }
 
     @Override
-    public void displayMessages(String message) {
+    public void viewString(String message) {
 
     }
 
     @Override
-    public void displayPlayerObj(PlayerObj playerObj) {
+    public void viewPlayerObj(PlayerObj playerObj) {
 
     }
 
     @Override
-    public void displayCommonObj(CommonObj obj1, CommonObj obj2) {
+    public void viewCommonObj(CommonObj obj1, CommonObj obj2) {
 
+    }
+
+    public GameLogic insert(ArrayList<Card> list, GameLogic gameLogic){
+        return null;
+    }
+
+    public GameLogic getCardFromTable(GameLogic gameLogic) throws RemoteException{
+        return null;
     }
 
 }

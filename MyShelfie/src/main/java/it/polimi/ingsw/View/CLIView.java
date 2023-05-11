@@ -1,9 +1,6 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.Messages.MessageType;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -11,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static it.polimi.ingsw.Model.Card.NONE;
+import static it.polimi.ingsw.Model.Card.NOT;
 
 public class CLIView implements ViewClient, Serializable {
 
@@ -22,7 +20,7 @@ public class CLIView implements ViewClient, Serializable {
     public String askUserName() {
 
         String temp;
-        displayMessages("Enter your username : ");
+        viewString("Enter your username : ");
         do {
             username = scanner.nextLine();
 //            if (checkUsername(username)) {
@@ -34,29 +32,97 @@ public class CLIView implements ViewClient, Serializable {
     }
 
     @Override
-    public void displayLibrary(Library library) {
-        library.viewGrid();
+    public void viewLibrary(Library library) {
+        System.out.print("   ");
+        for (int i = 1; i < 6; i++) {
+            System.out.printf("     %d     ", i);
+        }
+
+        System.out.print("\n");
+        System.out.print("\n");
+
+        for (int i = 0; i < 6; i++) {
+            System.out.printf(" %d ", i + 1);
+            for (int j = 0; j < 5; j++) {
+                if (library.getPos(i,j)!= NOT && library.getPos(i,j)!= NONE) {
+                    System.out.printf("%-22s", library.getPos(i,j));
+                } else {
+                    System.out.print("           ");
+                }
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
     }
 
     @Override
-    public void displayGameTable(GameTable gameTable) {
-        gameTable.viewTable();
+    public void viewGameTable(GameTable gameTable) {
+        System.out.print("   ");
+        for(int i = 1; i < 10; i++){
+            System.out.printf("     %d     ", i);
+        }
+
+        System.out.print("\n");
+        System.out.print("\n");
+
+        for(int i = 1; i < 10; i++){
+            System.out.printf(" %d ", i);
+            for(int j = 1; j < 11; j++){
+                if(gameTable.getCardfromBoard(i,j) != NOT && gameTable.getCardfromBoard(i,j) != NONE){ // remove this if to view NONE and NOT on the gameTable
+                    System.out.printf("%-22s", gameTable.getCardfromBoard(i,j));
+                }else{
+                    System.out.print("           ");     // if there is no card, read space
+
+                }
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
     }
 
     @Override
-    public void displayMessages(String message) {
+    public void viewString(String message) {
         System.out.println(message);
     }
 
     @Override
-    public void displayPlayerObj(PlayerObj playerObj) { playerObj.print(); }
+    public void viewPlayerObj(PlayerObj playerObj) {
+        Card[][] temp= new Card[6][5];
+        for (int k=0;k<6;k++){
+            for (int j=0;j<5;j++){
+                temp[k][j]=Card.NONE;
+            }
+        }
+        for (int i=0; i<playerObj.getPlayerObjs().size();i++){
+            temp[playerObj.getPlayerObjs().get(i).getXPosition()][playerObj.getPlayerObjs().get(i).getYPosition()]=playerObj.getPlayerObjs().get(i).getType();
+        }
+        for(int i = 1; i < 6; i++){
+            System.out.printf("     %d     ", i);
+        }
+
+        System.out.print("\n");
+        System.out.print("\n");
+
+        for(int i = 0; i < 6; i++){
+            System.out.printf(" %d ", i+1);
+            for(int j = 0; j < 5; j++){
+                if(temp[i][j] != NOT && temp[i][j] != NONE){
+                    System.out.printf("%-22s", temp[i][j]);
+                }else{
+                    System.out.print("           ");
+                }
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
+    }
 
     @Override
-    public void displayCommonObj(CommonObj obj1, CommonObj obj2) {
-        displayMessages("Common Object 1 : ");
-        displayMessages(obj1.getDescrizione());
-        displayMessages("Common Object 2 : ");
-        displayMessages(obj2.getDescrizione());
+    public void viewCommonObj(CommonObj obj1, CommonObj obj2) {
+        viewString("Common Object 1 : ");
+        viewString(obj1.getDescrizione());
+        viewString("Common Object 2 : ");
+        viewString(obj2.getDescrizione());
     }
 
 
@@ -224,7 +290,8 @@ public class CLIView implements ViewClient, Serializable {
     public GameLogic insert(ArrayList<Card> list, GameLogic gameLogic) {
         Scanner in = new Scanner(System.in);
         int column = 0;
-        gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
+        viewLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
+        //gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
         System.out.println("Choose the column:");
         do {
             column = in.nextInt() - 1;
@@ -275,7 +342,8 @@ public class CLIView implements ViewClient, Serializable {
         }
         System.out.println("Now the grid is: \n");
         gameLogic.getGame().getCurrentPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
-        gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
+        //gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
+        viewLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
         return gameLogic;
     }
 

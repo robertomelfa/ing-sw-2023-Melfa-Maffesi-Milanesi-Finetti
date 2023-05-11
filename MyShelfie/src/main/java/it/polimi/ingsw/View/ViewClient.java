@@ -1,16 +1,18 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.Model.CommonObj;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.PlayerObj;
+import it.polimi.ingsw.Model.*;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 
 public interface ViewClient {
     public String askUserName();
-    public void displayLibrary(Library library);
-    public void displayGameTable(GameTable gameTable);
-    public void displayMessages(String message);
-    public void displayPlayerObj(PlayerObj playerObj);
-    public void displayCommonObj(CommonObj obj1, CommonObj obj2);
+    public void viewLibrary(Library library);
+    public void viewGameTable(GameTable gameTable);
+    public void viewString(String message);
+    public void viewPlayerObj(PlayerObj playerObj);
+    public void viewCommonObj(CommonObj obj1, CommonObj obj2);
+    public GameLogic insert(ArrayList<Card> list, GameLogic gameLogic);
+    public GameLogic getCardFromTable(GameLogic gameLogic) throws RemoteException;
 }

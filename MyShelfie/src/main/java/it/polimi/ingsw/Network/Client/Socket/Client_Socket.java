@@ -8,13 +8,13 @@ import it.polimi.ingsw.View.CLIView;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 //TODO sistemare le varie funzioni (troppo lunghe)
 public class Client_Socket implements Serializable {
 
     private Socket socket;  // è il server
+    private CLIView view;
 
 
     /**
@@ -23,9 +23,10 @@ public class Client_Socket implements Serializable {
      */
     public  void start(GameInterface server) throws Exception{
         Scanner scanner=new Scanner(System.in);
+        view=new CLIView();
 
         int port;
-        System.out.println("Insert server port");
+        view.viewString("Insert server port");
         port=scanner.nextInt();
         connect("127.0.0.1",port);
         try {
@@ -35,7 +36,7 @@ public class Client_Socket implements Serializable {
             try{
                 socket.close();
             }catch (IOException i){
-                System.out.println("Impossible to close socket");
+                view.viewString("Impossible to close socket");
             }
         }
     }
@@ -49,25 +50,19 @@ public class Client_Socket implements Serializable {
         try {
             Socket socket = new Socket(host,port);
             this.socket=socket;
-            System.out.println("Client is running...");
+            view.viewString("Client is running...");
         }catch(IOException e){
-            System.out.println("Client fatal error");
+            view.viewString("Client fatal error");
         }
     }
 
     /**
      * the client start listening waiting for the server to send him the game table
      */
-    public void receiveGameTable(){
-        try{
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            GameTable gameTable = (GameTable) ois.readObject();
-            gameTable.viewTable();
-        }catch (IOException i){
-            System.out.println("IOException");
-        }catch (ClassNotFoundException c){
-            System.out.println("ClassNotFoundException");
-        }
+    public GameTable receiveGameTable() throws IOException,ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        GameTable gameTable = (GameTable) ois.readObject();
+        return gameTable;
     }
 
     /**
@@ -85,51 +80,52 @@ public class Client_Socket implements Serializable {
                 int numPlayers = 0;
                 Scanner in = new Scanner(System.in);
                 do{
-                    System.out.println("Insert players number:");
+
+                    view.viewString("Insert players number:");
                     numPlayers = in.nextInt();
                     if(numPlayers < 2 || numPlayers > 4){
-                        System.out.println("Players number must be between 2 and 4. Retry");
+                        view.viewString("Players number must be between 2 and 4. Retry");
                     }
                 }while(numPlayers < 2 || numPlayers > 4);
                 sendInt(numPlayers);
             }else if (msg.getType()==MessageType.requestNickname){
-                System.out.println("Insert name: ");
+                view.viewString("Insert name: ");
                 Scanner in = new Scanner(System.in);
                 String name = in.nextLine();
                 msg=new Message(MessageType.sendNickname,name);
                 sendMessage(msg);
                 server.release();   // tolgo il lock
             }else if(msg.getType()==MessageType.receiveGameTable){
-                receiveGameTable();
+                GameTable table=receiveGameTable();
+                view.viewGameTable(table);
             }else if(msg.getType()==MessageType.receiveLibrary){
                 Library lib=receiveLibrary();
-                lib.viewGrid();
+                view.viewLibrary(lib);
             }else if(msg.getType()==MessageType.getCard){
-                CLIView view = new CLIView();
                 GameLogic gameLogic = receiveGameLogic();
                 gameLogic = view.getCardFromTable(gameLogic);
                 sendGameLogic(gameLogic);
 
             }else if (msg.getType()==MessageType.objectiveCompleted){
-                System.out.println(msg.getMessage());
+                view.viewString(msg.getMessage());
 
             }else if (msg.getType()==MessageType.printMessage){
-                System.out.println(msg.getMessage());
+                view.viewString(msg.getMessage());
 
             }else if (msg.getType()==MessageType.receivePlayerObj){
                 PlayerObj obj=receivePlayerObj();
-                obj.print();
+                view.viewPlayerObj(obj);
 
             }else if (msg.getType()==MessageType.notifyBeginTurn){
-                System.out.println(msg.getMessage());
+                view.viewString(msg.getMessage());
                 Scanner in =new Scanner(System.in);
                 String choice=in.nextLine();
                 sendMessage(new Message(MessageType.printMessage,choice));
             }else if (msg.getType()==MessageType.endGame){
-                System.out.println("Game is ended");
+                view.viewString("Game is ended");
                 break;
             }else {
-                System.out.println("Comunication error");
+                view.viewString("Comunication error");
                 break;
             }
         }
