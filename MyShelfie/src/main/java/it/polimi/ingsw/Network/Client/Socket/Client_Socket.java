@@ -22,13 +22,9 @@ public class Client_Socket implements Serializable {
      * @throws Exception
      */
     public  void start(GameInterface server) throws Exception{
-        Scanner scanner=new Scanner(System.in);
         view=new CLIView();
 
-        int port;
-        view.viewString("Insert server port");
-        port=scanner.nextInt();
-        connect("127.0.0.1",port);
+        connect("127.0.0.1",8080);
         try {
             // start the logic of the client
             clientlogic(server);

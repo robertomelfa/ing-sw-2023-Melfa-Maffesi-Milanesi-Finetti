@@ -27,7 +27,7 @@ public class Server implements Serializable {
 
     public GameInterface getServerRMI() throws RemoteException{return  this.serverRMI;}
 
-    public static void main(String[] args) throws RemoteException, Exception {
+    public static void start() throws RemoteException, Exception {
         serverSocket = new Server_Socket();
         serverRMI = new GameServer();
         Registry registry = LocateRegistry.createRegistry(1099);

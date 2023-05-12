@@ -70,7 +70,6 @@ public class RMIController implements Serializable {
                     default:
                         current_client.receiveMessage("The input is not valid, please insert 1 or 2\n");
                 }
-
             }
 
             // send the library to the current player

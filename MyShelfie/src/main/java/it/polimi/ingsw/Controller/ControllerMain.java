@@ -201,7 +201,6 @@ public class ControllerMain implements Serializable {
      * @throws Exception
      */
     public void checkObjectives() throws Exception{
-
         // check common object 1
         if(!current_client.getPlayer().getCommonObj1Completed()){
             if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
