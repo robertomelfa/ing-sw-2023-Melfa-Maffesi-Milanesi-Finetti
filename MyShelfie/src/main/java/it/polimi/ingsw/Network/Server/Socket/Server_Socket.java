@@ -3,6 +3,7 @@ package it.polimi.ingsw.Network.Server.Socket;
 import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+import it.polimi.ingsw.Network.Lock;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 
@@ -24,34 +25,22 @@ public  class Server_Socket implements Serializable {
             int port=8080;
             ServerSocket serversocket = new ServerSocket(port); // create the server
             System.out.println("[SERVER] started on port: "+port);
-            int numplayers;
+            int numplayers = 0;
 
-            // first Socket connection
-            Socket socket = serversocket.accept();
-            if(controller.getClientList().size()==0){
-                numplayers = firstClient(serversocket, socket, controller);
-                controller.setNumPlayers(numplayers);
-            }else{
-                ClientClass client = new ClientClass(socket);   // associo il client ad un player
-                Message msg = new Message(MessageType.requestNickname, null);
-                sendMessage(msg, socket);
-                String name = receiveMessage(socket).getMessage();
-                client.setPlayer(name);
-                controller.addClient(client);
+            while (!controller.getStart()){
+                Socket socket = serversocket.accept();
+                if(controller.getClientList().size()==0){   // first player?
+                    numplayers = firstClient(serversocket, socket, controller);
+                    controller.setNumPlayers(numplayers);
+                }else{
+                    ClientClass client = new ClientClass(socket);   // associo il client ad un player
+                    Message msg = new Message(MessageType.requestNickname, null);
+                    sendMessage(msg, socket);
+                    String name = receiveMessage(socket).getMessage();
+                    client.setPlayer(name);
+                    controller.addClient(client);
+                }
             }
-
-            // other Socket connections
-            while (controller.getClientList().size() < controller.getNumPlayers()){
-                Socket socket1 = serversocket.accept();  // this is the client
-                ClientClass client = new ClientClass(socket1);
-                Message msg = new Message(MessageType.requestNickname, null);
-                sendMessage(msg, socket1);
-                // create a new object ClientClass related to the client
-                String name = receiveMessage(socket1).getMessage();
-                client.setPlayer(name);
-                controller.addClient(client);
-            }
-
         }catch (IOException e){
             System.out.println("[SERVER] fatal error");
         }

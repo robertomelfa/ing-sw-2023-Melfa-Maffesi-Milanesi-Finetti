@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface GameInterface extends Remote{
 
-    public void start(ControllerMain controller) throws RemoteException, Exception;
+    public void start(ControllerMain controller) throws RemoteException ;
 
     public void setClient(GameClientInterface c) throws RemoteException, Exception;
     public GameClientInterface getClient(int i) throws RemoteException;
@@ -33,7 +33,6 @@ public interface GameInterface extends Remote{
 
     public void messageToAll(String msg) throws RemoteException;
 
-    public int getNumPlayers() throws RemoteException;
 
     public ControllerMain getController() throws RemoteException;
     public void updateNumPlayers(int num) throws RemoteException;

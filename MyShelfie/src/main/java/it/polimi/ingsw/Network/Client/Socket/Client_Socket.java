@@ -80,7 +80,6 @@ public class Client_Socket implements Serializable {
                 int numPlayers = 0;
                 Scanner in = new Scanner(System.in);
                 do{
-
                     view.viewString("Insert players number:");
                     numPlayers = in.nextInt();
                     if(numPlayers < 2 || numPlayers > 4){

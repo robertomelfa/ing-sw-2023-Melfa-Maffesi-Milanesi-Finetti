@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Server;
 
 import it.polimi.ingsw.Controller.ControllerMain;
+import it.polimi.ingsw.Network.Lock;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.RMI.GameServer;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
@@ -25,6 +26,7 @@ public class Server implements Serializable {
     public Server_Socket getServerSocket() {return this.serverSocket;}
 
     public GameInterface getServerRMI() throws RemoteException{return  this.serverRMI;}
+
     public static void main(String[] args) throws RemoteException, Exception {
         serverSocket = new Server_Socket();
         serverRMI = new GameServer();
@@ -60,7 +62,6 @@ class startRMIServer extends Server implements Runnable{
     public void run(){
         try{
             GameInterface server = getServerRMI();
-
             try{
                 server.start(getController());
             }catch (Exception e){}
@@ -73,9 +74,9 @@ class startController extends Server implements Runnable{
     public void run(){
         try{
             // wait all the players before starting the game
-            while(!getController().getStart()){
+            getController().waitStart();
 
-            }
+            // game is starting
             System.out.println("Starting controller");
             getController().startGame();
         }catch (Exception e){}

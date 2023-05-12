@@ -13,7 +13,6 @@ public class PlayerObj implements Serializable{
     private final ArrayList<SingleObj> playerObjs ;
     private static ArrayList <Integer> available = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     private final int[] POINT = {1, 2, 4, 6, 9, 12};
-  //  private int i;
 
     /**
      * @param player, player to check
@@ -56,14 +55,9 @@ public class PlayerObj implements Serializable{
      * Constructor for the PlayerObj class: choose randomly one of the personal goal of the game
      */
     public PlayerObj() throws Exception{
-//        for(int i=0; i < 6; i++){
-//            assert false;                               //lo ha messo java per completezza
-//            playerObjs.add(new SingleObj(i));
-//        }
-
         Random rn = new Random();
         int rand = rn.nextInt(available.size());
-    //    this.i = 0;
+
         switch (available.get(rand)){
             case 1 -> this.playerObjs = obj1();
             case 2 -> this.playerObjs = obj2();
@@ -214,45 +208,6 @@ public class PlayerObj implements Serializable{
         temp.add(new SingleObj(5,0,Card.GREEN));
         return temp;
     }
-
-
-    /**
-     * Method that prints playerObj
-     */
-    public void print(){
-        Card[][] temp= new Card[6][5];
-        for (int k=0;k<6;k++){
-            for (int j=0;j<5;j++){
-                temp[k][j]=Card.NONE;
-            }
-        }
-        for (int i=0; i<playerObjs.size();i++){
-            temp[playerObjs.get(i).getXPosition()][playerObjs.get(i).getYPosition()]=playerObjs.get(i).getType();
-        }
-        for(int i = 1; i < 6; i++){
-            System.out.printf("     %d     ", i);
-        }
-
-        System.out.print("\n");
-        System.out.print("\n");
-
-        for(int i = 0; i < 6; i++){
-            System.out.printf(" %d ", i+1);
-            for(int j = 0; j < 5; j++){
-                if(temp[i][j] != NOT && temp[i][j] != NONE){
-                    System.out.printf("%-22s", temp[i][j]);
-                }else{
-                    System.out.print("           ");
-                }
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n");
-    }
-
-  /*  public int getI() {
-        return 0;
-    }   */
 
     //@test
     public int[] getPOINT() {

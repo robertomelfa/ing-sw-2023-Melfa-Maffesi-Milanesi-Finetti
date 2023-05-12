@@ -342,13 +342,12 @@ public class CLIView implements ViewClient, Serializable {
         }
         System.out.println("Now the grid is: \n");
         gameLogic.getGame().getCurrentPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
-        //gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
         viewLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
         return gameLogic;
     }
 
 
-    public GameLogic getCardFromTable(GameLogic gameLogic) throws RemoteException {
+    public GameLogic getCardFromTable(GameLogic gameLogic){
         int size = 0;
         Scanner in = new Scanner(System.in);
         ArrayList<Card> list = new ArrayList<Card>();
@@ -438,6 +437,8 @@ public class CLIView implements ViewClient, Serializable {
             }
         }
 
+        // check the status of the table
+        gameLogic.getGameTable().checkStatus();
 
         // the player will insert the picked cards
         gameLogic = insert(list, gameLogic);
