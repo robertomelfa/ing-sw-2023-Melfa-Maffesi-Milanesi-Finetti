@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerGui">
+               <children>
+                  <ImageView fx:id="background" fitHeight="800.0" fitWidth="1200.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/misc/sfondo parquet.jpg" />
+                     </image>
+                  </ImageView>
+                  <BorderPane prefHeight="800.0" prefWidth="1200.0">
+                     <left>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Region prefHeight="200.0" prefWidth="200.0" />
+                              <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/personal goal cards/Personal_Goals.png" />
+                                 </image>
+                     <VBox.margin>
+                        <Insets left="16.0" right="16.0" />
+                     </VBox.margin>
+                              </ImageView>
+                              <Region prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                           <BorderPane.margin>
+                              <Insets left="10.0" />
+                           </BorderPane.margin>
+                        </VBox>
+                     </left>
+                     <top>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="180.0" prefWidth="1200.0" spacing="16.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER_RIGHT">
+                                       <children>
+                                          <VBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
+                                             <children>
+                                                <Label text="Player" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/scoring tokens/scoring.jpg" />
+                                                   </image>
+                                                   <VBox.margin>
+                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                   </VBox.margin>
+                                                </ImageView>
+                                             </children>
+                                          </VBox>
+                                          <ImageView fx:id="LibraryPlayer1" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#openLibrary" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/boards/bookshelf.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                    <Region prefHeight="200.0" prefWidth="250.0" />
+                                    <VBox alignment="CENTER" spacing="16.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My Shelfie">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                          <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#openRules" text="Rules" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="8.0" right="8.0" />
+                                             </padding>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                    <Region prefHeight="200.0" prefWidth="250.0" />
+                                    <HBox alignment="CENTER_LEFT" spacing="16.0">
+                                       <children>
+                                          <ImageView fx:id="LibraryPlayer2" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#openLibrary" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/boards/bookshelf.png" />
+                                             </image>
+                                          </ImageView>
+                                          <VBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
+                                             <children>
+                                                <Label text="Player" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/scoring tokens/scoring.jpg" />
+                                                   </image>
+                                                   <VBox.margin>
+                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                   </VBox.margin>
+                                                </ImageView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets bottom="8.0" />
+                                       </opaqueInsets>
+                                    </HBox>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets bottom="8.0" />
+                                 </opaqueInsets>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </top>
+                     <bottom>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="120.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <VBox alignment="BOTTOM_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
+                                       <children>
+                                          <Label text="Player" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/scoring tokens/scoring.jpg" />
+                                             </image>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                    <ImageView fx:id="LibraryPlayer4" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#openLibrary" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/boards/bookshelf.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                              </HBox>
+                              <ImageView fx:id="CommonObj1" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/common goal cards/1.jpg" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="CommonObj2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/common goal cards/2.jpg" />
+                                 </image>
+                              </ImageView>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <ImageView fx:id="LibraryPlayer3" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#openLibrary" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/boards/bookshelf.png" />
+                                       </image>
+                                    </ImageView>
+                                    <VBox alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
+                                       <children>
+                                          <Label text="Player">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/scoring tokens/scoring.jpg" />
+                                             </image>
+                                             <VBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </VBox.margin>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                        </HBox>
+                     </bottom>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <center>
+                        <AnchorPane BorderPane.alignment="CENTER">
+                           <children>
+                              <Group layoutX="200.0">
+                                 <children>
+                                    <ImageView fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/boards/livingroom.png" />
+                                       </image>
+                                    </ImageView>
+                                    <GridPane layoutX="13.0" layoutY="13.0" maxHeight="377.0" maxWidth="386.0" onMouseClicked="#selectedCard" prefHeight="366.0" prefWidth="366.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="225.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="182.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="182.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="225.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="182.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="225.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="3">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="174.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="215.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="297.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="297.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="338.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="4">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="297.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="338.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="297.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="92.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="133.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="174.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="8">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="215.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                                             <image>
+                                                <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </Group>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                     <right>
+                        <Group BorderPane.alignment="CENTER">
+                           <children>
+                              <GridPane fx:id="gridLibrary" layoutX="26.0" layoutY="16.0" maxHeight="377.0" maxWidth="386.0" onMouseClicked="#selecColumn" prefHeight="155.0" prefWidth="154.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="139.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="225.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="182.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="225.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="182.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="225.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="256.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="215.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="297.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="256.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="297.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="338.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="256.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="297.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="92.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="133.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="74.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="106.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                       <image>
+                                          <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/item tiles/Libri1.2.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </GridPane>
+                              <ImageView fitHeight="250.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@ProgettoSoftwareEngeniring/17_MyShelfie_BGA/boards/bookshelf.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+               <BorderPane.margin>
+                  <Insets right="20.0" />
+               </BorderPane.margin>
+                        </Group>
+                     </right>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
