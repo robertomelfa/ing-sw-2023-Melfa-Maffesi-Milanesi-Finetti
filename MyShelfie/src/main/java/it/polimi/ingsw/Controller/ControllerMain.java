@@ -52,9 +52,7 @@ public class ControllerMain implements Serializable {
      * @return true if the name is already used in the game, false if not
      */
     public boolean checkExistingName(String name){
-        if(clientList.size() == 0){
-            return false;
-        }else{
+        if(clientList.size() != 0){
             for(int i = 0; i < clientList.size(); i++){
                 if(name.equals(clientList.get(i).getPlayer().getNickname())){
                     return true;
@@ -62,6 +60,17 @@ public class ControllerMain implements Serializable {
             }
         }
         return false;
+    }
+
+    /**
+     *
+     * Thread waiting the start of the game
+     * @throws InterruptedException
+     */
+    public synchronized void waitStart() throws InterruptedException{
+        while(!getStart()){
+            wait();
+        }
     }
 
     /**
@@ -75,11 +84,11 @@ public class ControllerMain implements Serializable {
         return false;
     }
 
-    public ClientClass getChair() throws RemoteException {
+    public ClientClass getChair(){
         return clientList.get(chair);
     }
 
-    public ClientClass getCurrentPlayer() throws RemoteException{
+    public ClientClass getCurrentPlayer(){
         return current_client;
     }
 
@@ -88,7 +97,7 @@ public class ControllerMain implements Serializable {
      * @throws RemoteException
      * @throws Exception
      */
-    public void updateCurrentPlayer() throws RemoteException, Exception{
+    public void updateCurrentPlayer() throws Exception{
         if(!endGame){
             // update the current player
             listIterator++;
@@ -131,6 +140,8 @@ public class ControllerMain implements Serializable {
      */
      public synchronized void addClient(ClientClass clientList){
         this.clientList.add(clientList);
+        // notify the client list change
+        notifyAll();
     }
 
     /**
@@ -179,7 +190,6 @@ public class ControllerMain implements Serializable {
                 RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI);
                 gameLogic = controllerR.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
-                current_client.getPlayer().getLibrary().viewGrid();
             }
             checkObjectives();
             updateCurrentPlayer();
@@ -215,7 +225,6 @@ public class ControllerMain implements Serializable {
 
         // check player object
         if(current_client.getPlayer().getLibrary().checkFull()){
-            //gameLogic.getGame().setEndGame();
             gameLogic.getGame().getCurrentPlayer().addPoints(1);
             endGame = true;
         }

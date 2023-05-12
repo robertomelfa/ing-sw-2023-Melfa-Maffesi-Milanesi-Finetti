@@ -17,7 +17,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     private List<GameClientInterface> client;
 
     private ControllerMain controller;
-    private int numPlayers;
     private boolean firstPlayer = true;
 
     private static Lock lock;
@@ -34,11 +33,9 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         }catch(Exception e){}
     }
 
-    public void start(ControllerMain controller) throws RemoteException, Exception{
+    public void start(ControllerMain controller) throws RemoteException{
         this.controller = controller;
         lock = new Lock();
-        // wait clients
-        while(controller.getClientList().size() < controller.getNumPlayers()){ }
     }
 
     /**
@@ -124,10 +121,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         for(int i = 0; i < client.size(); i++){
             client.get(i).receiveMessage(msg);
         }
-    }
-
-    public int getNumPlayers() throws RemoteException{
-        return this.numPlayers;
     }
 
     public ControllerMain getController() throws RemoteException{

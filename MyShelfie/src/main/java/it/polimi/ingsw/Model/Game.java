@@ -6,14 +6,10 @@ import java.io.Serializable;
 public class Game implements Serializable{
     private GameTable gameTable;
     private int numOfPlayers;
-    private int chair;
     private Player currentPlayer;
     private CardBox cardbox;
     private CommonObj commonObj1;
     private CommonObj commonObj2;
-    private boolean endGame;
-
-    private int listIteration = 0;
 
     /**
      *
@@ -21,20 +17,11 @@ public class Game implements Serializable{
      * setBothCommonObj
      *
      */
-    public Game(int numOfPlayers) throws Exception{
-        if(numOfPlayers < 2 || numOfPlayers > 4){
-            System.out.println("the number of players must be between 2 and 4, try again!");
-            throw new Exception();
-        }else {
-            this.numOfPlayers = numOfPlayers;
-            this.gameTable = new GameTable(numOfPlayers);
-            this.cardbox = new CardBox();
-            setBothCommonObj(numOfPlayers);
-        }
-    }
-
-    public void setGameTable(GameTable gameTable){
-        this.gameTable = gameTable;
+    public Game(int numOfPlayers){
+        this.numOfPlayers = numOfPlayers;
+        this.gameTable = new GameTable(numOfPlayers);
+        this.cardbox = new CardBox();
+        setBothCommonObj(numOfPlayers);
     }
 
     /**
@@ -67,14 +54,6 @@ public class Game implements Serializable{
 
     /**
      *
-     * @return the cardbox linked to game
-     */
-    public CardBox getCardbox() {
-        return cardbox;
-    }
-
-    /**
-     *
      * @return commonObj1
      */
     public CommonObj getCommonObj1(){
@@ -100,8 +79,6 @@ public class Game implements Serializable{
     public void setCurrentPlayer(Player player){
         this.currentPlayer = player;
     }
-
-
 }
 
 /**

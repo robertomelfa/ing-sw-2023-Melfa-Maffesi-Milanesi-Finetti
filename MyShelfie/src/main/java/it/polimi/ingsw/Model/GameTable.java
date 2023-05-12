@@ -114,42 +114,6 @@ public class GameTable implements Serializable{
         }
     }
 
-    /**
-     * This method prints the board. If there is no card (NOT or NONE) it prints space
-     * This method will be in the view
-     */
-    public void viewTable() {
-        System.out.print("   ");
-        for(int i = 1; i < 10; i++){
-            System.out.printf("     %d     ", i);
-        }
-
-        System.out.print("\n");
-        System.out.print("\n");
-
-        for(int i = 1; i < 10; i++){
-            System.out.printf(" %d ", i);
-            for(int j = 1; j < 11; j++){
-                if(this.board[i][j] != NOT && this.board[i][j] != NONE){ // remove this if to view NONE and NOT on the gameTable
-                    System.out.printf("%-22s", board[i][j]);
-                }else{
-                    System.out.print("           ");     // if there is no card, read space
-
-                }
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n");
-    }
-
-    public void updateTable(GameTable gameTable){
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                board[i][j] = gameTable.getCardfromBoard(i ,j);
-            }
-        }
-    }
-
     public void setCardfromBoard(int x, int y, Card card){
         board[x][y]=card;
     }

@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static it.polimi.ingsw.Model.Card.BLUE;
+
 public class TestPlayer {
     Player p1=null;
 
@@ -78,6 +80,21 @@ public class TestPlayer {
         p1.setCommonObj2Completed();
         Assert.assertTrue(p1.getCommonObj1Completed());
         Assert.assertTrue(p1.getCommonObj2Completed());
+    }
+
+    @Test
+    public void testSetLibrary() throws Exception{
+        Player p1 = new Player("bob");
+        p1.getLibrary().setCard(0, 1, BLUE);
+        p1.getLibrary().setCard(1, 1, BLUE);
+        p1.getLibrary().setCard(3, 1, BLUE);
+        p1.getLibrary().setCard(2, 1, BLUE);
+        p1.getLibrary().setCard(5, 1, BLUE);
+
+        Player p2 = new Player("joe");
+        p2.setLibrary(p1.getLibrary());
+
+        Assert.assertEquals(p1.getLibrary(),p2.getLibrary());
     }
     @After
     public void teardown(){

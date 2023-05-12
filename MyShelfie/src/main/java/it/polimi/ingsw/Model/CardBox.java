@@ -80,8 +80,4 @@ public class CardBox implements Serializable{
             return temp;
         }
     }
-
-    public List<Card> getCardBox() {
-        return cardBox;
-    }
 }
