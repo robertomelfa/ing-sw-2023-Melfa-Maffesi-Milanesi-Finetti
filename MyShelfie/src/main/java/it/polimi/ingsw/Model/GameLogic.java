@@ -149,7 +149,6 @@ public class GameLogic implements Serializable{
     // verify if card has free side
     public boolean checkNear(int x1, int y1){
         if(gameTable.getCardfromBoard(x1,y1) == NONE || gameTable.getCardfromBoard(x1,y1) == NOT){
-            System.out.println("Card not exists");
             return false;
         }else if((gameTable.getCardfromBoard(x1+1,y1) == NONE || gameTable.getCardfromBoard(x1+1,y1) == NOT) || (gameTable.getCardfromBoard(x1-1,y1) == NONE || gameTable.getCardfromBoard(x1-1,y1) == NOT) || (gameTable.getCardfromBoard(x1,y1+1) == NONE || gameTable.getCardfromBoard(x1+1,y1+1) == NOT) || (gameTable.getCardfromBoard(x1,y1-1) == NONE || gameTable.getCardfromBoard(x1,y1-1) == NOT)){
             return true;
@@ -173,7 +172,6 @@ public class GameLogic implements Serializable{
                 return true;
             }
         }
-        System.out.println("Card 2 has different x and y beside Card 1 (x or y must be the same)");
         return false;
     }
 
@@ -194,7 +192,6 @@ public class GameLogic implements Serializable{
                 return true;
             }
         }
-        System.out.println("Cards must be in the same row or column");
         return false;
     }
 

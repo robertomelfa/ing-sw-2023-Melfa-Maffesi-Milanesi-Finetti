@@ -1,10 +1,6 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.Player;
-import junit.framework.TestCase;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class TestGame {
 /*

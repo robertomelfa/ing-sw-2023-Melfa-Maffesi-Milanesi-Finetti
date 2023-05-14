@@ -122,4 +122,17 @@ public class GameTable implements Serializable{
     public Card getCardfromBoard(int x,int y) {
         return board[x][y];
     }
+
+    //@test
+
+    public boolean equals(GameTable gameTable){
+        for(int i = 0; i < 11; i++){
+            for(int j = 0; j < 11; j++){
+                if(board[i][j] != gameTable.getCardfromBoard(i, j)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

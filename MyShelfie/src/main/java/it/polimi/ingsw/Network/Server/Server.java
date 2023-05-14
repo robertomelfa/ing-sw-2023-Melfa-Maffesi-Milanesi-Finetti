@@ -1,15 +1,16 @@
 package it.polimi.ingsw.Network.Server;
 
 import it.polimi.ingsw.Controller.ControllerMain;
-import it.polimi.ingsw.Network.Lock;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.RMI.GameServer;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class Server implements Serializable {
 
@@ -19,7 +20,9 @@ public class Server implements Serializable {
 
     private static GameInterface serverRMI;
 
-    public ControllerMain getController(){
+    private static Registry registry;
+
+    public synchronized ControllerMain getController(){
         return this.controller;
     }
 
@@ -27,10 +30,11 @@ public class Server implements Serializable {
 
     public GameInterface getServerRMI() throws RemoteException{return  this.serverRMI;}
 
+
     public static void start() throws RemoteException, Exception {
         serverSocket = new Server_Socket();
         serverRMI = new GameServer();
-        Registry registry = LocateRegistry.createRegistry(1099);
+        registry = LocateRegistry.createRegistry(1099);
         registry.rebind("GameInterface", serverRMI);
         controller = new ControllerMain(serverSocket, serverRMI);
         Runnable task1 = new startSocketServer();
@@ -43,6 +47,17 @@ public class Server implements Serializable {
         thread2.start();
         thread3.start();
     }
+
+    public void close() throws RemoteException, IOException {
+        // Unexport the remote object
+        UnicastRemoteObject.unexportObject(serverRMI, true);
+// Unexport the registry
+        UnicastRemoteObject.unexportObject(registry, true);
+
+        serverSocket.close();
+
+    }
+
 }
 
 class startSocketServer extends Server implements Runnable{

@@ -45,9 +45,6 @@ public class RMIController implements Serializable {
      */
     public GameLogic takeTurn() throws RemoteException, Exception{
 
-            // send the gameTable to client
-            server.gameTableToClient(gameLogic.getGameTable(), current_client);
-
             // send library to client
             current_client.receiveLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
 
@@ -77,9 +74,6 @@ public class RMIController implements Serializable {
 
             // get cards from table
             this.gameLogic = current_client.receiveGetCard(gameLogic, server);
-
-            // send the gameTable to all players
-            server.gameTableToAll(gameLogic.getGameTable());
 
         return gameLogic;
     }

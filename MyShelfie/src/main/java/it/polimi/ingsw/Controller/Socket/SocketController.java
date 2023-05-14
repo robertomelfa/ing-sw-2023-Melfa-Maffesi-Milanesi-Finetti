@@ -42,9 +42,6 @@ public class SocketController implements Serializable {
      */
     public GameLogic takeTurn() throws IOException, Exception {
 
-            // send gametable to client
-            server.sendGameTable(current_client.getSocket(), gameLogic.getGameTable());
-
             // send library to client
             server.sendLibrary(current_client.getSocket(),current_client.getPlayer().getLibrary());
 

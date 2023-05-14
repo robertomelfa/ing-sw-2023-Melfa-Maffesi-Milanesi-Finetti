@@ -9,7 +9,6 @@ import it.polimi.ingsw.View.CLIView;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -58,7 +57,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws Exception
      */
     public GameLogic receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
-        gameLogic = view.getCardFromTable(gameLogic);
+        gameLogic = view.getTurn(gameLogic);
 
         return gameLogic;
     }
@@ -83,9 +82,15 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
         ClientClass client1;
+        int num;
         if(controller.getNumPlayers() == 0) {
-            view.viewString("Insert players number");
-            int num = in.nextInt();
+            do{
+                view.viewString("Insert players number");
+                num = in.nextInt();
+                if(num < 2 || num > 4){
+                    view.viewString("Players number must be between 2 and 4. Retry");
+                }
+            }while(num < 2 || num > 4);
             server.updateNumPlayers(num);
             view.viewString("Enter the player's name");
             String name;
