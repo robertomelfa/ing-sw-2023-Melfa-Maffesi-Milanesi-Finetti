@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Client_Socket implements Serializable {
 
     private Socket socket;  // è il server
-    private CLIView view;
+    private CLIView view = new CLIView();
 
 
     /**
@@ -22,9 +22,8 @@ public class Client_Socket implements Serializable {
      * @throws Exception
      */
     public  void start(GameInterface server) throws Exception{
-        view=new CLIView();
 
-        connect("127.0.0.1",8080);
+        connect("127.0.0.1",8080, server);
         try {
             // start the logic of the client
             clientlogic(server);
@@ -42,11 +41,45 @@ public class Client_Socket implements Serializable {
      * @param host server we want to connect
      * @param port port of the server
      */
-    public  void connect(String host,int port){
+    public  void connect(String host,int port, GameInterface server) throws ClassNotFoundException, Exception{
         try {
             Socket socket = new Socket(host,port);
             this.socket=socket;
             view.viewString("Client is running...");
+            Message msg;
+            Scanner in = new Scanner(System.in);
+            msg=receiveMessage();
+
+            if(server.getController().getClientList().size()==0){
+                if(msg.getType()==MessageType.requestNumPlayer){
+                    int numPlayers = 0;
+                    do{
+                        view.viewString("Insert players number:");
+                        numPlayers = in.nextInt();
+
+                        if(numPlayers < 2 || numPlayers > 4){
+                            view.viewString("Players number must be between 2 and 4. Retry");
+                        }
+                    }while(numPlayers < 2 || numPlayers > 4);
+                    sendInt(numPlayers);
+                }
+                msg=receiveMessage();
+            }
+
+            if (msg.getType()==MessageType.requestNickname){
+                String name;
+                do{
+                    view.viewString("Insert name: ");
+                    name = in.next();
+
+                    if(server.getController().checkExistingName(name)){
+                        view.viewString("This name is used, try again");
+                    }
+                }while(server.getController().checkExistingName(name));
+                msg=new Message(MessageType.sendNickname,name);
+                sendMessage(msg);
+                server.release();
+            }
         }catch(IOException e){
             view.viewString("Client fatal error");
         }
@@ -69,35 +102,11 @@ public class Client_Socket implements Serializable {
      */
     public void clientlogic(GameInterface server) throws Exception{
         // ricevo richiesta del nome e invio nome
+        Message msg;
+        Scanner in = new Scanner(System.in);
         while(true){
-            Message msg;
             msg=receiveMessage();
-            if(msg.getType()==MessageType.requestNumPlayer){
-                int numPlayers = 0;
-                Scanner in = new Scanner(System.in);
-                do{
-                    view.viewString("Insert players number:");
-                    numPlayers = in.nextInt();
-                    if(numPlayers < 2 || numPlayers > 4){
-                        view.viewString("Players number must be between 2 and 4. Retry");
-                    }
-                }while(numPlayers < 2 || numPlayers > 4);
-                sendInt(numPlayers);
-            }else if (msg.getType()==MessageType.requestNickname){
-                Scanner in = new Scanner(System.in);
-                String name;
-                do{
-                    view.viewString("Insert name: ");
-                    name = in.next();
-
-                    if(server.getController().checkExistingName(name)){
-                        view.viewString("This name is used, try again");
-                    }
-                }while(server.getController().checkExistingName(name));
-                msg=new Message(MessageType.sendNickname,name);
-                sendMessage(msg);
-                server.release();
-            }else if(msg.getType()==MessageType.receiveGameTable){
+            if(msg.getType()==MessageType.receiveGameTable){
                 GameTable table=receiveGameTable();
                 view.viewGameTable(table);
             }else if(msg.getType()==MessageType.receiveLibrary){
@@ -105,7 +114,7 @@ public class Client_Socket implements Serializable {
                 view.viewLibrary(lib);
             }else if(msg.getType()==MessageType.getCard){
                 GameLogic gameLogic = receiveGameLogic();
-                gameLogic = view.getCardFromTable(gameLogic);
+                gameLogic = view.getTurn(gameLogic);
                 sendGameLogic(gameLogic);
 
             }else if (msg.getType()==MessageType.objectiveCompleted){
@@ -120,7 +129,6 @@ public class Client_Socket implements Serializable {
 
             }else if (msg.getType()==MessageType.notifyBeginTurn){
                 view.viewString(msg.getMessage());
-                Scanner in =new Scanner(System.in);
                 String choice=in.nextLine();
                 sendMessage(new Message(MessageType.printMessage,choice));
             }else if (msg.getType()==MessageType.endGame){

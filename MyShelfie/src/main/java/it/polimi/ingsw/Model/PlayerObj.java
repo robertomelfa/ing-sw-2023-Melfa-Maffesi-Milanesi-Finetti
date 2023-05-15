@@ -225,7 +225,10 @@ public class PlayerObj implements Serializable{
     }
 
     //@test
+    private int num;
+    //@test
     public PlayerObj(int numObj) throws Exception {
+        num = numObj;
         switch (numObj){
             case 1 -> this.playerObjs = obj1();
             case 2 -> this.playerObjs = obj2();
@@ -241,6 +244,11 @@ public class PlayerObj implements Serializable{
             case 12 -> this.playerObjs = obj12();
             default -> throw new Exception("error");
         }
+    }
+
+    //@test
+    public int getNum(){
+        return num;
     }
 
     public void resetAvailable(){
