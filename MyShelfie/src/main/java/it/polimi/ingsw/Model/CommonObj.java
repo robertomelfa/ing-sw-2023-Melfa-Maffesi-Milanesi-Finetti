@@ -365,4 +365,47 @@ public class CommonObj implements Serializable{
         }
         return false;
     }
+
+    public String getDescription(int objNum){
+        switch (objNum) {
+            case 1 -> {
+                return "6 coppie distinte di tessere adiacenti dello stesso tipo";
+            }
+            case 2 -> {
+                return "5 tessere in diagonale dello stesso tipo";
+            }
+            case 3 -> {
+                return  "4 angoli dello stesso tipo";
+            }
+            case 4 -> {
+                return  "4 righe da 5 tessere ciascuna con non più di 3 tipi differenti";
+            }
+            case 5 -> {
+                return  "4 gruppi distinti di 4 tessere adiacenti dello stesso tipo";
+            }
+            case 6 -> {
+                return  "2 colonne di tessere ciascuna di 6 tipi diversi";
+            }
+            case 7 -> {
+                return  "2 quadrati 2x2 di tessere dello stesso tipo (entrambi i quadrati stesso tipo)";
+            }
+            case 8 -> {
+                return  "2 righe di tessere ciascuna di 5 tipi diversi";
+            }
+            case 9 -> {
+                return  "3 colonne di tessere ciascuna con non più di tre tipi diversi";
+            }
+            case 10 -> {
+                return  "5 tessere dello stesso tipo che formano una X";
+            }
+            case 11 -> {
+                return  "8 tessere dello stesso tipo (nessuna restrizione sulla posizione)";
+            }
+            case 12 -> {
+                return  "cinque colonne di altezza crescente (+1 ad ogni column) a partire dagli estremi (destra o sinistra)";
+            }
+        }
+        return "errore";
+    }
+
 }

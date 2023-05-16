@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerComObjDesc">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="500.0" layoutY="-200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/misc/sfondo parquet.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="286.0" fitWidth="500.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/misc/base_pagina2.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelText" layoutX="34.0" layoutY="107.0" prefHeight="85.0" prefWidth="432.0" text="testo prova " textFill="WHITE" wrapText="true" />
+   </children>
+</AnchorPane>

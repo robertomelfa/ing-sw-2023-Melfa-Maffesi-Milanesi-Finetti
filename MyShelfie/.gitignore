@@ -10,6 +10,9 @@
 # Ignore game assets
 assets/*
 
+#ignore assets (grafic resources)
+MyShelfie/src/main/resources/assets/**
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml

@@ -1,0 +1,66 @@
+
+.togglebutton {
+
+    visibility : true;
+    -fx-opacity : 1;
+    -fx-background-color : transparent;
+    -fx-text-fill : transparent;
+}
+
+.togglebutton:hover {
+
+    visibility : true;
+    -fx-opacity : 1;
+    -fx-background-color : #708ad9;
+    -fx-text-fill : transparent;
+
+}
+
+.togglebutton:pressed {
+
+    visibility : true;
+    -fx-background-color : green;
+    -fx-opacity : 0.60;
+    -fx-border-width : 3;
+    -fx-border-color : blue;
+    -fx-text-fill : transparent;
+
+}
+
+.togglebutton:selected {
+
+    -fx-background-color : transparent;
+    -fx-opacity : 1;
+    -fx-border-width : 2;
+    -fx-border-color : yellow;
+    -fx-text-fill : transparent;
+
+}
+
+.button {
+
+    -fx-background-color : transparent;
+    -fx-border-width : 1;
+    -fx-border-color : gray;
+}
+
+.button:hover {
+
+    -fx-background-color : #817ec7;
+
+}
+
+.button:pressed {
+
+    -fx-background-color : #2e2b86;
+
+}
+
+.label {
+
+    -fx-text-fill : black;
+    -fx-font-style : normal;
+    -fx-font-size : 12;
+    -fx-wrap-text : true;
+
+}
