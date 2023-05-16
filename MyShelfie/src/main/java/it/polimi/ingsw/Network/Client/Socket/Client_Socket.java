@@ -5,6 +5,7 @@ import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,6 +17,7 @@ public class Client_Socket implements Serializable {
     private Socket socket;  // è il server
     private CLIView view = new CLIView();
 
+    private boolean gui = false;
 
     /**
      * The client choose the game he want to connect to choosing the corresponding port
@@ -27,24 +29,23 @@ public class Client_Socket implements Serializable {
         try {
             // start the logic of the client
             clientlogic(server);
-        }catch (Exception e){
-            try{
+        } catch (Exception e) {
+            try {
                 socket.close();
-            }catch (IOException i){
+            } catch (IOException i) {
                 view.viewString("Impossible to close socket");
             }
         }
     }
 
     /**
-     *
      * @param host server we want to connect
      * @param port port of the server
      */
     public  void connect(String host,int port, GameInterface server) throws ClassNotFoundException, Exception{
         try {
-            Socket socket = new Socket(host,port);
-            this.socket=socket;
+            Socket socket = new Socket(host, port);
+            this.socket = socket;
             view.viewString("Client is running...");
             Message msg;
             Scanner in = new Scanner(System.in);
@@ -68,15 +69,15 @@ public class Client_Socket implements Serializable {
 
             if (msg.getType()==MessageType.requestNickname){
                 String name;
-                do{
+                do {
                     view.viewString("Insert name: ");
                     name = in.next();
 
-                    if(server.getController().checkExistingName(name)){
+                    if (server.getController().checkExistingName(name)) {
                         view.viewString("This name is used, try again");
                     }
-                }while(server.getController().checkExistingName(name));
-                msg=new Message(MessageType.sendNickname,name);
+                } while (server.getController().checkExistingName(name));
+                msg = new Message(MessageType.sendNickname, name);
                 sendMessage(msg);
                 server.release();
             }
@@ -109,32 +110,32 @@ public class Client_Socket implements Serializable {
             if(msg.getType()==MessageType.receiveGameTable){
                 GameTable table=receiveGameTable();
                 view.viewGameTable(table);
-            }else if(msg.getType()==MessageType.receiveLibrary){
-                Library lib=receiveLibrary();
+            } else if (msg.getType() == MessageType.receiveLibrary) {
+                Library lib = receiveLibrary();
                 view.viewLibrary(lib);
-            }else if(msg.getType()==MessageType.getCard){
+            } else if (msg.getType() == MessageType.getCard) {
                 GameLogic gameLogic = receiveGameLogic();
                 gameLogic = view.getTurn(gameLogic);
                 sendGameLogic(gameLogic);
 
-            }else if (msg.getType()==MessageType.objectiveCompleted){
+            } else if (msg.getType() == MessageType.objectiveCompleted) {
                 view.viewString(msg.getMessage());
 
-            }else if (msg.getType()==MessageType.printMessage){
+            } else if (msg.getType() == MessageType.printMessage) {
                 view.viewString(msg.getMessage());
 
-            }else if (msg.getType()==MessageType.receivePlayerObj){
-                PlayerObj obj=receivePlayerObj();
+            } else if (msg.getType() == MessageType.receivePlayerObj) {
+                PlayerObj obj = receivePlayerObj();
                 view.viewPlayerObj(obj);
 
-            }else if (msg.getType()==MessageType.notifyBeginTurn){
+            } else if (msg.getType() == MessageType.notifyBeginTurn) {
                 view.viewString(msg.getMessage());
                 String choice=in.nextLine();
                 sendMessage(new Message(MessageType.printMessage,choice));
             }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
-            }else {
+            } else {
                 view.viewString("Comunication error");
                 break;
             }
@@ -155,12 +156,13 @@ public class Client_Socket implements Serializable {
 
     /**
      * send a message to the server
+     *
      * @param msg the message we want to send
      * @throws IOException
      * @throws ClassNotFoundException
      * @throws Exception
      */
-    public void sendMessage(Message msg) throws IOException, ClassNotFoundException, Exception{
+    public void sendMessage(Message msg) throws IOException, ClassNotFoundException, Exception {
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(msg);
     }
@@ -170,7 +172,7 @@ public class Client_Socket implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public Library receiveLibrary()throws IOException,ClassNotFoundException{
+    public Library receiveLibrary() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Library) ois.readObject();
     }
@@ -181,7 +183,7 @@ public class Client_Socket implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public GameLogic receiveGameLogic() throws IOException, ClassNotFoundException{
+    public GameLogic receiveGameLogic() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (GameLogic) ois.readObject();
     }
@@ -192,7 +194,7 @@ public class Client_Socket implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public PlayerObj receivePlayerObj() throws IOException, ClassNotFoundException{
+    public PlayerObj receivePlayerObj() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (PlayerObj) ois.readObject();
     }
@@ -203,7 +205,7 @@ public class Client_Socket implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public void sendInt(int num) throws IOException, ClassNotFoundException{
+    public void sendInt(int num) throws IOException, ClassNotFoundException {
         // dovro aggiungere tipologia messaggio
 
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
@@ -212,14 +214,38 @@ public class Client_Socket implements Serializable {
 
     /**
      * send the gamelogic to the server
+     *
      * @param gameLogic the gamelogic we want to send
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public void sendGameLogic(GameLogic gameLogic) throws IOException, ClassNotFoundException{
+    public void sendGameLogic(GameLogic gameLogic) throws IOException, ClassNotFoundException {
         // dovro aggiungere tipologia messaggio
 
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(gameLogic);
+    }
+
+
+    public void startGUI(GameInterface server, Stage stage) throws Exception {
+        connectGUI("127.0.0.1", 8080);
+        try {
+            // start the logic of the client
+            //clientlogicGUI(server, stage);
+        } catch (Exception e) {
+            try {
+                socket.close();
+            } catch (IOException i) {
+                view.viewString("Impossible to close socket");
+            }
+        }
+    }
+
+    public void connectGUI(String host, int port){
+        try {
+            Socket socket = new Socket(host, port);
+            this.socket = socket;
+        } catch (IOException e) {
+        }
     }
 }

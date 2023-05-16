@@ -1,12 +1,14 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GUIView implements ViewClient{
+public class GUIView extends Application implements ViewClient {
 
 
     public String askUserName() {
@@ -49,4 +51,8 @@ public class GUIView implements ViewClient{
         return null;
     }
 
+    @Override
+    public void start(Stage stage) throws Exception {
+
+    }
 }
