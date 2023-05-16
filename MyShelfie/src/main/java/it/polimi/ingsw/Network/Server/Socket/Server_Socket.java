@@ -1,13 +1,18 @@
 package it.polimi.ingsw.Network.Server.Socket;
 
 import it.polimi.ingsw.Controller.ControllerMain;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameLogic;
+import it.polimi.ingsw.Model.GameTable;
+import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Model.PlayerObj;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
-import it.polimi.ingsw.Network.Lock;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -160,7 +165,7 @@ public  class Server_Socket implements Serializable {
      * @throws Exception
      */
     public int firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller) throws IOException, ClassNotFoundException, Exception{
-          // questo è il client
+        // questo è il client
         ClientClass client = new ClientClass(socket);   // associo il client ad un player
         // ask num of players
         Message msg=new Message(MessageType.requestNumPlayer,null);

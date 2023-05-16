@@ -1,11 +1,13 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class GUIView implements ViewClient{
+public class GUIView extends Application implements ViewClient {
 
 
     @Override
@@ -46,4 +48,8 @@ public class GUIView implements ViewClient{
         return null;
     }
 
+    @Override
+    public void start(Stage stage) throws Exception {
+
+    }
 }
