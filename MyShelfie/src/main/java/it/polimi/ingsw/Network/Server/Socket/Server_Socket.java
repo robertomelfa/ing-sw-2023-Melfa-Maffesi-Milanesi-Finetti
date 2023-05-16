@@ -14,7 +14,7 @@ import java.net.Socket;
 //TODO sistemare le funzioni, specie sendGameLogic dove viene gestito il pescaggio carte
 public  class Server_Socket implements Serializable {
 
-
+    private static ServerSocket serversocket;
     /**
      *
      * @param controller the controller who handle the game
@@ -23,15 +23,13 @@ public  class Server_Socket implements Serializable {
     public  void start(ControllerMain controller) throws Exception{
         try {
             int port=8080;
-            ServerSocket serversocket = new ServerSocket(port); // create the server
+            serversocket = new ServerSocket(port); // create the server
             System.out.println("[SERVER] started on port: "+port);
-            int numplayers = 0;
 
             while (!controller.getStart()){
                 Socket socket = serversocket.accept();
                 if(controller.getClientList().size()==0){   // first player?
-                    numplayers = firstClient(serversocket, socket, controller);
-                    controller.setNumPlayers(numplayers);
+                    controller = firstClient(serversocket, socket, controller);
                 }else{
                     ClientClass client = new ClientClass(socket);   // associo il client ad un player
                     Message msg = new Message(MessageType.requestNickname, null);
@@ -144,7 +142,7 @@ public  class Server_Socket implements Serializable {
         oos.writeObject(gameLogic);
 
 
-        // send the updated gameLogic
+        // receive the updated gameLogic
         ObjectInputStream ois = new ObjectInputStream(client.getSocket().getInputStream());
         return (GameLogic) ois.readObject();
     }
@@ -159,7 +157,7 @@ public  class Server_Socket implements Serializable {
      * @throws ClassNotFoundException
      * @throws Exception
      */
-    public int firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller) throws IOException, ClassNotFoundException, Exception{
+    public ControllerMain firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller) throws IOException, ClassNotFoundException, Exception{
           // questo è il client
         ClientClass client = new ClientClass(socket);   // associo il client ad un player
         // ask num of players
@@ -167,14 +165,18 @@ public  class Server_Socket implements Serializable {
         sendMessage(msg, socket);
         // receive num of players
         int num = receiveInt(socket);
+        controller.setNumPlayers(num);
         System.out.println("Players: " + num);
         // ask name of player
         msg=new Message(MessageType.requestNickname,null);
         sendMessage(msg, socket);
-        String name = receiveMessage(socket).getMessage();
-        client.setPlayer(name);
+        client.setPlayer(receiveMessage(socket).getMessage());
         controller.addClient(client);
-        return num;
+        return controller;
+    }
+
+    public void close() throws IOException{
+        serversocket.close();
     }
 
 }

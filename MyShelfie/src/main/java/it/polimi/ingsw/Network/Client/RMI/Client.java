@@ -1,7 +1,10 @@
 package it.polimi.ingsw.Network.Client.RMI;
 
 import it.polimi.ingsw.Controller.ControllerMain;
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameLogic;
+import it.polimi.ingsw.Model.GameTable;
+import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Model.PlayerObj;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
@@ -9,7 +12,6 @@ import it.polimi.ingsw.View.CLIView;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -58,7 +60,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws Exception
      */
     public GameLogic receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
-        gameLogic = view.getCardFromTable(gameLogic);
+        gameLogic = view.getTurn(gameLogic);
 
         return gameLogic;
     }
@@ -83,9 +85,15 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
         ClientClass client1;
+        int num;
         if(controller.getNumPlayers() == 0) {
-            view.viewString("Insert players number");
-            int num = in.nextInt();
+            do{
+                view.viewString("Insert players number");
+                num = in.nextInt();
+                if(num < 2 || num > 4){
+                    view.viewString("Players number must be between 2 and 4. Retry");
+                }
+            }while(num < 2 || num > 4);
             server.updateNumPlayers(num);
             view.viewString("Enter the player's name");
             String name;
@@ -128,4 +136,19 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         return in.nextInt();
     }
 
+    public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
+        ClientClass client1;
+        server.updateNumPlayers(num);
+        client1 = new ClientClass(client);
+        client1.setPlayer(username);
+        server.updatePlayers(client1);
+    }
+
+    public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception {
+        ClientClass client1;
+        client1 = new ClientClass(client);
+        client1.setPlayer(username);
+        server.updatePlayers(client1);
+
+    }
 }

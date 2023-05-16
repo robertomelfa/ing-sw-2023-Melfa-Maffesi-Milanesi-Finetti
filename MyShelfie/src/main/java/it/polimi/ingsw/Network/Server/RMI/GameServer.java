@@ -9,78 +9,24 @@ import it.polimi.ingsw.Network.Lock;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.LinkedList;
-import java.util.List;
 
 public class GameServer extends UnicastRemoteObject implements GameInterface, Serializable {
-
-    private List<GameClientInterface> client;
 
     private ControllerMain controller;
     private boolean firstPlayer = true;
 
     private static Lock lock;
 
-    /**
-     * constructor for the game server: create a LinkedList to save all the client connected
-     *
-     * @throws RemoteException
-     */
     public GameServer() throws RemoteException{
         super();
-        try{
-            client = new LinkedList<>();
-        }catch(Exception e){}
     }
+
 
     public void start(ControllerMain controller) throws RemoteException{
         this.controller = controller;
         lock = new Lock();
     }
 
-    /**
-     * When a client connect to the server add it to the LinkedList and to the game
-     * @param c , the client that connected
-     * @throws RemoteException
-     * @throws Exception
-     */
-    public void setClient(GameClientInterface c) throws RemoteException,Exception{
-        client.add(c);
-    }
-
-    /**
-     *
-     * @param i int corresponding to the position of the client in the LinkedList
-     * @return the client corresponding to the i position in the LinkedList
-     * @throws RemoteException
-     */
-    public  GameClientInterface getClient(int i) throws RemoteException{
-        try{
-            return client.get(i);
-        }catch(Exception e){
-            return null;
-        }
-
-    }
-
-    /**
-     * @return the LinkedList of the clients saved in the server
-     * @throws RemoteException
-     */
-    public List<GameClientInterface> getClientList() throws RemoteException {
-        return client;
-    }
-
-    /**
-     * sent the game table to all the client connected to the game
-     * @param board the game table we want to send to all the clients
-     * @throws RemoteException
-     */
-    public void gameTableToAll(GameTable board) throws RemoteException{
-        for(int i = 0; i < client.size(); i++){
-            client.get(i).receiveGameTable(board);
-        }
-    }
 
     /**
      * send the game table only to a specific client
@@ -117,11 +63,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         client.receiveMessage(msg);
     }
 
-    public void messageToAll(String msg) throws RemoteException{
-        for(int i = 0; i < client.size(); i++){
-            client.get(i).receiveMessage(msg);
-        }
-    }
 
     public ControllerMain getController() throws RemoteException{
         return this.controller;
@@ -148,5 +89,6 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     }
 
     public boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
+
 
 }

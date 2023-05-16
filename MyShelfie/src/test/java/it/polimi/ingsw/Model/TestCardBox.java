@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Card;
-import it.polimi.ingsw.Model.CardBox;
 import junit.framework.TestCase;
 import org.junit.Test;
 

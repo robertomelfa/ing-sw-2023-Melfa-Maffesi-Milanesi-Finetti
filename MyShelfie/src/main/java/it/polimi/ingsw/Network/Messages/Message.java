@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network.Messages;
 
 
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Network.Messages.MessageType;
-
 import java.io.Serializable;
 
 public class Message implements Serializable {
