@@ -1,19 +1,13 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.PlayerObj;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -21,19 +15,17 @@ import java.util.Scanner;
 public class Client_Socket implements Serializable {
 
     private Socket socket;  // è il server
-    private CLIView view;
+    private CLIView view = new CLIView();
 
     private boolean gui = false;
 
     /**
      * The client choose the game he want to connect to choosing the corresponding port
-     *
      * @throws Exception
      */
-    public void start(GameInterface server) throws Exception {
-        view = new CLIView();
+    public  void start(GameInterface server) throws Exception{
 
-        connect("127.0.0.1", 8080);
+        connect("127.0.0.1",8080, server);
         try {
             // start the logic of the client
             clientlogic(server);
@@ -50,50 +42,32 @@ public class Client_Socket implements Serializable {
      * @param host server we want to connect
      * @param port port of the server
      */
-    public void connect(String host, int port) {
+    public  void connect(String host,int port, GameInterface server) throws ClassNotFoundException, Exception{
         try {
             Socket socket = new Socket(host, port);
             this.socket = socket;
             view.viewString("Client is running...");
-        } catch (IOException e) {
-            view.viewString("Client fatal error");
-        }
-    }
-
-    /**
-     * the client start listening waiting for the server to send him the game table
-     */
-    public GameTable receiveGameTable() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-        GameTable gameTable = (GameTable) ois.readObject();
-        return gameTable;
-    }
-
-    /**
-     * handles the turn from the client side. The client recive a message from the server and perform a different
-     * action based on the typer of the message received. The action the client can perform are receiving the game table
-     * receiving the library, picking the cards from the table.
-     *
-     * @throws Exception
-     */
-    public void clientlogic(GameInterface server) throws Exception {
-        // ricevo richiesta del nome e invio nome
-        while (true) {
             Message msg;
-            msg = receiveMessage();
-            if (msg.getType() == MessageType.requestNumPlayer) {
-                int numPlayers = 0;
-                Scanner in = new Scanner(System.in);
-                do {
-                    view.viewString("Insert players number:");
-                    numPlayers = in.nextInt();
-                    if (numPlayers < 2 || numPlayers > 4) {
-                        view.viewString("Players number must be between 2 and 4. Retry");
-                    }
-                } while (numPlayers < 2 || numPlayers > 4);
-                sendInt(numPlayers);
-            } else if (msg.getType() == MessageType.requestNickname) {
-                Scanner in = new Scanner(System.in);
+            Scanner in = new Scanner(System.in);
+            msg=receiveMessage();
+
+            if(server.getController().getClientList().size()==0){
+                if(msg.getType()==MessageType.requestNumPlayer){
+                    int numPlayers = 0;
+                    do{
+                        view.viewString("Insert players number:");
+                        numPlayers = in.nextInt();
+
+                        if(numPlayers < 2 || numPlayers > 4){
+                            view.viewString("Players number must be between 2 and 4. Retry");
+                        }
+                    }while(numPlayers < 2 || numPlayers > 4);
+                    sendInt(numPlayers);
+                }
+                msg=receiveMessage();
+            }
+
+            if (msg.getType()==MessageType.requestNickname){
                 String name;
                 do {
                     view.viewString("Insert name: ");
@@ -106,15 +80,42 @@ public class Client_Socket implements Serializable {
                 msg = new Message(MessageType.sendNickname, name);
                 sendMessage(msg);
                 server.release();
-            } else if (msg.getType() == MessageType.receiveGameTable) {
-                GameTable table = receiveGameTable();
+            }
+        }catch(IOException e){
+            view.viewString("Client fatal error");
+        }
+    }
+
+    /**
+     * the client start listening waiting for the server to send him the game table
+     */
+    public GameTable receiveGameTable() throws IOException,ClassNotFoundException{
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        GameTable gameTable = (GameTable) ois.readObject();
+        return gameTable;
+    }
+
+    /**
+     * handles the turn from the client side. The client recive a message from the server and perform a different
+     * action based on the typer of the message received. The action the client can perform are receiving the game table
+     * receiving the library, picking the cards from the table.
+     * @throws Exception
+     */
+    public void clientlogic(GameInterface server) throws Exception{
+        // ricevo richiesta del nome e invio nome
+        Message msg;
+        Scanner in = new Scanner(System.in);
+        while(true){
+            msg=receiveMessage();
+            if(msg.getType()==MessageType.receiveGameTable){
+                GameTable table=receiveGameTable();
                 view.viewGameTable(table);
             } else if (msg.getType() == MessageType.receiveLibrary) {
                 Library lib = receiveLibrary();
                 view.viewLibrary(lib);
             } else if (msg.getType() == MessageType.getCard) {
                 GameLogic gameLogic = receiveGameLogic();
-                gameLogic = view.getCardFromTable(gameLogic);
+                gameLogic = view.getTurn(gameLogic);
                 sendGameLogic(gameLogic);
 
             } else if (msg.getType() == MessageType.objectiveCompleted) {
@@ -129,10 +130,9 @@ public class Client_Socket implements Serializable {
 
             } else if (msg.getType() == MessageType.notifyBeginTurn) {
                 view.viewString(msg.getMessage());
-                Scanner in = new Scanner(System.in);
-                String choice = in.nextLine();
-                sendMessage(new Message(MessageType.printMessage, choice));
-            } else if (msg.getType() == MessageType.endGame) {
+                String choice=in.nextLine();
+                sendMessage(new Message(MessageType.printMessage,choice));
+            }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
             } else {
@@ -143,6 +143,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     *
      * @return the Message received from the socket input
      * @throws IOException
      * @throws ClassNotFoundException
@@ -177,6 +178,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     *
      * @return the gameLogic received in socket input
      * @throws IOException
      * @throws ClassNotFoundException
@@ -187,6 +189,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     *
      * @return the player's object
      * @throws IOException
      * @throws ClassNotFoundException
@@ -197,6 +200,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     *
      * @param num number we want to send
      * @throws IOException
      * @throws ClassNotFoundException

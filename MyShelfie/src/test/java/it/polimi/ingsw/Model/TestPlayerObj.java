@@ -1,9 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Card;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Model.PlayerObj;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.CommonObj;
-import it.polimi.ingsw.Model.Player;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;

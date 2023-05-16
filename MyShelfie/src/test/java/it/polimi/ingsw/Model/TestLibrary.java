@@ -1,8 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Card;
-import it.polimi.ingsw.Model.Library;
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

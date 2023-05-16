@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
 import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 
 import java.io.Serializable;

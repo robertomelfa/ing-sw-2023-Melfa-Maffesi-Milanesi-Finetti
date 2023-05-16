@@ -4,12 +4,12 @@ import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Controller.Socket.SocketController;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
+import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
-import it.polimi.ingsw.View.CLIView;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,6 +34,8 @@ public class ControllerMain implements Serializable {
     private GameLogic gameLogic;
 
     private ClientClass current_client;
+
+    public ControllerMain(){}
 
 
     /**
@@ -108,6 +110,7 @@ public class ControllerMain implements Serializable {
                 current_client = clientList.get(listIterator);
             }
         }else {
+
             listIterator++;
             if(chair == listIterator){
                 // the game is ended
@@ -168,6 +171,16 @@ public class ControllerMain implements Serializable {
         return this.numPlayers;
     }
 
+    public void gameTableToALL(GameTable gameTable) throws ClassNotFoundException, IOException, Exception{
+        for(int i = 0; i < clientList.size(); i++){
+            if(clientList.get(i).getClient() == null){
+                serverSocket.sendGameTable(clientList.get(i).getSocket(), gameTable);
+            }else{
+                serverRMI.gameTableToClient(gameTable, clientList.get(i).getClient());
+            }
+        }
+    }
+
     /**
      * this method control the game
      * @throws Exception
@@ -179,9 +192,10 @@ public class ControllerMain implements Serializable {
         gameLogic = new GameLogic(game);
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         shufflePlayers();
-        sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
         while(true){
+            sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
             gameLogic.getGame().setCurrentPlayer(current_client.getPlayer());
+            gameTableToALL(gameLogic.getGameTable());
             if(current_client.getClient() == null){
                 SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic);
                 gameLogic = controllerS.takeTurn();

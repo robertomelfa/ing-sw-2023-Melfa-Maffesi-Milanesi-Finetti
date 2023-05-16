@@ -6,11 +6,11 @@ import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GUIView extends Application implements ViewClient {
 
 
-    @Override
     public String askUserName() {
         return null;
     }
@@ -40,11 +40,14 @@ public class GUIView extends Application implements ViewClient {
 
     }
 
-    public GameLogic insert(ArrayList<Card> list, GameLogic gameLogic){
+    public void insert(ArrayList<Card> list, GameLogic gameLogic){
+    }
+
+    public ArrayList<Card> getCardFromTable(GameLogic gameLogic) throws RemoteException{
         return null;
     }
 
-    public GameLogic getCardFromTable(GameLogic gameLogic) throws RemoteException{
+    public GameLogic getTurn(GameLogic gameLogic){
         return null;
     }
 

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Network.Client.RMI;
 
 import it.polimi.ingsw.Controller.ControllerMain;
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.PlayerObj;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 
 import java.rmi.Remote;

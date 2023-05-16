@@ -7,12 +7,13 @@ import java.util.ArrayList;
 
 
 public interface ViewClient {
-    public String askUserName();
     public void viewLibrary(Library library);
     public void viewGameTable(GameTable gameTable);
     public void viewString(String message);
     public void viewPlayerObj(PlayerObj playerObj);
     public void viewCommonObj(CommonObj obj1, CommonObj obj2);
-    public GameLogic insert(ArrayList<Card> list, GameLogic gameLogic);
-    public GameLogic getCardFromTable(GameLogic gameLogic) throws RemoteException;
+    public void insert(ArrayList<Card> list, GameLogic gameLogic);
+    public ArrayList<Card> getCardFromTable(GameLogic gameLogic) throws RemoteException;
+
+    public GameLogic getTurn(GameLogic gameLogic);
 }
