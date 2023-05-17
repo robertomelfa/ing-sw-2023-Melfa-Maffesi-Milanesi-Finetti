@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.View.CLIView;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -187,6 +188,72 @@ public class TestGameLogic {
         System.setOut(old);
         System.out.println("Out from console"+output.toString());
         Assert.assertTrue(output.toString().contains("Invalid coordinates, try again!"));
+    }
+
+    @Test
+    public void checkPickableCardTest(){
+        Game g1=new Game(2);
+        GameLogic gameLogic=new GameLogic(g1);
+        CLIView view = new CLIView();
+        for(int i = 0; i < 11; i++){
+            for(int j = 0; j < 11; j++){
+                gameLogic.getGameTable().setCardfromBoard(i,j,Card.NONE);
+            }
+        }
+        Assert.assertFalse(gameLogic.checkCardsPickable(3));
+
+        gameLogic.getGameTable().setCardfromBoard(5,5,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(5,6,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(4,5,Card.YELLOW);
+        view.viewGameTable(gameLogic.getGameTable());
+
+        Assert.assertFalse(gameLogic.checkCardsPickable(3));
+
+        for(int i = 0; i < 11; i++){
+            for(int j = 0; j < 11; j++){
+                gameLogic.getGameTable().setCardfromBoard(i,j,Card.NONE);
+            }
+        }
+        gameLogic.getGameTable().setCardfromBoard(1,7,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(1,8,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(1,9,Card.YELLOW);
+        view.viewGameTable(gameLogic.getGameTable());
+
+        Assert.assertTrue(gameLogic.checkCardsPickable(3));
+
+        for(int i = 0; i < 11; i++){
+            for(int j = 0; j < 11; j++){
+                gameLogic.getGameTable().setCardfromBoard(i,j,Card.NONE);
+            }
+        }
+        gameLogic.getGameTable().setCardfromBoard(7,3,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(8,3,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(9,3,Card.YELLOW);
+        view.viewGameTable(gameLogic.getGameTable());
+
+        Assert.assertTrue(gameLogic.checkCardsPickable(3));
+
+        Game g2=new Game(3);
+        GameLogic gameLogic1=new GameLogic(g2);
+        view.viewGameTable(gameLogic1.getGameTable());
+        Assert.assertTrue(gameLogic1.checkCardsPickable(3));
+        gameLogic1.getGameTable().setCardfromBoard(8,7,Card.YELLOW);
+        gameLogic1.getGameTable().setCardfromBoard(6,7,Card.NONE);
+        view.viewGameTable(gameLogic1.getGameTable());
+        Assert.assertFalse(gameLogic1.checkCardsPickable(3));
+
+        Game g3=new Game(4);
+        GameLogic gameLogic2=new GameLogic(g3);
+        view.viewGameTable(gameLogic2.getGameTable());
+        Assert.assertFalse(gameLogic2.checkCardsPickable(3));
+
+        Game g4=new Game(2);
+        GameLogic gameLogic3=new GameLogic(g4);
+        view.viewGameTable(gameLogic3.getGameTable());
+        Assert.assertTrue(gameLogic3.checkCardsPickable(2));
+
+        Assert.assertTrue(gameLogic3.checkCardsPickable(1));
+
     }
 
 }

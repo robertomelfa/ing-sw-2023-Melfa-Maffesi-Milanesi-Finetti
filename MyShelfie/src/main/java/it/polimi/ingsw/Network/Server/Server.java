@@ -22,6 +22,10 @@ public class Server implements Serializable {
 
     private static Registry registry;
 
+    private static Thread thread1;
+
+    private static Thread thread2;
+
     public synchronized ControllerMain getController(){
         return this.controller;
     }
@@ -29,6 +33,10 @@ public class Server implements Serializable {
     public Server_Socket getServerSocket() {return this.serverSocket;}
 
     public GameInterface getServerRMI() throws RemoteException{return  this.serverRMI;}
+
+    public Thread getThread1(){return thread1;}
+
+    public Thread getThread2(){return thread2;}
 
 
     public static void start() throws RemoteException, Exception {
@@ -39,8 +47,8 @@ public class Server implements Serializable {
         controller = new ControllerMain(serverSocket, serverRMI);
         Runnable task1 = new startSocketServer();
         Runnable task2 = new startRMIServer();
-        Thread thread1 = new Thread(task1);
-        Thread thread2 = new Thread(task2);
+        thread1 = new Thread(task1);
+        thread2 = new Thread(task2);
         Runnable task3 = new startController();
         Thread thread3 = new Thread(task3);
         thread1.start();
@@ -90,7 +98,9 @@ class startController extends Server implements Runnable{
         try{
             // wait all the players before starting the game
             getController().waitStart();
-
+            // stop other thread
+            getThread2().interrupt();
+            getThread1().interrupt();
             // game is starting
             System.out.println("Starting controller");
             getController().startGame();

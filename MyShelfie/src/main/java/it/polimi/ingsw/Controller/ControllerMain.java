@@ -119,7 +119,6 @@ public class ControllerMain implements Serializable {
                 }catch (IOException e){
                     System.out.println("IO EXCEPTION");
                 }
-
             }
         }
 
@@ -261,6 +260,7 @@ public class ControllerMain implements Serializable {
                 current_client = clientList.get(listIterator);
             }
         }else {
+
             listIterator++;
             if(chair == listIterator){
                 // the game is ended
@@ -271,6 +271,19 @@ public class ControllerMain implements Serializable {
                 current_client = clientList.get(listIterator);
             }
         }
+    }
+
+    /**
+     *
+     * @return the string which the points of each player
+     */
+    public String setPointsString(){
+        String string = "POINTS\n";
+        for(int i = 0; i < clientList.size(); i++){
+            string = string + clientList.get(i).getPlayer().getNickname() + ": " + clientList.get(i).getPlayer().getPoints() + " | ";
+        }
+        string = string + "\n\n";
+        return string;
     }
 
     /**
@@ -332,6 +345,23 @@ public class ControllerMain implements Serializable {
     }
 
     /**
+     *
+     * @param string the list of points to send to each client
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void pointsToAll(String string) throws IOException, ClassNotFoundException{
+        for(int i = 0; i < clientList.size(); i++){
+            if(clientList.get(i).getClient() == null){
+                Message msg = new Message(MessageType.receivePoint, string);
+                serverSocket.sendMessage(msg, clientList.get(i).getSocket());
+            }else{
+                serverRMI.messageToClient(string, clientList.get(i).getClient());
+            }
+        }
+    }
+
+    /**
      * this method control the game
      * @throws Exception
      * @throws ArrayIndexOutOfBoundsException
@@ -340,27 +370,34 @@ public class ControllerMain implements Serializable {
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
-        deleteObsoleteJson();
+      //  deleteObsoleteJson();
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
         }
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
-        while(true){
+        while(!endGame){
+            // print the points list to all the clients
+            pointsToAll(setPointsString());
+            // advise the current player
             sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
+            // set the current player in gameLogic
             gameLogic.getGame().setCurrentPlayer(current_client.getPlayer());
+            // print the game table to all the clients
             gameTableToALL(gameLogic.getGameTable());
+            // handle the turn in base of RMI or Socket clients
             if(current_client.getClient() == null){
                 SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic);
                 gameLogic = controllerS.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
-
             }else{
                 RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI);
                 gameLogic = controllerR.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
             }
+            // check the objectives of the current player at the end of the turn
             checkObjectives();
+            //update the current player
             updateCurrentPlayer();
             updateBackup();
 
@@ -375,9 +412,11 @@ public class ControllerMain implements Serializable {
         // check common object 1
         if(!current_client.getPlayer().getCommonObj1Completed()){
             if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
-                Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the first common goal\nnow has the " +gameLogic.getGame().getCommonObj1().getPointCount() +" card");
+                int points1 = 0;
+                points1 = gameLogic.getGame().getCommonObj1().getPointCount();
+                Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the first common goal\nnow has the " + points1 +" card");
                 sendGeneralMessage(message);
-                current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj1().getPointCount());
+                current_client.getPlayer().addPoints(points1);
                 current_client.getPlayer().setCommonObj2Completed();
 
             }
@@ -386,9 +425,11 @@ public class ControllerMain implements Serializable {
         // check common object 2
         if(!current_client.getPlayer().getCommonObj2Completed()){
             if(gameLogic.getGame().getCommonObj2().checkObj(current_client.getPlayer().getLibrary())){
-                Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the second common goal\nnow has the " + gameLogic.getGame().getCommonObj2().getPointCount() + " card");
+                int points2 = 0;
+                points2 = gameLogic.getGame().getCommonObj2().getPointCount();
+                Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the second common goal\nnow has the " + points2 + " card");
                 sendGeneralMessage(message);
-                current_client.getPlayer().addPoints(gameLogic.getGame().getCommonObj2().getPointCount());
+                current_client.getPlayer().addPoints(points2);
                 current_client.getPlayer().setCommonObj2Completed();
             }
         }

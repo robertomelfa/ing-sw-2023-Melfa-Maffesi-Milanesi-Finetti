@@ -102,4 +102,12 @@ public class Player implements Serializable{
         return commonObj2Completed;
     }
 
+    /**
+     *
+     * @return points of the player
+     */
+    public int getPoints(){
+        return this.points;
+    }
+
 }

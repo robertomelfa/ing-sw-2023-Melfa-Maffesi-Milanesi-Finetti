@@ -150,10 +150,10 @@ public class GameLogic implements Serializable{
     public boolean checkNear(int x1, int y1){
         if(gameTable.getCardfromBoard(x1,y1) == NONE || gameTable.getCardfromBoard(x1,y1) == NOT){
             return false;
-        }else if((gameTable.getCardfromBoard(x1+1,y1) == NONE || gameTable.getCardfromBoard(x1+1,y1) == NOT) || (gameTable.getCardfromBoard(x1-1,y1) == NONE || gameTable.getCardfromBoard(x1-1,y1) == NOT) || (gameTable.getCardfromBoard(x1,y1+1) == NONE || gameTable.getCardfromBoard(x1+1,y1+1) == NOT) || (gameTable.getCardfromBoard(x1,y1-1) == NONE || gameTable.getCardfromBoard(x1,y1-1) == NOT)){
+        }
+        if((gameTable.getCardfromBoard(x1+1,y1) == NONE || gameTable.getCardfromBoard(x1+1,y1) == NOT) || (gameTable.getCardfromBoard(x1-1,y1) == NONE || gameTable.getCardfromBoard(x1-1,y1) == NOT) || (gameTable.getCardfromBoard(x1,y1+1) == NONE || gameTable.getCardfromBoard(x1,y1+1) == NOT) || (gameTable.getCardfromBoard(x1,y1-1) == NONE || gameTable.getCardfromBoard(x1,y1-1) == NOT)){
             return true;
         }
-        System.out.println("Card has not free side");
         return false;
     }
 
@@ -190,6 +190,25 @@ public class GameLogic implements Serializable{
         if(checkNear(x1, y1) && checkNear(x2, y2) && checkNear(x3, y3)){
             if(((checkNear(x1, y1, x2, y2) && checkNear(x2, y2, x3, y3)) || ((checkNear(x1, y1, x3, y3) && checkNear(x2, y2, x3, y3)))) && ((x1 == x2 && x2 == x3) || (y1 == y2 && y2 == y3))){
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return true if i can pick 3 cards from table
+     */
+    public boolean checkCardsPickable(int num){
+        if(num != 3){
+            // i can't have less than 3 adjacent cards in the table
+            return true;
+        }
+        for(int i = 1; i < 9; i++){
+            for(int j = 1; j < 9; j++){
+                if(checkNear(i, j, i+1, j, i+2, j) || checkNear(i, j, i, j+1, i, j+2)){
+                    return true;
+                }
             }
         }
         return false;

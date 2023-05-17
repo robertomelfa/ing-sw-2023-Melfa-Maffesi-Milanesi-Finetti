@@ -132,6 +132,8 @@ public class Client_Socket implements Serializable {
                 view.viewString(msg.getMessage());
                 String choice=in.nextLine();
                 sendMessage(new Message(MessageType.printMessage,choice));
+            }else if(msg.getType() == MessageType.receivePoint){
+                view.viewString(msg.getMessage());
             }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
