@@ -11,7 +11,7 @@ public class ClientClass implements Serializable {
 
     private transient Socket socket;  // socket client
 
-    private GameClientInterface RMIclient;  // rmi client
+    private  GameClientInterface RMIclient;  // rmi client
 
     /**
      * constructor for the ClientClass

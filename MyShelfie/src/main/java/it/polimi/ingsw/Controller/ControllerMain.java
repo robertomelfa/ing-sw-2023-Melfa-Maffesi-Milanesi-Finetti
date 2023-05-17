@@ -1,23 +1,34 @@
 package it.polimi.ingsw.Controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Controller.Socket.SocketController;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.GameTable;
+import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
+import it.polimi.ingsw.Network.Server.GameBackup;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
+import it.polimi.ingsw.View.CLIView;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
+import java.nio.file.Files;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class ControllerMain implements Serializable {
-    private final ArrayList<ClientClass> clientList = new ArrayList<>();
+    private ArrayList<ClientClass> clientList = new ArrayList<>();
+    private GameBackup backup;
+    private boolean backupCreated=false;
+    private boolean isResumedGame=false;
 
     private int numPlayers = 0;
 
@@ -35,8 +46,6 @@ public class ControllerMain implements Serializable {
 
     private ClientClass current_client;
 
-    public ControllerMain(){}
-
 
     /**
      * constructor of the class: the controller is connected to both servers
@@ -47,6 +56,148 @@ public class ControllerMain implements Serializable {
         this.serverSocket = serverSocket;
         this.serverRMI = serverRMI;
     }
+
+    public synchronized void updateBackup() throws IOException, StackOverflowError {
+        if(backupCreated==false){
+            System.out.println("Starting backup");
+            ArrayList<String> nick = new ArrayList<>();
+            ArrayList<Player> ply = new ArrayList<>();
+            for (int i=0; i<clientList.size();i++){
+                nick.add(clientList.get(i).getPlayer().getNickname());
+            }
+            for (int i=0; i<clientList.size();i++){
+                ply.add(clientList.get(i).getPlayer());
+            }
+            backup=new GameBackup(ply,gameLogic,current_client.getPlayer(),nick,listIterator,chair);
+            Gson gson = new Gson();
+            FileWriter writer = new FileWriter("MyShelfie/saves/"+backup.getDate().hashCode()+".json");
+            gson.toJson(backup,writer);
+            writer.flush();
+            writer.close();
+            System.out.println("Backup saved");
+            setBackupCreated(true);
+
+        }else {
+            System.out.println("Updating backup");
+            backup.setCurrent_client(current_client.getPlayer());
+            backup.setGamelogic(gameLogic);
+            ArrayList<Player> ply = new ArrayList<>();
+            for (int i=0; i<clientList.size();i++){
+                ply.add(clientList.get(i).getPlayer());
+            }
+            backup.setPlayers(ply);
+            backup.setChair(chair);
+            backup.setListIterator(listIterator);
+            Gson gson = new Gson();
+            FileWriter writer = new FileWriter("MyShelfie/saves/"+backup.getDate().hashCode()+".json");
+            gson.toJson(backup,writer);
+            writer.flush();
+            writer.close();
+            System.out.println("Backup saved");
+        }
+    }
+
+
+    public synchronized void deleteObsoleteJson(){
+        File folder = new File("MyShelfie/saves/");
+        Date date=new Date();
+        date.getTime();
+        long daysmillies = 7*24*60*60*1000;
+        Gson gson = new Gson();
+        for (File file : folder.listFiles()){
+            if(!file.isDirectory() && file.isFile() && file.getName().endsWith(".json")){
+                GameBackup temp;
+                try{
+                    FileReader reader = new FileReader(file);
+                    temp=gson.fromJson(reader,GameBackup.class);
+                    long diff=date.getTime() - temp.getDate().getTime();
+                    if (diff >= daysmillies){
+                        System.out.println("Deleting "+file.getName());
+                        file.delete();
+                    }
+
+                }catch (IOException e){
+                    System.out.println("IO EXCEPTION");
+                }
+
+            }
+        }
+
+    }
+
+    public synchronized void resumeBackup() throws Exception{
+        System.out.println("Checking backups to resume");
+        File folder = new File("MyShelfie/saves/");
+        GameBackup found=null;
+        Gson gson = new Gson();
+        for (File file : folder.listFiles()){
+            if(!file.isDirectory() && file.isFile() && file.getName().endsWith(".json")){
+                GameBackup temp;
+                try{
+                    FileReader reader = new FileReader(file);
+                    temp=gson.fromJson(reader,GameBackup.class);
+                    System.out.println("Checking "+file.getName());
+                    boolean resetGame=true;
+                    for (int i=0; i<clientList.size(); i++){
+                        if(!temp.getNicknames().contains(clientList.get(i).getPlayer().getNickname())){
+                            resetGame=false;
+                        }
+                    }
+                    if(resetGame){
+                        found=temp;
+                        try {
+                            sendGeneralMessage(new Message(MessageType.printMessage,"Loading  game saved on "+found.getDate()));
+                            System.out.println("Loading "+file.getName()+" date: "+found.getDate());
+                        }catch (IOException e){
+                            System.out.println("IO EXCEPTION");
+                        }catch (ClassNotFoundException c){
+                            System.out.println("CLASS NOT FOUND");
+                        }
+                        break;
+                    }
+
+
+                }catch (IOException e){
+                    System.out.println("IO EXCEPTION");
+                }
+
+            }
+        }
+        if(found!=null){
+            for (int i=0; i<clientList.size();i++){
+                for (int j=0; j<found.getPlayers().size(); j++){
+                    if(clientList.get(i).getPlayer().getNickname().equals(found.getPlayers().get(j).getNickname())){
+                        try{
+
+                            clientList.get(i).setPlayer(found.getPlayers().get(j));
+                        }catch (Exception e){
+                            System.out.println("EXCEPTION");
+                        }
+                    }
+
+                }
+                if (clientList.get(i).getPlayer().getNickname().equals(found.getCurrent_client().getNickname())){
+                    current_client=clientList.get(i);
+                }
+            }
+            for(int i=0; i<found.getPlayers().size(); i++){
+                for (int j=0;j<clientList.size();j++){
+                    if (found.getPlayers().get(i).getNickname().equals(clientList.get(j).getPlayer().getNickname())){
+                        ClientClass temp = clientList.set(i,clientList.get(j));
+                        clientList.set(j,temp);
+                    }
+                }
+            }
+            this.gameLogic=found.getGamelogic();
+            this.chair=found.getChair();
+            this.listIterator=found.getListIterator();
+            backup=found;
+            setBackupCreated(true);
+            setResumedGame(true);
+        }
+
+    }
+
 
     /**
      *
@@ -110,7 +261,6 @@ public class ControllerMain implements Serializable {
                 current_client = clientList.get(listIterator);
             }
         }else {
-
             listIterator++;
             if(chair == listIterator){
                 // the game is ended
@@ -190,8 +340,12 @@ public class ControllerMain implements Serializable {
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
+        deleteObsoleteJson();
+        resumeBackup();
+        if(!isResumedGame){
+            shufflePlayers();
+        }
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
-        shufflePlayers();
         while(true){
             sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
             gameLogic.getGame().setCurrentPlayer(current_client.getPlayer());
@@ -200,6 +354,7 @@ public class ControllerMain implements Serializable {
                 SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic);
                 gameLogic = controllerS.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
+
             }else{
                 RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI);
                 gameLogic = controllerR.takeTurn();
@@ -207,6 +362,8 @@ public class ControllerMain implements Serializable {
             }
             checkObjectives();
             updateCurrentPlayer();
+            updateBackup();
+
         }
     }
 
@@ -272,5 +429,13 @@ public class ControllerMain implements Serializable {
                 clientList.get(i).getPlayer().addPoints(clientList.get(i).getPlayer().getLibrary().checkFinal());
 
         }
+    }
+
+    public void setBackupCreated(boolean backupCreated) {
+        this.backupCreated = backupCreated;
+    }
+
+    public void setResumedGame(boolean resumedGame) {
+        isResumedGame = resumedGame;
     }
 }
