@@ -438,6 +438,8 @@ public class ControllerMain implements Serializable {
         }
         // print points
         pointsToAll(setPointsString());
+        //delete current backup
+        deleteBackup();
         // notify the game is ended
         sendGeneralMessage(new Message(MessageType.endGame,"Game is ended"));
     }
