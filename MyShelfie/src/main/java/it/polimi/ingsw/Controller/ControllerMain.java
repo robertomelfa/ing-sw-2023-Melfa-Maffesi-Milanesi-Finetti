@@ -110,10 +110,14 @@ public class ControllerMain implements Serializable {
                 try{
                     FileReader reader = new FileReader(file);
                     temp=gson.fromJson(reader,GameBackup.class);
-                    long diff=date.getTime() - temp.getDate().getTime();
+                    reader.close();
+                    long diff = date.getTime() - temp.getDate().getTime();
                     if (diff >= daysmillies){
-                        System.out.println("Deleting "+file.getName());
-                        file.delete();
+                        String tempName=file.getName();
+                       boolean res = file.delete();
+                       if (res){
+                           System.out.println(tempName+" deleted");
+                       }
                     }
 
                 }catch (IOException e){
@@ -122,6 +126,27 @@ public class ControllerMain implements Serializable {
             }
         }
 
+    }
+
+    public synchronized void deleteBackup(){
+        File folder = new File("MyShelfie/saves/");
+        GameBackup found=null;
+        Gson gson = new Gson();
+        for (File file : folder.listFiles()){
+            if (!file.isDirectory() && file.isFile() && file.getName().endsWith(".json")){
+                GameBackup temp;
+                try{
+                    FileReader reader = new FileReader(file);
+                    temp=gson.fromJson(reader,GameBackup.class);
+                    reader.close();
+                    if (temp.getDate().hashCode() == Integer.parseInt(file.getName())){
+                        file.delete();
+                    }
+                }catch (IOException e){
+
+                }
+            }
+        }
     }
 
     public synchronized void resumeBackup() throws Exception{
@@ -370,7 +395,7 @@ public class ControllerMain implements Serializable {
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
-      //  deleteObsoleteJson();
+        deleteObsoleteJson();
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
@@ -402,6 +427,7 @@ public class ControllerMain implements Serializable {
             updateBackup();
 
         }
+        deleteBackup();
     }
 
     /**
