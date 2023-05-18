@@ -17,6 +17,8 @@ import java.util.Scanner;
 
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
 
+    private GameInterface server;
+
     private CLIView view=new CLIView(); // view
 
     public Client() throws RemoteException{
@@ -85,6 +87,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         Scanner in = new Scanner(System.in);
         ClientClass client1;
+        this.server = server;
         int num;
         if(controller.getNumPlayers() == 0) {
             do{

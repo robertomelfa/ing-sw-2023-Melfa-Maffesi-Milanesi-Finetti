@@ -65,7 +65,6 @@ public class ClientMain extends Application implements Serializable {
                             System.out.println("Starting Socket");
                             Client_Socket clientS = new Client_Socket();
                             clientS.start(server);
-                            server.release();
                             break;
                         case "B":
                             try {
@@ -84,8 +83,6 @@ public class ClientMain extends Application implements Serializable {
                     }
                 }
         }
-
-
     }
 
 

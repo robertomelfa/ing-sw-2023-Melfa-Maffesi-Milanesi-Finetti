@@ -24,9 +24,11 @@ public interface GameClientInterface extends Remote{
     public int getIntFromClient(String msg) throws RemoteException;
 
 
+
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception;
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception;
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception;
+
 }
