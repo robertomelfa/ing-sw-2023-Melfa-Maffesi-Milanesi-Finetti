@@ -64,6 +64,8 @@ public class Server implements Serializable {
 
         serverSocket.close();
 
+        System.exit(0);
+
     }
 
 }
@@ -104,6 +106,7 @@ class startController extends Server implements Runnable{
             // game is starting
             System.out.println("Starting controller");
             getController().startGame();
+            close();
         }catch (Exception e){}
     }
 }

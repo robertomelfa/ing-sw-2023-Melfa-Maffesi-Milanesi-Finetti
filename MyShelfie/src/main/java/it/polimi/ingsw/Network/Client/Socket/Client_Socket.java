@@ -142,6 +142,7 @@ public class Client_Socket implements Serializable {
                 break;
             }
         }
+        System.exit(0);
     }
 
     /**

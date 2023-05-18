@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Controller.Socket.SocketController;
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
@@ -19,10 +16,14 @@ import it.polimi.ingsw.View.CLIView;
 import java.io.*;
 import java.nio.file.Files;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+
+import static it.polimi.ingsw.Model.Card.*;
+import static it.polimi.ingsw.Model.Card.GREEN;
 
 public class ControllerMain implements Serializable {
     private ArrayList<ClientClass> clientList = new ArrayList<>();
@@ -38,7 +39,9 @@ public class ControllerMain implements Serializable {
 
     private boolean endGame = false;
 
-    private int chair;
+    private boolean finish = false;
+
+    private int chair = 0;
 
     private int listIterator = 0;
 
@@ -262,10 +265,14 @@ public class ControllerMain implements Serializable {
         }else {
 
             listIterator++;
-            if(chair == listIterator){
+            if(clientList.size() == listIterator){
+                listIterator = 0;
+            }
+            if(listIterator == 0){
                 // the game is ended
+                finish = true;
+                // check the adiacent cards
                 checkEnd();
-                sendGeneralMessage(new Message(MessageType.endGame,"Game is ended"));
             }
             else {
                 current_client = clientList.get(listIterator);
@@ -370,13 +377,13 @@ public class ControllerMain implements Serializable {
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
-      //  deleteObsoleteJson();
+        deleteObsoleteJson();
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
         }
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
-        while(!endGame){
+        while(!finish){
             // print the points list to all the clients
             pointsToAll(setPointsString());
             // advise the current player
@@ -399,9 +406,13 @@ public class ControllerMain implements Serializable {
             checkObjectives();
             //update the current player
             updateCurrentPlayer();
+            // update backup
             updateBackup();
-
         }
+        // print points
+        pointsToAll(setPointsString());
+        // notify the game is ended
+        sendGeneralMessage(new Message(MessageType.endGame,"Game is ended"));
     }
 
     /**
@@ -417,7 +428,7 @@ public class ControllerMain implements Serializable {
                 Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " successfully completed the first common goal\nnow has the " + points1 +" card");
                 sendGeneralMessage(message);
                 current_client.getPlayer().addPoints(points1);
-                current_client.getPlayer().setCommonObj2Completed();
+                current_client.getPlayer().setCommonObj1Completed();
 
             }
         }
@@ -434,9 +445,11 @@ public class ControllerMain implements Serializable {
             }
         }
 
-        // check player object
-        if(current_client.getPlayer().getLibrary().checkFull()){
-            gameLogic.getGame().getCurrentPlayer().addPoints(1);
+        // end game
+        if(current_client.getPlayer().getLibrary().checkFull() && !endGame){
+            current_client.getPlayer().addPoints(1);
+            Message message=new Message(MessageType.objectiveCompleted,current_client.getPlayer().getNickname() + " finish the game. Now he has the bonus point");
+            sendGeneralMessage(message);
             endGame = true;
         }
     }
