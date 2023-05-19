@@ -5,6 +5,8 @@ import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
+import it.polimi.ingsw.View.GUIView;
+import it.polimi.ingsw.View.ViewClient;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -15,7 +17,9 @@ import java.util.Scanner;
 public class Client_Socket implements Serializable {
 
     private Socket socket;  // è il server
-    private CLIView view = new CLIView();
+//    private CLIView view = new CLIView();
+
+    private ViewClient view;
 
     private boolean gui = false;
 
@@ -28,6 +32,7 @@ public class Client_Socket implements Serializable {
         connect("127.0.0.1",8080, server);
         try {
             // start the logic of the client
+            view = new CLIView();
             clientlogic(server);
         } catch (Exception e) {
             try {
@@ -134,8 +139,6 @@ public class Client_Socket implements Serializable {
                 sendMessage(new Message(MessageType.printMessage,choice));
             }else if(msg.getType() == MessageType.receivePoint){
                 view.viewString(msg.getMessage());
-            }else if(msg.getType() == MessageType.ping){
-
             }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
@@ -181,6 +184,7 @@ public class Client_Socket implements Serializable {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Library) ois.readObject();
     }
+
     /**
      *
      * @return the gameLogic received in socket input
@@ -234,6 +238,8 @@ public class Client_Socket implements Serializable {
     public void startGUI(GameInterface server, Stage stage) throws Exception {
         connectGUI("127.0.0.1", 8080);
         try {
+            view = new GUIView();
+            clientLogicGui(server);
             // start the logic of the client
             //clientlogicGUI(server, stage);
         } catch (Exception e) {
@@ -253,4 +259,35 @@ public class Client_Socket implements Serializable {
         }
     }
 
+    public void clientLogicGui(GameInterface server) throws Exception {
+        Message msg;
+
+        loop: while(true) {
+            msg = receiveMessage();
+
+            switch (msg.getType()) {
+                case receiveGameTable, receiveLibrary, receivePlayerObj -> {
+                }
+                case getCard -> {
+                    GameLogic gameLogic = receiveGameLogic();
+                    gameLogic = view.getTurn(gameLogic);
+                    sendGameLogic(gameLogic);
+                }
+                case objectiveCompleted, printMessage, receivePoint -> {
+                    view.viewString(msg.getMessage());
+                }
+                case notifyBeginTurn -> {
+                    sendMessage(new Message(MessageType.printMessage, "2"));
+                }
+                case endGame -> {
+                    view.viewString("Game is ended");
+                    break loop;
+                }
+                default -> {
+                    view.viewString("Communication error");
+                    break loop;
+                }
+            }
+        }
+    }
 }

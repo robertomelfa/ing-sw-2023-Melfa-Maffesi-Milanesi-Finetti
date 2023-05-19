@@ -7,13 +7,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GUIView extends Application implements ViewClient{
 
 private ControllerGui controllerGui;
+private GameLogic gameLogic;
 
     @Override
     public void viewLibrary(Library library) {    }
@@ -35,21 +34,28 @@ private ControllerGui controllerGui;
     @Override
     public void insert(ArrayList<Card> list, GameLogic gameLogic) {
 
+        controllerGui.showArrayCards(list);
+        controllerGui.setLabelMessage("Choose the column");
+        controllerGui.enableColumnButton();
+
+        while (!controllerGui.getAllCardsInsert()){
+            // wait until all cards are insert
+        }
+        controllerGui.setAllCardsInsert(false);
+        this.gameLogic = controllerGui.getGameLogic();
     }
 
     @Override
-    public ArrayList<Card> getCardFromTable(GameLogic gameLogic) throws RemoteException {
-
-        // trovare modo di fare arrivare le posizioni delle carte
-        // controllo
-        // se errore ciclo
-        // pesco le carte e le metto in un array: gameLogic.getGameTable().getCardfromBoard()
-        // setto a NONE le medesime carte: gameLogic.getGameTable().setCardfromBoard()
-        // update gameTable
-        // return array delle carte pescate
+    public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
 
 
-        return null;
+        while(!controllerGui.getConfirm()){
+            // wait until cards are selected and have pass controls
+        }
+        controllerGui.setConfirmCards(false);
+        this.gameLogic = controllerGui.getGameLogic();
+
+        return controllerGui.getListCard();
     }
 
 
@@ -57,13 +63,17 @@ private ControllerGui controllerGui;
     public GameLogic getTurn(GameLogic gameLogic) {
 
         controllerGui.updateGameTable(gameLogic.getGameTable());
-
-        controllerGui.setLabelMessage("Is your turn!  Choose from 1 to three Cards");
+        controllerGui.setGameLogic(gameLogic);
+        controllerGui.clearListCard();
+        controllerGui.clearPosCard();
+        controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
         controllerGui.enableGameTable();
 
-//        list = getCardFromTable(gameLogic);
-//        insert(list, this.gameLogic);
-//        return this.gameLogic;
+        ArrayList<Card> list;
+        list = getCardFromTable(this.gameLogic);
+        controllerGui.disableGameTable();
+        insert(list, this.gameLogic);
+
 
         return gameLogic;
     }
@@ -74,8 +84,7 @@ private ControllerGui controllerGui;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
         Parent root = loader.load();
         setControllerGui(loader.getController());
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/MyShelfieGui.fxml")));
-        stage.setTitle("hellow");
+        stage.setTitle("My Shelfie");
         stage.setScene(new Scene(root));
         stage.show();
     }

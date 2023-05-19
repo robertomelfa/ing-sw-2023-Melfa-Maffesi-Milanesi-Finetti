@@ -78,7 +78,7 @@ public class LogInController {
                 server.release();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                 Stage stage = (Stage) start.getScene().getWindow();
-                stage.setScene(new Scene(fxmlLoader.load(), 1240, 1024));
+                stage.setScene(new Scene(fxmlLoader.load()));
 
             } catch (Exception e) {
                 System.out.println(e);
@@ -105,7 +105,7 @@ public class LogInController {
                 server.release();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                 Stage stage = (Stage) start.getScene().getWindow();
-                stage.setScene(new Scene(fxmlLoader.load(), 1240, 1024));
+                stage.setScene(new Scene(fxmlLoader.load()));
             }catch (Exception e){
 
             }
