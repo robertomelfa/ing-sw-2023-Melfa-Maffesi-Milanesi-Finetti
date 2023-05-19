@@ -3,7 +3,6 @@ package it.polimi.ingsw.Network.Server.Socket;
 import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
-import it.polimi.ingsw.Network.Lock;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 
@@ -26,7 +25,7 @@ public  class Server_Socket implements Serializable {
             serversocket = new ServerSocket(port); // create the server
             System.out.println("[SERVER] started on port: "+port);
 
-            while (!controller.getStart()){
+            while (true){
                 Socket socket = serversocket.accept();
                 if(controller.getClientList().size()==0){   // first player?
                     controller = firstClient(serversocket, socket, controller);

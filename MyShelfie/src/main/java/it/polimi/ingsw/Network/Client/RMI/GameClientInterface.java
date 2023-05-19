@@ -31,4 +31,5 @@ public interface GameClientInterface extends Remote{
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception;
 
+
 }

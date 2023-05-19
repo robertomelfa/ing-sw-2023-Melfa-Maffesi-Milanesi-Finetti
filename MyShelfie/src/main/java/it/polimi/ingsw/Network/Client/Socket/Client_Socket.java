@@ -134,6 +134,8 @@ public class Client_Socket implements Serializable {
                 sendMessage(new Message(MessageType.printMessage,choice));
             }else if(msg.getType() == MessageType.receivePoint){
                 view.viewString(msg.getMessage());
+            }else if(msg.getType() == MessageType.ping){
+
             }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
@@ -179,7 +181,6 @@ public class Client_Socket implements Serializable {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Library) ois.readObject();
     }
-
     /**
      *
      * @return the gameLogic received in socket input
@@ -251,4 +252,5 @@ public class Client_Socket implements Serializable {
         } catch (IOException e) {
         }
     }
+
 }

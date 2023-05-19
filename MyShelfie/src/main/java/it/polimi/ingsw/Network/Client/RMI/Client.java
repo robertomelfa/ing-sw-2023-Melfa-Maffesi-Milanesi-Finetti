@@ -89,7 +89,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         ClientClass client1;
         this.server = server;
         int num;
-        if(controller.getNumPlayers() == 0) {
+        if(controller.getClientList().size() == 0) {
             do{
                 view.viewString("Insert players number");
                 num = in.nextInt();
@@ -154,4 +154,5 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         server.updatePlayers(client1);
 
     }
+
 }

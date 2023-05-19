@@ -5,6 +5,7 @@ import com.google.gson.JsonIOException;
 import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Controller.Socket.SocketController;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
@@ -16,14 +17,8 @@ import it.polimi.ingsw.View.CLIView;
 import java.io.*;
 import java.nio.file.Files;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-
-import static it.polimi.ingsw.Model.Card.*;
-import static it.polimi.ingsw.Model.Card.GREEN;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class ControllerMain implements Serializable {
     private ArrayList<ClientClass> clientList = new ArrayList<>();
@@ -58,6 +53,15 @@ public class ControllerMain implements Serializable {
     public ControllerMain(Server_Socket serverSocket, GameInterface serverRMI){
         this.serverSocket = serverSocket;
         this.serverRMI = serverRMI;
+    }
+
+    public void resetController(){
+        clientList.clear();
+    }
+
+    public void copy(ControllerMain controller){
+        this.clientList.addAll(controller.getClientList());
+        this.numPlayers = clientList.size();
     }
 
     public synchronized void updateBackup() throws IOException, StackOverflowError {
@@ -434,7 +438,6 @@ public class ControllerMain implements Serializable {
             updateCurrentPlayer();
             // update backup
             updateBackup();
-
         }
         // print points
         pointsToAll(setPointsString());
@@ -522,3 +525,4 @@ public class ControllerMain implements Serializable {
         isResumedGame = resumedGame;
     }
 }
+

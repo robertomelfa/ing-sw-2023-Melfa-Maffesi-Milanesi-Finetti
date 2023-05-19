@@ -3,7 +3,6 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Model.*;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -285,4 +284,5 @@ public class CLIView implements ViewClient, Serializable {
         insert(list, this.gameLogic);
         return this.gameLogic;
     }
+
 }
