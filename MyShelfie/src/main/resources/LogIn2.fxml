@@ -41,7 +41,7 @@
             <Image url="@/17_MyShelfie_BGA/Publisher material/Publisher.png" />
          </image>
       </ImageView>
-      <Button fx:id="start" layoutX="472.0" layoutY="514.0" mnemonicParsing="false" text="Start Game" onAction="#submitNotFirst">
+      <Button fx:id="start" layoutX="472.0" layoutY="514.0" mnemonicParsing="false" text="Start Game" onAction="#submit">
          <font>
             <Font name="Arial" size="21.0" />
          </font>

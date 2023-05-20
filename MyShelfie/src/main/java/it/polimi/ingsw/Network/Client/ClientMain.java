@@ -98,5 +98,5 @@ public class ClientMain extends Application implements Serializable {
         stage.setScene(scene);
         stage.setTitle("MyShelfie");
         stage.show();
-        }
+    }
 }

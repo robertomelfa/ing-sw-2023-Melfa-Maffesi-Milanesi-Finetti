@@ -33,8 +33,11 @@ public class LogInController {
     TextField username;
     @FXML
     Button start;
+    @FXML
+    TextField username2;
 
     Client_Socket clientSocket;
+
 
     private boolean RMI = true;
 
@@ -47,9 +50,10 @@ public class LogInController {
 
     @FXML
     private void SocketConnection() throws Exception{
+        nextScene();
         Client_Socket clientSocket = new Client_Socket();
         RMI = false;
-        clientSocket.startGUI(server, (Stage) RMIButton.getScene().getWindow());
+        clientSocket.connectGUI("127.0.0.1", 8080, server);
         server.release();
     }
 
@@ -74,9 +78,9 @@ public class LogInController {
                 String user = username.getText();
                 int n = Integer.parseInt(numPlayer.getText());
                 GameClientInterface client = new Client();
-                client.connectionGUI(server, client, server.getController(), n, user);
-                server.release();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                server.release();
+                client.connectionGUI(server, client, server.getController(), n, user);
                 Stage stage = (Stage) start.getScene().getWindow();
                 stage.setScene(new Scene(fxmlLoader.load(), 1240, 1024));
 
@@ -99,7 +103,7 @@ public class LogInController {
     public void submitNotFirst(ActionEvent event){
         if(RMI){
             try {
-                String user = username.getText();
+                String user = username2.getText();
                 GameClientInterface client = new Client();
                 client.connectionGUI(server, client, server.getController(), user);
                 server.release();
@@ -111,9 +115,12 @@ public class LogInController {
             }
         }else {
             try {
-                String user = username.getText();
+                String user = username2.getText();
                 Message msg = new Message(MessageType.sendNickname, user);
                 clientSocket.sendMessage(msg);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                Stage stage = (Stage) start.getScene().getWindow();
+                stage.setScene(new Scene(fxmlLoader.load(), 1240, 1024));
             } catch (Exception e){
                 System.out.println(e);
             }
