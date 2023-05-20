@@ -10,6 +10,12 @@
 # Ignore game assets
 assets/*
 
+#ignore assets (grafic resources)
+MyShelfie/src/main/resources/assets/**
+
+# Ignore Game saves
+/saves/
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -86,3 +92,5 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 /src/main/resources/17_MyShelfie_BGA/
+/src/main/resources/assets/
+

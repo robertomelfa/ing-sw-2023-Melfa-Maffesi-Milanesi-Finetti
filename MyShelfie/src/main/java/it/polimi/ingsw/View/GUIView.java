@@ -2,57 +2,98 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class GUIView extends Application implements ViewClient {
+public class GUIView extends Application implements ViewClient{
 
-
-    public String askUserName() {
-        return null;
-    }
+private ControllerGui controllerGui;
+private GameLogic gameLogic;
 
     @Override
-    public void viewLibrary(Library library) {
-
-    }
+    public void viewLibrary(Library library) {    }
 
     @Override
-    public void viewGameTable(GameTable gameTable) {
-
-    }
+    public void viewGameTable(GameTable gameTable) {    }
 
     @Override
     public void viewString(String message) {
-
+        controllerGui.setLabelMessage(message);
     }
 
     @Override
-    public void viewPlayerObj(PlayerObj playerObj) {
+    public void viewPlayerObj(PlayerObj playerObj) {    }
 
+    @Override
+    public void viewCommonObj(CommonObj obj1, CommonObj obj2) {    }
+
+    @Override
+    public void insert(ArrayList<Card> list, GameLogic gameLogic) {
+
+        controllerGui.showArrayCards(list);
+        controllerGui.setLabelMessage("Choose the column");
+        controllerGui.enableColumnButton();
+
+        while (!controllerGui.getAllCardsInsert()){
+            // wait until all cards are insert
+        }
+        controllerGui.setAllCardsInsert(false);
+        this.gameLogic = controllerGui.getGameLogic();
     }
 
     @Override
-    public void viewCommonObj(CommonObj obj1, CommonObj obj2) {
+    public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
 
+
+        while(!controllerGui.getConfirm()){
+            // wait until cards are selected and have pass controls
+        }
+        controllerGui.setConfirmCards(false);
+        this.gameLogic = controllerGui.getGameLogic();
+
+        return controllerGui.getListCard();
     }
 
-    public void insert(ArrayList<Card> list, GameLogic gameLogic){
-    }
 
-    public ArrayList<Card> getCardFromTable(GameLogic gameLogic) throws RemoteException{
-        return null;
-    }
+    @Override
+    public GameLogic getTurn(GameLogic gameLogic) {
 
-    public GameLogic getTurn(GameLogic gameLogic){
-        return null;
+        controllerGui.updateGameTable(gameLogic.getGameTable());
+        controllerGui.setGameLogic(gameLogic);
+        controllerGui.clearListCard();
+        controllerGui.clearPosCard();
+        controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
+        controllerGui.enableGameTable();
+
+        ArrayList<Card> list;
+        list = getCardFromTable(this.gameLogic);
+        controllerGui.disableGameTable();
+        insert(list, this.gameLogic);
+
+
+        return gameLogic;
     }
 
     @Override
     public void start(Stage stage) throws Exception {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+        Parent root = loader.load();
+        setControllerGui(loader.getController());
+        stage.setTitle("My Shelfie");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public void setControllerGui(ControllerGui controllerGui) {
+        this.controllerGui = controllerGui;
     }
 }

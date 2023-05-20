@@ -114,7 +114,7 @@ public class TestCLIView {
 
         view.viewGameTable(gameTable1);
 
-        String input = "3\n8\n4\n8\n5\n8\n6\n";
+        String input = "3\n8\n4\n8\n5\n8\n6\n3\n1\n5\n1";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
@@ -128,6 +128,26 @@ public class TestCLIView {
         Assert.assertEquals(card1, list1.get(0));
         Assert.assertEquals(card2, list1.get(1));
         Assert.assertEquals(card3, list1.get(2));
+
+    }
+
+    @Test
+    public void threeCard4PlayersTest(){
+        Game game1 = new Game(4);
+        GameLogic gameLogic1 = new GameLogic(game1);
+        GameTable gameTable2 = gameLogic1.getGameTable();
+        view.viewGameTable(gameTable2);
+
+        String input = "3\n1\n5\n1";
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+        System.setIn(inputStream);
+
+
+        Card card4 = gameTable2.getCardfromBoard(5,1);
+
+        ArrayList<Card> list2 = view.getCardFromTable(gameLogic1);
+
+        Assert.assertEquals(card4, list2.get(0));
     }
 
     @Test

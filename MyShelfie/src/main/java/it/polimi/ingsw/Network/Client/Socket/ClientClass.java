@@ -3,15 +3,19 @@ package it.polimi.ingsw.Network.Client.Socket;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientClass implements Serializable {
     private Player player; // player match to the client
 
     private transient Socket socket;  // socket client
 
-    private GameClientInterface RMIclient;  // rmi client
+    private boolean connected = false;
+
+    private  GameClientInterface RMIclient;  // rmi client
 
     /**
      * constructor for the ClientClass
@@ -20,6 +24,7 @@ public class ClientClass implements Serializable {
     public ClientClass(Socket client){
         this.socket = client;
         this.RMIclient = null;
+        connected = true;
     }
 
     /**
@@ -29,6 +34,7 @@ public class ClientClass implements Serializable {
     public ClientClass(GameClientInterface client){
         this.RMIclient = client;
         this.socket = null;
+        connected = true;
     }
 
     /**
@@ -71,5 +77,21 @@ public class ClientClass implements Serializable {
      */
     public GameClientInterface getClient(){
         return this.RMIclient;
+    }
+
+    public synchronized void checkConnection() throws IOException {
+        if(RMIclient == null){
+            socket.getOutputStream().write("ping".getBytes());
+
+            socket.setSoTimeout(5000);
+
+            byte[] buffer = new byte[1024];
+            int bytesRead = socket.getInputStream().read(buffer);
+
+            if (bytesRead == -1){
+                connected = false;
+                System.out.println("non ci sono");
+            }
+        }
     }
 }

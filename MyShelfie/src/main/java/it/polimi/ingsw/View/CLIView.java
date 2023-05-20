@@ -3,7 +3,6 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Model.*;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -182,7 +181,10 @@ public class CLIView implements ViewClient, Serializable {
             if(size < 1 || size >3){
                 System.out.println("You can pick 1, 2 or 3 cards. Try again!");
             }
-        }while(size < 1 || size >3);
+            if(!gameLogic.checkCardsPickable(size)){
+                System.out.println("There isn't 3 cards avaible");
+            }
+        }while(size < 1 || size >3 || !gameLogic.checkCardsPickable(size));
         if(size == 1){  // case 1 card
             int x1, y1;
             // ask coordinates until a correct input
@@ -269,12 +271,18 @@ public class CLIView implements ViewClient, Serializable {
         return list;
     }
 
+    /**
+     *
+     * @param gameLogic the object where we want to work
+     * @return the updated gamelogic
+     */
     public GameLogic getTurn(GameLogic gameLogic) {
         ArrayList<Card> list = new ArrayList<>();
-
+        // get the cards from the table
         list = getCardFromTable(gameLogic);
-
+        // insert the picked cards into the library
         insert(list, this.gameLogic);
         return this.gameLogic;
     }
+
 }

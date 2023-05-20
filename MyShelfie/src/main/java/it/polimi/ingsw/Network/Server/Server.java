@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Server;
 
 import it.polimi.ingsw.Controller.ControllerMain;
+import it.polimi.ingsw.Controller.Lobby;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.RMI.GameServer;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
@@ -20,7 +21,13 @@ public class Server implements Serializable {
 
     private static GameInterface serverRMI;
 
+    private static Lobby lobby;
+
     private static Registry registry;
+
+    private static Thread thread1;
+
+    private static Thread thread2;
 
     public synchronized ControllerMain getController(){
         return this.controller;
@@ -30,17 +37,25 @@ public class Server implements Serializable {
 
     public GameInterface getServerRMI() throws RemoteException{return  this.serverRMI;}
 
+    public Lobby getLobby(){
+        return this.lobby;
+    }
+
+    public Thread getThread1(){return thread1;}
+
+    public Thread getThread2(){return thread2;}
+
 
     public static void start() throws RemoteException, Exception {
         serverSocket = new Server_Socket();
         serverRMI = new GameServer();
         registry = LocateRegistry.createRegistry(1099);
         registry.rebind("GameInterface", serverRMI);
-        controller = new ControllerMain(serverSocket, serverRMI);
+        lobby = new Lobby(serverSocket, serverRMI);
         Runnable task1 = new startSocketServer();
         Runnable task2 = new startRMIServer();
-        Thread thread1 = new Thread(task1);
-        Thread thread2 = new Thread(task2);
+        thread1 = new Thread(task1);
+        thread2 = new Thread(task2);
         Runnable task3 = new startController();
         Thread thread3 = new Thread(task3);
         thread1.start();
@@ -54,7 +69,11 @@ public class Server implements Serializable {
 // Unexport the registry
         UnicastRemoteObject.unexportObject(registry, true);
 
+        getThread1().interrupt();
+
         serverSocket.close();
+
+        System.exit(0);
 
     }
 
@@ -66,7 +85,7 @@ class startSocketServer extends Server implements Runnable{
     public void run() {
         Server_Socket server = getServerSocket();
         try{
-            server.start(getController());
+            server.start(getLobby().getController());
         }catch(Exception e){}
 
     }
@@ -78,7 +97,7 @@ class startRMIServer extends Server implements Runnable{
         try{
             GameInterface server = getServerRMI();
             try{
-                server.start(getController());
+                server.start(getLobby().getController());
             }catch (Exception e){}
         }catch (RemoteException e){}
     }
@@ -89,11 +108,12 @@ class startController extends Server implements Runnable{
     public void run(){
         try{
             // wait all the players before starting the game
-            getController().waitStart();
-
+            getLobby().waitingGame();
+            // stop other thread
+            getThread2().interrupt();
             // game is starting
             System.out.println("Starting controller");
-            getController().startGame();
+            close();
         }catch (Exception e){}
     }
 }
