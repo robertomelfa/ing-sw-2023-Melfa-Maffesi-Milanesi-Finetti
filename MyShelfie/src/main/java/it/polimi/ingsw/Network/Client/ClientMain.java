@@ -62,9 +62,10 @@ public class ClientMain extends Application implements Serializable {
                     switch (input.toUpperCase()) {
                         case "A":
                             timer.cancel();
-                            System.out.println("Starting Socket");
-                            Client_Socket clientS = new Client_Socket();
-                            clientS.start(server);
+                                System.out.println("Starting Socket");
+                                Client_Socket clientS = new Client_Socket();
+                                clientS.start(server);
+
                             break;
                         case "B":
                             try {

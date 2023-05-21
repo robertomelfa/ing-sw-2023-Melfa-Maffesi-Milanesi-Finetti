@@ -50,7 +50,6 @@ class startingGame implements Runnable{
 
     public void run() {
         try{
-            System.out.println("run");
             controller.startGame();
         }catch(Exception e){}
     }

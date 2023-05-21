@@ -17,6 +17,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     private static Lock lock;
 
+    private static Lock messageLock = new Lock();
+
     public GameServer() throws RemoteException{
         super();
     }
