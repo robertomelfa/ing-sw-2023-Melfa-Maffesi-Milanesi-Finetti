@@ -1,24 +1,19 @@
 package it.polimi.ingsw.Controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
 import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Controller.Socket.SocketController;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.GameBackup;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
-import it.polimi.ingsw.View.CLIView;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.rmi.RemoteException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class ControllerMain implements Serializable {
     private ArrayList<ClientClass> clientList = new ArrayList<>();
@@ -35,6 +30,8 @@ public class ControllerMain implements Serializable {
     private boolean endGame = false;
 
     private boolean finish = false;
+
+    private transient Thread thread;
 
     private int chair = 0;
 
@@ -53,6 +50,26 @@ public class ControllerMain implements Serializable {
     public ControllerMain(Server_Socket serverSocket, GameInterface serverRMI){
         this.serverSocket = serverSocket;
         this.serverRMI = serverRMI;
+        // starting thread check clients disconnection
+        this.thread = new Thread(() ->{
+            while(!finish){
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    if(!clientList.isEmpty()){
+                        checkConnection();
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        thread.start();
     }
 
     public void resetController(){
@@ -403,7 +420,7 @@ public class ControllerMain implements Serializable {
      * @throws Exception
      * @throws ArrayIndexOutOfBoundsException
      */
-    public void startGame() throws Exception, ArrayIndexOutOfBoundsException{
+    public void startGame() throws Exception, ArrayIndexOutOfBoundsException, IOException, ClassNotFoundException{
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
@@ -523,6 +540,32 @@ public class ControllerMain implements Serializable {
 
     public void setResumedGame(boolean resumedGame) {
         isResumedGame = resumedGame;
+    }
+
+    public void checkConnection() throws IOException, ClassNotFoundException{
+        Message msg1 = new Message(MessageType.closeGame, "Stop game");
+        for(int i = 0; i < clientList.size(); i++){
+            if(clientList.get(i).getSocket() == null){
+                try {
+                    clientList.get(i).getClient().ping();
+                }catch (Exception e){
+                    finish = true;
+                    clientList.remove(i);
+                    sendGeneralMessage(msg1);
+                    resetController();
+                }
+            }else{
+                Message msg = new Message(MessageType.ping, null);
+                try{
+                    serverSocket.sendMessage(msg, clientList.get(i).getSocket());
+                }catch (IOException e){
+                    finish = true;
+                    clientList.remove(i);
+                    sendGeneralMessage(msg1);
+                    resetController();
+                }
+            }
+        }
     }
 }
 

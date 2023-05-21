@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.PlayerObj;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
@@ -12,10 +9,7 @@ import it.polimi.ingsw.View.GUIView;
 import it.polimi.ingsw.View.ViewClient;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -24,8 +18,13 @@ public class Client_Socket implements Serializable {
 
 
     private Socket socket;  // è il server
-//   private CLIView view = new CLIView();
+//    private CLIView view = new CLIView();
+
     private ViewClient view;
+
+    private ObjectInputStream ois;
+
+    private ObjectOutputStream oos;
 
     private boolean gui = false;
 
@@ -100,7 +99,7 @@ public class Client_Socket implements Serializable {
      * the client start listening waiting for the server to send him the game table
      */
     public GameTable receiveGameTable() throws IOException,ClassNotFoundException{
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        ois = new ObjectInputStream(socket.getInputStream());
         GameTable gameTable = (GameTable) ois.readObject();
         return gameTable;
     }
@@ -112,7 +111,7 @@ public class Client_Socket implements Serializable {
      * @throws Exception
      */
     public void clientlogic(GameInterface server) throws Exception{
-        // ricevo richiesta del nome e invio nome
+        // get message from server
         Message msg;
         Scanner in = new Scanner(System.in);
         while(true){
@@ -127,10 +126,8 @@ public class Client_Socket implements Serializable {
                 GameLogic gameLogic = receiveGameLogic();
                 gameLogic = view.getTurn(gameLogic);
                 sendGameLogic(gameLogic);
-
             } else if (msg.getType() == MessageType.objectiveCompleted) {
                 view.viewString(msg.getMessage());
-
             } else if (msg.getType() == MessageType.printMessage) {
                 view.viewString(msg.getMessage());
 
@@ -144,6 +141,11 @@ public class Client_Socket implements Serializable {
                 sendMessage(new Message(MessageType.printMessage,choice));
             }else if(msg.getType() == MessageType.receivePoint){
                 view.viewString(msg.getMessage());
+            }else if(msg.getType() == MessageType.closeGame){
+                view.viewString(msg.getMessage());
+                break;
+            }else if(msg.getType() == MessageType.ping){
+
             }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
@@ -152,6 +154,7 @@ public class Client_Socket implements Serializable {
                 break;
             }
         }
+        socket.close();
         System.exit(0);
     }
 
@@ -163,7 +166,7 @@ public class Client_Socket implements Serializable {
      * @throws Exception
      */
     public Message receiveMessage() throws IOException, ClassNotFoundException, Exception {
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        ois = new ObjectInputStream(socket.getInputStream());
         return (Message) ois.readObject();
     }
 
@@ -176,7 +179,7 @@ public class Client_Socket implements Serializable {
      * @throws Exception
      */
     public void sendMessage(Message msg) throws IOException, ClassNotFoundException, Exception {
-        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(msg);
     }
 
@@ -186,10 +189,9 @@ public class Client_Socket implements Serializable {
      * @throws ClassNotFoundException
      */
     public Library receiveLibrary() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        ois = new ObjectInputStream(socket.getInputStream());
         return (Library) ois.readObject();
     }
-
     /**
      *
      * @return the gameLogic received in socket input
@@ -197,7 +199,7 @@ public class Client_Socket implements Serializable {
      * @throws ClassNotFoundException
      */
     public GameLogic receiveGameLogic() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        ois = new ObjectInputStream(socket.getInputStream());
         return (GameLogic) ois.readObject();
     }
 
@@ -208,7 +210,7 @@ public class Client_Socket implements Serializable {
      * @throws ClassNotFoundException
      */
     public PlayerObj receivePlayerObj() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        ois = new ObjectInputStream(socket.getInputStream());
         return (PlayerObj) ois.readObject();
     }
 
@@ -221,7 +223,7 @@ public class Client_Socket implements Serializable {
     public void sendInt(int num) throws IOException, ClassNotFoundException {
         // dovro aggiungere tipologia messaggio
 
-        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(num);
     }
 
@@ -235,7 +237,7 @@ public class Client_Socket implements Serializable {
     public void sendGameLogic(GameLogic gameLogic) throws IOException, ClassNotFoundException {
         // dovro aggiungere tipologia messaggio
 
-        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(gameLogic);
     }
 

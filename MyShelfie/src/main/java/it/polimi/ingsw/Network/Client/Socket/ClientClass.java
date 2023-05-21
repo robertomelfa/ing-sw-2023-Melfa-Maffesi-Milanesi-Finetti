@@ -2,6 +2,8 @@ package it.polimi.ingsw.Network.Client.Socket;
 
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Messages.Message;
+import it.polimi.ingsw.Network.Messages.MessageType;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -79,19 +81,4 @@ public class ClientClass implements Serializable {
         return this.RMIclient;
     }
 
-    public synchronized void checkConnection() throws IOException {
-        if(RMIclient == null){
-            socket.getOutputStream().write("ping".getBytes());
-
-            socket.setSoTimeout(5000);
-
-            byte[] buffer = new byte[1024];
-            int bytesRead = socket.getInputStream().read(buffer);
-
-            if (bytesRead == -1){
-                connected = false;
-                System.out.println("non ci sono");
-            }
-        }
-    }
 }
