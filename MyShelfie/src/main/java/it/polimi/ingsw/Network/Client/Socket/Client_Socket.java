@@ -22,9 +22,9 @@ import java.util.Scanner;
 //TODO sistemare le varie funzioni (troppo lunghe)
 public class Client_Socket implements Serializable {
 
-    private Socket socket;  // è il server
-//    private CLIView view = new CLIView();
 
+    private Socket socket;  // è il server
+//   private CLIView view = new CLIView();
     private ViewClient view;
 
     private boolean gui = false;
@@ -34,11 +34,10 @@ public class Client_Socket implements Serializable {
      * @throws Exception
      */
     public  void start(GameInterface server) throws Exception{
-
+        view = new CLIView();
         connect("127.0.0.1",8080, server);
         try {
             // start the logic of the client
-            view = new CLIView();
             clientlogic(server);
         } catch (Exception e) {
             try {

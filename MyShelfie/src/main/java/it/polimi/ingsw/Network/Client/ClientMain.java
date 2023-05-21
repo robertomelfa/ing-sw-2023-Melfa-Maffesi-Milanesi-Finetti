@@ -21,6 +21,7 @@ public class ClientMain extends Application implements Serializable {
 
     public static void main(String[] args) throws Exception {
 
+        Boolean selection = false;
         Registry registry = LocateRegistry.getRegistry("localhost", 1099);
         GameInterface server = (GameInterface) registry.lookup("GameInterface");
         System.out.println("[CLIENT] is running");
@@ -32,56 +33,61 @@ public class ClientMain extends Application implements Serializable {
             System.out.println("Another client is connecting");
         }
         server.block();
-        switch (input) {
-            case "yes":
-                launch(args);
-                break;
-
-            default:
-                server.setFirstPlayer();
-                System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        System.out.println("Input not received within 15 seconds. Disconnecting from server ..-");
-                        try {
-                            server.release();
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                        System.exit(0);
-                    }
-                };
-
-                Timer timer = new Timer(true);
-                timer.schedule(task, 15000);
-                if (scanner.hasNext()) {
-                    input = scanner.next();
-                    switch (input.toUpperCase()) {
-                        case "A":
-                            timer.cancel();
-                            System.out.println("Starting Socket");
-                            Client_Socket clientS = new Client_Socket();
-                            clientS.start(server);
-                            break;
-                        case "B":
+        while (!selection){
+            switch (input) {
+                case "yes":
+                    launch(args);
+                    selection = true;
+                    break;
+                case "no":
+                    selection = true;
+                    server.setFirstPlayer();
+                    System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            System.out.println("Input not received within 15 seconds. Disconnecting from server ..-");
                             try {
-                                timer.cancel();
-
-                                GameClientInterface clientR = new Client();
-                                clientR.connection(server, clientR, server.getController());
                                 server.release();
-
-                            } catch (Exception e) {
-                                System.out.println("[System] Server failed: " + e);
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
                             }
-                            break;
-                        default:
-                            System.out.println("Invalid choice");
+                            System.exit(0);
+                        }
+                    };
+                    Timer timer = new Timer(true);
+                    timer.schedule(task, 15000);
+
+                    if (scanner.hasNext()) {
+                        input = scanner.next();
+                        switch (input.toUpperCase()) {
+                            case "A":
+                                timer.cancel();
+                                System.out.println("Starting Socket");
+                                Client_Socket clientS = new Client_Socket();
+                                clientS.start(server);
+                                break;
+                            case "B":
+                                try {
+                                    timer.cancel();
+
+                                    GameClientInterface clientR = new Client();
+                                    clientR.connection(server, clientR, server.getController());
+                                    server.release();
+                                } catch (Exception e) {
+                                    System.out.println("[System] Server failed: " + e);
+                                }
+                                break;
+                            default:
+                                System.out.println("Invalid choice");
+                        }
                     }
-                }
+                default:
+                    System.out.println("please insert yes or no to make a selection");
+                    input = scanner.next();
+            }
         }
     }
 

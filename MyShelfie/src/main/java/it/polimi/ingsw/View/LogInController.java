@@ -50,9 +50,9 @@ public class LogInController {
 
     @FXML
     private void SocketConnection() throws Exception{
+        RMI = false;
         nextScene();
         Client_Socket clientSocket = new Client_Socket();
-        RMI = false;
         clientSocket.connectGUI("127.0.0.1", 8080, server);
         server.release();
     }
@@ -105,21 +105,21 @@ public class LogInController {
             try {
                 String user = username2.getText();
                 GameClientInterface client = new Client();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                Stage stage = (Stage) username2.getScene().getWindow();
+                stage.setScene(new Scene(fxmlLoader.load()));
                 client.connectionGUI(server, client, server.getController(), user);
                 server.release();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
-                Stage stage = (Stage) start.getScene().getWindow();
-                stage.setScene(new Scene(fxmlLoader.load()));
             }catch (Exception e){
 
             }
-        }else {
+        } else {
             try {
                 String user = username2.getText();
                 Message msg = new Message(MessageType.sendNickname, user);
                 clientSocket.sendMessage(msg);
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
-                Stage stage = (Stage) start.getScene().getWindow();
+                Stage stage = (Stage) username2.getScene().getWindow();
                 stage.setScene(new Scene(fxmlLoader.load(), 1240, 1024));
             } catch (Exception e){
                 System.out.println(e);

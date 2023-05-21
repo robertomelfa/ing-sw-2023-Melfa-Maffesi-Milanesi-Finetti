@@ -18,7 +18,9 @@ private GameLogic gameLogic;
     public void viewLibrary(Library library) {    }
 
     @Override
-    public void viewGameTable(GameTable gameTable) {    }
+    public void viewGameTable(GameTable gameTable) {
+
+    }
 
     @Override
     public void viewString(String message) {

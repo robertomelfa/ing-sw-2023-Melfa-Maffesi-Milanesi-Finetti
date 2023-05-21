@@ -6,7 +6,6 @@ import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Model.Library;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,7 +19,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -147,10 +145,11 @@ public class ControllerGui {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());
 
-        //trovare modo di ottenere lista player **
+        // controllerMain.getClientList.get(i);
+        // trovare modo di ottenere lista player **
         // passo la Player.getLibrary
-//        ControllerLibrary controller = loader.getController();
-//        controller.updateLibrary(library);
+        // ControllerLibrary controller = loader.getController();
+        // controller.updateLibrary(library);
 
 
         stage.show();
@@ -460,6 +459,7 @@ public class ControllerGui {
     }
 
     public void setLabelMessage(String message){
+
         labelMessage.setText(message);
     }
 

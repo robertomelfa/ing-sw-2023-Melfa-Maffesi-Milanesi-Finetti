@@ -8,8 +8,6 @@ import it.polimi.ingsw.Model.PlayerObj;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
-import it.polimi.ingsw.View.GUIView;
-import it.polimi.ingsw.View.ViewClient;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -19,8 +17,8 @@ import java.util.Scanner;
 
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
 
-//    private CLIView view=new CLIView(); // view
-    private ViewClient view;
+   private CLIView view = new CLIView(); // view
+
     public Client() throws RemoteException{
         super();
     }
@@ -144,7 +142,6 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         client1 = new ClientClass(client);
         client1.setPlayer(username);
         server.updatePlayers(client1);
-        view = new GUIView();
     }
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception {
@@ -152,7 +149,6 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         client1 = new ClientClass(client);
         client1.setPlayer(username);
         server.updatePlayers(client1);
-        view = new GUIView();
     }
 
 }
