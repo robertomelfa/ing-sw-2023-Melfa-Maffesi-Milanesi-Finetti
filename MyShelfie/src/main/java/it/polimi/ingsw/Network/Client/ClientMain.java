@@ -7,6 +7,7 @@ import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.Serializable;
@@ -52,9 +53,9 @@ public class ClientMain extends Application implements Serializable {
         while (!selection){
             switch (input) {
                 case "yes":
-                    launch(args);
-                    selection = true;
                     timer.cancel();
+                    selection = true;
+                    launch(args);
                     break;
                 case "no":
                     selection = true;
@@ -98,8 +99,10 @@ public class ClientMain extends Application implements Serializable {
         GameInterface server = (GameInterface) registry.lookup("GameInterface");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
+        Image icon = new Image("assets/Publisher material/icon 50x50px.png");
         stage.setScene(scene);
         stage.setTitle("MyShelfie");
+        stage.getIcons().add(icon);
         stage.show();
     }
 }

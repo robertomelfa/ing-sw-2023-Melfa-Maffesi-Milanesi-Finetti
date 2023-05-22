@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Model.Library;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,13 +21,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.Model.Card.*;
 
-public class ControllerGui {
+public class ControllerGui implements Initializable {
 
     @FXML
     private ImageView CommonObj1;
@@ -110,6 +113,8 @@ public class ControllerGui {
 
         ControllerComObjDesc controller = loader.getController();
         controller.setLabelText(numObj);
+        Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+        stage.getIcons().add(icon);
         stage.show();
     }
 
@@ -140,6 +145,8 @@ public class ControllerGui {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Library.fxml"));
         Parent root = loader.load();
+        Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+        stage.getIcons().add(icon);
         stage.setTitle("Library");
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
@@ -160,6 +167,8 @@ public class ControllerGui {
 
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/RuleBook.fxml")));
+        Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+        stage.getIcons().add(icon);
         stage.setTitle("RuleBook");
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
@@ -537,4 +546,8 @@ public class ControllerGui {
         return card;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        labelMessage.setText("hello");
+    }
 }

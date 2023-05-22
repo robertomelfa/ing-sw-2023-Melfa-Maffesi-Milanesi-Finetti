@@ -11,7 +11,6 @@ import it.polimi.ingsw.View.CLIView;
 import it.polimi.ingsw.View.GUIView;
 import it.polimi.ingsw.View.ViewClient;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
@@ -34,11 +33,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException
      */
     public void receiveGameTable(GameTable board) throws RemoteException{
-        try {
-            view.viewGameTable(board);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        view.viewGameTable(board);
     }
 
     /**

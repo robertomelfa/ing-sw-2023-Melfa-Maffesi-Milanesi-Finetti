@@ -96,7 +96,7 @@
                                                 <Insets left="8.0" right="8.0" />
                                              </padding>
                                           </Button>
-                              <Label fx:id="labelMessage" prefHeight="36.0" prefWidth="394.0" styleClass="labelmessage" stylesheets="@CSS.css" text="a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a " textAlignment="CENTER" textFill="#0f0f0f" wrapText="true">
+                              <Label fx:id="labelMessage" prefHeight="36.0" prefWidth="394.0" styleClass="labelmessage" stylesheets="@CSS.css" textAlignment="CENTER" textFill="#0f0f0f" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
