@@ -52,9 +52,6 @@ public class LogInController {
     private void SocketConnection() throws Exception{
         RMI = false;
         nextScene();
-        Client_Socket clientSocket = new Client_Socket();
-        clientSocket.connectGUI("127.0.0.1", 8080, server);
-        server.release();
     }
 
     public void nextScene() throws IOException {
@@ -89,11 +86,17 @@ public class LogInController {
             }
         } else {
             try {
+                Client_Socket clientSocket = new Client_Socket();
+                clientSocket.startGUI(server);
                 int n = Integer.parseInt(numPlayer.getText());
                 String user = username.getText();
                 clientSocket.sendInt(n);
                 Message msg = new Message(MessageType.sendNickname, user);
                 clientSocket.sendMessage(msg);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                Stage stage = (Stage) start.getScene().getWindow();
+                stage.setScene(new Scene(fxmlLoader.load()));
+                server.release();
             } catch (Exception e){
                 System.out.println(e);
             }
@@ -115,6 +118,8 @@ public class LogInController {
             }
         } else {
             try {
+                Client_Socket clientSocket = new Client_Socket();
+                clientSocket.startGUI(server);
                 String user = username2.getText();
                 Message msg = new Message(MessageType.sendNickname, user);
                 clientSocket.sendMessage(msg);

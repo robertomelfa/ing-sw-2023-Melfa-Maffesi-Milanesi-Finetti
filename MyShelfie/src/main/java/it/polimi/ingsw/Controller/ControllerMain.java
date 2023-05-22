@@ -18,8 +18,8 @@ import java.util.*;
 public class ControllerMain implements Serializable {
     private ArrayList<ClientClass> clientList = new ArrayList<>();
     private GameBackup backup;
-    private boolean backupCreated=false;
-    private boolean isResumedGame=false;
+    private boolean backupCreated = false;
+    private boolean isResumedGame = false;
 
     private int numPlayers = 0;
 

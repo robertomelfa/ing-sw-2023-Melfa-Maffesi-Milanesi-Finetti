@@ -33,33 +33,33 @@ public class ClientMain extends Application implements Serializable {
             System.out.println("Another client is connecting");
         }
         server.block();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Input not received within 30 seconds. Disconnecting from server ..-");
+                try {
+                    server.release();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.exit(0);
+            }
+        };
+        Timer timer = new Timer(true);
+        timer.schedule(task, 30000);
         while (!selection){
             switch (input) {
                 case "yes":
                     launch(args);
                     selection = true;
+                    timer.cancel();
                     break;
                 case "no":
                     selection = true;
                     server.setFirstPlayer();
                     System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            System.out.println("Input not received within 15 seconds. Disconnecting from server ..-");
-                            try {
-                                server.release();
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            System.exit(0);
-                        }
-                    };
-                    Timer timer = new Timer(true);
-                    timer.schedule(task, 15000);
-
                     if (scanner.hasNext()) {
                         input = scanner.next();
                         switch (input.toUpperCase()) {

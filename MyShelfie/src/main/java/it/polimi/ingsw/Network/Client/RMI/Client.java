@@ -9,7 +9,9 @@ import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
 import it.polimi.ingsw.View.GUIView;
+import it.polimi.ingsw.View.ViewClient;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
@@ -20,7 +22,7 @@ import java.util.Scanner;
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
 
 //    private CLIView view=new CLIView(); // view
-    private ViewClient view = new CLIView();
+    private ViewClient view;
     public Client() throws RemoteException{
         super();
     }
@@ -31,8 +33,12 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @param board the game table we want to display
      * @throws RemoteException
      */
-    public void receiveGameTable(GameTable board) throws RemoteException {
-        view.viewGameTable(board);
+    public void receiveGameTable(GameTable board) throws RemoteException{
+        try {
+            view.viewGameTable(board);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -88,6 +94,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws Exception
      */
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
+        view = new CLIView();
         Scanner in = new Scanner(System.in);
         ClientClass client1;
         int num;
@@ -142,20 +149,21 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     }
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
+        //view = new GUIView();
         ClientClass client1;
         server.updateNumPlayers(num);
         client1 = new ClientClass(client);
         client1.setPlayer(username);
         server.updatePlayers(client1);
-        //view = new GUIView();
     }
 
+
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception {
+        view = new GUIView();
         ClientClass client1;
         client1 = new ClientClass(client);
         client1.setPlayer(username);
         server.updatePlayers(client1);
-        //view = new GUIView();
     }
 
     public void ping() throws RemoteException{}

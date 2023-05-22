@@ -43,10 +43,10 @@ public class ControllerGui {
     private GridPane gridTable;
     @FXML
     private Label labelMessage;
-    @FXML
-    private ToggleButton button;
+    private ToggleButton button = new ToggleButton();
     @FXML
     private Button confirm;
+
 
     private int column = -1;
     private ArrayList <Integer[]> posCard = new ArrayList<>();
@@ -190,19 +190,21 @@ public class ControllerGui {
 
     void updateGameTable(GameTable gameTable){
 
-
-        int k =0;
+        int k = 0;
         for(int i = 1; i < 10; i++){
             for(int j = 1; j < 10; j++) {
 
-                if (gameTable.getCardfromBoard(i,j)!= NOT) {
+                if (gameTable.getCardfromBoard(i,j) != NOT) {
                     if (gameTable.getCardfromBoard(i,j)!= NONE) {
                         button = (ToggleButton) gridTable.getChildren().get(k);
                         button.setDisable(false);
                         button.selectedProperty().set(false);
-                        ImageView image = (ImageView) button.getGraphic();
+                        //ImageView image = (ImageView) button.getGraphic();
                         String url = urlCard(gameTable.getCardfromBoard(i,j));
-                        image.setImage(new Image(url));
+                        //image.setImage(new Image(url));
+                        Image image = new Image(url);
+                        button.setGraphic(new ImageView(image));
+
                     }else{
                         button = (ToggleButton) gridTable.getChildren().get(k);
                         button.setDisable(true);
@@ -459,7 +461,6 @@ public class ControllerGui {
     }
 
     public void setLabelMessage(String message){
-
         labelMessage.setText(message);
     }
 
@@ -535,4 +536,5 @@ public class ControllerGui {
         }
         return card;
     }
+
 }

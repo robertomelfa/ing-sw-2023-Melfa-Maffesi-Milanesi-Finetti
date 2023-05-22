@@ -1,15 +1,20 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
-import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.GameLogic;
+import it.polimi.ingsw.Model.GameTable;
+import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Model.PlayerObj;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
 import it.polimi.ingsw.View.GUIView;
 import it.polimi.ingsw.View.ViewClient;
-import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -242,13 +247,12 @@ public class Client_Socket implements Serializable {
     }
 
 
-    public void startGUI(GameInterface server, Stage stage) throws Exception {
+    public void startGUI(GameInterface server) throws Exception {
         connectGUI("127.0.0.1", 8080, server);
         try {
             view = new GUIView();
-            clientLogicGui(server);
-            // start the logic of the client
-            //clientlogicGUI(server, stage);
+            //start the logic of the client
+            clientLogicGui(server);;
         } catch (Exception e) {
             try {
                 socket.close();
@@ -262,13 +266,7 @@ public class Client_Socket implements Serializable {
         try {
             Socket socket = new Socket(host, port);
             this.socket = socket;
-            Message msg;
-            msg = receiveMessage();
         }catch(IOException e){
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -299,6 +297,7 @@ public class Client_Socket implements Serializable {
                     view.viewString("Game is ended");
                     break loop;
                 }
+                case requestNickname, requestNumPlayer -> { }
                 default -> {
                     view.viewString("Communication error");
                     break loop;

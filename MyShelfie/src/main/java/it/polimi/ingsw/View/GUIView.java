@@ -1,18 +1,18 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class GUIView extends Application implements ViewClient{
+public class GUIView implements ViewClient{
 
 private ControllerGui controllerGui;
 private GameLogic gameLogic;
+
+    public GUIView(){
+        controllerGui = new ControllerGui();
+
+    }
 
     @Override
     public void viewLibrary(Library library) {    }
@@ -20,6 +20,7 @@ private GameLogic gameLogic;
     @Override
     public void viewGameTable(GameTable gameTable) {
 
+        controllerGui.updateGameTable(gameTable);
     }
 
     @Override
@@ -80,8 +81,8 @@ private GameLogic gameLogic;
         return gameLogic;
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    //@Override
+    /*public void start(Stage stage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
         Parent root = loader.load();
@@ -95,7 +96,8 @@ private GameLogic gameLogic;
         launch(args);
     }
 
-    public void setControllerGui(ControllerGui controllerGui) {
-        this.controllerGui = controllerGui;
+    */
+
+    public void setControllerGui(ControllerGui controllerGui) { this.controllerGui = controllerGui;
     }
 }
