@@ -69,6 +69,8 @@ public class ControllerMain implements Serializable {
                     throw new RuntimeException(e);
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -545,7 +547,7 @@ public class ControllerMain implements Serializable {
         isResumedGame = resumedGame;
     }
 
-    public void checkConnection() throws IOException, ClassNotFoundException{
+    public void checkConnection() throws IOException, ClassNotFoundException, InterruptedException {
         Message msg1 = new Message(MessageType.closeGame, "Stop game");
         for(int i = 0; i < clientList.size(); i++){
             if(clientList.get(i).getSocket() == null){
@@ -556,6 +558,9 @@ public class ControllerMain implements Serializable {
                     clientList.remove(i);
                     sendGeneralMessage(msg1);
                     resetController();
+                    if(serverRMI.isLocked()){
+                        serverRMI.release();
+                    }
                 }
             }else{
                 Message msg = new Message(MessageType.ping, null);
@@ -566,6 +571,9 @@ public class ControllerMain implements Serializable {
                     clientList.remove(i);
                     sendGeneralMessage(msg1);
                     resetController();
+                    if(serverRMI.isLocked()){
+                        serverRMI.release();
+                    }
                 }
             }
         }

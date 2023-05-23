@@ -2,6 +2,7 @@ package it.polimi.ingsw.Network.Server.RMI;
 
 import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Lock;
@@ -17,7 +18,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     private static Lock lock;
 
-    private static Lock messageLock = new Lock();
+    private boolean isConnecting = false; // the client is trying to connect
 
     public GameServer() throws RemoteException{
         super();
@@ -27,6 +28,10 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     public void start(ControllerMain controller) throws RemoteException{
         this.controller = controller;
         lock = new Lock();
+    }
+
+    public void stopConnecting() throws RemoteException{
+        this.isConnecting = false;
     }
 
 
@@ -91,6 +96,32 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     }
 
     public boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
+
+    public void newClient(GameClientInterface client) throws RemoteException{
+        isConnecting = true;
+        Thread thread = new Thread(()->{
+            while(isConnecting){
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    client.ping();
+                } catch (Exception e) {
+                    try {
+                        release();
+                    } catch (RemoteException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+
+        });
+        thread.start();
+    }
 
 
 }

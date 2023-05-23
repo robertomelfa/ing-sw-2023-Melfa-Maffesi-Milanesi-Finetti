@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.Serializable;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -91,7 +92,6 @@ public class ClientMain extends Application implements Serializable {
                                     clientR.connection(server, clientR, server.getController());
                                     server.release();
                                 } catch (Exception e) {
-                                    System.out.println("[System] Server failed: " + e);
                                 }
                                 break;
                             default:

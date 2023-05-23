@@ -85,7 +85,7 @@ class startSocketServer extends Server implements Runnable{
     public void run() {
         Server_Socket server = getServerSocket();
         try{
-            server.start(getLobby().getController());
+            server.start(getLobby().getController(), getServerRMI());
         }catch(Exception e){}
 
     }

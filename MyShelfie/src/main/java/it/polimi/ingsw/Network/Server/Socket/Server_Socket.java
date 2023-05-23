@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
+import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -19,7 +20,7 @@ public  class Server_Socket implements Serializable {
      * @param controller the controller who handle the game
      * @throws Exception
      */
-    public  void start(ControllerMain controller) throws Exception{
+    public  void start(ControllerMain controller, GameInterface serverRMI) throws Exception{
         try {
             int port=8080;
             serversocket = new ServerSocket(port); // create the server
@@ -28,14 +29,18 @@ public  class Server_Socket implements Serializable {
             while (true){
                 Socket socket = serversocket.accept();
                 if(controller.getClientList().size()==0){   // first player?
-                    controller = firstClient(serversocket, socket, controller);
+                    controller = firstClient(serversocket, socket, controller, serverRMI);
                 }else{
-                    ClientClass client = new ClientClass(socket);   // associo il client ad un player
-                    Message msg = new Message(MessageType.requestNickname, null);
-                    sendMessage(msg, socket);
-                    String name = receiveMessage(socket).getMessage();
-                    client.setPlayer(name);
-                    controller.addClient(client);
+                    try{
+                        ClientClass client = new ClientClass(socket);   // associo il client ad un player
+                        Message msg = new Message(MessageType.requestNickname, null);
+                        sendMessage(msg, socket);
+                        String name = receiveMessage(socket).getMessage();
+                        client.setPlayer(name);
+                        controller.addClient(client);
+                    }catch(IOException e){
+                        serverRMI.release();
+                    }
                 }
             }
         }catch (IOException e){
@@ -156,21 +161,26 @@ public  class Server_Socket implements Serializable {
      * @throws ClassNotFoundException
      * @throws Exception
      */
-    public ControllerMain firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller) throws IOException, ClassNotFoundException, Exception{
+    public ControllerMain firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller, GameInterface serverRMI) throws IOException, ClassNotFoundException, Exception{
           // questo è il client
         ClientClass client = new ClientClass(socket);   // associo il client ad un player
         // ask num of players
-        Message msg=new Message(MessageType.requestNumPlayer,null);
-        sendMessage(msg, socket);
-        // receive num of players
-        int num = receiveInt(socket);
-        controller.setNumPlayers(num);
-        System.out.println("Players: " + num);
-        // ask name of player
-        msg=new Message(MessageType.requestNickname,null);
-        sendMessage(msg, socket);
-        client.setPlayer(receiveMessage(socket).getMessage());
-        controller.addClient(client);
+        try{
+            Message msg=new Message(MessageType.requestNumPlayer,null);
+            sendMessage(msg, socket);
+            // receive num of players
+            int num = receiveInt(socket);
+            controller.setNumPlayers(num);
+            System.out.println("Players: " + num);
+            // ask name of player
+            msg=new Message(MessageType.requestNickname,null);
+            sendMessage(msg, socket);
+            client.setPlayer(receiveMessage(socket).getMessage());
+            controller.addClient(client);
+        }catch (IOException e){
+            serverRMI.release();
+        }
+
         return controller;
     }
 

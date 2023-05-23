@@ -93,38 +93,44 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         Scanner in = new Scanner(System.in);
         ClientClass client1;
         int num;
+        server.newClient(client);
         if(controller.getClientList().size() == 0) {
-            do{
-                view.viewString("Insert players number");
-                num = in.nextInt();
-                if(num < 2 || num > 4){
-                    view.viewString("Players number must be between 2 and 4. Retry");
-                }
-            }while(num < 2 || num > 4);
-            server.updateNumPlayers(num);
-            view.viewString("Enter the player's name");
-            String name;
-            name = in.next();
-            client1 = new ClientClass(client);
-            client1.setPlayer(name);
-            server.updatePlayers(client1);
-        }else{
-            if(controller.getClientList().size() < controller.getNumPlayers()){
-                String name;
+            try{
                 do{
-                    view.viewString("Enter the player's name");
-                    name = in.nextLine();
-                    if(controller.checkExistingName(name)){
-                        System.out.println("This name is used. Try again");
+                    view.viewString("Insert players number");
+                    num = in.nextInt();
+                    if(num < 2 || num > 4){
+                        view.viewString("Players number must be between 2 and 4. Retry");
                     }
-                }while(controller.checkExistingName(name));
+                }while(num < 2 || num > 4);
+                server.updateNumPlayers(num);
+                view.viewString("Enter the player's name");
+                String name;
+                name = in.next();
                 client1 = new ClientClass(client);
                 client1.setPlayer(name);
                 server.updatePlayers(client1);
-            }else{
-                throw new Exception("too many connected clients, you can't log in");
+            }catch(Exception e){
+            }
+        }else{
+            if(controller.getClientList().size() < controller.getNumPlayers()){
+                String name;
+                try{
+                    do{
+                        view.viewString("Enter the player's name");
+                        name = in.nextLine();
+                        if(controller.checkExistingName(name)){
+                            System.out.println("This name is used. Try again");
+                        }
+                    }while(controller.checkExistingName(name));
+                    client1 = new ClientClass(client);
+                    client1.setPlayer(name);
+                    server.updatePlayers(client1);
+                }catch(Exception e){
+                }
             }
         }
+        server.stopConnecting();
         view.viewString("[System] connected!");
     }
 
