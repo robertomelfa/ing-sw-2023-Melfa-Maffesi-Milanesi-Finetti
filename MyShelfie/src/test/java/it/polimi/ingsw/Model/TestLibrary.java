@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static it.polimi.ingsw.Model.Card.*;
+import static it.polimi.ingsw.Model.Card.GREEN;
+
 /**
  * Unit test for Library.
  */
@@ -144,6 +147,53 @@ public class TestLibrary {
         Assert.assertEquals(0, lib.checkFinal());
 
 
+
+    }
+    @Test
+    public void testCheckNumCardsRemain() throws Exception{
+        Player p1 = new Player("bob");
+        p1.getLibrary().setCard(1, 0, PURPLE);
+        p1.getLibrary().setCard(2, 0, WHITE);
+        p1.getLibrary().setCard(3, 0, LIGHTBLUE);
+        p1.getLibrary().setCard(4, 0, LIGHTBLUE);
+        p1.getLibrary().setCard(5, 0, LIGHTBLUE);
+
+        p1.getLibrary().setCard(0, 1, PURPLE);
+        p1.getLibrary().setCard(1, 1, PURPLE);
+        p1.getLibrary().setCard(2, 1, WHITE);
+        p1.getLibrary().setCard(3, 1, YELLOW);
+        p1.getLibrary().setCard(4, 1, LIGHTBLUE);
+        p1.getLibrary().setCard(5, 1, LIGHTBLUE);
+
+        p1.getLibrary().setCard(0, 2, PURPLE);
+        p1.getLibrary().setCard(1, 2, PURPLE);
+        p1.getLibrary().setCard(2, 2, BLUE);
+        p1.getLibrary().setCard(3, 2, LIGHTBLUE);
+        p1.getLibrary().setCard(4, 2, GREEN);
+        p1.getLibrary().setCard(5, 2, LIGHTBLUE);
+
+        p1.getLibrary().setCard(1, 3, GREEN);
+        p1.getLibrary().setCard(2, 3, WHITE);
+        p1.getLibrary().setCard(3, 3, YELLOW);
+        p1.getLibrary().setCard(4, 3, GREEN);
+        p1.getLibrary().setCard(5, 3, GREEN);
+
+        p1.getLibrary().setCard(4, 4, GREEN);
+        p1.getLibrary().setCard(5, 4, GREEN);
+
+        Assert.assertTrue(p1.getLibrary().checkNumCardsRemain(3));
+
+        p1.getLibrary().setCard(3, 4, GREEN);
+        p1.getLibrary().setCard(2, 4, GREEN);
+
+        Assert.assertFalse(p1.getLibrary().checkNumCardsRemain(3));
+        Assert.assertTrue(p1.getLibrary().checkNumCardsRemain(2));
+
+        p1.getLibrary().setCard(1, 4, GREEN);
+
+        Assert.assertFalse(p1.getLibrary().checkNumCardsRemain(2));
+        Assert.assertFalse(p1.getLibrary().checkNumCardsRemain(3));
+        Assert.assertTrue(p1.getLibrary().checkNumCardsRemain(1));
 
     }
     @After
