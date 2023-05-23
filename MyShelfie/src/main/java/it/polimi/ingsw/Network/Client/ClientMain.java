@@ -22,6 +22,19 @@ public class ClientMain extends Application implements Serializable {
 
     public static void main(String[] args) throws Exception {
 
+        System.out.printf(" ██████   ██████             █████████  █████               ████     ██████   ███          \n" +
+                          "░░██████ ██████             ███░░░░░███░░███               ░░███    ███░░███ ░░░           \n" +
+                          " ░███░█████░███  █████ ████░███    ░░░  ░███████    ██████  ░███   ░███ ░░░  ████   ██████ \n" +
+                          " ░███░░███ ░███ ░░███ ░███ ░░█████████  ░███░░███  ███░░███ ░███  ███████   ░░███  ███░░███\n" +
+                          " ░███ ░░░  ░███  ░███ ░███  ░░░░░░░░███ ░███ ░███ ░███████  ░███ ░░░███░     ░███ ░███████ \n" +
+                          " ░███      ░███  ░███ ░███  ███    ░███ ░███ ░███ ░███░░░   ░███   ░███      ░███ ░███░░░  \n" +
+                          " █████     █████ ░░███████ ░░█████████  ████ █████░░██████  █████  █████     █████░░██████ \n" +
+                          "░░░░░     ░░░░░   ░░░░░███  ░░░░░░░░░  ░░░░ ░░░░░  ░░░░░░  ░░░░░  ░░░░░     ░░░░░  ░░░░░░  \n" +
+                          "                  ███ ░███                                                                 \n" +
+                          "                 ░░██████                                                                  \n" +
+                          "                  ░░░░░░                                                                   \n");
+
+
         Boolean selection = false;
         Registry registry = LocateRegistry.getRegistry("localhost", 1099);
         GameInterface server = (GameInterface) registry.lookup("GameInterface");

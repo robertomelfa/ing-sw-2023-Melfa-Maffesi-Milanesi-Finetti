@@ -144,7 +144,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     }
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
-        //view = new GUIView();
+        view = new GUIView();
         ClientClass client1;
         server.updateNumPlayers(num);
         client1 = new ClientClass(client);

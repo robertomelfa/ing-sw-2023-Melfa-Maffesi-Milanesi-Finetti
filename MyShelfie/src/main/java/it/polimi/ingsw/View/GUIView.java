@@ -1,13 +1,10 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class GUIView implements ViewClient{
+public class GUIView implements ViewClient {
 
 private ControllerGui controllerGui;
 private GameLogic gameLogic;
@@ -15,9 +12,7 @@ private byte initLibrary = 0;
 
     public GUIView(){
         controllerGui = new ControllerGui();
-
     }
-
     @Override
     public void viewLibrary(Library library) {    }
 
@@ -28,14 +23,9 @@ private byte initLibrary = 0;
 
     @Override
     public void viewString(String message) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MyShelfieGUi.fxml"));
-            Parent root = loader.load();
-            ControllerGui controller = loader.getController();
-            controller.setLabelMessage(message);
-        } catch (IOException e){
-            System.out.println("IOEXception");
-        }
+
+        controllerGui.setLabelMessage(message);
+
     }
 
     @Override
