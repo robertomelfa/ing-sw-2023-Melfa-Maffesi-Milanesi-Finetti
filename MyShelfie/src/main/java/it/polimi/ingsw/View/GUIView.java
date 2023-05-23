@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
 
-public class GUIView implements ViewClient{
+public class GUIView implements ViewClient {
 
 private ControllerGui controllerGui;
 private GameLogic gameLogic;
