@@ -1,6 +1,6 @@
 
 .togglebutton {
-
+    -fx-border-radius : 5;
     visibility : true;
     -fx-opacity : 1;
     -fx-background-color : transparent;
@@ -8,7 +8,7 @@
 }
 
 .togglebutton:hover {
-
+    -fx-border-radius : 5;
     visibility : true;
     -fx-opacity : 1;
     -fx-background-color : #708ad9;
@@ -17,7 +17,7 @@
 }
 
 .togglebutton:pressed {
-
+    -fx-border-radius : 5;
     visibility : true;
     -fx-background-color : green;
     -fx-opacity : 0.60;
@@ -28,7 +28,7 @@
 }
 
 .togglebutton:selected {
-
+    -fx-border-radius : 5;
     -fx-background-color : transparent;
     -fx-opacity : 1;
     -fx-border-width : 2;
@@ -38,14 +38,14 @@
 }
 
 .button {
-
+    -fx-border-radius : 5;
     -fx-background-color : transparent;
     -fx-border-width : 1;
     -fx-border-color : gray;
 }
 
 .button:hover {
-
+    -fx-border-radius : 5;
     -fx-background-color : #817ec7;
 
 }

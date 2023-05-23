@@ -249,8 +249,8 @@ public class Client_Socket implements Serializable {
 
     public void startGUI(GameInterface server) throws Exception {
         connectGUI("127.0.0.1", 8080, server);
+        view = new GUIView();
         try {
-            view = new GUIView();
             //start the logic of the client
             clientLogicGui(server);;
         } catch (Exception e) {

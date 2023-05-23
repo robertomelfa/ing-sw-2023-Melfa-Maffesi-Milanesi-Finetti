@@ -469,8 +469,10 @@ public class ControllerGui implements Initializable {
         }
     }
 
-    public void setLabelMessage(String message){
-        labelMessage.setText(message);
+    @FXML
+    public void setLabelMessage(String message) {
+        labelMessage.setText("message");
+
     }
 
     public void setGameLogic(GameLogic gameLogic){
@@ -550,4 +552,6 @@ public class ControllerGui implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelMessage.setText("hello");
     }
+
+
 }
