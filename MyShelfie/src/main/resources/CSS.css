@@ -37,23 +37,44 @@
 
 }
 
-.button {
-    -fx-border-radius : 5;
+.button2 {
+
     -fx-background-color : transparent;
     -fx-border-width : 1;
     -fx-border-color : gray;
+    -fx-border-radius : 5;
 }
 
-.button:hover {
+.button2:hover {
+
     -fx-border-radius : 5;
     -fx-background-color : #817ec7;
-
 }
 
-.button:pressed {
+.button2:pressed {
+
+    -fx-border-radius : 5;
+    -fx-background-color : #4456c9;
+}
+
+.button1 {
+
+    -fx-background-color : transparent;
+    -fx-border-color : #2a2a2a;
+    -fx-border-width : 3;
+    -fx-border-radius : 5;
+}
+
+.button1:hover {
+
+    -fx-background-color : #817ec7;
+    -fx-border-radius : 5;
+}
+
+.button1:pressed{
 
     -fx-background-color : #2e2b86;
-
+    -fx-border-radius : 5;
 }
 
 .label {

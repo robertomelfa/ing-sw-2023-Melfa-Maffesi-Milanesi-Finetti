@@ -17,7 +17,7 @@ public class ControllerLibrary {
     @FXML
     private GridPane grid;
 
-
+// TODO una volta verificato che funziona eliminare metodo e bottone prova
 
     // test per verificare che funzioni, da rimpiazzare con click su librerie giocatori
     public void setLibrary(){
@@ -39,26 +39,28 @@ public class ControllerLibrary {
 
     }
 
-    public void updateLibrary(Library library){
+    public void updateLibrary(Library library) {
 
-        Image image ;
-        ImageView card ;
-        grid.setPadding(new Insets(4, 4, 4, 4) );
-        grid.setHgap(10);
+        if (library != null) {
+            Image image;
+            ImageView card;
+            grid.setPadding(new Insets(4, 4, 4, 4));
+            grid.setHgap(10);
 
-        ControllerGui c = new ControllerGui();
+            ControllerGui c = new ControllerGui();
 
-        for (int i=0; i<6; i++){
-            for (int j=0; j<5; j++){
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 5; j++) {
 
-                String url = c.urlCard(library.getPos(i,j));
-                image = new Image(url);
+                    String url = c.urlCard(library.getPos(i, j));
+                    image = new Image(url);
 
-                if (image!=null) {
-                    card = new ImageView(image);
-                    card.setFitHeight(35);
-                    card.setFitWidth(36);
-                    grid.add(card,j,i);
+                    if (image != null) {
+                        card = new ImageView(image);
+                        card.setFitHeight(35);
+                        card.setFitWidth(36);
+                        grid.add(card, j, i);
+                    }
                 }
             }
         }
