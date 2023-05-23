@@ -182,9 +182,13 @@ public class CLIView implements ViewClient, Serializable {
                 System.out.println("You can pick 1, 2 or 3 cards. Try again!");
             }
             if(!gameLogic.checkCardsPickable(size)){
-                System.out.println("There isn't 3 cards avaible");
+                System.out.println("There isn't " + size + " cards avaible");
             }
-        }while(size < 1 || size >3 || !gameLogic.checkCardsPickable(size));
+            if(!gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(size)){
+                System.out.println("There isn't column with " + size + " free spaces");
+            }
+
+        }while(size < 1 || size >3 || !gameLogic.checkCardsPickable(size) || !gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(size));
         if(size == 1){  // case 1 card
             int x1, y1;
             // ask coordinates until a correct input
@@ -284,5 +288,6 @@ public class CLIView implements ViewClient, Serializable {
         insert(list, this.gameLogic);
         return this.gameLogic;
     }
+
 
 }

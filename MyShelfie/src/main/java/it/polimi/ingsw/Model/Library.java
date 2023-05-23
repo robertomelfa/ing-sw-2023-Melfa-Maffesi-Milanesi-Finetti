@@ -123,6 +123,22 @@ public class Library implements Serializable{
     }
 
     /**
+     *
+     * @param size num of cards picked from the client
+     * @return true if he can pick all the cards, false if not
+     */
+    public boolean checkNumCardsRemain(int size){
+        boolean check = false;
+        for(int i = 0; i < 5; i++){
+            if(checkFreeSpaces(i, size)){
+                check = true;
+                break;
+            }
+        }
+        return check;
+    }
+
+    /**
      * @param column: verify last free row of this column
      * @return the last free row of the column
      */
