@@ -58,6 +58,8 @@ public class ControllerGui implements Initializable {
     private GameLogic gameLogic;
     private boolean confirmCards = false;
     private boolean allCardsInsert = false;
+    private final ArrayList<Library> libraries = new ArrayList<>(gameLogic.getGame().getNumOfPlayers());
+    private int indexCurrPlayer = -1;
 
 
     @FXML
@@ -86,7 +88,7 @@ public class ControllerGui implements Initializable {
 
         int numObj=0;
         final String prefix = "file:/C:/Users/mylan/Desktop/Progetto%20Software%20Engeniring/ing-sw-2023-Melfa-Maffesi-Milanesi-Finetti/MyShelfie/target/classes/assets/common goal cards/";
-
+        // TODO fare in modo che il path sia universale
         // ho aggiunto metodo in model/CommonObj
 
         String url;
@@ -151,14 +153,12 @@ public class ControllerGui implements Initializable {
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());
-
-        // controllerMain.getClientList.get(i);
-        // trovare modo di ottenere lista player **
-        // passo la Player.getLibrary
-        // ControllerLibrary controller = loader.getController();
-        // controller.updateLibrary(library);
-
-
+        ControllerLibrary controller = loader.getController();
+        try {
+            controller.updateLibrary(libraries.get(numPlayer));
+        }catch (IndexOutOfBoundsException e ){
+            controller.updateLibrary(null);
+        }
         stage.show();
     }
 
@@ -348,7 +348,7 @@ public class ControllerGui implements Initializable {
     }
 
     @FXML
-    void selectedCard(MouseEvent event) {
+    void selectedCard(javafx.event.ActionEvent event) {
 
         this.button = (ToggleButton) event.getSource();
 
@@ -481,6 +481,13 @@ public class ControllerGui implements Initializable {
         return gameLogic;
     }
 
+    public void updateCurrPlayer(){
+        indexCurrPlayer++;
+        if (indexCurrPlayer >= gameLogic.getGame().getNumOfPlayers()) indexCurrPlayer = 0;
+    }
+    public void setLibraries(Library library){
+        libraries.add(library);
+    }
     public String urlCard (Card card){
         Random rand = new Random();
         int r = rand.nextInt(3)+1;

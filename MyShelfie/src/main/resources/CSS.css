@@ -37,20 +37,41 @@
 
 }
 
-.button {
+.button2 {
 
     -fx-background-color : transparent;
     -fx-border-width : 1;
     -fx-border-color : gray;
+    -fx-border-radius : 3;
+
 }
 
-.button:hover {
+.button2:hover {
+
+    -fx-background-color : #817ec7;
+}
+
+.button2:pressed {
+
+    -fx-background-color : #4456c9;
+
+}
+
+.button1 {
+
+    -fx-background-color : transparent;
+    -fx-border-color : #2a2a2a;
+    -fx-border-width : 3;
+
+}
+
+.button1:hover {
 
     -fx-background-color : #817ec7;
 
 }
 
-.button:pressed {
+.button1:pressed{
 
     -fx-background-color : #2e2b86;
 

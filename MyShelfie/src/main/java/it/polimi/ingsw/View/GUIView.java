@@ -11,6 +11,7 @@ public class GUIView implements ViewClient{
 
 private ControllerGui controllerGui;
 private GameLogic gameLogic;
+private byte initLibrary = 0;
 
     public GUIView(){
         controllerGui = new ControllerGui();
@@ -74,6 +75,11 @@ private GameLogic gameLogic;
     @Override
     public GameLogic getTurn(GameLogic gameLogic) {
 
+        controllerGui.updateCurrPlayer();
+        if (initLibrary < gameLogic.getGame().getNumOfPlayers()){
+            controllerGui.setLibraries(gameLogic.getGame().getCurrentPlayer().getLibrary());
+            initLibrary++;
+        }
         controllerGui.updateGameTable(gameLogic.getGameTable());
         controllerGui.setGameLogic(gameLogic);
         controllerGui.clearListCard();
@@ -85,7 +91,6 @@ private GameLogic gameLogic;
         list = getCardFromTable(this.gameLogic);
         controllerGui.disableGameTable();
         insert(list, this.gameLogic);
-
 
         return gameLogic;
     }
