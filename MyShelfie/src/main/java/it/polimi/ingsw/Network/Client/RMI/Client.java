@@ -7,9 +7,8 @@ import it.polimi.ingsw.Model.Library;
 import it.polimi.ingsw.Model.PlayerObj;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.View.CLIView;
-import it.polimi.ingsw.View.GUIView;
-import it.polimi.ingsw.View.ViewClient;
+import it.polimi.ingsw.View.*;
+import javafx.application.Platform;
 
 import java.io.Serializable;
 import java.rmi.NoSuchObjectException;
@@ -146,11 +145,11 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     public int getIntFromClient(String msg) throws RemoteException{
         Scanner in = new Scanner(System.in);
         view.viewString(msg);
+//        if (view.getClass().equals(GUIView.class)) return 2;
         return in.nextInt();
     }
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
-        view = new GUIView();
         ClientClass client1;
         server.updateNumPlayers(num);
         client1 = new ClientClass(client);
@@ -160,11 +159,15 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
 
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception {
-        view = new GUIView();
         ClientClass client1;
         client1 = new ClientClass(client);
         client1.setPlayer(username);
         server.updatePlayers(client1);
+    }
+
+    public void setControllerView(ControllerGui controllerGui){
+        view = new GUIView();
+        view.setController(controllerGui);
     }
 
     public void ping() throws RemoteException{}

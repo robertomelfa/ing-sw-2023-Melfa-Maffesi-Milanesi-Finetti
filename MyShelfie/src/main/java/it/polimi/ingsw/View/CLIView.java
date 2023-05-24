@@ -289,5 +289,8 @@ public class CLIView implements ViewClient, Serializable {
         return this.gameLogic;
     }
 
+    @Override
+    public void setController(ControllerGui controllerGui) {    }
+
 
 }

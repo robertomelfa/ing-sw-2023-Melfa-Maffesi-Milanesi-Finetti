@@ -16,4 +16,6 @@ public interface ViewClient {
     public ArrayList<Card> getCardFromTable(GameLogic gameLogic) throws RemoteException;
 
     public GameLogic getTurn(GameLogic gameLogic);
+
+    void setController(ControllerGui controllerGui);
 }

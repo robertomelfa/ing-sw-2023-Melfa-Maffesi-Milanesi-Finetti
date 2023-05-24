@@ -7,9 +7,7 @@ import it.polimi.ingsw.Model.PlayerObj;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.View.CLIView;
-import it.polimi.ingsw.View.GUIView;
-import it.polimi.ingsw.View.ViewClient;
+import it.polimi.ingsw.View.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,8 +21,8 @@ public class Client_Socket implements Serializable {
 
 
     private Socket socket;  // è il server
-//    private CLIView view = new CLIView();
 
+//    private CLIView view = new CLIView();
     private ViewClient view;
 
     private ObjectInputStream ois;
@@ -245,11 +243,18 @@ public class Client_Socket implements Serializable {
         oos.writeObject(gameLogic);
     }
 
+    public void setControllerGui(ControllerGui controllerGui){
+        gui = true;
+        view.setController(controllerGui);
+    }
 
     public void startGUI(GameInterface server) throws Exception {
         connectGUI("127.0.0.1", 8080, server);
         view = new GUIView();
         try {
+            while (!gui){
+                // wait until the set of the controller
+            }
             //start the logic of the client
             clientLogicGui(server);;
         } catch (Exception e) {

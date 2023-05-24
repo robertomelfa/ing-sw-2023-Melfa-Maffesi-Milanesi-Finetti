@@ -1,6 +1,8 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 import java.util.ArrayList;
 
@@ -10,22 +12,32 @@ private ControllerGui controllerGui;
 private GameLogic gameLogic;
 private byte initLibrary = 0;
 
-    public GUIView(){
-        controllerGui = new ControllerGui();
-    }
+    public GUIView(){    }
     @Override
     public void viewLibrary(Library library) {    }
 
     @Override
     public void viewGameTable(GameTable gameTable) {
-        controllerGui.updateGameTable(gameTable);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controllerGui.updateGameTable(gameTable);
+            }
+        });
+//        controllerGui.updateGameTable(gameTable);
     }
 
     @Override
     public void viewString(String message) {
 
-        controllerGui.setLabelMessage(message);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controllerGui.setLabelMessage(message);
+            }
+        });
 
+//        controllerGui.setLabelMessage(message);
     }
 
     @Override
@@ -37,9 +49,14 @@ private byte initLibrary = 0;
     @Override
     public void insert(ArrayList<Card> list, GameLogic gameLogic) {
 
-        controllerGui.showArrayCards(list);
-        controllerGui.setLabelMessage("Choose the column");
-        controllerGui.enableColumnButton();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controllerGui.showArrayCards(list);
+                controllerGui.setLabelMessage("Choose the column");
+                controllerGui.enableColumnButton();
+            }
+        });
 
         while (!controllerGui.getAllCardsInsert()){
             // wait until all cards are insert
@@ -50,7 +67,6 @@ private byte initLibrary = 0;
 
     @Override
     public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
-
 
         while(!controllerGui.getConfirm()){
             // wait until cards are selected and have pass controls
@@ -65,23 +81,36 @@ private byte initLibrary = 0;
     @Override
     public GameLogic getTurn(GameLogic gameLogic) {
 
+
+        System.out.println("init player");
         controllerGui.updateCurrPlayer();
         if (initLibrary < gameLogic.getGame().getNumOfPlayers()){
             controllerGui.setLibraries(gameLogic.getGame().getCurrentPlayer().getLibrary());
             initLibrary++;
         }
-        controllerGui.updateGameTable(gameLogic.getGameTable());
-        controllerGui.setGameLogic(gameLogic);
-        controllerGui.clearListCard();
-        controllerGui.clearPosCard();
-        controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
-        controllerGui.enableGameTable();
+        System.out.println("turn started ");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controllerGui.updateGameTable(gameLogic.getGameTable());
+                controllerGui.setGameLogic(gameLogic);
+                controllerGui.clearListCard();
+                controllerGui.clearPosCard();
+                controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
+                controllerGui.enableGameTable();
+            }
+        });
 
         ArrayList<Card> list;
         list = getCardFromTable(this.gameLogic);
-        controllerGui.disableGameTable();
-        insert(list, this.gameLogic);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controllerGui.disableGameTable();
+            }
+        });
 
+        insert(list, this.gameLogic);
         return gameLogic;
     }
 
@@ -102,6 +131,6 @@ private byte initLibrary = 0;
 
     */
 
-    public void setControllerGui(ControllerGui controllerGui) { this.controllerGui = controllerGui;
-    }
+    public void setController(ControllerGui controllerGui) { this.controllerGui = controllerGui; }
+
 }

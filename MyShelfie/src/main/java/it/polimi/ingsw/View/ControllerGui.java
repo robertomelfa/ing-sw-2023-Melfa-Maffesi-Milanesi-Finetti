@@ -4,6 +4,8 @@ import it.polimi.ingsw.Model.Card;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Model.Library;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,7 +35,6 @@ public class ControllerGui implements Initializable {
 
     @FXML
     private ImageView CommonObj1;
-
     @FXML
     private ImageView CommonObj2;
     @FXML
@@ -46,6 +47,7 @@ public class ControllerGui implements Initializable {
     private GridPane gridTable;
     @FXML
     private Label labelMessage;
+    @FXML
     private ToggleButton button = new ToggleButton();
     @FXML
     private Button confirm;
@@ -58,9 +60,17 @@ public class ControllerGui implements Initializable {
     private GameLogic gameLogic;
     private boolean confirmCards = false;
     private boolean allCardsInsert = false;
-    private final ArrayList<Library> libraries = new ArrayList<>(gameLogic.getGame().getNumOfPlayers());
+    private ArrayList<Library> libraries =null;
     private int indexCurrPlayer = -1;
 
+    private LogInController logInController;
+
+    public void setLogInController(LogInController logInController) {
+        this.logInController = logInController;
+    }
+    public void prova(){
+
+    }
 
     @FXML
     void openDescription1(MouseEvent event) throws IOException {
@@ -156,7 +166,7 @@ public class ControllerGui implements Initializable {
         ControllerLibrary controller = loader.getController();
         try {
             controller.updateLibrary(libraries.get(numPlayer));
-        }catch (IndexOutOfBoundsException e ){
+        }catch (NullPointerException e ){
             controller.updateLibrary(null);
         }
         stage.show();
@@ -212,7 +222,11 @@ public class ControllerGui implements Initializable {
                         String url = urlCard(gameTable.getCardfromBoard(i,j));
                         //image.setImage(new Image(url));
                         Image image = new Image(url);
-                        button.setGraphic(new ImageView(image));
+                        ImageView imageView = new ImageView(image);
+                        imageView.setFitWidth(35);
+                        imageView.setFitHeight(40);
+                        button.setGraphic(imageView);
+
 
                     }else{
                         button = (ToggleButton) gridTable.getChildren().get(k);
@@ -471,8 +485,7 @@ public class ControllerGui implements Initializable {
 
     @FXML
     public void setLabelMessage(String message) {
-        labelMessage.setText("message");
-
+        labelMessage.setText(message);
     }
 
     public void setGameLogic(GameLogic gameLogic){
@@ -488,6 +501,7 @@ public class ControllerGui implements Initializable {
         if (indexCurrPlayer >= gameLogic.getGame().getNumOfPlayers()) indexCurrPlayer = 0;
     }
     public void setLibraries(Library library){
+        if (libraries == null) libraries = new ArrayList<>(gameLogic.getGame().getNumOfPlayers());
         libraries.add(library);
     }
     public String urlCard (Card card){

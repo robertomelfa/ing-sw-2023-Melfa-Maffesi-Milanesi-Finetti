@@ -78,13 +78,14 @@ public class LogInController{
         if(RMI) {
             try {
                 if ( num > 1 && num < 5){
-                    String user = username.getText();
-                    GameClientInterface client = new Client();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
-                    server.release();
-                    client.connectionGUI(server, client, server.getController(), num, user);
                     Stage stage = (Stage) start.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load()));
+                    String user = username.getText();
+                    GameClientInterface client = new Client();
+                    server.release();
+                    ((Client) client).setControllerView(fxmlLoader.getController());
+                    client.connectionGUI(server, client, server.getController(), num, user);
                 } else {
                     labelNumPlayers.setOpacity(1);
                 }
@@ -105,6 +106,7 @@ public class LogInController{
                     Stage stage = (Stage) start.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load()));
                     server.release();
+                    clientSocket.setControllerGui(fxmlLoader.getController());
                 }else {
                     labelNumPlayers.setOpacity(1);
                 }
@@ -123,8 +125,9 @@ public class LogInController{
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load()));
-                    client.connectionGUI(server, client, server.getController(), user);
                     server.release();
+                    ((Client) client).setControllerView(fxmlLoader.getController());
+                    client.connectionGUI(server, client, server.getController(), user);
                 } else {
                     label.setOpacity(1);
                 }
@@ -142,6 +145,7 @@ public class LogInController{
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load(), 1240, 1024));
+                    clientSocket.setControllerGui(fxmlLoader.getController());
                 } else {
                     label.setOpacity(1);
                 }
