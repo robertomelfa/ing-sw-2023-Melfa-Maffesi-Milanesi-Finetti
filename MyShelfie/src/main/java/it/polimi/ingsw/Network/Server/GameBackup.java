@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class GameBackup implements Serializable {
+    String name;
     private ArrayList<Player> players;
     private int listIterator;
     private int chair;
@@ -29,6 +30,14 @@ public class GameBackup implements Serializable {
         this.nicknames=nicknames;
         this.chair=chair;
         this.listIterator=listIterator;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public ArrayList<Player> getPlayers() {

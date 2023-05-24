@@ -47,7 +47,7 @@ public class ClientMain extends Application implements Serializable {
         if (server.isLocked()) {
             System.out.println("Another client is connecting");
         }
-        server.block();
+
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -79,12 +79,14 @@ public class ClientMain extends Application implements Serializable {
                         input = scanner.next();
                         switch (input.toUpperCase()) {
                             case "A":
+                                server.block();
                                 timer.cancel();
                                 System.out.println("Starting Socket");
                                 Client_Socket clientS = new Client_Socket();
                                 clientS.start(server);
                                 break;
                             case "B":
+                                server.block();
                                 try {
                                     timer.cancel();
 
@@ -98,9 +100,6 @@ public class ClientMain extends Application implements Serializable {
                                 System.out.println("Invalid choice");
                         }
                     }
-                default:
-                    System.out.println("please insert yes or no to make a selection");
-                    input = scanner.next();
             }
         }
     }

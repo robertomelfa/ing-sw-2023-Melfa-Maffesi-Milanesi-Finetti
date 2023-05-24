@@ -70,7 +70,7 @@ public class Client_Socket implements Serializable {
                     int numPlayers = 0;
                     do{
                         view.viewString("Insert players number:");
-                        numPlayers = in.nextInt();
+                        numPlayers = Integer.parseInt(in.nextLine());
 
                         if(numPlayers < 2 || numPlayers > 4){
                             view.viewString("Players number must be between 2 and 4. Retry");
@@ -148,6 +148,7 @@ public class Client_Socket implements Serializable {
                 view.viewString(msg.getMessage());
             }else if(msg.getType() == MessageType.closeGame){
                 view.viewString(msg.getMessage());
+                socket.close();
                 break;
             }else if(msg.getType() == MessageType.ping){
 
@@ -159,7 +160,6 @@ public class Client_Socket implements Serializable {
                 break;
             }
         }
-        socket.close();
     }
 
     /**

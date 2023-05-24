@@ -87,7 +87,7 @@ public class ControllerMain implements Serializable {
     }
 
     public synchronized void updateBackup() throws IOException, StackOverflowError {
-        if(backupCreated==false){
+        if(!backupCreated){
             System.out.println("Starting backup");
             ArrayList<String> nick = new ArrayList<>();
             ArrayList<Player> ply = new ArrayList<>();
@@ -99,11 +99,12 @@ public class ControllerMain implements Serializable {
             }
             backup=new GameBackup(ply,gameLogic,current_client.getPlayer(),nick,listIterator,chair);
             Gson gson = new Gson();
-            FileWriter writer = new FileWriter("MyShelfie/saves/"+backup.getDate().hashCode()+".json");
+            backup.setName(String.valueOf(backup.getDate().hashCode()));
+            FileWriter writer = new FileWriter("MyShelfie/saves/"+backup.getName()+".json");
             gson.toJson(backup,writer);
             writer.flush();
             writer.close();
-            System.out.println("Backup saved");
+            System.out.println("Backup created");
             setBackupCreated(true);
 
         }else {
@@ -118,7 +119,7 @@ public class ControllerMain implements Serializable {
             backup.setChair(chair);
             backup.setListIterator(listIterator);
             Gson gson = new Gson();
-            FileWriter writer = new FileWriter("MyShelfie/saves/"+backup.getDate().hashCode()+".json");
+            FileWriter writer = new FileWriter("MyShelfie/saves/"+backup.getName()+".json");
             gson.toJson(backup,writer);
             writer.flush();
             writer.close();
@@ -159,20 +160,14 @@ public class ControllerMain implements Serializable {
 
     public synchronized void deleteBackup(){
         File folder = new File("MyShelfie/saves/");
-        GameBackup found=null;
-        Gson gson = new Gson();
+        String currName = backup.getName()+".json";
         for (File file : folder.listFiles()){
             if (!file.isDirectory() && file.isFile() && file.getName().endsWith(".json")){
-                GameBackup temp;
-                try{
-                    FileReader reader = new FileReader(file);
-                    temp=gson.fromJson(reader,GameBackup.class);
-                    reader.close();
-                    if (temp.getDate().hashCode() == Integer.parseInt(file.getName())){
-                        file.delete();
+                if (file.getName().equals(currName)){
+                    boolean res = file.delete();
+                    if (res){
+                        System.out.println("Deleting current backup");
                     }
-                }catch (IOException e){
-
                 }
             }
         }
@@ -190,6 +185,7 @@ public class ControllerMain implements Serializable {
                     FileReader reader = new FileReader(file);
                     temp=gson.fromJson(reader,GameBackup.class);
                     System.out.println("Checking "+file.getName());
+                    reader.close();
                     boolean resetGame=true;
                     for (int i=0; i<clientList.size(); i++){
                         if(!temp.getNicknames().contains(clientList.get(i).getPlayer().getNickname())){
@@ -244,7 +240,8 @@ public class ControllerMain implements Serializable {
             this.gameLogic=found.getGamelogic();
             this.chair=found.getChair();
             this.listIterator=found.getListIterator();
-            backup=found;
+            this.backup=found;
+            this.backup.setName(found.getName());
             setBackupCreated(true);
             setResumedGame(true);
         }
@@ -324,7 +321,6 @@ public class ControllerMain implements Serializable {
                 finish = true;
                 // check the adiacent cards
                 checkEnd();
-                sendGeneralMessage(new Message(MessageType.endGame,"Game is ended"));
             }
             else {
                 current_client = clientList.get(listIterator);
@@ -462,7 +458,7 @@ public class ControllerMain implements Serializable {
             updateBackup();
         }
         // print points
-        pointsToAll(setPointsString());
+        sendGeneralMessage(new Message(MessageType.printMessage,setPointsString()));
         //delete current backup
         deleteBackup();
         // notify the game is ended
@@ -545,6 +541,10 @@ public class ControllerMain implements Serializable {
 
     public void setResumedGame(boolean resumedGame) {
         isResumedGame = resumedGame;
+    }
+
+    public GameBackup getGameBackup() {
+        return backup;
     }
 
     public void checkConnection() throws IOException, ClassNotFoundException, InterruptedException {

@@ -66,7 +66,7 @@ public class Server implements Serializable {
     public void close() throws RemoteException, IOException {
         // Unexport the remote object
         UnicastRemoteObject.unexportObject(serverRMI, true);
-// Unexport the registry
+        // Unexport the registry
         UnicastRemoteObject.unexportObject(registry, true);
 
         getThread1().interrupt();

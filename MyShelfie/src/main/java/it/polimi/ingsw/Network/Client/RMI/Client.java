@@ -98,7 +98,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
             try{
                 do{
                     view.viewString("Insert players number");
-                    num = in.nextInt();
+                    num = Integer.parseInt(in.nextLine());
                     if(num < 2 || num > 4){
                         view.viewString("Players number must be between 2 and 4. Retry");
                     }
@@ -146,7 +146,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     public int getIntFromClient(String msg) throws RemoteException{
         Scanner in = new Scanner(System.in);
         view.viewString(msg);
-        return in.nextInt();
+        return Integer.parseInt(in.nextLine());
     }
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
