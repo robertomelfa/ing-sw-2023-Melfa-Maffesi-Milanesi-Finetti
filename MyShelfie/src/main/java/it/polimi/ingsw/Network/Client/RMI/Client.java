@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.PlayerObj;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
+import it.polimi.ingsw.View.ControllerGui;
 import it.polimi.ingsw.View.GUIView;
 import it.polimi.ingsw.View.ViewClient;
 
