@@ -117,7 +117,7 @@ public class CLIView implements ViewClient, Serializable {
         //gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
         System.out.println("Choose the column:");
         do {
-            column = in.nextInt() - 1;
+            column = Integer.parseInt(in.nextLine()) - 1;
             if (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column, list.size())) {
                 System.out.println("There is no enough space in this column");
             }
@@ -132,7 +132,7 @@ public class CLIView implements ViewClient, Serializable {
             do {
                 flag = 0;
                 if (in.hasNextInt()) {
-                    card = in.nextInt() - 1;
+                    card = Integer.parseInt(in.nextLine()) - 1;
                     if (card >= 0 && card < list.size()) {
                         flag = 1;
                     } else {
@@ -176,7 +176,7 @@ public class CLIView implements ViewClient, Serializable {
         ArrayList<Card> list = new ArrayList<Card>();
         do{
             System.out.println("How many cards?");         // number of card to pick (1 - 3)
-            size = in.nextInt();
+            size = Integer.parseInt(in.nextLine());
 
             if(size < 1 || size >3){
                 System.out.println("You can pick 1, 2 or 3 cards. Try again!");
@@ -194,9 +194,9 @@ public class CLIView implements ViewClient, Serializable {
             // ask coordinates until a correct input
             do{
                 System.out.println("Coordinate x Card 1");
-                x1 = in.nextInt();
+                x1 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate y Card 1");
-                y1 = in.nextInt();
+                y1 = Integer.parseInt(in.nextLine());
                 if(!gameLogic.checkNear(x1, y1)){
                     System.out.println("Invalid coordinates, try again!");
                 }
@@ -211,13 +211,13 @@ public class CLIView implements ViewClient, Serializable {
             // requires coordinates
             do{
                 System.out.println("Coordinate x Card 1");
-                x1 = in.nextInt();
+                x1 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate y Card 1");
-                y1 = in.nextInt();
+                y1 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate x Card 2");
-                x2 = in.nextInt();
+                x2 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate y Card 2");
-                y2 = in.nextInt();
+                y2 = Integer.parseInt(in.nextLine());
 
                 if(!gameLogic.checkNear(x1, y1, x2, y2)){
                     System.out.println("Invalid coordinates, try again!");
@@ -235,17 +235,17 @@ public class CLIView implements ViewClient, Serializable {
             // requires coordinates
             do{
                 System.out.println("Coordinate x Card 1");
-                x1 = in.nextInt();
+                x1 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate y Card 1");
-                y1 = in.nextInt();
+                y1 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate x Card 2");
-                x2 = in.nextInt();
+                x2 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate y Card 2");
-                y2 = in.nextInt();
+                y2 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate x Card 3");
-                x3 = in.nextInt();
+                x3 = Integer.parseInt(in.nextLine());
                 System.out.println("Coordinate y Card 3");
-                y3 = in.nextInt();
+                y3 = Integer.parseInt(in.nextLine());
 
                 if(!gameLogic.checkNear(x1, y1, x2, y2, x3, y3)){
                     System.out.println("Invalid coordinates, try again!");

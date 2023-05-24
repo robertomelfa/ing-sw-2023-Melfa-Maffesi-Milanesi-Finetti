@@ -132,7 +132,7 @@ public class LogInController{
                     label.setOpacity(1);
                 }
             }catch (Exception e){
-
+                System.out.println(e);
             }
         } else {
             try {
