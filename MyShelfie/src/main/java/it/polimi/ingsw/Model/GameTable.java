@@ -28,18 +28,15 @@ public class GameTable implements Serializable{
 
         board[2][4] = NONE;
         board[2][5] = NONE;
-        board[3][3] = NONE;
         board[3][4] = NONE;
         board[3][5] = NONE;
         board[3][6] = NONE;
-        board[4][2] = NONE;
         board[4][3] = NONE;
         board[4][4] = NONE;
         board[4][5] = NONE;
         board[4][6] = NONE;
         board[4][7] = NONE;
         board[4][8] = NONE;
-        board[5][1] = NONE;
         board[5][2] = NONE;
         board[5][3] = NONE;
         board[5][4] = NONE;
@@ -56,13 +53,13 @@ public class GameTable implements Serializable{
         board[7][4] = NONE;
         board[7][5] = NONE;
         board[7][6] = NONE;
-        board[8][4] = NONE;
         board[8][5] = NONE;
         board[8][6] = NONE;
 
         if(playerNumber != 2) {
             // these cases are good for 3 or 4 players
             board[1][4] = NONE;
+            board[3][3] = NONE;
             board[3][7] = NONE;
             board[4][9] = NONE;
             board[6][1] = NONE;
@@ -71,10 +68,13 @@ public class GameTable implements Serializable{
             board[9][6] = NONE;
             // 4 players
             if (playerNumber == 4) {
+                board[5][1] = NONE;
                 board[1][5] = NONE;
+                board[4][2] = NONE;
                 board[2][6] = NONE;
                 board[5][9] = NONE;
                 board[6][8] = NONE;
+                board[8][4] = NONE;
                 board[9][5] = NONE;
             }
         }

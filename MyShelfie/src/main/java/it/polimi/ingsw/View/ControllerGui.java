@@ -5,7 +5,6 @@ import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Model.Library;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -190,15 +189,18 @@ public class ControllerGui implements Initializable {
     void updateLibrary(Library library){
         Image image ;
         ImageView card ;
-        for (int i=0; i<6; i++){
-            for (int j=0; j<5; j++){
+        for (int j=0; j<5; j++){
+            for (int i=0; i<6; i++){
 
                 String url = urlCard(library.getPos(i,j));
 
                 if (url != null){
                     image = new Image(url);
                     card = new ImageView(image);
-                    gridLibrary.add(card,i,j);
+                    card.setFitHeight(26);
+                    card.setFitWidth(24);
+                    gridLibrary.add(card,j,i);
+                    System.out.println(" insert in pos : " +(j)+" - "+(i));
 //                }else{
 //                    card = new ImageView(null);
 //                    gridLibrary.add(card,i,j);
@@ -210,42 +212,45 @@ public class ControllerGui implements Initializable {
     void updateGameTable(GameTable gameTable){
 
         int k = 0;
-        for(int i = 1; i < 10; i++){
-            for(int j = 1; j < 10; j++) {
 
-                if (gameTable.getCardfromBoard(i,j) != NOT) {
-                    if (gameTable.getCardfromBoard(i,j)!= NONE) {
-                        button = (ToggleButton) gridTable.getChildren().get(k);
-                        button.setDisable(false);
-                        button.selectedProperty().set(false);
-                        //ImageView image = (ImageView) button.getGraphic();
-                        String url = urlCard(gameTable.getCardfromBoard(i,j));
-                        //image.setImage(new Image(url));
-                        Image image = new Image(url);
-                        ImageView imageView = new ImageView(image);
-                        imageView.setFitWidth(35);
-                        imageView.setFitHeight(40);
-                        button.setGraphic(imageView);
+        while(k<45) {
+            button = (ToggleButton) gridTable.getChildren().get(k);
+            String pos = button.getText();
+            int x = (int) pos.charAt(0) - 48 +1;
+            int y = (int) pos.charAt(1) - 48 +1;
 
+            if((gameTable.getCardfromBoard(x,y)!= NONE) && (gameTable.getCardfromBoard(x,y) != NOT)){
 
-                    }else{
-                        button = (ToggleButton) gridTable.getChildren().get(k);
-                        button.setDisable(true);
-                        button.selectedProperty().set(false);
-                        ImageView image = (ImageView) button.getGraphic();
-                        image.setImage(null);
-                    }
-                    k++;
-                }
+                button.setDisable(false);
+                button.selectedProperty().set(false);
+                //ImageView image = (ImageView) button.getGraphic();
+                String url = urlCard(gameTable.getCardfromBoard(x,y));
+                //image.setImage(new Image(url));
+                Image image = new Image(url);
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(35);
+                imageView.setFitHeight(40);
+                button.setGraphic(imageView);
+
+            }else{
+                button = (ToggleButton) gridTable.getChildren().get(k);
+                button.setDisable(true);
+                button.selectedProperty().set(false);
+                ImageView image = (ImageView) button.getGraphic();
+                image.setImage(null);
             }
+
+            k++;
         }
+
+
     }
 
     @FXML
     void selectColumn(javafx.event.ActionEvent event) {
 
         Button b = (Button) event.getSource();
-        column = (int) b.getText().charAt(0);   // -48
+        column = (int) b.getText().charAt(0) -48;
         System.out.println("hai scelto la colonna : " + column);
         controlColumn();
 
@@ -271,8 +276,10 @@ public class ControllerGui implements Initializable {
 
         ImageView image = (ImageView) event.getSource();
         Card card = cardUrl(image.getImage().getUrl());
-        gameLogic.getGame().getCurrentPlayer().getLibrary().getGrid()[gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column)][column] = card;
-        updateLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
+        System.out.println("updating library in pos : " + gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column-1)+" - " +column);
+        gameLogic.getGame().getCurrentPlayer().getLibrary().getGrid()[gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column-1)][column-1] = card;
+        Platform.runLater(()->updateLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary()));
+
         image.setImage(null);
         image.setVisible(false);
         image.setDisable(true);
@@ -311,12 +318,14 @@ public class ControllerGui implements Initializable {
 
     public void showArrayCards(ArrayList<Card> list){
         String url;
+        System.out.println("in showCards...");
         for (int i=0; i<list.size(); i++){
+            System.out.println("Card :  " +list.get(i));
             ImageView image = (ImageView) arrayCards.getChildren().get(i);
             url = urlCard(list.get(i));
             image.setImage(new Image(url));
             image.setVisible(true);
-//            image.setDisable(true);
+//            image.setDisable(false);
         }
         for (int i=list.size(); i<3; i++){
             ImageView image = (ImageView) arrayCards.getChildren().get(i);
@@ -349,6 +358,8 @@ public class ControllerGui implements Initializable {
             button = (ToggleButton) gridTable.getChildren().get(i);
             if (button.getGraphic()!=null) {
                 button.setDisable(false);
+            }else{
+                button.setDisable(true);
             }
         }
     }
@@ -368,18 +379,25 @@ public class ControllerGui implements Initializable {
 
         //controllare se invertiti x & y
         String pos = button.getText();
-        int x = (int) pos.charAt(0)-48;
-        int y = (int) pos.charAt(1)-48;
+        int x = (int) pos.charAt(0)-48+1;
+        int y = (int) pos.charAt(1)-48+1;
 
         if (button.isSelected()) {
-            System.out.println("clicked " +x+ " , " +y);
+            System.out.println("clicked " +(x-1)+ " , " +(y-1));
             addCountCard();
             posCard.add(new Integer[]{x,y});
         }
         else {
-            System.out.println("unclicked " +x+ ", " +y);
+            System.out.println("unclicked " +(x-1)+ ", " +(y-1));
             subCountCard();
-            posCard.remove(new Integer[]{x, y});
+
+            for (Integer[] pair : posCard){
+                if ((pair[0] == x) && (pair[1] == y)) {
+                    posCard.remove(pair);
+                    break;
+                }
+            }
+//            posCard.remove(new Integer[]{x,y});
         }
 
         confirm.setDisable(countCard > 3);
@@ -401,11 +419,17 @@ public class ControllerGui implements Initializable {
 
         switch (countCard){
             case 1 -> {
+                System.out.println(" card : " + posCard.get(0)[0] + " - " +posCard.get(0)[1]);
+                System.out.println("check : " + gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1]));
                 if (gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1])){
 
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(0)[0],posCard.get(0)[1]));
-                    setConfirmCards(true);
+
+                    System.out.println("add Card at list");
+
                     gameLogic.getGameTable().setCardfromBoard(posCard.get(0)[0], posCard.get(0)[1], NONE);
+
+                    System.out.println("set NONE in gameTable");
 
                 }else{
                     String message = "Cards selected are not drawable. Choose other cards";
@@ -414,13 +438,15 @@ public class ControllerGui implements Initializable {
                 }
             }
             case 2 ->{
+                System.out.println(" card : " + posCard.get(0)[0] + " - " +posCard.get(0)[1]);
+                System.out.println(" card : " + posCard.get(1)[0] + " - " +posCard.get(1)[1]);
+                System.out.println("check : " + gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1]));
                 if (gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1])) {
 
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(0)[0],posCard.get(0)[1]));
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(1)[0],posCard.get(1)[1]));
-                    setConfirmCards(true);
-                    gameLogic.getGameTable().setCardfromBoard(posCard.get(1)[0], posCard.get(1)[1], NONE);
                     gameLogic.getGameTable().setCardfromBoard(posCard.get(0)[0], posCard.get(0)[1], NONE);
+                    gameLogic.getGameTable().setCardfromBoard(posCard.get(1)[0], posCard.get(1)[1], NONE);
 
                 }else{
                     String message = "Cards selected are not drawable. Choose other cards";
@@ -430,12 +456,15 @@ public class ControllerGui implements Initializable {
             }
 
             case 3 ->{
+                System.out.println(" card : " + posCard.get(0)[0] + " - " +posCard.get(0)[1]);
+                System.out.println(" card : " + posCard.get(1)[0] + " - " +posCard.get(1)[1]);
+                System.out.println(" card : " + posCard.get(2)[0] + " - " +posCard.get(2)[1]);
+                System.out.println("check : " + gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1],posCard.get(2)[0],posCard.get(2)[1]));
                 if (gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1],posCard.get(2)[0],posCard.get(2)[1])) {
 
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(0)[0],posCard.get(0)[1]));
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(1)[0],posCard.get(1)[1]));
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(2)[0],posCard.get(2)[1]));
-                    setConfirmCards(true);
                     gameLogic.getGameTable().setCardfromBoard(posCard.get(2)[0], posCard.get(2)[1], NONE);
                     gameLogic.getGameTable().setCardfromBoard(posCard.get(1)[0], posCard.get(1)[1], NONE);
                     gameLogic.getGameTable().setCardfromBoard(posCard.get(0)[0], posCard.get(0)[1], NONE);
@@ -449,9 +478,16 @@ public class ControllerGui implements Initializable {
 
         }
 
-        unselectedGameTable();
-        disableGameTable();
+        System.out.println("setting confirm ...  now : " + confirmCards);
+        setConfirmCards(true);
+        System.out.println("confirm  :  " + confirmCards);
+        Platform.runLater(() -> {
+            updateGameTable(gameLogic.getGameTable());
+            unselectedGameTable();
+            disableGameTable();
+        });
 
+        System.out.println("refresh gameTable");
     }
 
     public void addCountCard(){
@@ -462,15 +498,20 @@ public class ControllerGui implements Initializable {
         countCard--;
     }
 
-    public boolean getConfirm(){
+    public boolean getConfirmCards(){
         return confirmCards;
     }
     public void setConfirmCards(boolean confirmCards) {
         this.confirmCards = confirmCards;
     }
     public void clearPosCard(){
-        while(posCard.get(0)!=null){
-            posCard.remove(posCard.size()-1);
+        try {
+            while(posCard != null){
+                System.out.println("clear pos : " + posCard.get(posCard.size()-1)[0] + " - " +posCard.get(posCard.size()-1)[1] );
+                posCard.remove(posCard.size()-1);
+            }
+        }catch (IndexOutOfBoundsException ignored){
+
         }
     }
 
@@ -478,8 +519,12 @@ public class ControllerGui implements Initializable {
         return listCard;
     }
     public void clearListCard(){
-        while(listCard.get(0)!=null){
-            listCard.remove(listCard.size()-1);
+        try {
+            while (listCard != null) {
+                listCard.remove(listCard.size() - 1);
+            }
+        }catch (IndexOutOfBoundsException ignored ){
+
         }
     }
 
@@ -556,7 +601,9 @@ public class ControllerGui implements Initializable {
     }
 
     public Card cardUrl (String url){
-
+        url = url.substring(url.lastIndexOf("assets"));
+        url = url.replace("%20", " ");
+        System.out.println("url clear from useless : " + url);
         Card card = null;
         switch (url){
             case PathImageCards.TROFEI1, PathImageCards.TROFEI3, PathImageCards.TROFEI2 -> card = LIGHTBLUE;

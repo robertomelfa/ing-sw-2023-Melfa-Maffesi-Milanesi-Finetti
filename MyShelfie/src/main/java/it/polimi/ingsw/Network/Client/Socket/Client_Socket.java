@@ -256,7 +256,7 @@ public class Client_Socket implements Serializable {
                 // wait until the set of the controller
             }
             //start the logic of the client
-            clientLogicGui(server);;
+            clientLogicGui(server);
         } catch (Exception e) {
             try {
                 socket.close();
@@ -279,12 +279,16 @@ public class Client_Socket implements Serializable {
 
     public void clientLogicGui(GameInterface server) throws Exception {
         Message msg;
+        System.out.println("started gui logic");
 
         loop: while(true) {
             msg = receiveMessage();
 
             switch (msg.getType()) {
                 case receiveGameTable, receiveLibrary, receivePlayerObj -> {
+                }
+                case notifyBeginTurn -> {
+                    sendMessage(new Message(MessageType.printMessage, "2"));
                 }
                 case getCard -> {
                     GameLogic gameLogic = receiveGameLogic();
@@ -294,14 +298,11 @@ public class Client_Socket implements Serializable {
                 case objectiveCompleted, printMessage, receivePoint -> {
                     view.viewString(msg.getMessage());
                 }
-                case notifyBeginTurn -> {
-                    sendMessage(new Message(MessageType.printMessage, "2"));
-                }
+                case requestNickname, requestNumPlayer -> { }
                 case endGame -> {
                     view.viewString("Game is ended");
                     break loop;
                 }
-                case requestNickname, requestNumPlayer -> { }
                 default -> {
                     view.viewString("Communication error");
                     break loop;

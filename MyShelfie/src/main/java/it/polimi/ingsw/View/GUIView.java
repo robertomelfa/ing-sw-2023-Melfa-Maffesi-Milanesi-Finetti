@@ -2,7 +2,6 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 
 import java.util.ArrayList;
 
@@ -30,12 +29,7 @@ private byte initLibrary = 0;
     @Override
     public void viewString(String message) {
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controllerGui.setLabelMessage(message);
-            }
-        });
+        Platform.runLater(() -> controllerGui.setLabelMessage(message));
 
 //        controllerGui.setLabelMessage(message);
     }
@@ -49,17 +43,20 @@ private byte initLibrary = 0;
     @Override
     public void insert(ArrayList<Card> list, GameLogic gameLogic) {
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controllerGui.showArrayCards(list);
-                controllerGui.setLabelMessage("Choose the column");
-                controllerGui.enableColumnButton();
-            }
+        System.out.println("in insert, GuiView");
+        Platform.runLater(() -> {
+            controllerGui.showArrayCards(list);
+            controllerGui.setLabelMessage("Choose the column");
+            controllerGui.enableColumnButton();
         });
+        System.out.println("refresh gui done, showCards");
 
         while (!controllerGui.getAllCardsInsert()){
             // wait until all cards are insert
+            try{
+                Thread.sleep(50);
+            } catch (InterruptedException ignore) {
+            }
         }
         controllerGui.setAllCardsInsert(false);
         this.gameLogic = controllerGui.getGameLogic();
@@ -68,11 +65,18 @@ private byte initLibrary = 0;
     @Override
     public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
 
-        while(!controllerGui.getConfirm()){
-            // wait until cards are selected and have pass controls
+        System.out.println("in getCardFromTable, GuiView ...");
+
+        while(!controllerGui.getConfirmCards()){
+            //wait until get confirm is true
+            try{
+                Thread.sleep(50);
+            } catch (InterruptedException ignore) {}
         }
-        controllerGui.setConfirmCards(false);
+
+        System.out.println("get the confirmation and go on...");
         this.gameLogic = controllerGui.getGameLogic();
+        controllerGui.setConfirmCards(false);
 
         return controllerGui.getListCard();
     }
@@ -82,35 +86,29 @@ private byte initLibrary = 0;
     public GameLogic getTurn(GameLogic gameLogic) {
 
 
-        System.out.println("init player");
-        controllerGui.updateCurrPlayer();
-        if (initLibrary < gameLogic.getGame().getNumOfPlayers()){
-            controllerGui.setLibraries(gameLogic.getGame().getCurrentPlayer().getLibrary());
-            initLibrary++;
-        }
+//        da capire come fare a inizializzare con gli altri player
+//        controllerGui.updateCurrPlayer();
+//        if (initLibrary < gameLogic.getGame().getNumOfPlayers()){
+//            controllerGui.setLibraries(gameLogic.getGame().getCurrentPlayer().getLibrary());
+//            initLibrary++;
+//        }
         System.out.println("turn started ");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controllerGui.updateGameTable(gameLogic.getGameTable());
-                controllerGui.setGameLogic(gameLogic);
-                controllerGui.clearListCard();
-                controllerGui.clearPosCard();
-                controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
-                controllerGui.enableGameTable();
-            }
+
+        Platform.runLater(() -> {
+            controllerGui.updateGameTable(gameLogic.getGameTable());
+            controllerGui.setGameLogic(gameLogic);
+            controllerGui.clearListCard();
+            controllerGui.clearPosCard();
+            controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
+            controllerGui.enableGameTable();
         });
 
         ArrayList<Card> list;
+        System.out.println("created list ");
         list = getCardFromTable(this.gameLogic);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controllerGui.disableGameTable();
-            }
-        });
-
+        System.out.println("taken list from getCardFromTable, GuiView");
         insert(list, this.gameLogic);
+
         return gameLogic;
     }
 

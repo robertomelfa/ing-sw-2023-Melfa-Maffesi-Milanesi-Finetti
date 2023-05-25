@@ -96,7 +96,7 @@
                                                 <Insets left="8.0" right="8.0" />
                                              </padding>
                                           </Button>
-                              <Label fx:id="labelMessage" prefHeight="36.0" prefWidth="394.0" styleClass="labelmessage" stylesheets="@CSS.css" textAlignment="CENTER" textFill="#0f0f0f" wrapText="true" >
+                              <Label fx:id="labelMessage" prefHeight="36.0" prefWidth="394.0" styleClass="labelmessage" stylesheets="@CSS.css" textAlignment="CENTER" textFill="#0f0f0f" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -304,7 +304,7 @@
                            <font>
                               <Font size="1.0" />
                            </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="32" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="23" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -646,10 +646,10 @@
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                              <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.rowIndex="5" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                              <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.rowIndex="5" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
