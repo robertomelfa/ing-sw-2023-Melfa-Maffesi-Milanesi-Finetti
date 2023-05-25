@@ -77,10 +77,17 @@ public class ControllerMain implements Serializable {
         thread.start();
     }
 
+    /**
+     * This method reset the clientList of the controller when a client crash
+     */
     public void resetController(){
         clientList.clear();
     }
 
+    /**
+     *
+     * @param controller controller we want to copy (it pass the list of the clients connected)
+     */
     public void copy(ControllerMain controller){
         this.clientList.addAll(controller.getClientList());
         this.numPlayers = clientList.size();
@@ -287,9 +294,6 @@ public class ControllerMain implements Serializable {
         return false;
     }
 
-    public ClientClass getChair(){
-        return clientList.get(chair);
-    }
 
     public ClientClass getCurrentPlayer(){
         return current_client;
@@ -389,6 +393,14 @@ public class ControllerMain implements Serializable {
         return this.numPlayers;
     }
 
+    /**
+     * This method send the gameTable to all clients (socket and RMI)
+     *
+     * @param gameTable the gametable associate with the game
+     * @throws ClassNotFoundException
+     * @throws IOException
+     * @throws Exception
+     */
     public void gameTableToALL(GameTable gameTable) throws ClassNotFoundException, IOException, Exception{
         for(int i = 0; i < clientList.size(); i++){
             if(clientList.get(i).getClient() == null){
@@ -457,8 +469,8 @@ public class ControllerMain implements Serializable {
             // update backup
             updateBackup();
         }
-        // print points
-        sendGeneralMessage(new Message(MessageType.printMessage,setPointsString()));
+        // print classification
+        sendGeneralMessage(new Message(MessageType.printMessage,getClassification()));
         //delete current backup
         deleteBackup();
         // notify the game is ended
@@ -547,6 +559,30 @@ public class ControllerMain implements Serializable {
         return backup;
     }
 
+    /**
+     *
+     * @return the String with the classification of the game
+     */
+    public String getClassification(){
+        List<Player> playersList = new ArrayList<>();
+        String string ="\nCLASSIFICATION\n";
+        for(int i = 0; i < clientList.size(); i++){
+            playersList.add(clientList.get(i).getPlayer());
+        }
+        playersList.sort(Comparator.comparingInt(Player::getScore).reversed());
+        for(int i = 0; i < playersList.size(); i++){
+            string = string + (i+1) + "° : " + playersList.get(i).getNickname() + " with " + playersList.get(i).getScore() + "\n";
+        }
+        return string;
+    }
+
+    /**
+     * This method checks if any client is disconnected, if yes the game will stop
+     *
+     * @throws IOException if the socket client is disconnected
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
+     */
     public void checkConnection() throws IOException, ClassNotFoundException, InterruptedException {
         Message msg1 = new Message(MessageType.closeGame, "Stop game");
         for(int i = 0; i < clientList.size(); i++){
@@ -558,9 +594,6 @@ public class ControllerMain implements Serializable {
                     clientList.remove(i);
                     sendGeneralMessage(msg1);
                     resetController();
-                    if(serverRMI.isLocked()){
-                        serverRMI.release();
-                    }
                 }
             }else{
                 Message msg = new Message(MessageType.ping, null);
@@ -571,12 +604,21 @@ public class ControllerMain implements Serializable {
                     clientList.remove(i);
                     sendGeneralMessage(msg1);
                     resetController();
-                    if(serverRMI.isLocked()){
-                        serverRMI.release();
-                    }
                 }
             }
         }
+    }
+
+}
+
+/**
+ * Class to compare the players' scores
+ */
+class ScoreComparator implements Comparator<Player>{
+
+    @Override
+    public int compare(Player p1, Player p2){
+        return Integer.compare(p1.getScore(), p2.getScore());
     }
 }
 
