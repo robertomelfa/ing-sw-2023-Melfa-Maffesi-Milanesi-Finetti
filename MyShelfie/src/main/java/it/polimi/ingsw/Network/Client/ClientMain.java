@@ -42,8 +42,7 @@ public class ClientMain extends Application implements Serializable {
         System.out.println("[CLIENT] is running");
         Scanner scanner = new Scanner(System.in);
         String input;
-        System.out.println("Do you want to use UI?");
-        input = scanner.next();
+        //input = scanner.next();
         if (server.isLocked()) {
             System.out.println("Another client is connecting");
         }
@@ -65,6 +64,8 @@ public class ClientMain extends Application implements Serializable {
         Timer timer = new Timer(true);
         timer.schedule(task, 30000);
         while (!selection){
+            System.out.println("Do you want to use UI?");
+            input = scanner.next();
             switch (input) {
                 case "yes":
                     timer.cancel();
@@ -74,32 +75,36 @@ public class ClientMain extends Application implements Serializable {
                 case "no":
                     selection = true;
                     server.setFirstPlayer();
-                    System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
-                    if (scanner.hasNext()) {
-                        input = scanner.next();
-                        switch (input.toUpperCase()) {
-                            case "A":
-                                server.block();
-                                timer.cancel();
-                                System.out.println("Starting Socket");
-                                Client_Socket clientS = new Client_Socket();
-                                clientS.start(server);
-                                break;
-                            case "B":
-                                server.block();
-                                try {
-                                    timer.cancel();
+                    do{
+                        System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
 
-                                    GameClientInterface clientR = new Client();
-                                    clientR.connection(server, clientR, server.getController());
-                                    server.release();
-                                } catch (Exception e) {
-                                }
-                                break;
-                            default:
-                                System.out.println("Invalid choice");
+                        if (scanner.hasNext()) {
+                            input = scanner.next();
+                            switch (input.toUpperCase()) {
+                                case "A":
+                                    server.block();
+                                    timer.cancel();
+                                    System.out.println("Starting Socket");
+                                    Client_Socket clientS = new Client_Socket();
+                                    clientS.start(server);
+                                    break;
+                                case "B":
+                                    server.block();
+                                    try {
+                                        timer.cancel();
+
+                                        GameClientInterface clientR = new Client();
+                                        clientR.connection(server, clientR, server.getController());
+                                        server.release();
+                                    } catch (Exception e) {
+                                    }
+                                    break;
+
+                            }
                         }
                     }
+                    while (!input.toUpperCase().equals("A") && !input.toUpperCase().equals("B"));
+
             }
         }
     }
