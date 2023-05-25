@@ -259,7 +259,7 @@ public class ControllerGui implements Initializable {
     public void controlColumn(){
         if (column == -1) return;
 
-        if (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column,countCard)){
+        if (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column-1,countCard)){
             setLabelMessage("There is no enough space in this column. Choose another one");
             column = -1;
             return;
@@ -509,6 +509,7 @@ public class ControllerGui implements Initializable {
             while(posCard != null){
                 System.out.println("clear pos : " + posCard.get(posCard.size()-1)[0] + " - " +posCard.get(posCard.size()-1)[1] );
                 posCard.remove(posCard.size()-1);
+                subCountCard();
             }
         }catch (IndexOutOfBoundsException ignored){
 
