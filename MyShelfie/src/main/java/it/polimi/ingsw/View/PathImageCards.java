@@ -21,4 +21,20 @@ public class PathImageCards {
     public static final String TROFEI2 = "assets/item tiles/Trofei1.2.png";
     public static final String TROFEI3 = "assets/item tiles/Trofei1.3.png";
 
+    public static final String COMMONOBJ1 = "assets/common goal cards/1.jpg";
+    public static final String COMMONOBJ2 = "assets/common goal cards/2.jpg";
+    public static final String COMMONOBJ3 = "assets/common goal cards/3.jpg";
+    public static final String COMMONOBJ4 = "assets/common goal cards/4.jpg";
+    public static final String COMMONOBJ5 = "assets/common goal cards/5.jpg";
+    public static final String COMMONOBJ6 = "assets/common goal cards/6.jpg";
+    public static final String COMMONOBJ7 = "assets/common goal cards/7.jpg";
+    public static final String COMMONOBJ8 = "assets/common goal cards/8.jpg";
+    public static final String COMMONOBJ9 = "assets/common goal cards/9.jpg";
+    public static final String COMMONOBJ10 = "assets/common goal cards/10.jpg";
+    public static final String COMMONOBJ11 = "assets/common goal cards/11.jpg";
+    public static final String COMMONOBJ12 = "assets/common goal cards/12.jpg";
+    public static final String COMMONOBJBACK = "assets/common goal cards/back.jpg";
+
+
+
 }
