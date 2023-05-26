@@ -198,7 +198,6 @@ public class ControllerGui implements Initializable {
                     card.setFitHeight(26);
                     card.setFitWidth(24);
                     gridLibrary.add(card,j,i);
-                    System.out.println(" insert in pos : " +(j)+" - "+(i));
 //                }else{
 //                    card = new ImageView(null);
 //                    gridLibrary.add(card,i,j);
@@ -241,6 +240,7 @@ public class ControllerGui implements Initializable {
             k++;
         }
 
+        gameTable.checkStatus();
 
     }
 
@@ -274,7 +274,6 @@ public class ControllerGui implements Initializable {
 
         ImageView image = (ImageView) event.getSource();
         Card card = cardUrl(image.getImage().getUrl());
-        System.out.println("updating library in pos : " + gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column-1)+" - " +column);
         gameLogic.getGame().getCurrentPlayer().getLibrary().getGrid()[gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column-1)][column-1] = card;
         Platform.runLater(()->updateLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary()));
 
@@ -617,7 +616,7 @@ public class ControllerGui implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        labelMessage.setText("hello");
+        labelMessage.setText(" Welcome !!! \n waiting other players... ");
     }
 
 

@@ -13,7 +13,9 @@ private byte initLibrary = 0;
 
     public GUIView(){    }
     @Override
-    public void viewLibrary(Library library) {    }
+    public void viewLibrary(Library library) {
+        Platform.runLater(()-> controllerGui.updateLibrary(library));
+    }
 
     @Override
     public void viewGameTable(GameTable gameTable) {
@@ -70,7 +72,7 @@ private byte initLibrary = 0;
         while(!controllerGui.getConfirmCards()){
             //wait until get confirm is true
             try{
-                Thread.sleep(50);
+                Thread.sleep(100);
             } catch (InterruptedException ignore) {}
         }
 

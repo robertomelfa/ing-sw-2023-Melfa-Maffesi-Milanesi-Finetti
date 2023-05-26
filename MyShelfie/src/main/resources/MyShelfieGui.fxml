@@ -184,12 +184,12 @@
                               </HBox>
                               <ImageView fx:id="CommonObj1" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription1" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/common goal cards/1.jpg" />
+                                    <Image url="@assets/common goal cards/back.jpg" />
                                  </image>
                               </ImageView>
                               <ImageView fx:id="CommonObj2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription2" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/common goal cards/2.jpg" />
+                                    <Image url="@assets/common goal cards/back.jpg" />
                                  </image>
                               </ImageView>
                               <HBox alignment="CENTER_LEFT">
