@@ -112,16 +112,26 @@ public class CLIView implements ViewClient, Serializable {
 
     public void insert(ArrayList<Card> list, GameLogic gameLogic) {
         int column = 0;
+        String tempColumn;
+        boolean validChoice = false;
         Scanner in = new Scanner(System.in);
         viewLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
-        //gameLogic.getGame().getCurrentPlayer().getLibrary().viewGrid();
-        System.out.println("Choose the column:");
         do {
-            column = Integer.parseInt(in.nextLine()) - 1;
-            if (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column, list.size())) {
-                System.out.println("There is no enough space in this column");
+            System.out.println("Choose the column:");
+            tempColumn = in.nextLine();
+            if (tempColumn.equals("1") || tempColumn.equals("2") || tempColumn.equals("3") || tempColumn.equals("4") || tempColumn.equals("5")){
+                column = Integer.parseInt(tempColumn) - 1;
+                if (gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column, list.size())) {
+                    validChoice = true;
+
+                }else {
+                    System.out.println("There is no enough space in this column");
+                }
+            }else {
+                System.out.println("Invalid input");
             }
-        } while (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column, list.size()));
+
+        } while (!validChoice);
 
         int flag = 0;
         String type = new String();

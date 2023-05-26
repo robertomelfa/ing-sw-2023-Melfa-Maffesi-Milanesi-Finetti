@@ -18,6 +18,7 @@ import java.util.*;
 import static it.polimi.ingsw.Model.Card.*;
 import static it.polimi.ingsw.Model.Card.GREEN;
 
+
 public class ControllerMain implements Serializable {
     private ArrayList<ClientClass> clientList = new ArrayList<>();
     private GameBackup backup;

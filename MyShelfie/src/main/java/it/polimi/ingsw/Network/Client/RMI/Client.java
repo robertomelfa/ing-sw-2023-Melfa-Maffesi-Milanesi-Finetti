@@ -140,17 +140,16 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
 
 
     /**
-     * print a string and return an int that correspond to the answer of a question present in the sting
-     * we printed
-     * @param msg string we want to print
-     * @return an int taken in input
+     * print a string to CLI and return a string taken from input
+     * @param viewMessage string we want to print
+     * @return the string taken from input
      * @throws RemoteException
      */
-    public int getIntFromClient(String msg) throws RemoteException{
+
+    public String getStringFromClient(String viewMessage) throws RemoteException{
         Scanner in = new Scanner(System.in);
-        view.viewString(msg);
-//        if (view.getClass().equals(GUIView.class)) return 2;
-        return Integer.parseInt(in.nextLine());
+        view.viewString(viewMessage);
+        return in.nextLine();
     }
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{

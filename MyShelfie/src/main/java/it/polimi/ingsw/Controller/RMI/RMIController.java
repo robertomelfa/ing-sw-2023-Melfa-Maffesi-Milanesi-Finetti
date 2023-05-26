@@ -13,7 +13,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 
-// TODO implementare comunicazione client-server attraverso controller per la gestione del turno
 
 public class RMIController implements Serializable {
     private GameInterface server;   // RMIServer
@@ -51,8 +50,8 @@ public class RMIController implements Serializable {
             int i = 0;
             while(i == 0){
 
-                switch (current_client.getIntFromClient("\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards")){
-                    case 1:
+                switch (current_client.getStringFromClient("\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards")){
+                    case "1":
                         // print object
                         current_client.receiveMessage("Player Object:");
                         current_client.receivePlayerObj(gameLogic.getGame().getCurrentPlayer().getPlayerObj());
@@ -61,7 +60,7 @@ public class RMIController implements Serializable {
                         current_client.receiveMessage("Common Object 2:");
                         current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescrizione());
                         break;
-                    case 2:
+                    case "2":
                         i = 1;
                         break;
                     default:
@@ -70,7 +69,7 @@ public class RMIController implements Serializable {
             }
 
             // send the library to the current player
-            current_client.receiveLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
+            //current_client.receiveLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
 
             // get cards from table
             this.gameLogic = current_client.receiveGetCard(gameLogic, server);

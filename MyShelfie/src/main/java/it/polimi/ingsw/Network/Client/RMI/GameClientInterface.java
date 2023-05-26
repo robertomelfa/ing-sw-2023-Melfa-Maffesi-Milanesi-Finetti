@@ -20,13 +20,9 @@ public interface GameClientInterface extends Remote{
 
     public void receiveMessage(String msg) throws RemoteException;
 
-
-
-    public int getIntFromClient(String msg) throws RemoteException;
-
-
-
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception;
+
+    public String getStringFromClient(String viewMessage) throws RemoteException;
 
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception;
 
