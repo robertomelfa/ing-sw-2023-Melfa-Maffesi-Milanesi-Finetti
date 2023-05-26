@@ -21,9 +21,8 @@ import java.util.Scanner;
 public class Client_Socket implements Serializable {
 
 
-    private Socket socket;  // è il server
+    private Socket socket;
 
-//    private CLIView view = new CLIView();
     private ViewClient view;
 
     private ObjectInputStream ois;
@@ -315,5 +314,10 @@ public class Client_Socket implements Serializable {
                 }
             }
         }
+    }
+
+    //@Test
+    public void setView(){
+        view = new CLIView();
     }
 }

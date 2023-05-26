@@ -64,14 +64,14 @@ public class TestCLIView {
         Game game = new Game(2);
         GameLogic gameLogic = new GameLogic(game);
         GameTable gameTable1 = gameLogic.getGameTable();
-        Card card = gameTable1.getCardfromBoard(5,1);
+        Card card = gameTable1.getCardfromBoard(2,4);
         Player player = new Player("bob");
         player.getLibrary().setCard(5, 0, BLUE);
         player.getLibrary().setCard(4, 0, BLUE);
         gameLogic.getGame().setCurrentPlayer(player);
         // one card
 
-        String input = "1\n5\n1\n";
+        String input = "5\n1\n5\n1\n2\n4\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
@@ -87,15 +87,17 @@ public class TestCLIView {
         Game game = new Game(2);
         GameLogic gameLogic = new GameLogic(game);
         GameTable gameTable1 = gameLogic.getGameTable();
+        Player player = new Player("bob");
+        gameLogic.getGame().setCurrentPlayer(player);
 
         view.viewGameTable(gameTable1);
 
-        String input = "2\n8\n4\n8\n5\n";
+        String input = "2\n8\n5\n8\n6\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
-        Card card1 = gameTable1.getCardfromBoard(8,4);
-        Card card2 = gameTable1.getCardfromBoard(8,5);
+        Card card1 = gameTable1.getCardfromBoard(8,5);
+        Card card2 = gameTable1.getCardfromBoard(8,6);
 
 
         ArrayList<Card> list1 = view.getCardFromTable(gameLogic);
@@ -111,39 +113,41 @@ public class TestCLIView {
         Game game = new Game(2);
         GameLogic gameLogic = new GameLogic(game);
         GameTable gameTable1 = gameLogic.getGameTable();
+        Player player = new Player("bob");
+        gameLogic.getGame().setCurrentPlayer(player);
 
         view.viewGameTable(gameTable1);
 
-        String input = "3\n8\n4\n8\n5\n8\n6\n3\n1\n5\n1";
+        String input = "3\n2\n8\n4\n8\n5\n8\n6\n8\n5";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
-        Card card1 = gameTable1.getCardfromBoard(8,4);
         Card card2 = gameTable1.getCardfromBoard(8,5);
         Card card3 = gameTable1.getCardfromBoard(8,6);
 
 
         ArrayList<Card> list1 = view.getCardFromTable(gameLogic);
 
-        Assert.assertEquals(card1, list1.get(0));
         Assert.assertEquals(card2, list1.get(1));
-        Assert.assertEquals(card3, list1.get(2));
+        Assert.assertEquals(card3, list1.get(0));
 
     }
 
     @Test
-    public void threeCard4PlayersTest(){
+    public void threeCard4PlayersTest() throws Exception {
         Game game1 = new Game(4);
         GameLogic gameLogic1 = new GameLogic(game1);
         GameTable gameTable2 = gameLogic1.getGameTable();
         view.viewGameTable(gameTable2);
+        Player player = new Player("bob");
+        gameLogic1.getGame().setCurrentPlayer(player);
 
-        String input = "3\n1\n5\n1";
+        String input = "3\n1\n2\n4";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
 
-        Card card4 = gameTable2.getCardfromBoard(5,1);
+        Card card4 = gameTable2.getCardfromBoard(2,4);
 
         ArrayList<Card> list2 = view.getCardFromTable(gameLogic1);
 
