@@ -96,15 +96,13 @@ public class ControllerGui implements Initializable {
 
 
         int numObj=0;
-        final String prefix = "file:/C:/Users/mylan/Desktop/Progetto%20Software%20Engeniring/ing-sw-2023-Melfa-Maffesi-Milanesi-Finetti/MyShelfie/target/classes/assets/common goal cards/";
-        // TODO fare in modo che il path sia universale
-        // ho aggiunto metodo in model/CommonObj
+        final String prefix = "assets/common goal cards/";
 
         String url;
         if (num == 1) url = CommonObj1.getImage().getUrl();
         else if (num == 2) url = CommonObj2.getImage().getUrl();
         else url = null;
-
+        if (url != null) url = url.substring(url.lastIndexOf("assets"));
         switch (url){
             case prefix + "4.jpg" ->numObj=1;
             case prefix + "11.jpg" ->numObj=2;
@@ -119,7 +117,7 @@ public class ControllerGui implements Initializable {
             case prefix + "9.jpg" ->numObj=11;
             case prefix + "12.jpg" ->numObj=12;
         }
-
+        // se da problemi con le exception mettere un default
         // 4 - 11 - 3 - 7 - 8 - 2 - 1 - 6 - 5 - 10 - 9 - 12
 
         ControllerComObjDesc controller = loader.getController();

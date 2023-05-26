@@ -4,7 +4,6 @@ import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.View.CLIView;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -56,9 +55,9 @@ public class RMIController implements Serializable {
                         current_client.receiveMessage("Player Object:");
                         current_client.receivePlayerObj(gameLogic.getGame().getCurrentPlayer().getPlayerObj());
                         current_client.receiveMessage("Common Object 1:");
-                        current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescrizione());
+                        current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescription());
                         current_client.receiveMessage("Common Object 2:");
-                        current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescrizione());
+                        current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescription());
                         break;
                     case "2":
                         i = 1;
