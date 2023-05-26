@@ -19,18 +19,18 @@ public class CommonObj implements Serializable{
 
         this.objNum = objNum;
         switch (objNum) {
-            case 1 -> this.description = "6 coppie distinte di tessere adiacenti dello stesso tipo";
-            case 2 -> this.description = "5 tessere in diagonale dello stesso tipo";
-            case 3 -> this.description = "4 angoli dello stesso tipo";
-            case 4 -> this.description = "4 righe da 5 tessere ciascuna con non più di 3 tipi differenti";
-            case 5 -> this.description = "4 gruppi distinti di 4 tessere adiacenti dello stesso tipo";
-            case 6 -> this.description = "2 colonne di tessere ciascuna di 6 tipi diversi";
-            case 7 -> this.description = "2 quadrati 2x2 di tessere dello stesso tipo (entrambi i quadrati stesso tipo)";
-            case 8 -> this.description = "2 righe di tessere ciascuna di 5 tipi diversi";
-            case 9 -> this.description = "3 colonne di tessere ciascuna con non più di tre tipi diversi";
-            case 10 -> this.description = "5 tessere dello stesso tipo che formano una X";
-            case 11 -> this.description = "8 tessere dello stesso tipo (nessuna restrizione sulla posizione)";
-            case 12 -> this.description = "cinque colonne di altezza crescente (+1 ad ogni column) a partire dagli estremi (destra o sinistra)";
+            case 1 -> this.description = "Six groups each containing at least 2 tiles of the same type (not necessarily in the depicted shape).";
+            case 2 -> this.description = "Five tiles of the same type forming a diagonal.";
+            case 3 -> this.description = "Four tiles of the same type in the four corners of the bookshelf.";
+            case 4 -> this.description = "Four lines each formed by 5 tiles of maximum three different types. One line can show the same or a different combination of another line.";
+            case 5 -> this.description = "Four groups each containing at least 4 tiles of the same type (not necessarily in the depicted shape). The tiles of one group can be different from those of another group.";
+            case 6 -> this.description = "Two columns each formed by 6 different types of tiles.";
+            case 7 -> this.description = "Two groups each containing 4 tiles of the same type in a 2x2 square. The tiles of one square can't be different from those of the other square.";
+            case 8 -> this.description = "Two lines each formed by 5 different types of tiles. One line can show the same or a different combination of the other line.";
+            case 9 -> this.description = "Three columns each formed by 6 tiles of maximum three different types. One column can show the same or a different combination of another column.";
+            case 10 -> this.description = "Five tiles of the same type forming an X.";
+            case 11 -> this.description = "Eight tiles of the same type. There’s no restriction about the position of these tiles.";
+            case 12 -> this.description = "Five columns of increasing or decreasing height. Starting from the first column on the left or on the right, each next column must be made of exactly one more tile. Tiles can be of any type.";
         }
 
         switch (numOfPlayer) {
@@ -65,7 +65,7 @@ public class CommonObj implements Serializable{
     /**
      * @return descrizione, the description of the goal
      */
-    public String getDescrizione() {
+    public String getDescription() {
         return description;
     }
 
@@ -369,43 +369,43 @@ public class CommonObj implements Serializable{
     public String getDescription(int objNum){
         switch (objNum) {
             case 1 -> {
-                return "6 coppie distinte di tessere adiacenti dello stesso tipo";
+                return "Six groups each containing at least 2 tiles of the same type (not necessarily in the depicted shape).";
             }
             case 2 -> {
-                return "5 tessere in diagonale dello stesso tipo";
+                return "Five tiles of the same type forming a diagonal.";
             }
             case 3 -> {
-                return  "4 angoli dello stesso tipo";
+                return  "Four tiles of the same type in the four corners of the bookshelf.";
             }
             case 4 -> {
-                return  "4 righe da 5 tessere ciascuna con non più di 3 tipi differenti";
+                return  "Four lines each formed by 5 tiles of maximum three different types. One line can show the same or a different combination of another line.";
             }
             case 5 -> {
-                return  "4 gruppi distinti di 4 tessere adiacenti dello stesso tipo";
+                return  "Four groups each containing at least 4 tiles of the same type (not necessarily in the depicted shape).The tiles of one group can be different from those of another group.";
             }
             case 6 -> {
-                return  "2 colonne di tessere ciascuna di 6 tipi diversi";
+                return  "Two columns each formed by 6 different types of tiles.";
             }
             case 7 -> {
-                return  "2 quadrati 2x2 di tessere dello stesso tipo (entrambi i quadrati stesso tipo)";
+                return  "Two groups each containing 4 tiles of the same type in a 2x2 square. The tiles of one square can't be different from those of the other square.";
             }
             case 8 -> {
-                return  "2 righe di tessere ciascuna di 5 tipi diversi";
+                return  "Two lines each formed by 5 different types of tiles. One line can show the same or a different combination of the other line.";
             }
             case 9 -> {
-                return  "3 colonne di tessere ciascuna con non più di tre tipi diversi";
+                return  "Three columns each formed by 6 tiles of maximum three different types. One column can show the same or a different combination of another column.";
             }
             case 10 -> {
-                return  "5 tessere dello stesso tipo che formano una X";
+                return  "Five tiles of the same type forming an X.";
             }
             case 11 -> {
-                return  "8 tessere dello stesso tipo (nessuna restrizione sulla posizione)";
+                return  "Eight tiles of the same type. There’s no restriction about the position of these tiles.";
             }
             case 12 -> {
-                return  "cinque colonne di altezza crescente (+1 ad ogni column) a partire dagli estremi (destra o sinistra)";
+                return  "Five columns of increasing or decreasing height. Starting from the first column on the left or on the right, each next column must be made of exactly one more tile. Tiles can be of any type.";
             }
         }
-        return "errore";
+        return "error";
     }
 
 }

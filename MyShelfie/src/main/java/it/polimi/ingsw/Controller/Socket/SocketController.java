@@ -6,7 +6,6 @@ import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.Socket.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
-import it.polimi.ingsw.View.CLIView;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -55,9 +54,9 @@ public class SocketController implements Serializable {
                         server.sendMessage(new Message(MessageType.printMessage,"Player Object:"),current_client.getSocket());
                         server.sendPlayerObj(current_client.getSocket(),current_client.getPlayer().getPlayerObj());
                         server.sendMessage(new Message(MessageType.printMessage,"Common Object 1:"),current_client.getSocket());
-                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj1().getDescrizione()),current_client.getSocket());
+                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj1().getDescription()),current_client.getSocket());
                         server.sendMessage(new Message(MessageType.printMessage,"Common Object 2:"),current_client.getSocket());
-                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj2().getDescrizione()),current_client.getSocket());
+                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj2().getDescription()),current_client.getSocket());
                         break;
                     case "2":
                         // pick card from table

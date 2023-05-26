@@ -104,9 +104,9 @@ public class CLIView implements ViewClient, Serializable {
     @Override
     public void viewCommonObj(CommonObj obj1, CommonObj obj2) {
         viewString("Common Object 1 : ");
-        viewString(obj1.getDescrizione());
+        viewString(obj1.getDescription());
         viewString("Common Object 2 : ");
-        viewString(obj2.getDescrizione());
+        viewString(obj2.getDescription());
     }
 
 
