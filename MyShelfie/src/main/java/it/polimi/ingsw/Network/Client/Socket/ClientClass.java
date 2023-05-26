@@ -17,6 +17,8 @@ public class ClientClass implements Serializable {
 
     private boolean connected = false;
 
+    private boolean gui = false;
+
     private  GameClientInterface RMIclient;  // rmi client
 
     /**
@@ -80,5 +82,9 @@ public class ClientClass implements Serializable {
     public GameClientInterface getClient(){
         return this.RMIclient;
     }
+
+    public boolean isGui(){ return gui; }
+
+    public void setGui(){  gui = true; }
 
 }

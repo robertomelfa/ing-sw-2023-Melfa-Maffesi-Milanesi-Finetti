@@ -19,6 +19,7 @@ public class RMIController implements Serializable {
     private GameLogic gameLogic;
 
     private GameClientInterface current_client; // RMI Client
+    private boolean gui;
 
 
 
@@ -29,10 +30,11 @@ public class RMIController implements Serializable {
      * @throws NotBoundException
      * @throws Exception
      */
-    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server) {
+    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server, boolean gui) {
         this.server = server;
         this.gameLogic = gameLogic;
         this.current_client = current_client.getClient();
+        this.gui = gui;
     }
 
     /**
@@ -48,22 +50,25 @@ public class RMIController implements Serializable {
 
             int i = 0;
             while(i == 0){
-
-                switch (current_client.getStringFromClient("\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards")){
-                    case "1":
-                        // print object
-                        current_client.receiveMessage("Player Object:");
-                        current_client.receivePlayerObj(gameLogic.getGame().getCurrentPlayer().getPlayerObj());
-                        current_client.receiveMessage("Common Object 1:");
-                        current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescription());
-                        current_client.receiveMessage("Common Object 2:");
-                        current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescription());
-                        break;
-                    case "2":
-                        i = 1;
-                        break;
-                    default:
-                        current_client.receiveMessage("The input is not valid, please insert 1 or 2\n");
+                if(!gui) {
+                    switch (current_client.getStringFromClient("\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards")) {
+                        case "1":
+                            // print object
+                            current_client.receiveMessage("Player Object:");
+                            current_client.receivePlayerObj(gameLogic.getGame().getCurrentPlayer().getPlayerObj());
+                            current_client.receiveMessage("Common Object 1:");
+                            current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescription());
+                            current_client.receiveMessage("Common Object 2:");
+                            current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescription());
+                            break;
+                        case "2":
+                            i = 1;
+                            break;
+                        default:
+                            current_client.receiveMessage("The input is not valid, please insert 1 or 2\n");
+                    }
+                }else {
+                    i = 1;
                 }
             }
 

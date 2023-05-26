@@ -156,6 +156,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         ClientClass client1;
         server.updateNumPlayers(num);
         client1 = new ClientClass(client);
+        client1.setGui();
         client1.setPlayer(username);
         server.updatePlayers(client1);
     }
@@ -165,6 +166,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         ClientClass client1;
         client1 = new ClientClass(client);
         client1.setPlayer(username);
+        client1.setGui();
         server.updatePlayers(client1);
     }
 

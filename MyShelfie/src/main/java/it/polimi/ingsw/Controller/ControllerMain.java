@@ -455,11 +455,11 @@ public class ControllerMain implements Serializable {
             gameTableToALL(gameLogic.getGameTable());
             // handle the turn in base of RMI or Socket clients
             if(current_client.getClient() == null){
-                SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic);
+                SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic, current_client.isGui());
                 gameLogic = controllerS.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
             }else{
-                RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI);
+                RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI, current_client.isGui());
                 gameLogic = controllerR.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
             }

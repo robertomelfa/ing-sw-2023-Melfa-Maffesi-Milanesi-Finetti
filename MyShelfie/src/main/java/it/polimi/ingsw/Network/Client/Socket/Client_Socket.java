@@ -94,6 +94,8 @@ public class Client_Socket implements Serializable {
                 } while (server.getController().checkExistingName(name));
                 msg = new Message(MessageType.sendNickname, name);
                 sendMessage(msg);
+                msg = new Message(MessageType.sendBoolean, "false");
+                sendMessage(msg);
                 server.release();
             }
         }catch(IOException e){
@@ -252,6 +254,7 @@ public class Client_Socket implements Serializable {
     }
 
     public void startGUI(GameInterface server) throws Exception {
+        System.out.println("socket");
         connectGUI("127.0.0.1", 8080, server);
         view = new GUIView();
         try {

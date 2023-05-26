@@ -37,6 +37,10 @@ public  class Server_Socket implements Serializable {
                         sendMessage(msg, socket);
                         String name = receiveMessage(socket).getMessage();
                         client.setPlayer(name);
+                        String gui = receiveMessage(socket).getMessage();
+                        if(gui == "true"){
+                            client.setGui();
+                        }
                         controller.addClient(client);
                     }catch(IOException e){
                         serverRMI.release();

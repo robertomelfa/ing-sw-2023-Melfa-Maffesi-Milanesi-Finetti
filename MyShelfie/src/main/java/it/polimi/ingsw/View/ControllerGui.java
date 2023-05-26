@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.GameTable;
 import it.polimi.ingsw.Model.Library;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -619,5 +620,7 @@ public class ControllerGui implements Initializable {
         labelMessage.setText(" Welcome !!! \n waiting other players... ");
     }
 
+    public void openLeaderboard(ActionEvent event) {
 
+    }
 }

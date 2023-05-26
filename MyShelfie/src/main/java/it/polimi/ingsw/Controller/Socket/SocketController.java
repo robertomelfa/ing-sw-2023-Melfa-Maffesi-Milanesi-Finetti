@@ -21,16 +21,19 @@ public class SocketController implements Serializable {
     private GameLogic gameLogic;
     private ClientClass current_client;
 
+    private boolean gui;
+
     /**
      * constructor for the controller
      * @param server
      * @throws Exception
      */
 
-    public SocketController(Server_Socket server, ClientClass current_client, GameLogic gameLogic) throws Exception{
+    public SocketController(Server_Socket server, ClientClass current_client, GameLogic gameLogic, boolean gui) throws Exception{
         this.server = server;
         this.current_client = current_client;
         this.gameLogic = gameLogic;
+        this.gui = gui;
     }
 
     /**
@@ -45,28 +48,33 @@ public class SocketController implements Serializable {
             server.sendLibrary(current_client.getSocket(),current_client.getPlayer().getLibrary());
 
             int i=0;
-            while(i==0){
-                server.sendMessage(new Message(MessageType.notifyBeginTurn,"\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards"),current_client.getSocket());
-                switch (server.receiveMessage(current_client.getSocket()).getMessage()){
+            while(i==0) {
+                if (!gui) {
+                    server.sendMessage(new Message(MessageType.notifyBeginTurn, "\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards"), current_client.getSocket());
+                    switch (server.receiveMessage(current_client.getSocket()).getMessage()) {
 
-                    case "1":
-                        // print objects
-                        server.sendMessage(new Message(MessageType.printMessage,"Player Object:"),current_client.getSocket());
-                        server.sendPlayerObj(current_client.getSocket(),current_client.getPlayer().getPlayerObj());
-                        server.sendMessage(new Message(MessageType.printMessage,"Common Object 1:"),current_client.getSocket());
-                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj1().getDescription()),current_client.getSocket());
-                        server.sendMessage(new Message(MessageType.printMessage,"Common Object 2:"),current_client.getSocket());
-                        server.sendMessage(new Message(MessageType.printMessage,gameLogic.getGame().getCommonObj2().getDescription()),current_client.getSocket());
-                        break;
-                    case "2":
-                        // pick card from table
+                        case "1":
+                            // print objects
+                            server.sendMessage(new Message(MessageType.printMessage, "Player Object:"), current_client.getSocket());
+                            server.sendPlayerObj(current_client.getSocket(), current_client.getPlayer().getPlayerObj());
+                            server.sendMessage(new Message(MessageType.printMessage, "Common Object 1:"), current_client.getSocket());
+                            server.sendMessage(new Message(MessageType.printMessage, gameLogic.getGame().getCommonObj1().getDescription()), current_client.getSocket());
+                            server.sendMessage(new Message(MessageType.printMessage, "Common Object 2:"), current_client.getSocket());
+                            server.sendMessage(new Message(MessageType.printMessage, gameLogic.getGame().getCommonObj2().getDescription()), current_client.getSocket());
+                            break;
+                        case "2":
+                            // pick card from table
 
-                        gameLogic = server.sendGameLogic(current_client, gameLogic);
-                        i=1;
-                        break;
-                    default:
-                        server.sendMessage(new Message(MessageType.printMessage,"The input is not valid, please insert 1 or 2\n"),current_client.getSocket());
+                            gameLogic = server.sendGameLogic(current_client, gameLogic);
+                            i = 1;
+                            break;
+                        default:
+                            server.sendMessage(new Message(MessageType.printMessage, "The input is not valid, please insert 1 or 2\n"), current_client.getSocket());
 
+                    }
+                }else {
+                    gameLogic = server.sendGameLogic(current_client, gameLogic);
+                    i = 1;
                 }
             }
             // return the updated gamelogic

@@ -44,7 +44,7 @@ public class LogInController{
     @FXML
     Button button4;
     private int num = 0;
-    private boolean RMI = true;
+    private boolean rmi = false;
 
     public LogInController() throws RemoteException, NotBoundException {
     }
@@ -55,12 +55,11 @@ public class LogInController{
 
     @FXML
     private void SocketConnection() throws Exception{
-        RMI = false;
         nextScene();
     }
 
     public void nextScene() throws IOException {
-        if (server.isFirstPlayer()) {
+        if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
             Stage stage = (Stage) RMIButton.getScene().getWindow();
@@ -75,7 +74,7 @@ public class LogInController{
 
 
     public void submit(ActionEvent event){
-        if(RMI) {
+        if(rmi) {
             try {
                 if ( num > 1 && num < 5){
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
@@ -102,6 +101,8 @@ public class LogInController{
                     clientSocket.sendInt(num);
                     Message msg = new Message(MessageType.sendNickname, user);
                     clientSocket.sendMessage(msg);
+                    msg = new Message(MessageType.sendBoolean, "true");
+                    clientSocket.sendMessage(msg);
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) start.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load()));
@@ -117,7 +118,7 @@ public class LogInController{
     }
 
     public void submitNotFirst(ActionEvent event){
-        if(RMI){
+        if(rmi){
             try {
                 String user = username2.getText();
                 GameClientInterface client = new Client();
@@ -141,6 +142,8 @@ public class LogInController{
                 if(!server.getController().checkExistingName(user)) {
                     clientSocket.startGUI(server);
                     Message msg = new Message(MessageType.sendNickname, user);
+                    clientSocket.sendMessage(msg);
+                    msg = new Message(MessageType.sendBoolean, "true");
                     clientSocket.sendMessage(msg);
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
