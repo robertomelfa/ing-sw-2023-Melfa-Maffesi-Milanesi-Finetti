@@ -44,7 +44,7 @@ public class LogInController{
     @FXML
     Button button4;
     private int num = 0;
-    private boolean rmi = false;
+    private boolean rmi = true;
 
     public LogInController() throws RemoteException, NotBoundException {
     }
@@ -55,6 +55,7 @@ public class LogInController{
 
     @FXML
     private void SocketConnection() throws Exception{
+        rmi = false;
         nextScene();
     }
 
