@@ -9,6 +9,7 @@ public class GUIView implements ViewClient {
 
 private ControllerGui controllerGui;
 private GameLogic gameLogic;
+private boolean first = true;
 private byte initLibrary = 0;
 
     public GUIView(){    }
@@ -19,21 +20,12 @@ private byte initLibrary = 0;
 
     @Override
     public void viewGameTable(GameTable gameTable) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controllerGui.updateGameTable(gameTable);
-            }
-        });
-//        controllerGui.updateGameTable(gameTable);
+        Platform.runLater(() -> controllerGui.updateGameTable(gameTable));
     }
 
     @Override
     public void viewString(String message) {
-
         Platform.runLater(() -> controllerGui.setLabelMessage(message));
-
-//        controllerGui.setLabelMessage(message);
     }
 
     @Override
@@ -56,7 +48,7 @@ private byte initLibrary = 0;
         while (!controllerGui.getAllCardsInsert()){
             // wait until all cards are insert
             try{
-                Thread.sleep(50);
+                Thread.sleep(100);
             } catch (InterruptedException ignore) {
             }
         }
@@ -94,6 +86,12 @@ private byte initLibrary = 0;
 //            controllerGui.setLibraries(gameLogic.getGame().getCurrentPlayer().getLibrary());
 //            initLibrary++;
 //        }
+
+        if (first){
+            Platform.runLater(()-> controllerGui.setCommonObj(gameLogic));
+            first = false;
+        }
+
         System.out.println("turn started ");
 
         Platform.runLater(() -> {

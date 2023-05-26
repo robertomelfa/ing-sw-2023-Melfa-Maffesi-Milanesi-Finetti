@@ -97,13 +97,13 @@ public class ControllerGui implements Initializable {
 
 
         int numObj=0;
-        final String prefix = "assets/common goal cards/";
+        final String prefix = "cards/";
 
         String url;
         if (num == 1) url = CommonObj1.getImage().getUrl();
         else if (num == 2) url = CommonObj2.getImage().getUrl();
-        else url = null;
-        if (url != null) url = url.substring(url.lastIndexOf("assets"));
+        else url = PathImageCards.COMMONOBJBACK;
+        url = url.substring(url.lastIndexOf("cards"));
         switch (url){
             case prefix + "4.jpg" ->numObj=1;
             case prefix + "11.jpg" ->numObj=2;
@@ -613,6 +613,50 @@ public class ControllerGui implements Initializable {
             case PathImageCards.PIANTE1, PathImageCards.PIANTE2, PathImageCards.PIANTE3 -> card = PURPLE;
         }
         return card;
+    }
+
+    public void setCommonObj(GameLogic gameLogic){
+
+        String url = PathImageCards.COMMONOBJBACK;
+        switch (gameLogic.getGame().getCommonObj1().getObjNum()){
+
+            case 1 -> url = PathImageCards.COMMONOBJ1;
+            case 2 -> url = PathImageCards.COMMONOBJ2;
+            case 3 -> url = PathImageCards.COMMONOBJ3;
+            case 4 -> url = PathImageCards.COMMONOBJ4;
+            case 5 -> url = PathImageCards.COMMONOBJ5;
+            case 6 -> url = PathImageCards.COMMONOBJ6;
+            case 7 -> url = PathImageCards.COMMONOBJ7;
+            case 8 -> url = PathImageCards.COMMONOBJ8;
+            case 9 -> url = PathImageCards.COMMONOBJ9;
+            case 10 -> url = PathImageCards.COMMONOBJ10;
+            case 11 -> url = PathImageCards.COMMONOBJ11;
+            case 12 -> url = PathImageCards.COMMONOBJ12;
+        }
+
+        CommonObj1.setImage(new Image(url));
+        CommonObj1.setFitWidth(200);
+        CommonObj1.setFitHeight(150);
+
+        switch (gameLogic.getGame().getCommonObj2().getObjNum()){
+
+            case 1 -> url = PathImageCards.COMMONOBJ1;
+            case 2 -> url = PathImageCards.COMMONOBJ2;
+            case 3 -> url = PathImageCards.COMMONOBJ3;
+            case 4 -> url = PathImageCards.COMMONOBJ4;
+            case 5 -> url = PathImageCards.COMMONOBJ5;
+            case 6 -> url = PathImageCards.COMMONOBJ6;
+            case 7 -> url = PathImageCards.COMMONOBJ7;
+            case 8 -> url = PathImageCards.COMMONOBJ8;
+            case 9 -> url = PathImageCards.COMMONOBJ9;
+            case 10 -> url = PathImageCards.COMMONOBJ10;
+            case 11 -> url = PathImageCards.COMMONOBJ11;
+            case 12 -> url = PathImageCards.COMMONOBJ12;
+        }
+
+        CommonObj2.setImage(new Image(url));
+        CommonObj2.setFitWidth(200);
+        CommonObj2.setFitHeight(150);
     }
 
     @Override

@@ -4,6 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerComObjDesc">
    <children>
@@ -17,6 +18,9 @@
             <Image url="@assets/misc/base_pagina2.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="labelText" layoutX="34.0" layoutY="107.0" prefHeight="85.0" prefWidth="432.0" text="testo prova " textFill="WHITE" wrapText="true" />
+      <Label fx:id="labelText" layoutX="34.0" layoutY="88.0" prefHeight="124.0" prefWidth="432.0" text="testo prova" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
    </children>
 </AnchorPane>
