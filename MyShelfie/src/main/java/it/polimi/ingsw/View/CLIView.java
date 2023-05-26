@@ -139,7 +139,7 @@ public class CLIView implements ViewClient, Serializable {
                         System.out.println("This card does not exist, try again!");
                     }
                 } else {
-                    type = in.next().toUpperCase();
+                    type = in.nextLine().toUpperCase();
                     if (type.equals("YELLOW") || type.equals("PURPLE") || type.equals("WHITE") || type.equals("BLUE") || type.equals("LIGHTBLUE") || type.equals("GREEN")) {
                         if (list.contains(Card.valueOf(type))) {
                             flag = 2;

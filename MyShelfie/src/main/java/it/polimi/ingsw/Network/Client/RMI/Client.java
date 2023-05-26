@@ -97,13 +97,15 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         server.newClient(client);
         if(controller.getClientList().size() == 0) {
             try{
+                String tempNum;
                 do{
                     view.viewString("Insert players number");
-                    num = Integer.parseInt(in.nextLine());
-                    if(num < 2 || num > 4){
+                    tempNum = in.nextLine();
+                    if(!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3")){
                         view.viewString("Players number must be between 2 and 4. Retry");
                     }
-                }while(num < 2 || num > 4);
+                }while(!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3"));
+                num = Integer.parseInt(tempNum);
                 server.updateNumPlayers(num);
                 view.viewString("Enter the player's name");
                 String name;

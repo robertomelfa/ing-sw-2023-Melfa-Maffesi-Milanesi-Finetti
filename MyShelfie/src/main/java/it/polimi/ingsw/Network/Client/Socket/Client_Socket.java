@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.Scanner;
 
 //TODO sistemare le varie funzioni (troppo lunghe)
@@ -66,14 +67,16 @@ public class Client_Socket implements Serializable {
             if(server.getController().getClientList().size()==0){
                 if(msg.getType()==MessageType.requestNumPlayer){
                     int numPlayers = 0;
+                    String tempNum;
                     do{
                         view.viewString("Insert players number:");
-                        numPlayers = Integer.parseInt(in.nextLine());
+                        tempNum=in.nextLine();
 
-                        if(numPlayers < 2 || numPlayers > 4){
+                        if(!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3")){
                             view.viewString("Players number must be between 2 and 4. Retry");
                         }
-                    }while(numPlayers < 2 || numPlayers > 4);
+                    }while(!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3"));
+                    numPlayers = Integer.parseInt(tempNum);
                     sendInt(numPlayers);
                 }
                 msg=receiveMessage();
