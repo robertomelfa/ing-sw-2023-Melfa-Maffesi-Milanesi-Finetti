@@ -20,7 +20,10 @@ private byte initLibrary = 0;
 
     @Override
     public void viewGameTable(GameTable gameTable) {
-        Platform.runLater(() -> controllerGui.updateGameTable(gameTable));
+        Platform.runLater(() -> {
+            controllerGui.updateGameTable(gameTable);
+            controllerGui.disableGameTable();
+        });
     }
 
     @Override
@@ -111,23 +114,6 @@ private byte initLibrary = 0;
 
         return gameLogic;
     }
-
-    //@Override
-    /*public void start(Stage stage) throws Exception {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
-        Parent root = loader.load();
-        setControllerGui(loader.getController());
-        stage.setTitle("My Shelfie");
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    */
 
     public void setController(ControllerGui controllerGui) { this.controllerGui = controllerGui; }
 

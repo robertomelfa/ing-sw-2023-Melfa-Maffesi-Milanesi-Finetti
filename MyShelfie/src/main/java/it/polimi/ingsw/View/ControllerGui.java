@@ -63,15 +63,6 @@ public class ControllerGui implements Initializable {
     private ArrayList<Library> libraries =null;
     private int indexCurrPlayer = -1;
 
-    private LogInController logInController;
-
-    public void setLogInController(LogInController logInController) {
-        this.logInController = logInController;
-    }
-    public void prova(){
-
-    }
-
     @FXML
     void openDescription1(MouseEvent event) throws IOException {
         openDescription(1);
@@ -82,7 +73,11 @@ public class ControllerGui implements Initializable {
         openDescription(2);
     }
 
-
+    /**
+     * method that open a new window and show the description of the Common Object selected
+     * @param num CommonObj selected
+     * @throws IOException exception for the loader
+     */
     @FXML
     void openDescription(int num) throws IOException {
 
@@ -149,6 +144,11 @@ public class ControllerGui implements Initializable {
     }
 
 
+    /**
+     * method that open a new window that show the library of the player selected
+     * @param numPlayer player selected
+     * @throws IOException exception for the loader
+     */
         @FXML
     void openLibrary(int numPlayer) throws IOException {
 
@@ -170,6 +170,11 @@ public class ControllerGui implements Initializable {
         stage.show();
     }
 
+    /**
+     * method that open a window with the rule of the game
+     * @param event the click on the button "rules"
+     * @throws IOException exception for the loader
+     */
     @FXML
     void openRules(MouseEvent event) throws IOException {
 
@@ -185,6 +190,10 @@ public class ControllerGui implements Initializable {
 
     }
 
+    /**
+     * update the main library
+     * @param library the new library to show
+     */
     void updateLibrary(Library library){
         Image image ;
         ImageView card ;
@@ -207,6 +216,10 @@ public class ControllerGui implements Initializable {
         }
     }
 
+    /**
+     * update gameTable
+     * @param gameTable the new gameTable
+     */
     void updateGameTable(GameTable gameTable){
 
         int k = 0;
@@ -245,6 +258,10 @@ public class ControllerGui implements Initializable {
 
     }
 
+    /**
+     * response to the column choose
+     * @param event click of the button
+     */
     @FXML
     void selectColumn(javafx.event.ActionEvent event) {
 
@@ -255,6 +272,9 @@ public class ControllerGui implements Initializable {
 
     }
 
+    /**
+     * controls that the column chosen have enough space for the cars selected
+     */
     public void controlColumn(){
         if (column == -1) return;
 
@@ -270,6 +290,10 @@ public class ControllerGui implements Initializable {
 
     }
 
+    /**
+     * insert the card selected in the library
+     * @param event card selected
+     */
     @FXML
     void insertCard(MouseEvent event) {
 
@@ -297,6 +321,9 @@ public class ControllerGui implements Initializable {
          this.allCardsInsert = allCardsInsert;
     }
 
+    /**
+     * enable the buttons of column choose
+     */
     public void enableColumnButton(){
         for (int i=0; i<5; i++){
             Button b = (Button) columnButtonBox.getChildren().get(i);
@@ -305,6 +332,9 @@ public class ControllerGui implements Initializable {
         }
     }
 
+    /**
+     * disable the buttons of column choose
+     */
     public void disableColumnButton(){
         for (int i=0; i<5; i++){
             Button b = (Button) columnButtonBox.getChildren().get(i);
@@ -313,7 +343,10 @@ public class ControllerGui implements Initializable {
         }
     }
 
-
+    /**
+     * show the cards selected in the gameTable over the main library
+     * @param list cards selected
+     */
     public void showArrayCards(ArrayList<Card> list){
         String url;
         System.out.println("in showCards...");
@@ -340,6 +373,9 @@ public class ControllerGui implements Initializable {
         }
     }
 
+    /**
+     * disable the gameTable
+     */
     public void disableGameTable(){
         confirm.setVisible(false);
         confirm.setDisable(true);
@@ -349,6 +385,9 @@ public class ControllerGui implements Initializable {
         }
     }
 
+    /**
+     * enable the gameTable where there are cards
+     */
     public void enableGameTable(){
         confirm.setVisible(true);
         confirm.setDisable(false);
@@ -362,6 +401,9 @@ public class ControllerGui implements Initializable {
         }
     }
 
+    /**
+     * unselect all the button on gameTable
+     */
     public void unselectedGameTable(){
         for(int i=0; i<gridTable.getChildren().size(); i++){
             button = (ToggleButton) gridTable.getChildren().get(i);
@@ -370,6 +412,10 @@ public class ControllerGui implements Initializable {
 
     }
 
+    /**
+     * register the card selected / unselected an the number of cards selected
+     * @param event card selected / unselected
+     */
     @FXML
     void selectedCard(javafx.event.ActionEvent event) {
 
@@ -417,8 +463,6 @@ public class ControllerGui implements Initializable {
 
         switch (countCard){
             case 1 -> {
-                System.out.println(" card : " + posCard.get(0)[0] + " - " +posCard.get(0)[1]);
-                System.out.println("check : " + gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1]));
                 if (gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1])){
 
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(0)[0],posCard.get(0)[1]));
@@ -436,9 +480,6 @@ public class ControllerGui implements Initializable {
                 }
             }
             case 2 ->{
-                System.out.println(" card : " + posCard.get(0)[0] + " - " +posCard.get(0)[1]);
-                System.out.println(" card : " + posCard.get(1)[0] + " - " +posCard.get(1)[1]);
-                System.out.println("check : " + gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1]));
                 if (gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1])) {
 
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(0)[0],posCard.get(0)[1]));
@@ -454,10 +495,6 @@ public class ControllerGui implements Initializable {
             }
 
             case 3 ->{
-                System.out.println(" card : " + posCard.get(0)[0] + " - " +posCard.get(0)[1]);
-                System.out.println(" card : " + posCard.get(1)[0] + " - " +posCard.get(1)[1]);
-                System.out.println(" card : " + posCard.get(2)[0] + " - " +posCard.get(2)[1]);
-                System.out.println("check : " + gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1],posCard.get(2)[0],posCard.get(2)[1]));
                 if (gameLogic.checkNear(posCard.get(0)[0],posCard.get(0)[1],posCard.get(1)[0],posCard.get(1)[1],posCard.get(2)[0],posCard.get(2)[1])) {
 
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(0)[0],posCard.get(0)[1]));
@@ -476,16 +513,12 @@ public class ControllerGui implements Initializable {
 
         }
 
-        System.out.println("setting confirm ...  now : " + confirmCards);
         setConfirmCards(true);
-        System.out.println("confirm  :  " + confirmCards);
         Platform.runLater(() -> {
             updateGameTable(gameLogic.getGameTable());
             unselectedGameTable();
             disableGameTable();
         });
-
-        System.out.println("refresh gameTable");
     }
 
     public void addCountCard(){
@@ -502,6 +535,10 @@ public class ControllerGui implements Initializable {
     public void setConfirmCards(boolean confirmCards) {
         this.confirmCards = confirmCards;
     }
+
+    /**
+     * clear the variables that register the cards selected
+     */
     public void clearPosCard(){
         try {
             while(posCard != null){
@@ -517,6 +554,10 @@ public class ControllerGui implements Initializable {
     public ArrayList<Card> getListCard(){
         return listCard;
     }
+
+    /**
+     * clear the list of cards chosen
+     */
     public void clearListCard(){
         try {
             while (listCard != null) {
@@ -548,6 +589,12 @@ public class ControllerGui implements Initializable {
         if (libraries == null) libraries = new ArrayList<>(gameLogic.getGame().getNumOfPlayers());
         libraries.add(library);
     }
+
+    /**
+     * convert the card in a string path where can find the right image
+     * @param card type of card
+     * @return url of image
+     */
     public String urlCard (Card card){
         Random rand = new Random();
         int r = rand.nextInt(3)+1;
@@ -599,10 +646,14 @@ public class ControllerGui implements Initializable {
         return url;
     }
 
+    /**
+     * convert the url in the right type of card
+     * @param url string path where find image
+     * @return type of card
+     */
     public Card cardUrl (String url){
         url = url.substring(url.lastIndexOf("assets"));
         url = url.replace("%20", " ");
-        System.out.println("url clear from useless : " + url);
         Card card = null;
         switch (url){
             case PathImageCards.TROFEI1, PathImageCards.TROFEI3, PathImageCards.TROFEI2 -> card = LIGHTBLUE;
@@ -615,6 +666,10 @@ public class ControllerGui implements Initializable {
         return card;
     }
 
+    /**
+     * initialize the common object in the window
+     * @param gameLogic game logic of the game
+     */
     public void setCommonObj(GameLogic gameLogic){
 
         String url = PathImageCards.COMMONOBJBACK;
@@ -659,6 +714,11 @@ public class ControllerGui implements Initializable {
         CommonObj2.setFitHeight(150);
     }
 
+    /**
+     * initialize the message label before the start of the game
+     * @param url url
+     * @param resourceBundle resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelMessage.setText(" Welcome !!! \n waiting other players... ");
