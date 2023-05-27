@@ -52,7 +52,7 @@ public class RMIController implements Serializable {
             while(i == 0){
                 if(!gui) {
                     switch (current_client.getStringFromClient("\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards")) {
-                        case "1":
+                        case "1" -> {
                             // print object
                             current_client.receiveMessage("Player Object:");
                             current_client.receivePlayerObj(gameLogic.getGame().getCurrentPlayer().getPlayerObj());
@@ -60,12 +60,9 @@ public class RMIController implements Serializable {
                             current_client.receiveMessage(gameLogic.getGame().getCommonObj1().getDescription());
                             current_client.receiveMessage("Common Object 2:");
                             current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescription());
-                            break;
-                        case "2":
-                            i = 1;
-                            break;
-                        default:
-                            current_client.receiveMessage("The input is not valid, please insert 1 or 2\n");
+                        }
+                        case "2" -> i = 1;
+                        default -> current_client.receiveMessage("The input is not valid, please insert 1 or 2\n");
                     }
                 }else {
                     i = 1;
