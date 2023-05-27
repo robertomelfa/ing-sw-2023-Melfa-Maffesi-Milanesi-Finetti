@@ -38,7 +38,7 @@ public  class Server_Socket implements Serializable {
                         String name = receiveMessage(socket).getMessage();
                         client.setPlayer(name);
                         String gui = receiveMessage(socket).getMessage();
-                        if(gui == "true"){
+                        if(gui.equals("true")){
                             client.setGui();
                         }
                         controller.addClient(client);
@@ -180,6 +180,10 @@ public  class Server_Socket implements Serializable {
             msg=new Message(MessageType.requestNickname,null);
             sendMessage(msg, socket);
             client.setPlayer(receiveMessage(socket).getMessage());
+            String gui = receiveMessage(socket).getMessage();
+            if(gui.equals("true")){
+                client.setGui();
+            }
             controller.addClient(client);
         }catch (IOException e){
             serverRMI.release();
