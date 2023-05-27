@@ -26,9 +26,9 @@ import static it.polimi.ingsw.Network.Messages.MessageType.*;
 public class Client_Socket implements Serializable {
 
 
-    private Socket socket;  // è il server
+    private Socket socket;
 
-    //    private CLIView view = new CLIView();
+//    private CLIView view = new CLIView();
     private ViewClient view;
 
     private ObjectInputStream ois;
@@ -42,9 +42,9 @@ public class Client_Socket implements Serializable {
      *
      * @throws Exception
      */
-    public void start(GameInterface server) throws Exception {
+    public  void start(GameInterface server) throws Exception{
         view = new CLIView();
-        connect("127.0.0.1", 8080, server);
+        connect("127.0.0.1",8080, server);
         try {
             // start the logic of the client
             clientlogic(server);
@@ -61,34 +61,34 @@ public class Client_Socket implements Serializable {
      * @param host server we want to connect
      * @param port port of the server
      */
-    public void connect(String host, int port, GameInterface server) throws ClassNotFoundException, Exception {
+    public  void connect(String host,int port, GameInterface server) throws ClassNotFoundException, Exception{
         try {
             Socket socket = new Socket(host, port);
             this.socket = socket;
             view.viewString("Client is running...");
             Message msg;
             Scanner in = new Scanner(System.in);
-            msg = receiveMessage();
+            msg=receiveMessage();
 
-            if (server.getController().getClientList().size() == 0) {
-                if (msg.getType() == requestNumPlayer) {
+            if(server.getController().getClientList().size()==0){
+                if(msg.getType()==MessageType.requestNumPlayer){
                     int numPlayers = 0;
                     String tempNum;
-                    do {
+                    do{
                         view.viewString("Insert players number:");
-                        tempNum = in.nextLine();
+                        tempNum=in.nextLine();
 
-                        if (!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3")) {
+                        if(!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3")){
                             view.viewString("Players number must be between 2 and 4. Retry");
                         }
-                    } while (!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3"));
+                    }while(!tempNum.equals("2") && !tempNum.equals("4") && !tempNum.equals("3"));
                     numPlayers = Integer.parseInt(tempNum);
                     sendInt(numPlayers);
                 }
-                msg = receiveMessage();
+                msg=receiveMessage();
             }
 
-            if (msg.getType() == requestNickname) {
+            if (msg.getType()==MessageType.requestNickname){
                 String name;
                 do {
                     view.viewString("Insert name: ");
@@ -104,7 +104,7 @@ public class Client_Socket implements Serializable {
                 sendMessage(msg);
                 server.release();
             }
-        } catch (IOException e) {
+        }catch(IOException e){
             view.viewString("Client fatal error");
         }
     }
@@ -112,7 +112,7 @@ public class Client_Socket implements Serializable {
     /**
      * the client start listening waiting for the server to send him the game table
      */
-    public GameTable receiveGameTable() throws IOException, ClassNotFoundException {
+    public GameTable receiveGameTable() throws IOException,ClassNotFoundException{
         ois = new ObjectInputStream(socket.getInputStream());
         GameTable gameTable = (GameTable) ois.readObject();
         return gameTable;
@@ -122,17 +122,16 @@ public class Client_Socket implements Serializable {
      * handles the turn from the client side. The client recive a message from the server and perform a different
      * action based on the typer of the message received. The action the client can perform are receiving the game table
      * receiving the library, picking the cards from the table.
-     *
      * @throws Exception
      */
-    public void clientlogic(GameInterface server) throws Exception {
+    public void clientlogic(GameInterface server) throws Exception{
         // get message from server
         Message msg;
         Scanner in = new Scanner(System.in);
-        while (true) {
-            msg = receiveMessage();
-            if (msg.getType() == MessageType.receiveGameTable) {
-                GameTable table = receiveGameTable();
+        while(true){
+            msg=receiveMessage();
+            if(msg.getType()==MessageType.receiveGameTable){
+                GameTable table=receiveGameTable();
                 view.viewGameTable(table);
             } else if (msg.getType() == MessageType.receiveLibrary) {
                 Library lib = receiveLibrary();
@@ -152,17 +151,17 @@ public class Client_Socket implements Serializable {
 
             } else if (msg.getType() == MessageType.notifyBeginTurn) {
                 view.viewString(msg.getMessage());
-                String choice = in.nextLine();
-                sendMessage(new Message(MessageType.printMessage, choice));
-            } else if (msg.getType() == MessageType.receivePoint) {
+                String choice=in.nextLine();
+                sendMessage(new Message(MessageType.printMessage,choice));
+            }else if(msg.getType() == MessageType.receivePoint){
                 view.viewString(msg.getMessage());
-            } else if (msg.getType() == MessageType.closeGame) {
+            }else if(msg.getType() == MessageType.closeGame){
                 view.viewString(msg.getMessage());
                 socket.close();
                 break;
-            } else if (msg.getType() == MessageType.ping) {
+            }else if(msg.getType() == MessageType.ping){
 
-            } else if (msg.getType() == endGame) {
+            }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
             } else {
@@ -173,6 +172,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     *
      * @return the Message received from the socket input
      * @throws IOException
      * @throws ClassNotFoundException
@@ -205,8 +205,8 @@ public class Client_Socket implements Serializable {
         ois = new ObjectInputStream(socket.getInputStream());
         return (Library) ois.readObject();
     }
-
     /**
+     *
      * @return the gameLogic received in socket input
      * @throws IOException
      * @throws ClassNotFoundException
@@ -217,6 +217,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     *
      * @return the player's object
      * @throws IOException
      * @throws ClassNotFoundException
@@ -227,6 +228,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     *
      * @param num number we want to send
      * @throws IOException
      * @throws ClassNotFoundException
@@ -252,7 +254,7 @@ public class Client_Socket implements Serializable {
         oos.writeObject(gameLogic);
     }
 
-    public void setControllerGui(ControllerGui controllerGui) {
+    public void setControllerGui(ControllerGui controllerGui){
         gui = true;
         view.setController(controllerGui);
     }
@@ -415,5 +417,10 @@ public class Client_Socket implements Serializable {
                     break;
                 }
             }
+    }
+
+    //@Test
+    public void setView(){
+        view = new CLIView();
     }
 }

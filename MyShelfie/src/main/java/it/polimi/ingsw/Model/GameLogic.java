@@ -41,12 +41,7 @@ public class GameLogic implements Serializable{
         return this.gameTable;
     }
 
-    /**
-     *
-     * @return the List of cards picked by player
-     * The method is used to draw from one to three cards from the board
-     * the method continues to request cards from the player until they are actually drawable
-     */
+    //@Test
     public ArrayList<Card> getCardFromTable(){
         int size = 0;
         Scanner in = new Scanner(System.in);

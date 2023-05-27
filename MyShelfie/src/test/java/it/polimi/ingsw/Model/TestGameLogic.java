@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import static it.polimi.ingsw.Model.Card.NONE;
+
 public class TestGameLogic {
 
 
@@ -83,7 +85,8 @@ public class TestGameLogic {
         Player p1=new Player("Player 1");
         g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
-        builder.append("3\n8\n4\n8\n5\n8\n6");
+        gameLogic.getGame().getGameTable().setCardfromBoard(8,5,NONE);
+        builder.append("3\n7\n4\n7\n5\n7\n6");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
         //reading from console output
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -117,7 +120,7 @@ public class TestGameLogic {
         Player p1=new Player("Player 1");
         g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
-        builder.append("1\n3\n4\n3\n3");
+        builder.append("1\n5\n1\n2\n4");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
         //reading from console output
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -171,7 +174,8 @@ public class TestGameLogic {
         Player p1=new Player("Player 1");
         g1.setCurrentPlayer(p1);
         StringBuilder builder=new StringBuilder();
-        builder.append("3\n4\n3\n4\n4\n4\n5\n8\n4\n8\n5\n8\n6");
+        gameLogic.getGame().getGameTable().setCardfromBoard(8,5,NONE);
+        builder.append("3\n4\n3\n4\n4\n4\n5\n7\n4\n7\n5\n7\n6");
         InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
         //reading from console output
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -197,7 +201,7 @@ public class TestGameLogic {
         CLIView view = new CLIView();
         for(int i = 0; i < 11; i++){
             for(int j = 0; j < 11; j++){
-                gameLogic.getGameTable().setCardfromBoard(i,j,Card.NONE);
+                gameLogic.getGameTable().setCardfromBoard(i,j, NONE);
             }
         }
         Assert.assertFalse(gameLogic.checkCardsPickable(3));
@@ -211,7 +215,7 @@ public class TestGameLogic {
 
         for(int i = 0; i < 11; i++){
             for(int j = 0; j < 11; j++){
-                gameLogic.getGameTable().setCardfromBoard(i,j,Card.NONE);
+                gameLogic.getGameTable().setCardfromBoard(i,j, NONE);
             }
         }
         gameLogic.getGameTable().setCardfromBoard(1,7,Card.YELLOW);
@@ -223,12 +227,12 @@ public class TestGameLogic {
 
         for(int i = 0; i < 11; i++){
             for(int j = 0; j < 11; j++){
-                gameLogic.getGameTable().setCardfromBoard(i,j,Card.NONE);
+                gameLogic.getGameTable().setCardfromBoard(i,j, NONE);
             }
         }
-        gameLogic.getGameTable().setCardfromBoard(7,3,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(8,3,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(9,3,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(6,3,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(5,3,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(4,3,Card.YELLOW);
         view.viewGameTable(gameLogic.getGameTable());
 
         Assert.assertTrue(gameLogic.checkCardsPickable(3));
@@ -236,9 +240,9 @@ public class TestGameLogic {
         Game g2=new Game(3);
         GameLogic gameLogic1=new GameLogic(g2);
         view.viewGameTable(gameLogic1.getGameTable());
-        Assert.assertTrue(gameLogic1.checkCardsPickable(3));
+        Assert.assertFalse(gameLogic1.checkCardsPickable(3));
         gameLogic1.getGameTable().setCardfromBoard(8,7,Card.YELLOW);
-        gameLogic1.getGameTable().setCardfromBoard(6,7,Card.NONE);
+        gameLogic1.getGameTable().setCardfromBoard(6,7, NONE);
         view.viewGameTable(gameLogic1.getGameTable());
         Assert.assertFalse(gameLogic1.checkCardsPickable(3));
 

@@ -5,11 +5,14 @@ import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.Player;
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import static it.polimi.ingsw.Model.Card.*;
 
 public class TestGameTable extends TestCase {
 
@@ -65,121 +68,27 @@ public class TestGameTable extends TestCase {
 
     @Test
     public void testCheckStatus_emptyboard_refill() throws Exception{
-        Game g1=new Game(2);
-        GameLogic logic=new GameLogic(g1);
-        Player p1=new Player("Player 1");
-        g1.setCurrentPlayer(p1);
-
-        StringBuilder builder=new StringBuilder();
-        builder.append("2\n2\n4\n2\n5\n");
-        InputStream input = new ByteArrayInputStream(builder.toString().getBytes());
-        ArrayList<Card> result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n3\n3\n3\n4\n3\n5\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("1\n3\n6\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n4\n2\n4\n3\n4\n4\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n4\n5\n4\n6\n4\n7\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("1\n4\n8\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n5\n1\n5\n2\n5\n3\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n5\n4\n5\n5\n5\n6\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("2\n5\n7\n5\n8\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n6\n2\n6\n3\n6\n4\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n6\n5\n6\n6\n6\n7\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n7\n4\n7\n5\n7\n6\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-        builder=new StringBuilder();
-        builder.append("3\n8\n4\n8\n5\n8\n6\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-
-
-
-        g1.getGameTable().checkStatus();
-
-
-        builder=new StringBuilder();
-        builder.append("2\n2\n4\n2\n5\n");
-        input = new ByteArrayInputStream(builder.toString().getBytes());
-        result = new ArrayList<>();
-        System.setIn(input);
-        result=logic.getCardFromTable();
-        boolean condition=true;
-        for (int i=0; i<result.size();i++){
-            if(result.get(i)==Card.NONE){
-                condition=false;
+        GameTable gameTable = new GameTable(2);
+        for(int i = 0; i < 11; i++){
+            for(int j = 0; j < 11; j++){
+                if(gameTable.getCardfromBoard(i, j)!= NOT){
+                    gameTable.setCardfromBoard(i, j, NONE);
+                }
             }
         }
-        assertTrue(condition);
 
+        gameTable.setCardfromBoard(2, 3, YELLOW);
+        gameTable.setCardfromBoard(2, 5, YELLOW);
+        gameTable.setCardfromBoard(3, 6, YELLOW);
+        gameTable.setCardfromBoard(4, 5, YELLOW);
+
+        gameTable.checkStatus();
+
+        Assert.assertTrue(gameTable.getCardfromBoard(8, 5) != NONE);
+        Assert.assertTrue(gameTable.getCardfromBoard(8, 6) != NONE);
+        Assert.assertTrue(gameTable.getCardfromBoard(2, 4) != NONE);
+        Assert.assertTrue(gameTable.getCardfromBoard(8, 4) == NOT);
+        Assert.assertTrue(gameTable.getCardfromBoard(1, 1) == NOT);
     }
 
 

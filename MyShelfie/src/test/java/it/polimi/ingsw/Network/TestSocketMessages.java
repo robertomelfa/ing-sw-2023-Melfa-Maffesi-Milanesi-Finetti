@@ -41,11 +41,12 @@ public class TestSocketMessages {
 
     @Test
     public void TestSendPlayerObj() throws Exception{
-        String input = "5 4 bob";
+        String input = "5\n4\nbob";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
         Client_Socket client = new Client_Socket();
+        client.setView();
         client.connect("127.0.0.1", 8080, server.getServerRMI());
 
         // wait the controller updating
@@ -55,7 +56,7 @@ public class TestSocketMessages {
 
 
 
-        server.getServerSocket().sendPlayerObj(server.getController().getClientList().get(0).getSocket(), obj);
+        server.getServerSocket().sendPlayerObj(server.getLobby().getController().getClientList().get(0).getSocket(), obj);
         Message msg=client.receiveMessage();
 
         if (msg.getType()== MessageType.receivePlayerObj) {
@@ -67,11 +68,12 @@ public class TestSocketMessages {
 
     @Test
     public void TestSendGameTable() throws Exception{
-        String input = "5 4 bob";
+        String input = "5\n4\nbob";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
         Client_Socket client = new Client_Socket();
+        client.setView();
         client.connect("127.0.0.1", 8080, server.getServerRMI());
 
         // wait the controller updating
@@ -81,7 +83,7 @@ public class TestSocketMessages {
         gameTable.setCardfromBoard(5,5,BLUE);
         gameTable.setCardfromBoard(7,4,YELLOW);
 
-        server.getServerSocket().sendGameTable(server.getController().getClientList().get(0).getSocket(), gameTable);
+        server.getServerSocket().sendGameTable(server.getLobby().getController().getClientList().get(0).getSocket(), gameTable);
         Message msg=client.receiveMessage();
 
         if (msg.getType()== MessageType.receiveGameTable) {
@@ -93,11 +95,12 @@ public class TestSocketMessages {
 
     @Test
     public void TestClientLogic() throws Exception{
-        String input = "5 4 bob";
+        String input = "5\n4\nbob";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
         Client_Socket client = new Client_Socket();
+        client.setView();
         client.connect("127.0.0.1", 8080, server.getServerRMI());
         Game game = new Game(2);
         GameTable gameTable = new GameTable(2);
@@ -105,14 +108,14 @@ public class TestSocketMessages {
         GameLogic gameLogic = new GameLogic(game);
         Thread.sleep(500);
         Message msg = new Message(MessageType.printMessage, "Game is starting");
-        server.getServerSocket().sendMessage(msg, server.getController().getClientList().get(0).getSocket());
+        server.getServerSocket().sendMessage(msg, server.getLobby().getController().getClientList().get(0).getSocket());
         msg = new Message(MessageType.objectiveCompleted, "completed");
-        server.getServerSocket().sendMessage(msg, server.getController().getClientList().get(0).getSocket());
-        server.getServerSocket().sendGameTable(server.getController().getClientList().get(0).getSocket(), gameTable);
-        server.getServerSocket().sendPlayerObj(server.getController().getClientList().get(0).getSocket(), obj);
-        server.getServerSocket().sendLibrary(server.getController().getClientList().get(0).getSocket(), server.getController().getClientList().get(0).getPlayer().getLibrary());
+        server.getServerSocket().sendMessage(msg, server.getLobby().getController().getClientList().get(0).getSocket());
+        server.getServerSocket().sendGameTable(server.getLobby().getController().getClientList().get(0).getSocket(), gameTable);
+        server.getServerSocket().sendPlayerObj(server.getLobby().getController().getClientList().get(0).getSocket(), obj);
+        server.getServerSocket().sendLibrary(server.getLobby().getController().getClientList().get(0).getSocket(), server.getLobby().getController().getClientList().get(0).getPlayer().getLibrary());
         msg = new Message(MessageType.endGame, null);
-        server.getServerSocket().sendMessage(msg, server.getController().getClientList().get(0).getSocket());
+        server.getServerSocket().sendMessage(msg, server.getLobby().getController().getClientList().get(0).getSocket());
         client.clientlogic(server.getServerRMI());
 
     }

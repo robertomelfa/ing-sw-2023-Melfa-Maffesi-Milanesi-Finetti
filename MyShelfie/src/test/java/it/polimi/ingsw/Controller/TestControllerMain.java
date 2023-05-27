@@ -27,40 +27,41 @@ public class TestControllerMain {
 
     @Test
     public void nameTest() throws RemoteException, Exception{
-        String input = "3 bob\n";
+        String input = "3\nbob\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
         GameClientInterface client = new Client();
-        client.connection(server.getServerRMI(), client, server.getController());
+        client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
-        Assert.assertTrue(server.getController().checkExistingName("bob"));
-        Assert.assertFalse(server.getController().checkExistingName(" bob"));
+        Assert.assertTrue(server.getLobby().getController().checkExistingName("bob"));
+        Assert.assertFalse(server.getLobby().getController().checkExistingName(" bob"));
 
     }
 
     @Test
     public void updatePlayerTest() throws RemoteException, Exception{
-        String input = "3 bob\n";
+        String input = "3\nbob\n";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
         GameClientInterface client = new Client();
-        client.connection(server.getServerRMI(), client, server.getController());
+        client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
-        System.out.println(server.getController().getClientList().get(0).getPlayer().getNickname());
 
         String input1 = "bob\nrob\n";
         ByteArrayInputStream inputStream1 = new ByteArrayInputStream(input1.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream1);
 
         Client_Socket clientS = new Client_Socket();
+        clientS.setView();
         clientS.connect("127.0.0.1", 8080, server.getServerRMI());
+
 
         // wait the controller updating
         Thread.sleep(500);
-        server.getController().updateCurrentPlayer();
-        Assert.assertEquals(server.getController().getCurrentPlayer(), server.getController().getClientList().get(1));
+        server.getLobby().getController().updateCurrentPlayer();
+        Assert.assertEquals(server.getLobby().getController().getCurrentPlayer(), server.getLobby().getController().getClientList().get(1));
     }
 
     @After
