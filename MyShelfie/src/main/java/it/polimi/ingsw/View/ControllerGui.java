@@ -1,9 +1,6 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.Model.Card;
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
+import it.polimi.ingsw.Model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +30,8 @@ import static it.polimi.ingsw.Model.Card.*;
 
 public class ControllerGui implements Initializable {
 
+    @FXML
+    private ImageView PlayerObj;
     @FXML
     private ImageView CommonObj1;
     @FXML
@@ -664,6 +663,31 @@ public class ControllerGui implements Initializable {
             case PathImageCards.PIANTE1, PathImageCards.PIANTE2, PathImageCards.PIANTE3 -> card = PURPLE;
         }
         return card;
+    }
+
+    public void setPlayerObj(GameLogic gameLogic){
+
+        String url = PathImageCards.PLAYEROBJEMPTY;
+
+        switch (gameLogic.getGame().getCurrentPlayer().getPlayerObj().getNum()){
+            case 1 -> url = PathImageCards.PLAYEROBJ2;
+            case 2 -> url = PathImageCards.PLAYEROBJ1;
+            case 3 -> url = PathImageCards.PLAYEROBJ3;
+            case 4 -> url = PathImageCards.PLAYEROBJ4;
+            case 5 -> url = PathImageCards.PLAYEROBJ5;
+            case 6 -> url = PathImageCards.PLAYEROBJ6;
+            case 7 -> url = PathImageCards.PLAYEROBJ7;
+            case 8 -> url = PathImageCards.PLAYEROBJ8;
+            case 9 -> url = PathImageCards.PLAYEROBJ9;
+            case 10 -> url = PathImageCards.PLAYEROBJ10;
+            case 11 -> url = PathImageCards.PLAYEROBJ11;
+            case 12 -> url = PathImageCards.PLAYEROBJ12;
+        }
+        // 2 - 1 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 - 11 - 12
+
+        PlayerObj.setImage(new Image(url));
+        PlayerObj.setFitWidth(200);
+        PlayerObj.setFitHeight(200);
     }
 
     /**

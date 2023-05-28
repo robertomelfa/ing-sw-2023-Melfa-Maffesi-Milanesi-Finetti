@@ -13,6 +13,7 @@ public class PlayerObj implements Serializable{
     private final ArrayList<SingleObj> playerObjs ;
     private static ArrayList <Integer> available = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     private final int[] POINT = {1, 2, 4, 6, 9, 12};
+    private int num;
 
     /**
      * @param player, player to check
@@ -73,6 +74,7 @@ public class PlayerObj implements Serializable{
             case 12 -> this.playerObjs = obj12();
             default -> throw new Exception("error");
         }
+        num=available.get(rand);
         if (available.size() <= 8) resetAvailable();
         available.remove(rand);
     }
@@ -224,8 +226,6 @@ public class PlayerObj implements Serializable{
         return playerObjs;
     }
 
-    //@test
-    private int num;
     //@test
     public PlayerObj(int numObj) throws Exception {
         num = numObj;

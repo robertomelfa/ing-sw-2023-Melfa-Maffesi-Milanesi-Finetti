@@ -91,7 +91,10 @@ private byte initLibrary = 0;
 //        }
 
         if (first){
-            Platform.runLater(()-> controllerGui.setCommonObj(gameLogic));
+            Platform.runLater(()-> {
+                controllerGui.setPlayerObj(gameLogic);
+                controllerGui.setCommonObj(gameLogic);
+            });
             first = false;
         }
 
