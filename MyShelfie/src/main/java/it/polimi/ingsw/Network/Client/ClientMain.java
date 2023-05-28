@@ -4,6 +4,7 @@ import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import it.polimi.ingsw.View.CLIView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,7 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ClientMain extends Application implements Serializable {
-
     public static void main(String[] args) throws Exception {
 
         System.out.printf(" ██████   ██████             █████████  █████               ████     ██████   ███          \n" +
@@ -37,9 +37,11 @@ public class ClientMain extends Application implements Serializable {
 
 
         Boolean selection = false;
-        Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-        GameInterface server = (GameInterface) registry.lookup("GameInterface");
         System.out.println("[CLIENT] is running");
+        CLIView view = new CLIView();
+        String port = view.requestIP();
+        Registry registry = LocateRegistry.getRegistry(port, 1099);
+        GameInterface server = (GameInterface) registry.lookup("GameInterface");
         Scanner scanner = new Scanner(System.in);
         String input;
         //input = scanner.next();
@@ -86,12 +88,13 @@ public class ClientMain extends Application implements Serializable {
                                     timer.cancel();
                                     System.out.println("Starting Socket");
                                     Client_Socket clientS = new Client_Socket();
-                                    clientS.start(server);
+                                    clientS.start(server,port);
                                     break;
                                 case "B":
                                     server.block();
                                     try {
                                         timer.cancel();
+
 
                                         GameClientInterface clientR = new Client();
                                         clientR.connection(server, clientR, server.getController());
@@ -109,11 +112,10 @@ public class ClientMain extends Application implements Serializable {
         }
     }
 
-
     @Override
     public void start(Stage stage) throws Exception {
-        Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-        GameInterface server = (GameInterface) registry.lookup("GameInterface");
+        //Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+        //GameInterface server = (GameInterface) registry.lookup("GameInterface");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
         Image icon = new Image("assets/Publisher material/icon 50x50px.png");

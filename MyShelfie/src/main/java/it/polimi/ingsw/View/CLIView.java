@@ -15,6 +15,16 @@ public class CLIView implements ViewClient, Serializable {
     GameLogic gameLogic;
 
 
+    public String requestIP(){
+        System.out.println("Insert server IP:");
+        Scanner input = new Scanner(System.in);
+        String port = input.nextLine();
+        if (port.isBlank()){
+            port = "localhost";
+        }
+        return port;
+    }
+
     @Override
     public void viewLibrary(Library library) {
         System.out.print("   ");
@@ -185,8 +195,12 @@ public class CLIView implements ViewClient, Serializable {
         Scanner in = new Scanner(System.in);
         ArrayList<Card> list = new ArrayList<Card>();
         do{
-            System.out.println("How many cards?");         // number of card to pick (1 - 3)
-            size = Integer.parseInt(in.nextLine());
+            String tempSize;
+            do {
+                System.out.println("How many cards?");         // number of card to pick (1 - 3)
+                tempSize = in.nextLine();
+            }while (!tempSize.matches("\\d"));           // "\\d" represents number from 0-9
+            size = Integer.parseInt(tempSize);
 
             if(size < 1 || size >3){
                 System.out.println("You can pick 1, 2 or 3 cards. Try again!");
@@ -203,10 +217,17 @@ public class CLIView implements ViewClient, Serializable {
             int x1, y1;
             // ask coordinates until a correct input
             do{
-                System.out.println("Coordinate x Card 1");
-                x1 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate y Card 1");
-                y1 = Integer.parseInt(in.nextLine());
+                String tempX,tempY;
+                do {
+                    System.out.println("Coordinate x Card 1");
+                    tempX = in.nextLine();
+                }while (!tempX.matches("\\d"));
+                x1 = Integer.parseInt(tempX);
+                do {
+                    System.out.println("Coordinate y Card 1");
+                    tempY = in.nextLine();
+                }while (!tempY.matches("\\d"));
+                y1 = Integer.parseInt(tempY);
                 if(!gameLogic.checkNear(x1, y1)){
                     System.out.println("Invalid coordinates, try again!");
                 }
@@ -220,14 +241,30 @@ public class CLIView implements ViewClient, Serializable {
             int x1, y1, x2, y2;
             // requires coordinates
             do{
-                System.out.println("Coordinate x Card 1");
-                x1 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate y Card 1");
-                y1 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate x Card 2");
-                x2 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate y Card 2");
-                y2 = Integer.parseInt(in.nextLine());
+                String tempX,tempY;
+                do {
+                    System.out.println("Coordinate x Card 1");
+                    tempX = in.nextLine();
+                }while (!tempX.matches("\\d"));
+                x1 = Integer.parseInt(tempX);
+
+                do {
+                    System.out.println("Coordinate y Card 1");
+                    tempY = in.nextLine();
+                }while (!tempY.matches("\\d"));
+                y1 = Integer.parseInt(tempY);
+
+                do {
+                    System.out.println("Coordinate x Card 2");
+                    tempX = in.nextLine();
+                }while (!tempX.matches("\\d"));
+                x2 = Integer.parseInt(tempX);
+
+                do {
+                    System.out.println("Coordinate y Card 2");
+                    tempY = in.nextLine();
+                }while (!tempY.matches("\\d"));
+                y2 = Integer.parseInt(tempY);
 
                 if(!gameLogic.checkNear(x1, y1, x2, y2)){
                     System.out.println("Invalid coordinates, try again!");
@@ -244,18 +281,42 @@ public class CLIView implements ViewClient, Serializable {
             int x1, y1, x2, y2, x3, y3;
             // requires coordinates
             do{
-                System.out.println("Coordinate x Card 1");
-                x1 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate y Card 1");
-                y1 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate x Card 2");
-                x2 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate y Card 2");
-                y2 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate x Card 3");
-                x3 = Integer.parseInt(in.nextLine());
-                System.out.println("Coordinate y Card 3");
-                y3 = Integer.parseInt(in.nextLine());
+                String tempX,tempY;
+                do {
+                    System.out.println("Coordinate x Card 1");
+                    tempX = in.nextLine();
+                }while (!tempX.matches("\\d"));
+                x1 = Integer.parseInt(tempX);
+
+                do {
+                    System.out.println("Coordinate y Card 1");
+                    tempY = in.nextLine();
+                }while (!tempY.matches("\\d"));
+                y1 = Integer.parseInt(tempY);
+
+                do {
+                    System.out.println("Coordinate x Card 2");
+                    tempX = in.nextLine();
+                }while (!tempX.matches("\\d"));
+                x2 = Integer.parseInt(tempX);
+
+                do {
+                    System.out.println("Coordinate y Card 2");
+                    tempY = in.nextLine();
+                }while (!tempY.matches("\\d"));
+                y2 = Integer.parseInt(tempY);
+
+                do {
+                    System.out.println("Coordinate x Card 3");
+                    tempX = in.nextLine();
+                }while (!tempX.matches("\\d"));
+                x3 = Integer.parseInt(tempX);
+
+                do {
+                    System.out.println("Coordinate y Card 3");
+                    tempY = in.nextLine();
+                }while (!tempY.matches("\\d"));
+                y3 = Integer.parseInt(tempY);
 
                 if(!gameLogic.checkNear(x1, y1, x2, y2, x3, y3)){
                     System.out.println("Invalid coordinates, try again!");

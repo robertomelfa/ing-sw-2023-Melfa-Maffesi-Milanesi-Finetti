@@ -85,7 +85,7 @@ public class ControllerGui implements Initializable {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/comObjDesc.fxml"));
         Parent root = loader.load();
-        stage.setTitle("description");
+        stage.setTitle("Description");
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());

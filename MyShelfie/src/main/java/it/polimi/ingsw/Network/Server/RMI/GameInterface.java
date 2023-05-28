@@ -14,8 +14,6 @@ public interface GameInterface extends Remote{
 
     public void start(ControllerMain controller) throws RemoteException ;
 
-
-
     public void gameTableToClient(GameTable board, GameClientInterface client) throws RemoteException,Exception;
 
 
