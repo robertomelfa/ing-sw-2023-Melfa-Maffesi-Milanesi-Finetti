@@ -42,9 +42,9 @@ public class Client_Socket implements Serializable {
      *
      * @throws Exception
      */
-    public  void start(GameInterface server) throws Exception{
+    public  void start(GameInterface server, String port) throws Exception{
         view = new CLIView();
-        connect("127.0.0.1",8080, server);
+        connect(port,8080, server);
         try {
             // start the logic of the client
             clientlogic(server);

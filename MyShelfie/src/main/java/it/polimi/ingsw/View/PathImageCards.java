@@ -35,6 +35,18 @@ public class PathImageCards {
     public static final String COMMONOBJ12 = "assets/common goal cards/12.jpg";
     public static final String COMMONOBJBACK = "assets/common goal cards/back.jpg";
 
-
+    public static final String PLAYEROBJ1 = "assets/personal goal cards/personal_Goals.png";
+    public static final String PLAYEROBJ2 = "assets/personal goal cards/Personal_Goals2.png";
+    public static final String PLAYEROBJ3 = "assets/personal goal cards/personal_Goals3.png";
+    public static final String PLAYEROBJ4 = "assets/personal goal cards/personal_Goals4.png";
+    public static final String PLAYEROBJ5 = "assets/personal goal cards/personal_Goals5.png";
+    public static final String PLAYEROBJ6 = "assets/personal goal cards/personal_Goals6.png";
+    public static final String PLAYEROBJ7 = "assets/personal goal cards/personal_Goals7.png";
+    public static final String PLAYEROBJ8 = "assets/personal goal cards/personal_Goals8.png";
+    public static final String PLAYEROBJ9 = "assets/personal goal cards/personal_Goals9.png";
+    public static final String PLAYEROBJ10 = "assets/personal goal cards/personal_Goals10.png";
+    public static final String PLAYEROBJ11 = "assets/personal goal cards/personal_Goals11.png";
+    public static final String PLAYEROBJ12 = "assets/personal goal cards/personal_Goals12.png";
+    public static final String PLAYEROBJEMPTY = "assets/personal goal cards/front_EMPTY.jpg";
 
 }
