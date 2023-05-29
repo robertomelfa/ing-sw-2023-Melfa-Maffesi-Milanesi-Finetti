@@ -364,9 +364,9 @@ public class Client_Socket implements Serializable {
                             GameTable table = receiveGameTable();
                             view.viewGameTable(table);
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            System.out.println("error receiving gameTable");
                         } catch (ClassNotFoundException e) {
-                            throw new RuntimeException(e);
+                            System.out.println("error receiving gameTable");
                         }
                     });
                 } else if (msg.getType() == MessageType.receiveLibrary) {
