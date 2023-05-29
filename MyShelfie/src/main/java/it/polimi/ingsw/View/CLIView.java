@@ -16,9 +16,13 @@ public class CLIView implements ViewClient, Serializable {
 
 
     public String requestIP(){
-        System.out.println("Insert server IP:");
+        String port;
         Scanner input = new Scanner(System.in);
-        String port = input.nextLine();
+        do{
+            System.out.println("Insert server IP:");
+            port = input.nextLine();
+        }while (!port.matches("\\d+.\\d+.\\d+.\\d+") && !port.matches("localhost") && !port.matches(""));
+
         if (port.isBlank()){
             port = "localhost";
         }
