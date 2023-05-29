@@ -10,9 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class ControllerLibrary {
+public class ControllerLibrary implements Serializable {
 
     @FXML
     private GridPane grid;

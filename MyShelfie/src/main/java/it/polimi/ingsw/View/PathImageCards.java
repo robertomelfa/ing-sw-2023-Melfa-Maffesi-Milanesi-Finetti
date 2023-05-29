@@ -1,6 +1,8 @@
 package it.polimi.ingsw.View;
 
-public class PathImageCards {
+import java.io.Serializable;
+
+public class PathImageCards implements Serializable {
 
     public static final String CORNICI1 = "assets/item tiles/Cornici1.1.png";
     public static final String CORNICI2 = "assets/item tiles/Cornici1.2.png";

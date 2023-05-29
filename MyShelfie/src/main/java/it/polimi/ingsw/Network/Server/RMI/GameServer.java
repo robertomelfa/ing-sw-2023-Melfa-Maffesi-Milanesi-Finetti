@@ -20,6 +20,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     private boolean isConnecting = false; // the client is trying to connect
 
+    private boolean temp = false;
+
     public GameServer() throws RemoteException{
         super();
     }
@@ -121,6 +123,18 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
         });
         thread.start();
+    }
+
+    public void setTemp() throws RemoteException{
+        temp = true;
+    }
+
+    public boolean getTemp() throws RemoteException{
+        if(temp){
+            temp = false;
+            return true;
+        }
+        return temp;
     }
 
 

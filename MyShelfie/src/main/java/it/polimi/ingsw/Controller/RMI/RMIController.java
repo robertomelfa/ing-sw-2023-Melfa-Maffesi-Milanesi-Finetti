@@ -61,10 +61,13 @@ public class RMIController implements Serializable {
                             current_client.receiveMessage("Common Object 2:");
                             current_client.receiveMessage(gameLogic.getGame().getCommonObj2().getDescription());
                         }
-                        case "2" -> i = 1;
+                        case "2" -> {
+                            i = 1;
+                        }
                         default -> current_client.receiveMessage("The input is not valid, please insert 1 or 2\n");
                     }
                 }else {
+                    System.out.println("RMI controller");
                     i = 1;
                 }
             }

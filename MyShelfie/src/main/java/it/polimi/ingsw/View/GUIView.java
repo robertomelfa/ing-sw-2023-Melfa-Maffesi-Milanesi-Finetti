@@ -3,11 +3,12 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Model.*;
 import javafx.application.Platform;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GUIView implements ViewClient {
+public class GUIView implements ViewClient, Serializable {
 
-private ControllerGui controllerGui;
+private ControllerGui controllerGui = new ControllerGui();
 private GameLogic gameLogic;
 private boolean first = true;
 private byte initLibrary = 0;
@@ -51,7 +52,7 @@ private byte initLibrary = 0;
         while (!controllerGui.getAllCardsInsert()){
             // wait until all cards are insert
             try{
-                Thread.sleep(100);
+                Thread.sleep(500);
             } catch (InterruptedException ignore) {
             }
         }

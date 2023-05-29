@@ -20,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.Model.Card.*;
 
-public class ControllerGui implements Initializable {
+public class ControllerGui implements Initializable, Serializable {
 
     @FXML
     private ImageView PlayerObj;
@@ -222,7 +223,6 @@ public class ControllerGui implements Initializable {
     void updateGameTable(GameTable gameTable){
 
         int k = 0;
-
         while(k<45) {
             button = (ToggleButton) gridTable.getChildren().get(k);
             String pos = button.getText();
@@ -252,7 +252,6 @@ public class ControllerGui implements Initializable {
 
             k++;
         }
-
         gameTable.checkStatus();
 
     }

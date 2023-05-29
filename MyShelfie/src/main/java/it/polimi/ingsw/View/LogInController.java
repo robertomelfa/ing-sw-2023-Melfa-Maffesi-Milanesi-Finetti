@@ -14,12 +14,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class LogInController{
+public class LogInController implements Serializable {
 
     Registry registry = LocateRegistry.getRegistry("localhost", 1099);
     GameInterface server = (GameInterface) registry.lookup("GameInterface");
@@ -66,51 +67,105 @@ public class LogInController{
     private void SocketConnection() throws Exception{
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2socket.fxml"));
+            server.setTemp();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
             Stage stage = (Stage) RMIButton.getScene().getWindow();
             stage.setScene(new Scene(fxmlLoader.load(), 1080, 720));
         } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInNotFirstSocket.fxml"));
+            server.setTemp();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInNotFirst.fxml"));
             Stage stage = (Stage) RMIButton.getScene().getWindow();
             stage.setScene(new Scene(fxmlLoader.load(), 1080, 720));
         }
     }
-    public void submit(ActionEvent event){
-        try {
-            if ( num > 1 && num < 5){
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
-                Stage stage = (Stage) start.getScene().getWindow();
-                stage.setScene(new Scene(fxmlLoader.load()));
-                String user = username.getText();
-                GameClientInterface client = new Client();
-                server.release();
-                ((Client) client).setControllerView(fxmlLoader.getController());
-                client.connectionGUI(server, client, server.getController(), num, user);
-            } else {
-                labelNumPlayers.setOpacity(1);
+    public void submit(ActionEvent event) throws Exception{
+        if(!server.getTemp()){
+            try {
+                if ( num > 1 && num < 5){
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                    Stage stage = (Stage) start.getScene().getWindow();
+                    stage.setScene(new Scene(fxmlLoader.load()));
+                    String user = username.getText();
+                    GameClientInterface client = new Client();
+                    server.release();
+                    ((Client) client).setControllerView(fxmlLoader.getController());
+                    client.connectionGUI(server, client, server.getController(), num, user);
+                } else {
+                    labelNumPlayers.setOpacity(1);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        }else{
+            System.out.println("New socket client");
+            try{
+                if (num > 1 && num < 5) {
+                    Client_Socket clientSocket = new Client_Socket();
+                    String user = username.getText();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                    //clientSocket.sendInt(num);
+                    Stage stage = (Stage) username.getScene().getWindow();
+                    stage.setScene(new Scene(fxmlLoader.load()));
+                    try {
+                        clientSocket.setControllerGui(fxmlLoader.getController());
+                        clientSocket.startGUI(server, num, user);
+                    }catch (Exception e){
+                        System.out.println("error starting the socket");
+                    }
+                }else {
+                    labelNumPlayers.setOpacity(1);
+                }
+            }catch (Exception e){
+
+            }
         }
+
     }
 
-    public void submitNotFirst(ActionEvent event){
-        try {
-            String user = username2.getText();
-            GameClientInterface client = new Client();
-            if(!server.getController().checkExistingName(user)){
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
-                Stage stage = (Stage) username2.getScene().getWindow();
-                stage.setScene(new Scene(fxmlLoader.load()));
-                server.release();
-                ((Client) client).setControllerView(fxmlLoader.getController());
-                client.connectionGUI(server, client, server.getController(), user);
-            } else {
-                label.setOpacity(1);
+    public void submitNotFirst(ActionEvent event) throws RemoteException {
+        if(!server.getTemp()){
+            // rmi
+            try {
+                String user = username2.getText();
+                GameClientInterface client = new Client();
+                if(!server.getController().checkExistingName(user)){
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                    Stage stage = (Stage) username2.getScene().getWindow();
+                    stage.setScene(new Scene(fxmlLoader.load()));
+                    server.release();
+                    ((Client) client).setControllerView(fxmlLoader.getController());
+                    client.connectionGUI(server, client, server.getController(), user);
+                } else {
+                    label.setOpacity(1);
+                }
+            }catch (Exception e){
+                System.out.println(e);
             }
-        }catch (Exception e){
-            System.out.println(e);
+        }else{
+            //socket
+            System.out.println("sono in socket");
+            try {
+                Client_Socket clientSocket = new Client_Socket();
+                String user = username2.getText();
+                if(!server.getController().checkExistingName(user)) {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
+                    Stage stage = (Stage) username2.getScene().getWindow();
+                    stage.setScene(new Scene(fxmlLoader.load()));
+                    server.release();
+                    try {
+                        clientSocket.setControllerGui(fxmlLoader.getController());
+                        clientSocket.startGUI(server, 0 , user);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    label.setOpacity(1);
+                }
+            } catch (Exception e){
+                System.out.println(e);
+            }
         }
+
     }
 
     public void set2(ActionEvent event){

@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class ControllerComObjDesc {
+import java.io.Serializable;
+
+public class ControllerComObjDesc implements Serializable {
 
     @FXML
     private Label labelText;

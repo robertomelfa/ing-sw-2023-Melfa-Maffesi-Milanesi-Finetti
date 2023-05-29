@@ -41,4 +41,8 @@ public interface GameInterface extends Remote{
     public boolean isLocked() throws RemoteException, InterruptedException;
 
     public void newClient(GameClientInterface client) throws RemoteException;
+
+    public void setTemp() throws RemoteException;
+
+    public boolean getTemp() throws RemoteException;
 }

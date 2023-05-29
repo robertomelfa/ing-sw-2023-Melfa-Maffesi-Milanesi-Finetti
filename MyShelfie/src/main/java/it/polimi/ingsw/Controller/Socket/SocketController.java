@@ -63,7 +63,6 @@ public class SocketController implements Serializable {
                         }
                         case "2" -> {
                             // pick card from table
-
                             gameLogic = server.sendGameLogic(current_client, gameLogic);
                             i = 1;
                         }
@@ -71,6 +70,7 @@ public class SocketController implements Serializable {
                                 server.sendMessage(new Message(MessageType.printMessage, "The input is not valid, please insert 1 or 2\n"), current_client.getSocket());
                     }
                 }else {
+                    System.out.println("Socket controller");
                     gameLogic = server.sendGameLogic(current_client, gameLogic);
                     i = 1;
                 }
