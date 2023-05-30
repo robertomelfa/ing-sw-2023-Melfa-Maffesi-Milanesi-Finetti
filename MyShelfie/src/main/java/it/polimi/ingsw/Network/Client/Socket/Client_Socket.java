@@ -35,10 +35,11 @@ public class Client_Socket implements Serializable {
     private boolean gui = false;
 
     /**
-     * The client choose the game he want to connect to choosing the corresponding port
+     * The client choose the game he wants to connect to choosing the corresponding port
      *
      * @throws Exception
      */
+
     public  void start(GameInterface server, String port) throws Exception{
         view = new CLIView();
         connect(port,8080, server);
@@ -255,9 +256,9 @@ public class Client_Socket implements Serializable {
         view.setController(controllerGui);
     }
 
-    public void startGUI(GameInterface server, int num, String username) throws Exception {
+    public void startGUI(GameInterface server,String guiIp,int num, String username) throws Exception {
         System.out.println("socket");
-        connectGUI("127.0.0.1", 8080, server, num, username);
+        connectGUI(guiIp, 8080, server, num, username);
         try {
             //start the logic of the client
             clientLogicGui(server);

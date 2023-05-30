@@ -6,6 +6,7 @@ import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +23,9 @@ import java.rmi.registry.Registry;
 
 public class LogInController implements Serializable {
 
-    Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-    GameInterface server = (GameInterface) registry.lookup("GameInterface");
+    private Registry registry;
+    private GameInterface server;
+    private String ip;
 
     @FXML
     Button RMIButton;
@@ -47,7 +49,20 @@ public class LogInController implements Serializable {
     private int num = 0;
     private boolean rmi = true;
 
-    public LogInController() throws RemoteException, NotBoundException {
+    @FXML
+    public void initialize() {
+        Platform.runLater(() -> {
+            try {
+                Registry registry = LocateRegistry.getRegistry(ip, 1099);
+                GameInterface server = (GameInterface) registry.lookup("GameInterface");
+                this.registry = registry;
+                this.server = server;
+            }catch (Exception e){
+                System.out.println("Exception in LogInController initialize");
+            }
+        });
+
+
     }
     @FXML
     private void RMIconnection() throws Exception {
@@ -108,7 +123,7 @@ public class LogInController implements Serializable {
                     stage.setScene(new Scene(fxmlLoader.load()));
                     try {
                         clientSocket.setControllerGui(fxmlLoader.getController());
-                        clientSocket.startGUI(server, num, user);
+                        clientSocket.startGUI(server,ip, num, user);
                     }catch (Exception e){
                         System.out.println("error starting the socket");
                     }
@@ -154,7 +169,7 @@ public class LogInController implements Serializable {
                     server.release();
                     try {
                         clientSocket.setControllerGui(fxmlLoader.getController());
-                        clientSocket.startGUI(server, 0 , user);
+                        clientSocket.startGUI(server,ip, 0 , user);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -188,5 +203,9 @@ public class LogInController implements Serializable {
         button3.setOpacity(1);
         button4.setOpacity(0.8);
 
+    }
+
+    public void setIP(String ip){
+        this.ip = ip;
     }
 }

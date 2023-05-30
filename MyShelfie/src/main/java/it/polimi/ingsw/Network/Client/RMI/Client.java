@@ -14,7 +14,10 @@ import it.polimi.ingsw.View.ViewClient;
 
 import java.io.Serializable;
 import java.rmi.NoSuchObjectException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 

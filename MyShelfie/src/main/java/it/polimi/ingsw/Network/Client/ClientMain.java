@@ -5,8 +5,10 @@ import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
+import it.polimi.ingsw.View.LogInController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -16,6 +18,7 @@ import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -72,7 +75,7 @@ public class ClientMain extends Application implements Serializable {
                 case "yes":
                     timer.cancel();
                     selection = true;
-                    launch(args);
+                    launch("--ipport="+port);
                     break;
                 case "no":
                     selection = true;
@@ -114,10 +117,14 @@ public class ClientMain extends Application implements Serializable {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-        //GameInterface server = (GameInterface) registry.lookup("GameInterface");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInScreen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 720);
+        Parent root = (Parent)fxmlLoader.load();
+        Parameters parameters = getParameters();
+        String ip = parameters.getNamed().get("ipport");
+        System.out.println(ip);
+        LogInController loginController = fxmlLoader.<LogInController>getController();
+        loginController.setIP(ip);
+        Scene scene = new Scene(root, 1080, 720);
         Image icon = new Image("assets/Publisher material/icon 50x50px.png");
         stage.setScene(scene);
         stage.setTitle("MyShelfie");
