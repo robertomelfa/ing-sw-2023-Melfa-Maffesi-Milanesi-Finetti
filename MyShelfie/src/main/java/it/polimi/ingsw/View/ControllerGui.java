@@ -279,7 +279,6 @@ public class ControllerGui implements Initializable, Serializable {
         if (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column-1,countCard)){
             setLabelMessage("There is no enough space in this column. Choose another one");
             column = -1;
-            return;
         }else{
             enableArrayCards();
             disableColumnButton();

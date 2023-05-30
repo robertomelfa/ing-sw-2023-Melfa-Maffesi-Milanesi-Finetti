@@ -76,6 +76,10 @@ public class Game implements Serializable{
         return commonObj2;
     }
 
+    /**
+     *
+     * @param player the current player in the game
+     */
     public void setCurrentPlayer(Player player){
         this.currentPlayer = player;
     }

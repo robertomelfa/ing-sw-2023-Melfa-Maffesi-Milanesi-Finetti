@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-
+import java.util.ArrayList;
 
 
 public class RMIController implements Serializable {
@@ -19,6 +19,8 @@ public class RMIController implements Serializable {
     private GameLogic gameLogic;
 
     private GameClientInterface current_client; // RMI Client
+
+    private ArrayList<ClientClass> clientList = new ArrayList<>();
     private boolean gui;
 
 
@@ -30,11 +32,12 @@ public class RMIController implements Serializable {
      * @throws NotBoundException
      * @throws Exception
      */
-    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server, boolean gui) {
+    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server, boolean gui, ArrayList<ClientClass> clientList) {
         this.server = server;
         this.gameLogic = gameLogic;
         this.current_client = current_client.getClient();
         this.gui = gui;
+        this.clientList = clientList;
     }
 
     /**
@@ -51,7 +54,7 @@ public class RMIController implements Serializable {
             int i = 0;
             while(i == 0){
                 if(!gui) {
-                    switch (current_client.getStringFromClient("\nInsert 1 if you want to see your objectives or insert 2 if you want to pick the cards")) {
+                    switch (current_client.getStringFromClient("\nInsert 1 if you want to see your objectives, insert 2 if you want to pick the cards or insert 3 to view all the libraries")) {
                         case "1" -> {
                             // print object
                             current_client.receiveMessage("Player Object:");
@@ -63,6 +66,14 @@ public class RMIController implements Serializable {
                         }
                         case "2" -> {
                             i = 1;
+                        }
+                        case "3"->{
+                            for(int j = 0; j < clientList.size(); j++){
+                                if(!clientList.get(j).getPlayer().getNickname().equals(gameLogic.getGame().getCurrentPlayer().getNickname())){
+                                    current_client.receiveMessage("\n" + clientList.get(j).getPlayer().getNickname() + "'s library");
+                                    current_client.receiveLibrary(clientList.get(j).getPlayer().getLibrary());
+                                }
+                            }
                         }
                         default -> current_client.receiveMessage("The input is not valid, please insert 1 or 2\n");
                     }
