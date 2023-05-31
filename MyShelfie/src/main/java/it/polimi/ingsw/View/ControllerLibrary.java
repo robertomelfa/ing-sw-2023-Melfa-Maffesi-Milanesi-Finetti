@@ -22,6 +22,7 @@ public class ControllerLibrary implements Serializable {
 
     // test per verificare che funzioni, da rimpiazzare con click su librerie giocatori
     public void setLibrary(){
+        /*
         Library library= new Library();
 
         library.getGrid() [0][0] = Card.WHITE;   library.getGrid()[0][1]=Card.WHITE;   library.getGrid()[0][2]=Card.LIGHTBLUE;   library.getGrid()[0][3]=Card.PURPLE;   library.getGrid()[0][4]=Card.YELLOW;
@@ -37,7 +38,7 @@ public class ControllerLibrary implements Serializable {
         library.getGrid()[5][0]=Card.LIGHTBLUE;   library.getGrid()[5][1]=Card.WHITE;   library.getGrid()[5][2]=Card.BLUE;   library.getGrid()[5][3]=Card.GREEN;   library.getGrid()[5][4]=Card.GREEN;
 
         updateLibrary(library);
-
+        */
     }
 
     public void updateLibrary(Library library) {
