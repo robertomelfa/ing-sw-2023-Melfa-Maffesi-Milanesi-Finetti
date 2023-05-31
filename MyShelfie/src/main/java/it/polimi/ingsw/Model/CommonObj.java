@@ -121,31 +121,31 @@ public class CommonObj implements Serializable{
         for (int i = 0; i < 5; i++) {
             if (i == 4) return true;
             if ((lib.getPos(i, i) == NONE)) break;
-            if (lib.getPos(i, i) != lib.getPos(i + 1, i + 1)) break;
+            if (!(lib.getPos(i, i).isEqualTo(lib.getPos(i + 1, i + 1)))) break;
         }
         for (int i = 0; i < 5; i++) {
             if (i == 4) return true;
             if ((lib.getPos(i + 1, i) == NONE)) break;
-            if (lib.getPos(i + 1, i) != lib.getPos(i + 2, i + 1)) break;
+            if (!(lib.getPos(i + 1, i).isEqualTo(lib.getPos(i + 2, i + 1)))) break;
         }
         for (int i = 0; i < 5; i++) {
             if (i == 4) return true;
             if ((lib.getPos(i, 4 - i) == NONE)) break;
-            if (lib.getPos(i, 4 - i) != lib.getPos(i + 1, 4 - i - 1)) break;
+            if (!(lib.getPos(i, 4 - i).isEqualTo(lib.getPos(i + 1, 4 - i - 1)))) break;
         }
         for (int i = 0; i < 5; i++) {
             if (i == 4) return true;
             if ((lib.getPos(i + 1, 4 - i) == NONE)) break;
-            if (lib.getPos(i + 1, 4 - i) != lib.getPos(i + 2, 4 - i - 1)) break;
+            if (!(lib.getPos(i + 1, 4 - i).isEqualTo(lib.getPos(i + 2, 4 - i - 1)))) break;
         }
         return false;
 
     }
 
     private boolean check3(Library lib) {
-        return ((lib.getPos(0, 0) == lib.getPos(0, 4)) &&
-                (lib.getPos(0, 4) == lib.getPos(5, 4)) &&
-                (lib.getPos(5, 4) == lib.getPos(5, 0)) &&
+        return ((lib.getPos(0, 0).isEqualTo(lib.getPos(0, 4))) &&
+                (lib.getPos(0, 4).isEqualTo(lib.getPos(5, 4))) &&
+                (lib.getPos(5, 4).isEqualTo(lib.getPos(5, 0))) &&
                 (lib.getPos(0, 0) != NONE));
     }
 
@@ -169,9 +169,9 @@ public class CommonObj implements Serializable{
 
                         countType[i] = lib.getPos(row, column);
                         break;
-                    } else if (lib.getPos(row, column) == countType[i]) break;
+                    } else if (lib.getPos(row, column).isEqualTo(countType[i])) break;
 
-                    else if ((i == 2) && (lib.getPos(row, column) != countType[i])) break outer;
+                    else if ((i == 2) && !(lib.getPos(row, column).isEqualTo(countType[i]))) break outer;
                 }
                 if (column == 4) count4++;
             }
@@ -207,7 +207,7 @@ public class CommonObj implements Serializable{
 
                 for (int row2 = row1 + 1; row2 < 6; row2++) {
 
-                    if (lib.getPos(row1, column) == lib.getPos(row2, column)) break outer;
+                    if (lib.getPos(row1, column).isEqualTo(lib.getPos(row2, column))) break outer;
                 }
 
                 if (row1 == 4) count6++;
@@ -227,20 +227,20 @@ public class CommonObj implements Serializable{
         }
         for (int k=1;k<7;k++){
             for (int h=1;h<6;h++){
-                temp[k][h]=lib.getPos(k-1,h-1);
+                temp[k][h].isEqualTo(lib.getPos(k-1,h-1));
             }
         }
-        for(Card i : EnumSet.range(WHITE,PURPLE)){
+        for(Card i : EnumSet.range(WHITE1, PURPLE1)){
             for (int k=1;k<7;k++){
                 for (int h=1;h<6;h++){
-                    if(temp[k][h]==i && temp[k][h+1]==i && temp[k+1][h]==i && temp[k+1][h+1]==i){
+                    if(temp[k][h].isEqualTo(i) && temp[k][h+1].isEqualTo(i) && temp[k+1][h].isEqualTo(i) && temp[k+1][h+1].isEqualTo(i)){
                         temp[k][h]=NONE;
                         temp[k][h+1]=NONE;
                         temp[k+1][h]=NONE;
                         temp[k+1][h+1]=NONE;
                         boolean borders=(
-                                    temp[k-1][h]!=i && temp[k-1][h+1]!=i && temp[k+2][h]!=i && temp[k+2][h+1]!=i &&
-                                            temp[k][h-1]!=i && temp[k+1][h-1]!=i && temp[k][h+2]!=i && temp[k+1][h+2]!=i
+                                    !temp[k-1][h].isEqualTo(i) && !temp[k-1][h+1].isEqualTo(i) && !temp[k+2][h].isEqualTo(i) && !temp[k+2][h+1].isEqualTo(i) &&
+                                            !temp[k][h-1].isEqualTo(i) && !temp[k+1][h-1].isEqualTo(i) && !temp[k][h+2].isEqualTo(i) && !temp[k+1][h+2].isEqualTo(i)
                                 );
                         if(borders){
                             count++;
@@ -263,7 +263,7 @@ public class CommonObj implements Serializable{
             for (int column1 = 0; column1 < 5; column1++) {
                 if (lib.getPos(row, column1) == NONE) break;
                 for (int column2 = 0; column2 < 5; column2++) {
-                    if (lib.getPos(row, column1) == lib.getPos(row, column2) && column1 != column2) break outer;
+                    if (lib.getPos(row, column1).isEqualTo(lib.getPos(row, column2)) && column1 != column2) break outer;
                 }
                 if (column1 == 4) count8++;
             }
@@ -284,11 +284,11 @@ public class CommonObj implements Serializable{
                 if (lib.getPos(row, column) == NONE) break;
                 for (int i = 0; i < 3; i++) {
                     if (countType[i] == NONE) {
-                        countType[i] = lib.getPos(row, column);
+                        countType[i].isEqualTo(lib.getPos(row, column));
                         break;
-                    } else if (lib.getPos(row, column) == countType[i]) break;
+                    } else if (lib.getPos(row, column).isEqualTo(countType[i])) break;
 
-                    else if ((i == 2) && (lib.getPos(row, column) != countType[i])) break outer;
+                    else if ((i == 2) && !(lib.getPos(row, column).isEqualTo(countType[i]))) break outer;
                 }
                 if (row == 5) count9++;
             }
@@ -300,10 +300,10 @@ public class CommonObj implements Serializable{
         for (int row = 0; row < 4; row++) {
             for (int column = 0; column < 3; column++) {
                 if ((lib.getPos(row, column) != NONE) &&
-                        (lib.getPos(row, column) == lib.getPos(row + 1, column + 1)) &&
-                        (lib.getPos(row, column) == lib.getPos(row + 2, column + 2)) &&
-                        (lib.getPos(row, column) == lib.getPos(row, column + 2)) &&
-                        (lib.getPos(row, column) == lib.getPos(row + 2, column))) {
+                        (lib.getPos(row, column).isEqualTo(lib.getPos(row + 1, column + 1))) &&
+                        (lib.getPos(row, column).isEqualTo(lib.getPos(row + 2, column + 2))) &&
+                        (lib.getPos(row, column).isEqualTo(lib.getPos(row, column + 2))) &&
+                        (lib.getPos(row, column).isEqualTo(lib.getPos(row + 2, column)))) {
                     return true;
                 }
             }
@@ -321,12 +321,12 @@ public class CommonObj implements Serializable{
         for (int row = 0; row < 6; row++) {
             for (int column = 0; column < 5; column++) {
                 switch (lib.getPos(row, column)) {
-                    case WHITE -> count11WHITE++;
-                    case BLUE -> count11BLUE++;
-                    case LIGHTBLUE -> count11LIGHTBLUE++;
-                    case YELLOW -> count11YELLOW++;
-                    case GREEN -> count11GREEN++;
-                    case PURPLE -> count11PURPLE++;
+                    case WHITE1, WHITE2, WHITE3 -> count11WHITE++;
+                    case BLUE1, BLUE2, BLUE3 -> count11BLUE++;
+                    case LIGHTBLUE1, LIGHTBLUE2, LIGHTBLUE3 -> count11LIGHTBLUE++;
+                    case YELLOW1, YELLOW2, YELLOW3 -> count11YELLOW++;
+                    case GREEN1, GREEN2, GREEN3 -> count11GREEN++;
+                    case PURPLE1, PURPLE2, PURPLE3 -> count11PURPLE++;
                 }
             }
         }

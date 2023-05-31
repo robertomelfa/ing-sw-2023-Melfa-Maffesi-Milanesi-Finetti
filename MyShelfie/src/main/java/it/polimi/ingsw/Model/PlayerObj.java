@@ -29,7 +29,7 @@ public class PlayerObj implements Serializable{
 
         //per ogni casella obiettivo controllo che nella stessa posizione della library ci sia la stessa carta e aggiorno il contatore
         for (SingleObj singleObj : playerObjs) {
-            if (library.getPos(singleObj.getXPosition(), singleObj.getYPosition()) == singleObj.getType()) count++;
+            if (library.getPos(singleObj.getXPosition(), singleObj.getYPosition()).isEqualTo(singleObj.getType())) count++;
 
         }
     /*    if(count == 6){     // if count == 6, does not verify the object during the next rounds
@@ -81,133 +81,133 @@ public class PlayerObj implements Serializable{
 
     private ArrayList <SingleObj>  obj1 (){
         ArrayList<SingleObj> temp=new ArrayList<>();
-        temp.add(new SingleObj(1,1,Card.PURPLE));
-        temp.add(new SingleObj(2,0,Card.GREEN));
-        temp.add(new SingleObj(2,2,Card.YELLOW));
-        temp.add(new SingleObj(3,4,Card.WHITE));
-        temp.add(new SingleObj(4,3,Card.LIGHTBLUE));
-        temp.add(new SingleObj(5,4,Card.BLUE));
+        temp.add(new SingleObj(1,1,Card.PURPLE1));
+        temp.add(new SingleObj(2,0,Card.GREEN1));
+        temp.add(new SingleObj(2,2,Card.YELLOW1));
+        temp.add(new SingleObj(3,4,Card.WHITE1));
+        temp.add(new SingleObj(4,3,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(5,4,Card.BLUE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj2 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,0,Card.PURPLE));
-        temp.add(new SingleObj(0,2,Card.BLUE));
-        temp.add(new SingleObj(1,4,Card.GREEN));
-        temp.add(new SingleObj(2,3,Card.WHITE));
-        temp.add(new SingleObj(3,1,Card.YELLOW));
-        temp.add(new SingleObj(5,2,Card.LIGHTBLUE));
+        temp.add(new SingleObj(0,0,Card.PURPLE1));
+        temp.add(new SingleObj(0,2,Card.BLUE1));
+        temp.add(new SingleObj(1,4,Card.GREEN1));
+        temp.add(new SingleObj(2,3,Card.WHITE1));
+        temp.add(new SingleObj(3,1,Card.YELLOW1));
+        temp.add(new SingleObj(5,2,Card.LIGHTBLUE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj3 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(1,0,Card.BLUE));
-        temp.add(new SingleObj(1,3,Card.YELLOW));
-        temp.add(new SingleObj(2,2,Card.PURPLE));
-        temp.add(new SingleObj(3,1,Card.GREEN));
-        temp.add(new SingleObj(3,4,Card.LIGHTBLUE));
-        temp.add(new SingleObj(5,0,Card.WHITE));
+        temp.add(new SingleObj(1,0,Card.BLUE1));
+        temp.add(new SingleObj(1,3,Card.YELLOW1));
+        temp.add(new SingleObj(2,2,Card.PURPLE1));
+        temp.add(new SingleObj(3,1,Card.GREEN1));
+        temp.add(new SingleObj(3,4,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(5,0,Card.WHITE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj4 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,4,Card.YELLOW));
-        temp.add(new SingleObj(2,0,Card.LIGHTBLUE));
-        temp.add(new SingleObj(2,2,Card.BLUE));
-        temp.add(new SingleObj(3,3,Card.PURPLE));
-        temp.add(new SingleObj(4,1,Card.WHITE));
-        temp.add(new SingleObj(4,2,Card.GREEN));
+        temp.add(new SingleObj(0,4,Card.YELLOW1));
+        temp.add(new SingleObj(2,0,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(2,2,Card.BLUE1));
+        temp.add(new SingleObj(3,3,Card.PURPLE1));
+        temp.add(new SingleObj(4,1,Card.WHITE1));
+        temp.add(new SingleObj(4,2,Card.GREEN1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj5 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(1,1,Card.LIGHTBLUE));
-        temp.add(new SingleObj(3,1,Card.BLUE));
-        temp.add(new SingleObj(3,2,Card.WHITE));
-        temp.add(new SingleObj(4,4,Card.PURPLE));
-        temp.add(new SingleObj(5,0,Card.YELLOW));
-        temp.add(new SingleObj(5,3,Card.GREEN));
+        temp.add(new SingleObj(1,1,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(3,1,Card.BLUE1));
+        temp.add(new SingleObj(3,2,Card.WHITE1));
+        temp.add(new SingleObj(4,4,Card.PURPLE1));
+        temp.add(new SingleObj(5,0,Card.YELLOW1));
+        temp.add(new SingleObj(5,3,Card.GREEN1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj6 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,2,Card.LIGHTBLUE));
-        temp.add(new SingleObj(0,4,Card.GREEN));
-        temp.add(new SingleObj(2,3,Card.WHITE));
-        temp.add(new SingleObj(4,1,Card.YELLOW));
-        temp.add(new SingleObj(4,3,Card.BLUE));
-        temp.add(new SingleObj(5,0,Card.PURPLE));
+        temp.add(new SingleObj(0,2,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(0,4,Card.GREEN1));
+        temp.add(new SingleObj(2,3,Card.WHITE1));
+        temp.add(new SingleObj(4,1,Card.YELLOW1));
+        temp.add(new SingleObj(4,3,Card.BLUE1));
+        temp.add(new SingleObj(5,0,Card.PURPLE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj7 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,0,Card.GREEN));
-        temp.add(new SingleObj(1,3,Card.BLUE));
-        temp.add(new SingleObj(2,1,Card.PURPLE));
-        temp.add(new SingleObj(3,0,Card.LIGHTBLUE));
-        temp.add(new SingleObj(4,4,Card.YELLOW));
-        temp.add(new SingleObj(5,2,Card.WHITE));
+        temp.add(new SingleObj(0,0,Card.GREEN1));
+        temp.add(new SingleObj(1,3,Card.BLUE1));
+        temp.add(new SingleObj(2,1,Card.PURPLE1));
+        temp.add(new SingleObj(3,0,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(4,4,Card.YELLOW1));
+        temp.add(new SingleObj(5,2,Card.WHITE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj8 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,4,Card.BLUE));
-        temp.add(new SingleObj(1,1,Card.GREEN));
-        temp.add(new SingleObj(2,2,Card.LIGHTBLUE));
-        temp.add(new SingleObj(3,0,Card.PURPLE));
-        temp.add(new SingleObj(4,3,Card.WHITE));
-        temp.add(new SingleObj(5,3,Card.YELLOW));
+        temp.add(new SingleObj(0,4,Card.BLUE1));
+        temp.add(new SingleObj(1,1,Card.GREEN1));
+        temp.add(new SingleObj(2,2,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(3,0,Card.PURPLE1));
+        temp.add(new SingleObj(4,3,Card.WHITE1));
+        temp.add(new SingleObj(5,3,Card.YELLOW1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj9 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,2,Card.YELLOW));
-        temp.add(new SingleObj(2,2,Card.GREEN));
-        temp.add(new SingleObj(3,4,Card.WHITE));
-        temp.add(new SingleObj(4,1,Card.LIGHTBLUE));
-        temp.add(new SingleObj(4,4,Card.PURPLE));
-        temp.add(new SingleObj(5,0,Card.BLUE));
+        temp.add(new SingleObj(0,2,Card.YELLOW1));
+        temp.add(new SingleObj(2,2,Card.GREEN1));
+        temp.add(new SingleObj(3,4,Card.WHITE1));
+        temp.add(new SingleObj(4,1,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(4,4,Card.PURPLE1));
+        temp.add(new SingleObj(5,0,Card.BLUE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj10 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,4,Card.LIGHTBLUE));
-        temp.add(new SingleObj(1,1,Card.YELLOW));
-        temp.add(new SingleObj(2,0,Card.WHITE));
-        temp.add(new SingleObj(3,3,Card.GREEN));
-        temp.add(new SingleObj(4,1,Card.BLUE));
-        temp.add(new SingleObj(5,3,Card.PURPLE));
+        temp.add(new SingleObj(0,4,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(1,1,Card.YELLOW1));
+        temp.add(new SingleObj(2,0,Card.WHITE1));
+        temp.add(new SingleObj(3,3,Card.GREEN1));
+        temp.add(new SingleObj(4,1,Card.BLUE1));
+        temp.add(new SingleObj(5,3,Card.PURPLE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj11 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,2,Card.PURPLE));
-        temp.add(new SingleObj(1,1,Card.WHITE));
-        temp.add(new SingleObj(2,0,Card.YELLOW));
-        temp.add(new SingleObj(3,2,Card.BLUE));
-        temp.add(new SingleObj(4,4,Card.GREEN));
-        temp.add(new SingleObj(5,3,Card.LIGHTBLUE));
+        temp.add(new SingleObj(0,2,Card.PURPLE1));
+        temp.add(new SingleObj(1,1,Card.WHITE1));
+        temp.add(new SingleObj(2,0,Card.YELLOW1));
+        temp.add(new SingleObj(3,2,Card.BLUE1));
+        temp.add(new SingleObj(4,4,Card.GREEN1));
+        temp.add(new SingleObj(5,3,Card.LIGHTBLUE1));
         return temp;
     }
 
     private ArrayList <SingleObj> obj12 (){
         ArrayList<SingleObj> temp = new ArrayList<>();
-        temp.add(new SingleObj(0,2,Card.WHITE));
-        temp.add(new SingleObj(1,1,Card.PURPLE));
-        temp.add(new SingleObj(2,2,Card.BLUE));
-        temp.add(new SingleObj(3,3,Card.LIGHTBLUE));
-        temp.add(new SingleObj(4,4,Card.YELLOW));
-        temp.add(new SingleObj(5,0,Card.GREEN));
+        temp.add(new SingleObj(0,2,Card.WHITE1));
+        temp.add(new SingleObj(1,1,Card.PURPLE1));
+        temp.add(new SingleObj(2,2,Card.BLUE1));
+        temp.add(new SingleObj(3,3,Card.LIGHTBLUE1));
+        temp.add(new SingleObj(4,4,Card.YELLOW1));
+        temp.add(new SingleObj(5,0,Card.GREEN1));
         return temp;
     }
 

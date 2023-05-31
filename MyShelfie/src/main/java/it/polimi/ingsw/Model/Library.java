@@ -233,13 +233,13 @@ public class Library implements Serializable{
      */
     public void group(int x, int y, int y2, Card color) {
         if (getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y) == color) {
-            if (getPos(x, y) == getPos(x + 1, y)) {
+            if (getPos(x, y).isEqualTo(getPos(x + 1, y))) {
                 group(x + 1, y, y, color);
             }
-            if (getPos(x, y) == getPos(x, y + 1)) {
+            if (getPos(x, y).isEqualTo(getPos(x, y + 1))) {
                 group(x, y + 1, y, color);
             }
-            if (getPos(x, y2) == getPos(x, y2 - 1)) {
+            if (getPos(x, y2).isEqualTo(getPos(x, y2 - 1))) {
                 group(x, y, y2 - 1, color);
             }
             if (getPos(x, y) == color) {

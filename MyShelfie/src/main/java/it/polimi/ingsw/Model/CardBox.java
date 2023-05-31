@@ -22,14 +22,33 @@ public class CardBox implements Serializable{
 //        leftPurple = 22;
 //        leftGreen = 22;
 
-        for (int i=0; i<22; i++){
-            cardBox.add(Card.WHITE);
-            cardBox.add(Card.BLUE);
-            cardBox.add(Card.LIGHTBLUE);
-            cardBox.add(Card.YELLOW);
-            cardBox.add(Card.PURPLE);
-            cardBox.add(Card.GREEN);
+        for (int i=0; i < 8; i++){
+            cardBox.add(Card.WHITE1);
+            cardBox.add(Card.BLUE1);
+            cardBox.add(Card.LIGHTBLUE1);
+            cardBox.add(Card.YELLOW1);
+            cardBox.add(Card.PURPLE1);
+            cardBox.add(Card.GREEN1);
+            cardBox.add(Card.WHITE2);
+            cardBox.add(Card.BLUE2);
+            cardBox.add(Card.LIGHTBLUE2);
+            cardBox.add(Card.YELLOW2);
+            cardBox.add(Card.PURPLE2);
+            cardBox.add(Card.GREEN2);
+            cardBox.add(Card.WHITE3);
+            cardBox.add(Card.BLUE3);
+            cardBox.add(Card.LIGHTBLUE3);
+            cardBox.add(Card.YELLOW3);
+            cardBox.add(Card.PURPLE3);
+            cardBox.add(Card.GREEN3);
         }
+        cardBox.add(Card.WHITE3);
+        cardBox.add(Card.BLUE3);
+        cardBox.add(Card.LIGHTBLUE3);
+        cardBox.add(Card.YELLOW3);
+        cardBox.add(Card.PURPLE3);
+        cardBox.add(Card.GREEN3);
+
         Collections.shuffle(cardBox);
 
     }

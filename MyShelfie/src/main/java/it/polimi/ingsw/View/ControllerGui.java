@@ -598,47 +598,62 @@ public class ControllerGui implements Initializable, Serializable {
         int r = rand.nextInt(3)+1;
         String url = null;
         switch (card){
-            case LIGHTBLUE -> {
-                switch (r){
-                    case 1 -> url = PathImageCards.TROFEI1;
-                    case 2 -> url = PathImageCards.TROFEI2;
-                    case 3 -> url = PathImageCards.TROFEI3;
-                }
+            case LIGHTBLUE1 -> {
+                 url = PathImageCards.TROFEI1;
+
             }
-            case BLUE ->{
-                switch (r){
-                    case 1 -> url = PathImageCards.CORNICI1;
-                    case 2 -> url = PathImageCards.CORNICI2;
-                    case 3 -> url = PathImageCards.CORNICI3;
-                }
+            case LIGHTBLUE2 -> {
+                url = PathImageCards.TROFEI2;
+
             }
-            case YELLOW ->{
-                switch (r){
-                    case 1 -> url = PathImageCards.GIOCHI1;
-                    case 2 -> url = PathImageCards.GIOCHI2;
-                    case 3 -> url = PathImageCards.GIOCHI3;
-                }
+            case LIGHTBLUE3 -> {
+                url = PathImageCards.TROFEI3;
+
             }
-            case GREEN ->{
-                switch (r){
-                    case 1 -> url = PathImageCards.GATTI1;
-                    case 2 -> url = PathImageCards.GATTI2;
-                    case 3 -> url = PathImageCards.GATTI3;
-                }
+            case BLUE1 ->{
+                url = PathImageCards.CORNICI1;
             }
-            case WHITE ->{
-                switch (r){
-                    case 1 -> url = PathImageCards.LIBRI1;
-                    case 2 -> url = PathImageCards.LIBRI2;
-                    case 3 -> url = PathImageCards.LIBRI3;
-                }
+            case BLUE2 ->{
+                url = PathImageCards.CORNICI2;
             }
-            case PURPLE ->{
-                switch (r){
-                    case 1 -> url = PathImageCards.PIANTE1;
-                    case 2 -> url = PathImageCards.PIANTE2;
-                    case 3 -> url = PathImageCards.PIANTE3;
-                }
+            case BLUE3 ->{
+                url = PathImageCards.CORNICI3;
+            }
+            case YELLOW1 ->{
+                url = PathImageCards.GIOCHI1;
+            }
+            case YELLOW2 ->{
+                url = PathImageCards.GIOCHI2;
+            }
+            case YELLOW3 ->{
+                url = PathImageCards.GIOCHI3;
+            }
+            case GREEN1 ->{
+                url = PathImageCards.GATTI1;
+            }
+            case GREEN2 ->{
+                url = PathImageCards.GATTI2;
+            }
+            case GREEN3 ->{
+                url = PathImageCards.GATTI3;
+            }
+            case WHITE1 ->{
+                url = PathImageCards.LIBRI1;
+            }
+            case WHITE2 ->{
+                url = PathImageCards.LIBRI2;
+            }
+            case WHITE3 ->{
+                url = PathImageCards.LIBRI3;
+            }
+            case PURPLE1 ->{
+                url = PathImageCards.PIANTE1;
+            }
+            case PURPLE2 ->{
+                url = PathImageCards.PIANTE2;
+            }
+            case PURPLE3 ->{
+                url = PathImageCards.PIANTE3;
             }
         }
         return url;
@@ -654,12 +669,24 @@ public class ControllerGui implements Initializable, Serializable {
         url = url.replace("%20", " ");
         Card card = null;
         switch (url){
-            case PathImageCards.TROFEI1, PathImageCards.TROFEI3, PathImageCards.TROFEI2 -> card = LIGHTBLUE;
-            case PathImageCards.CORNICI1, PathImageCards.CORNICI3, PathImageCards.CORNICI2 -> card = BLUE;
-            case PathImageCards.GIOCHI1, PathImageCards.GIOCHI3, PathImageCards.GIOCHI2 -> card = YELLOW;
-            case PathImageCards.GATTI1, PathImageCards.GATTI2, PathImageCards.GATTI3 -> card = GREEN;
-            case PathImageCards.LIBRI1, PathImageCards.LIBRI3, PathImageCards.LIBRI2 -> card = WHITE;
-            case PathImageCards.PIANTE1, PathImageCards.PIANTE2, PathImageCards.PIANTE3 -> card = PURPLE;
+            case PathImageCards.TROFEI1 -> card = LIGHTBLUE1;
+            case PathImageCards.TROFEI3 -> card = LIGHTBLUE3;
+            case PathImageCards.TROFEI2 -> card = LIGHTBLUE2;
+            case PathImageCards.CORNICI1 -> card = BLUE1;
+            case PathImageCards.CORNICI2 -> card = BLUE2;
+            case PathImageCards.CORNICI3 -> card = BLUE3;
+            case PathImageCards.GIOCHI1 -> card = YELLOW1;
+            case PathImageCards.GIOCHI2 -> card = YELLOW2;
+            case PathImageCards.GIOCHI3 -> card = YELLOW3;
+            case PathImageCards.GATTI1 -> card = GREEN1;
+            case PathImageCards.GATTI2 -> card = GREEN2;
+            case PathImageCards.GATTI3 -> card = GREEN3;
+            case PathImageCards.LIBRI1 -> card = WHITE1;
+            case PathImageCards.LIBRI2 -> card = WHITE2;
+            case PathImageCards.LIBRI3 -> card = WHITE3;
+            case PathImageCards.PIANTE1 -> card = PURPLE1;
+            case PathImageCards.PIANTE2 -> card = PURPLE2;
+            case PathImageCards.PIANTE3 -> card = PURPLE3;
         }
         return card;
     }
