@@ -51,6 +51,30 @@ public class ControllerGui implements Initializable, Serializable {
     private ToggleButton button = new ToggleButton();
     @FXML
     private Button confirm;
+    @FXML
+    private Label namePlayer1;
+    @FXML
+    private Label namePlayer2;
+    @FXML
+    private Label namePlayer3;
+    @FXML
+    private Label namePlayer4;
+    @FXML
+    private Label points1;
+    @FXML
+    private Label points2;
+    @FXML
+    private Label points3;
+    @FXML
+    private Label points4;
+    @FXML
+    private HBox CardPlayer3;
+    @FXML
+    private HBox CardPlayer4;
+    @FXML
+    private ImageView scoreObj1;
+    @FXML
+    private ImageView scoreObj2;
 
 
     private int column = -1;
@@ -562,6 +586,56 @@ public class ControllerGui implements Initializable, Serializable {
             }
         }catch (IndexOutOfBoundsException ignored ){
 
+        }
+    }
+
+    public void setNamePlayers(String message){
+        String name = "";
+
+        message = message.replace("\n","");             //clear from lines
+        message = message.replaceAll("[0-9]","");       //clear from numbers
+        message = message.replace(" ","");              //clear from spaces
+        message = message.replace("|","");              //clear from |
+        message = message.replace("POINTS","");         //clear POINTS
+
+
+        name = message.substring(0,message.indexOf(":"));               //substring name
+        message = message.replace(name+":","");         //clear old name
+        name = name.replace(":","");                    //clear from :
+        namePlayer1.setText(name);
+
+
+        name = message.substring(0,message.indexOf(":"));
+        message = message.replace(name+":","");
+        namePlayer2.setText(name);
+
+        System.out.println("message 3  -"+message+"-");
+
+        if (message.length()>1) {
+            name = message.substring(0, message.indexOf(":"));
+            message = message.replace(name + ":", "");
+            namePlayer3.setText(name);
+
+            if (message.length() > 1) {
+                name = message.substring(0, message.indexOf(":"));
+
+                namePlayer4.setText(name);
+            }else{
+                CardPlayer4.setVisible(false);
+            }
+        }else{
+            CardPlayer3.setVisible(false);
+            CardPlayer4.setVisible(false);
+        }
+
+    }
+
+    public void updatePoits(int point, int numPlayer){
+        switch (numPlayer){
+            case 1 -> points1.setText("Points : "+point);
+            case 2 -> points2.setText("Points : "+point);
+            case 3 -> points3.setText("Points : "+point);
+            case 4 -> points4.setText("Points : "+point);
         }
     }
 

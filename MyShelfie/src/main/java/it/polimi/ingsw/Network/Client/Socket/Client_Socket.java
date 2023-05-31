@@ -141,7 +141,6 @@ public class Client_Socket implements Serializable {
                 view.viewString(msg.getMessage());
             } else if (msg.getType() == MessageType.printMessage) {
                 view.viewString(msg.getMessage());
-
             } else if (msg.getType() == MessageType.receivePlayerObj) {
                 PlayerObj obj = receivePlayerObj();
                 view.viewPlayerObj(obj);
@@ -339,8 +338,7 @@ public class Client_Socket implements Serializable {
                             System.out.println("Error");
                         }
                     } else if (msg.getType() == MessageType.objectiveCompleted) {
-                        Message finalMsg = msg;
-                        view.viewString(finalMsg.getMessage());
+                        view.viewString(msg.getMessage());
                     } else if (msg.getType() == MessageType.printMessage) {
                         String message = msg.getMessage();
                         view.viewString(message);
@@ -362,6 +360,7 @@ public class Client_Socket implements Serializable {
                             throw new RuntimeException(e);
                         }
                     } else if (msg.getType() == MessageType.receivePoint) {
+                        view.updatePoints(msg.getMessage());
                         view.viewString(msg.getMessage());
                     } else if (msg.getType() == MessageType.closeGame) {
                         view.viewString(msg.getMessage());

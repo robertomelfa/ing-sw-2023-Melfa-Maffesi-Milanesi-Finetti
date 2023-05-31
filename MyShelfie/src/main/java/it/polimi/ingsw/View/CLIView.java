@@ -367,5 +367,8 @@ public class CLIView implements ViewClient, Serializable {
     @Override
     public void setController(ControllerGui controllerGui) {    }
 
+    @Override
+    public void updatePoints(String msg) {    }
+
 
 }

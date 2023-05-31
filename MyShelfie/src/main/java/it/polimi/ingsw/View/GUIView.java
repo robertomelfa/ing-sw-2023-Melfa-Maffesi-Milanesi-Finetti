@@ -11,6 +11,7 @@ public class GUIView implements ViewClient, Serializable {
 private ControllerGui controllerGui = new ControllerGui();
 private GameLogic gameLogic;
 private boolean first = true;
+private boolean firstName = true;
 private byte initLibrary = 0;
 
     public GUIView(){    }
@@ -120,5 +121,21 @@ private byte initLibrary = 0;
     }
 
     public void setController(ControllerGui controllerGui) { this.controllerGui = controllerGui; }
+
+    @Override
+    public void updatePoints(String msg) {
+        if (firstName){
+            String message = msg;
+            Platform.runLater(()->controllerGui.setNamePlayers(message));
+            firstName=false;
+        }
+
+        msg = msg.replaceAll("\\D+","");
+        for (int i=0; i<msg.length(); i++){
+            int point = msg.charAt(i) -48;
+            int temp = i+1;
+            Platform.runLater(()-> controllerGui.updatePoits(point, temp));
+        }
+    }
 
 }
