@@ -55,7 +55,7 @@
                                        <children>
                                           <VBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="150.0" prefWidth="150.0">
                                              <children>
-                                                <Label text="Player" textAlignment="CENTER">
+                                                <Label fx:id="namePlayer1" text="Player" textAlignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -71,7 +71,7 @@
                                                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                                    </VBox.margin>
                                                 </ImageView>
-                                    <Label text="Points : 0" />
+                                    <Label fx:id="points1" text="Points : 0" />
                                              </children>
                                           </VBox>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#openLibrary1" pickOnBounds="true" preserveRatio="true">
@@ -114,7 +114,7 @@
                                           </ImageView>
                                           <VBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
                                              <children>
-                                                <Label text="Player" textAlignment="CENTER">
+                                                <Label fx:id="namePlayer2" text="Player" textAlignment="CENTER">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -130,7 +130,7 @@
                                                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                                    </VBox.margin>
                                                 </ImageView>
-                                    <Label text="Points : 0" />
+                                    <Label fx:id="points2" text="Points : 0" />
                                              </children>
                                           </VBox>
                                        </children>
@@ -152,11 +152,11 @@
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="120.0" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER_LEFT">
+                              <HBox fx:id="CardPlayer4" alignment="CENTER_LEFT">
                                  <children>
                                     <VBox alignment="BOTTOM_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
                                        <children>
-                              <Label text="Points : 0" />
+                              <Label fx:id="points4" text="Points : 0" />
                                           <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@assets/scoring tokens/scoring.jpg" />
@@ -165,7 +165,7 @@
                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                              </VBox.margin>
                                           </ImageView>
-                                          <Label text="Player" textAlignment="CENTER">
+                                          <Label fx:id="namePlayer4" text="Player" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -185,17 +185,35 @@
                         <Insets />
                      </HBox.margin>
                               </HBox>
-                              <ImageView fx:id="CommonObj1" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription1" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@assets/common goal cards/back.jpg" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="CommonObj2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription2" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@assets/common goal cards/back.jpg" />
-                                 </image>
-                              </ImageView>
-                              <HBox alignment="CENTER_LEFT">
+                  <AnchorPane>
+                     <children>
+                                    <ImageView fx:id="CommonObj1" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription1" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/common goal cards/back.jpg" />
+                                       </image>
+                                    </ImageView>
+                        <ImageView fx:id="scoreObj1" fitHeight="32.0" fitWidth="32.0" layoutX="168.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/scoring tokens/scoring.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                                    <ImageView fx:id="CommonObj2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#openDescription2" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/common goal cards/back.jpg" />
+                                       </image>
+                                    </ImageView>
+                        <ImageView fx:id="scoreObj2" fitHeight="32.0" fitWidth="32.0" layoutX="168.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/scoring tokens/scoring.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                              <HBox fx:id="CardPlayer3" alignment="CENTER_LEFT">
                                  <children>
                                     <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#openLibrary3" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -204,7 +222,7 @@
                                     </ImageView>
                                     <VBox alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
                                        <children>
-                              <Label text="Points : 0" />
+                              <Label fx:id="points3" text="Points : 0" />
                                           <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@assets/scoring tokens/scoring.jpg" />
@@ -213,7 +231,7 @@
                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                              </VBox.margin>
                                           </ImageView>
-                                          <Label text="Player">
+                                          <Label fx:id="namePlayer3" text="Player">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>

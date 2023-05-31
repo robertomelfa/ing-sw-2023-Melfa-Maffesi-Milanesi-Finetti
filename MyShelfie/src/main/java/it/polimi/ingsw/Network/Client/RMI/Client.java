@@ -79,6 +79,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      */
     public void receiveMessage(String msg) throws RemoteException{
         view.viewString(msg);
+        if (msg.contains("POINTS")) view.updatePoints(msg);
         if(msg.equals("Stop game")){
             kill();
         }

@@ -51,4 +51,10 @@ public class PathImageCards implements Serializable {
     public static final String PLAYEROBJ12 = "assets/personal goal cards/personal_Goals12.png";
     public static final String PLAYEROBJEMPTY = "assets/personal goal cards/front_EMPTY.jpg";
 
+    public static final String SCORE_EMPTY = "assets/scoring tokens/scoring.jpg";
+    public static final String SCORE2 = "assets/scoring tokens/scoring_2.jpg";
+    public static final String SCORE4 = "assets/scoring tokens/scoring_4.jpg";
+    public static final String SCORE6 = "assets/scoring tokens/scoring_6.jpg";
+    public static final String SCORE8 = "assets/scoring tokens/scoring_8.jpg";
+
 }

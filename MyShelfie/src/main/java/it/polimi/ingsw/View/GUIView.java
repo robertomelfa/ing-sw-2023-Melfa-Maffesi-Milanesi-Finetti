@@ -11,6 +11,7 @@ public class GUIView implements ViewClient, Serializable {
 private ControllerGui controllerGui = new ControllerGui();
 private GameLogic gameLogic;
 private boolean first = true;
+private boolean firstName = true;
 private byte initLibrary = 0;
 
     public GUIView(){    }
@@ -72,7 +73,6 @@ private byte initLibrary = 0;
             } catch (InterruptedException ignore) {}
         }
 
-        System.out.println("get the confirmation and go on...");
         this.gameLogic = controllerGui.getGameLogic();
         controllerGui.setConfirmCards(false);
 
@@ -102,8 +102,9 @@ private byte initLibrary = 0;
         System.out.println("turn started ");
 
         Platform.runLater(() -> {
-            controllerGui.updateGameTable(gameLogic.getGameTable());
             controllerGui.setGameLogic(gameLogic);
+            controllerGui.updateCommonObjPoints();
+            controllerGui.updateGameTable(gameLogic.getGameTable());
             controllerGui.clearListCard();
             controllerGui.clearPosCard();
             controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
@@ -111,14 +112,28 @@ private byte initLibrary = 0;
         });
 
         ArrayList<Card> list;
-        System.out.println("created list ");
         list = getCardFromTable(this.gameLogic);
-        System.out.println("taken list from getCardFromTable, GuiView");
         insert(list, this.gameLogic);
 
         return gameLogic;
     }
 
     public void setController(ControllerGui controllerGui) { this.controllerGui = controllerGui; }
+
+    @Override
+    public void updatePoints(String msg) {
+        if (firstName){
+            String message = msg;
+            Platform.runLater(()->controllerGui.setNamePlayers(message));
+            firstName=false;
+        }
+
+        msg = msg.replaceAll("\\D+","");
+        for (int i=0; i<msg.length(); i++){
+            int point = msg.charAt(i) -48;
+            int temp = i+1;
+            Platform.runLater(()-> controllerGui.updatePoits(point, temp));
+        }
+    }
 
 }

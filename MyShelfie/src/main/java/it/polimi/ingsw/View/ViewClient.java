@@ -18,4 +18,6 @@ public interface ViewClient {
     public GameLogic getTurn(GameLogic gameLogic);
 
     void setController(ControllerGui controllerGui);
+
+    void updatePoints(String msg);
 }

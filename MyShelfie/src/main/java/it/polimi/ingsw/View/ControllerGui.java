@@ -51,6 +51,30 @@ public class ControllerGui implements Initializable, Serializable {
     private ToggleButton button = new ToggleButton();
     @FXML
     private Button confirm;
+    @FXML
+    private Label namePlayer1;
+    @FXML
+    private Label namePlayer2;
+    @FXML
+    private Label namePlayer3;
+    @FXML
+    private Label namePlayer4;
+    @FXML
+    private Label points1;
+    @FXML
+    private Label points2;
+    @FXML
+    private Label points3;
+    @FXML
+    private Label points4;
+    @FXML
+    private HBox CardPlayer3;
+    @FXML
+    private HBox CardPlayer4;
+    @FXML
+    private ImageView scoreObj1;
+    @FXML
+    private ImageView scoreObj2;
 
 
     private int column = -1;
@@ -252,7 +276,7 @@ public class ControllerGui implements Initializable, Serializable {
 
             k++;
         }
-        gameTable.checkStatus();
+        if (gameLogic != null) gameLogic.getGameTable().checkStatus();
 
     }
 
@@ -279,7 +303,6 @@ public class ControllerGui implements Initializable, Serializable {
         if (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkFreeSpaces(column-1,countCard)){
             setLabelMessage("There is no enough space in this column. Choose another one");
             column = -1;
-            return;
         }else{
             enableArrayCards();
             disableColumnButton();
@@ -388,7 +411,7 @@ public class ControllerGui implements Initializable, Serializable {
      */
     public void enableGameTable(){
         confirm.setVisible(true);
-        confirm.setDisable(false);
+        confirm.setDisable(true);
         for(int i=0; i<gridTable.getChildren().size(); i++) {
             button = (ToggleButton) gridTable.getChildren().get(i);
             if (button.getGraphic()!=null) {
@@ -442,7 +465,9 @@ public class ControllerGui implements Initializable, Serializable {
 //            posCard.remove(new Integer[]{x,y});
         }
 
-        confirm.setDisable(countCard > 3);
+
+        confirm.setDisable((countCard > 3) || (countCard<1) ||
+                           (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(countCard)));
 
         System.out.println("you have selected : " +countCard+ " cards");
     }
@@ -511,12 +536,12 @@ public class ControllerGui implements Initializable, Serializable {
 
         }
 
-        setConfirmCards(true);
         Platform.runLater(() -> {
             updateGameTable(gameLogic.getGameTable());
             unselectedGameTable();
             disableGameTable();
         });
+        setConfirmCards(true);
     }
 
     public void addCountCard(){
@@ -564,6 +589,85 @@ public class ControllerGui implements Initializable, Serializable {
         }catch (IndexOutOfBoundsException ignored ){
 
         }
+    }
+
+    public void setNamePlayers(String message){
+        String name = "";
+
+        message = message.replace("\n","");             //clear from lines
+        message = message.replaceAll("[0-9]","");       //clear from numbers
+        message = message.replace(" ","");              //clear from spaces
+        message = message.replace("|","");              //clear from |
+        message = message.replace("POINTS","");         //clear POINTS
+
+
+        name = message.substring(0,message.indexOf(":"));               //substring name
+        message = message.replace(name+":","");         //clear old name
+        name = name.replace(":","");                    //clear from :
+        namePlayer1.setText(name);
+
+
+        name = message.substring(0,message.indexOf(":"));
+        message = message.replace(name+":","");
+        namePlayer2.setText(name);
+
+        System.out.println("message 3  -"+message+"-");
+
+        if (message.length()>1) {
+            name = message.substring(0, message.indexOf(":"));
+            message = message.replace(name + ":", "");
+            namePlayer3.setText(name);
+
+            if (message.length() > 1) {
+                name = message.substring(0, message.indexOf(":"));
+
+                namePlayer4.setText(name);
+            }else{
+                CardPlayer4.setVisible(false);
+            }
+        }else{
+            CardPlayer3.setVisible(false);
+            CardPlayer4.setVisible(false);
+        }
+
+    }
+
+    public void updatePoits(int point, int numPlayer){
+        switch (numPlayer){
+            case 1 -> points1.setText("Points : "+point);
+            case 2 -> points2.setText("Points : "+point);
+            case 3 -> points3.setText("Points : "+point);
+            case 4 -> points4.setText("Points : "+point);
+        }
+    }
+
+    public void updateCommonObjPoints(){
+        int point = gameLogic.getGame().getCommonObj1().getPointCount(true);
+        String url = "";
+        switch (point){
+            case 0 -> url = PathImageCards.SCORE_EMPTY;
+            case 2 -> url = PathImageCards.SCORE2;
+            case 4 -> url = PathImageCards.SCORE4;
+            case 6 -> url = PathImageCards.SCORE6;
+            case 8 -> url = PathImageCards.SCORE8;
+        }
+        scoreObj1.setImage(new Image(url));
+        scoreObj1.setFitWidth(32);
+        scoreObj1.setFitHeight(32);
+
+        point = gameLogic.getGame().getCommonObj2().getPointCount(true);
+
+        switch (point){
+            case 0 -> url = PathImageCards.SCORE_EMPTY;
+            case 2 -> url = PathImageCards.SCORE2;
+            case 4 -> url = PathImageCards.SCORE4;
+            case 6 -> url = PathImageCards.SCORE6;
+            case 8 -> url = PathImageCards.SCORE8;
+        }
+        scoreObj2.setImage(new Image(url));
+        scoreObj2.setFitWidth(32);
+        scoreObj2.setFitHeight(32);
+
     }
 
     @FXML
