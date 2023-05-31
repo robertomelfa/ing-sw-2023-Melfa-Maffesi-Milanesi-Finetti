@@ -73,7 +73,6 @@ private byte initLibrary = 0;
             } catch (InterruptedException ignore) {}
         }
 
-        System.out.println("get the confirmation and go on...");
         this.gameLogic = controllerGui.getGameLogic();
         controllerGui.setConfirmCards(false);
 
@@ -103,8 +102,9 @@ private byte initLibrary = 0;
         System.out.println("turn started ");
 
         Platform.runLater(() -> {
-            controllerGui.updateGameTable(gameLogic.getGameTable());
             controllerGui.setGameLogic(gameLogic);
+            controllerGui.updateCommonObjPoints();
+            controllerGui.updateGameTable(gameLogic.getGameTable());
             controllerGui.clearListCard();
             controllerGui.clearPosCard();
             controllerGui.setLabelMessage("Is your turn!  Choose from 1 to 3 Cards");
@@ -112,9 +112,7 @@ private byte initLibrary = 0;
         });
 
         ArrayList<Card> list;
-        System.out.println("created list ");
         list = getCardFromTable(this.gameLogic);
-        System.out.println("taken list from getCardFromTable, GuiView");
         insert(list, this.gameLogic);
 
         return gameLogic;

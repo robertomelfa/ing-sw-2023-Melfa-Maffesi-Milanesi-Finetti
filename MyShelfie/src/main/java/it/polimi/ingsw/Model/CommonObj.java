@@ -77,6 +77,10 @@ public class CommonObj implements Serializable{
         return pointCount[indexPoint - 1];
     }
 
+    public int getPointCount(boolean gui) {
+        return pointCount[indexPoint];
+    }
+
     /**
      * @param lib, library to check for the goal
      * @return result, the result of the check of the goal

@@ -276,7 +276,7 @@ public class ControllerGui implements Initializable, Serializable {
 
             k++;
         }
-        gameTable.checkStatus();
+        if (gameLogic != null) gameLogic.getGameTable().checkStatus();
 
     }
 
@@ -411,7 +411,7 @@ public class ControllerGui implements Initializable, Serializable {
      */
     public void enableGameTable(){
         confirm.setVisible(true);
-        confirm.setDisable(false);
+        confirm.setDisable(true);
         for(int i=0; i<gridTable.getChildren().size(); i++) {
             button = (ToggleButton) gridTable.getChildren().get(i);
             if (button.getGraphic()!=null) {
@@ -465,7 +465,9 @@ public class ControllerGui implements Initializable, Serializable {
 //            posCard.remove(new Integer[]{x,y});
         }
 
-        confirm.setDisable(countCard > 3);
+
+        confirm.setDisable((countCard > 3) || (countCard<1) ||
+                           (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(countCard)));
 
         System.out.println("you have selected : " +countCard+ " cards");
     }
@@ -534,12 +536,12 @@ public class ControllerGui implements Initializable, Serializable {
 
         }
 
-        setConfirmCards(true);
         Platform.runLater(() -> {
             updateGameTable(gameLogic.getGameTable());
             unselectedGameTable();
             disableGameTable();
         });
+        setConfirmCards(true);
     }
 
     public void addCountCard(){
@@ -637,6 +639,35 @@ public class ControllerGui implements Initializable, Serializable {
             case 3 -> points3.setText("Points : "+point);
             case 4 -> points4.setText("Points : "+point);
         }
+    }
+
+    public void updateCommonObjPoints(){
+        int point = gameLogic.getGame().getCommonObj1().getPointCount(true);
+        String url = "";
+        switch (point){
+            case 0 -> url = PathImageCards.SCORE_EMPTY;
+            case 2 -> url = PathImageCards.SCORE2;
+            case 4 -> url = PathImageCards.SCORE4;
+            case 6 -> url = PathImageCards.SCORE6;
+            case 8 -> url = PathImageCards.SCORE8;
+        }
+        scoreObj1.setImage(new Image(url));
+        scoreObj1.setFitWidth(32);
+        scoreObj1.setFitHeight(32);
+
+        point = gameLogic.getGame().getCommonObj2().getPointCount(true);
+
+        switch (point){
+            case 0 -> url = PathImageCards.SCORE_EMPTY;
+            case 2 -> url = PathImageCards.SCORE2;
+            case 4 -> url = PathImageCards.SCORE4;
+            case 6 -> url = PathImageCards.SCORE6;
+            case 8 -> url = PathImageCards.SCORE8;
+        }
+        scoreObj2.setImage(new Image(url));
+        scoreObj2.setFitWidth(32);
+        scoreObj2.setFitHeight(32);
+
     }
 
     @FXML
