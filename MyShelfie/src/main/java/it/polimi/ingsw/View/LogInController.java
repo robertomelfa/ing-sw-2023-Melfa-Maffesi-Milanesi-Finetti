@@ -6,10 +6,12 @@ import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -69,12 +71,22 @@ public class LogInController implements Serializable {
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            LogInController loginController = fxmlLoader.<LogInController>getController();
+            loginController.setIP(ip);
+            loginController.initialize();
+            fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
-            stage.setScene(new Scene(fxmlLoader.load(), 1080, 720));
+            stage.setScene(new Scene(root, 1080, 720));
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInNotFirst.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            LogInController loginController = fxmlLoader.<LogInController>getController();
+            loginController.setIP(ip);
+            loginController.initialize();
+            fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
-            stage.setScene(new Scene(fxmlLoader.load(), 1080, 720));
+            stage.setScene(new Scene(root, 1080, 720));
         }
     }
 
@@ -84,13 +96,23 @@ public class LogInController implements Serializable {
             server.setFirstPlayer();
             server.setTemp();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            LogInController loginController = fxmlLoader.<LogInController>getController();
+            loginController.setIP(ip);
+            loginController.initialize();
+            fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
-            stage.setScene(new Scene(fxmlLoader.load(), 1080, 720));
+            stage.setScene(new Scene(root, 1080, 720));
         } else {
             server.setTemp();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInNotFirst.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            LogInController loginController = fxmlLoader.<LogInController>getController();
+            loginController.setIP(ip);
+            loginController.initialize();
+            fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
-            stage.setScene(new Scene(fxmlLoader.load(), 1080, 720));
+            stage.setScene(new Scene(root, 1080, 720));
         }
     }
     public void submit(ActionEvent event) throws Exception{

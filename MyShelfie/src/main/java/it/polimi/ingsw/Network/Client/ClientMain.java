@@ -121,9 +121,10 @@ public class ClientMain extends Application implements Serializable {
         Parent root = (Parent)fxmlLoader.load();
         Parameters parameters = getParameters();
         String ip = parameters.getNamed().get("ipport");
-        System.out.println(ip);
         LogInController loginController = fxmlLoader.<LogInController>getController();
         loginController.setIP(ip);
+        loginController.initialize();
+        fxmlLoader.setController(loginController);
         Scene scene = new Scene(root, 1080, 720);
         Image icon = new Image("assets/Publisher material/icon 50x50px.png");
         stage.setScene(scene);
