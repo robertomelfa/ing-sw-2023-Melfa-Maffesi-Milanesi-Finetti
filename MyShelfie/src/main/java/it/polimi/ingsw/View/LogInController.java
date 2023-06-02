@@ -68,6 +68,7 @@ public class LogInController implements Serializable {
     }
     @FXML
     private void RMIconnection() throws Exception {
+        server.block();
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
@@ -92,6 +93,7 @@ public class LogInController implements Serializable {
 
     @FXML
     private void SocketConnection() throws Exception{
+        server.block();
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             server.setTemp();
@@ -124,7 +126,6 @@ public class LogInController implements Serializable {
                     stage.setScene(new Scene(fxmlLoader.load()));
                     String user = username.getText();
                     GameClientInterface client = new Client();
-                    server.release();
                     ((Client) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), num, user);
                 } else {
@@ -156,10 +157,10 @@ public class LogInController implements Serializable {
 
             }
         }
-
+        server.release();
     }
 
-    public void submitNotFirst(ActionEvent event) throws RemoteException {
+    public void submitNotFirst(ActionEvent event) throws RemoteException, Exception {
         if(!server.getTemp()){
             // rmi
             try {
@@ -169,7 +170,6 @@ public class LogInController implements Serializable {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load()));
-                    server.release();
                     ((Client) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), user);
                 } else {
@@ -188,7 +188,6 @@ public class LogInController implements Serializable {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load()));
-                    server.release();
                     try {
                         clientSocket.setControllerGui(fxmlLoader.getController());
                         clientSocket.startGUI(server,ip, 0 , user);
@@ -202,7 +201,7 @@ public class LogInController implements Serializable {
                 System.out.println(e);
             }
         }
-
+        server.release();
     }
 
     public void set2(ActionEvent event){
