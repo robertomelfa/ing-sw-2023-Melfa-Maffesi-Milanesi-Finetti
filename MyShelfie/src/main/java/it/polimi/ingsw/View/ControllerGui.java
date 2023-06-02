@@ -76,6 +76,9 @@ public class ControllerGui implements Initializable, Serializable {
     @FXML
     private ImageView scoreObj2;
 
+    @FXML
+    private ImageView[][] libraryImageView = new ImageView[5][6];
+
 
     private int column = -1;
     private ArrayList <Integer[]> posCard = new ArrayList<>();
@@ -86,6 +89,8 @@ public class ControllerGui implements Initializable, Serializable {
     private boolean allCardsInsert = false;
     private ArrayList<Library> libraries =null;
     private int indexCurrPlayer = -1;
+
+    private boolean first = true;
 
     @FXML
     void openDescription1(MouseEvent event) throws IOException {
@@ -211,33 +216,40 @@ public class ControllerGui implements Initializable, Serializable {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());
         stage.show();
-
     }
+
 
     /**
      * update the main library
      * @param library the new library to show
      */
     void updateLibrary(Library library){
-        Image image ;
-        ImageView card ;
+
+        if(first){
+            for (int j = 0; j < 5; j++) {
+                for (int i = 0; i < 6; i++) {
+                    ImageView card = new ImageView();
+                    card.setFitHeight(26);
+                    card.setFitWidth(24);
+                    libraryImageView[j][i] = card;
+                    gridLibrary.add(card, j, i);
+                }
+            }
+            first = false;
+        }
+
         for (int j=0; j<5; j++){
             for (int i=0; i<6; i++){
 
                 String url = urlCard(library.getPos(i,j));
 
-                if (url != null){
-                    image = new Image(url);
-                    card = new ImageView(image);
-                    card.setFitHeight(26);
-                    card.setFitWidth(24);
-                    gridLibrary.add(card,j,i);
-//                }else{
-//                    card = new ImageView(null);
-//                    gridLibrary.add(card,i,j);
+                if(libraryImageView[j][i].getImage()==null && url != null){
+                    Image image = new Image(url);
+                    libraryImageView[j][i].setImage(image);
                 }
             }
         }
+
     }
 
     /**
@@ -254,24 +266,26 @@ public class ControllerGui implements Initializable, Serializable {
             int y = (int) pos.charAt(1) - 48 +1;
 
             if((gameTable.getCardfromBoard(x,y)!= NONE) && (gameTable.getCardfromBoard(x,y) != NOT)){
-
                 button.setDisable(false);
                 button.selectedProperty().set(false);
-                //ImageView image = (ImageView) button.getGraphic();
+
+                ImageView imageView = (ImageView) button.getGraphic();
                 String url = urlCard(gameTable.getCardfromBoard(x,y));
-                //image.setImage(new Image(url));
-                Image image = new Image(url);
-                ImageView imageView = new ImageView(image);
-                imageView.setFitWidth(35);
-                imageView.setFitHeight(40);
-                button.setGraphic(imageView);
+                if(imageView.getImage()==null){
+                    Image image = new Image(url);
+                    imageView.setImage(image);
+                    imageView.setFitWidth(35);
+                    imageView.setFitHeight(40);
+                }
+
 
             }else{
-                button = (ToggleButton) gridTable.getChildren().get(k);
                 button.setDisable(true);
                 button.selectedProperty().set(false);
                 ImageView image = (ImageView) button.getGraphic();
-                image.setImage(null);
+                if(image.getImage()!=null){
+                    image.setImage(null);
+                }
             }
 
             k++;

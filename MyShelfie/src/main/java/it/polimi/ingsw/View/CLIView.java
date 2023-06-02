@@ -183,8 +183,7 @@ public class CLIView implements ViewClient, Serializable {
                 list.remove(Card.valueOf(type));
                 gameLogic.getGame().getCurrentPlayer().getLibrary().getGrid()[gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column)][column] = Card.valueOf(type);
             } else {
-                System.out.println("This card does not exist, try again!");
-                i--;
+                System.out.println("This card does not exist, try again!");notify();
             }
         }
         System.out.println("Now the grid is: \n");
