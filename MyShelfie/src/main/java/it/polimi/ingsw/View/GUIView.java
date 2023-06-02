@@ -115,6 +115,8 @@ private byte initLibrary = 0;
         list = getCardFromTable(this.gameLogic);
         insert(list, this.gameLogic);
 
+        gameLogic.getGameTable().checkStatus();
+
         return gameLogic;
     }
 
