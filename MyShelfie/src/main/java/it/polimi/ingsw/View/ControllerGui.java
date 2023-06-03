@@ -277,9 +277,15 @@ public class ControllerGui implements Initializable, Serializable {
                     imageView.setFitWidth(35);
                     imageView.setFitHeight(40);
                 }
-                Image image = new Image(url);
-                if (!Objects.equals(imageView.getImage(),image)) imageView.setImage(image);
-                image.cancel();
+
+                String temp = imageView.getImage().getUrl().substring(imageView.getImage().getUrl().lastIndexOf("assets"));
+                temp = temp. replace("%20"," ");
+                if (!Objects.equals(temp,url)){
+                    imageView.setImage(null);
+                    Image image = new Image(url);
+                    imageView.setImage(image);
+                    image.cancel();
+                }
             }else{
                 button.setDisable(true);
                 button.selectedProperty().set(false);
