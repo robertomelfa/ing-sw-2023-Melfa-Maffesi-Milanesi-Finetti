@@ -212,14 +212,14 @@ public class LogInController implements Serializable {
 
     }
     public void set3(ActionEvent event){
-        num = 2;
+        num = 3;
         button2.setOpacity(1);
         button3.setOpacity(0.8);
         button4.setOpacity(1);
 
     }
     public void set4(ActionEvent event){
-        num = 2;
+        num = 4;
         button2.setOpacity(1);
         button3.setOpacity(1);
         button4.setOpacity(0.8);
