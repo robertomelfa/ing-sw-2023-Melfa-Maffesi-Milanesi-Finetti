@@ -255,7 +255,6 @@ public class ControllerMain implements Serializable {
                     }
                 }
             }
-            this.gameLogic.setPlayers(temp);
             this.chair=found.getChair();
             this.listIterator=found.getListIterator();
             this.backup=found;
@@ -473,20 +472,10 @@ public class ControllerMain implements Serializable {
                 SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic, current_client.isGui());
                 gameLogic = controllerS.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
-                ArrayList<Player> temp = new ArrayList<>();
-                for (int i=0; i<clientList.size();i++){
-                    temp.add(clientList.get(i).getPlayer());
-                }
-                gameLogic.setPlayers(temp);
             }else{
                 RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI, current_client.isGui());
                 gameLogic = controllerR.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
-                ArrayList<Player> temp = new ArrayList<>();
-                for (int i=0; i<clientList.size();i++){
-                    temp.add(clientList.get(i).getPlayer());
-                }
-                gameLogic.setPlayers(temp);
             }
             // check the objectives of the current player at the end of the turn
             checkObjectives();
