@@ -192,7 +192,8 @@ public class ControllerGui implements Initializable, Serializable {
         stage.initOwner(CommonObj1.getScene().getWindow());
         ControllerLibrary controller = loader.getController();
         try {
-            controller.updateLibrary(libraries.get(numPlayer));
+            gameLogic.getPlayers().get(numPlayer-1).getLibrary().viewGrid();
+            controller.updateLibrary(gameLogic.getPlayers().get(numPlayer-1).getLibrary());
         }catch (NullPointerException e ){
             controller.updateLibrary(null);
         }

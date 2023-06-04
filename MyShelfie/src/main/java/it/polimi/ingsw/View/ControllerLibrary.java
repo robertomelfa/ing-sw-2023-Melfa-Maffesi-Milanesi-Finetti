@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.io.Serializable;
@@ -68,5 +69,7 @@ public class ControllerLibrary implements Serializable {
         }
     }
 
-
+    public void closeWindow(){
+        grid.getChildren().clear();
+    }
 }

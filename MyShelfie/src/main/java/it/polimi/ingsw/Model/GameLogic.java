@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class GameLogic implements Serializable{
     private GameTable gameTable;
 
-
+    private ArrayList<Player> players;
     private Game game1;
 
 
@@ -21,8 +21,17 @@ public class GameLogic implements Serializable{
      * It takes the gameTable of the game
      */
     public GameLogic(Game game){
+        players = new ArrayList<>();
         this.game1 = game;
         this.gameTable = game.getGameTable();
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 
     public Game getGame(){
