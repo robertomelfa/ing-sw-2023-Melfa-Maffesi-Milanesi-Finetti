@@ -279,7 +279,14 @@ public class ControllerGui implements Initializable, Serializable {
                     imageView.setFitHeight(40);
                 }
 
-
+                String temp = imageView.getImage().getUrl().substring(imageView.getImage().getUrl().lastIndexOf("assets"));
+                temp = temp. replace("%20"," ");
+                if (!Objects.equals(temp,url)){
+                    imageView.setImage(null);
+                    Image image = new Image(url);
+                    imageView.setImage(image);
+                    image.cancel();
+                }
             }else{
                 button.setDisable(true);
                 button.selectedProperty().set(false);
@@ -291,8 +298,6 @@ public class ControllerGui implements Initializable, Serializable {
 
             k++;
         }
-        if (gameLogic != null) gameLogic.getGameTable().checkStatus();
-
     }
 
     /**
@@ -429,7 +434,8 @@ public class ControllerGui implements Initializable, Serializable {
         confirm.setDisable(true);
         for(int i=0; i<gridTable.getChildren().size(); i++) {
             button = (ToggleButton) gridTable.getChildren().get(i);
-            if (button.getGraphic()!=null) {
+            ImageView imageView = (ImageView) button.getGraphic();
+            if (imageView.getImage() !=null) {
                 button.setDisable(false);
             }else{
                 button.setDisable(true);
