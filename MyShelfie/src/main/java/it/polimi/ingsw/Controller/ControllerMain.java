@@ -246,6 +246,16 @@ public class ControllerMain implements Serializable {
                 }
             }
             this.gameLogic=found.getGamelogic();
+            ArrayList<Player> temp = new ArrayList<>();
+            temp.addAll(found.getGamelogic().getPlayers());
+            for (int i=0; i<gameLogic.getPlayers().size(); i++){
+                for (int j=0; j<found.getGamelogic().getPlayers().size();j++){
+                    if (found.getGamelogic().getPlayers().get(j).getNickname().equals(gameLogic.getPlayers().get(i).getNickname())){
+                        temp.set(i,found.getGamelogic().getPlayers().get(j));
+                    }
+                }
+            }
+            this.gameLogic.setPlayers(temp);
             this.chair=found.getChair();
             this.listIterator=found.getListIterator();
             this.backup=found;
@@ -463,10 +473,20 @@ public class ControllerMain implements Serializable {
                 SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic, current_client.isGui());
                 gameLogic = controllerS.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
+                ArrayList<Player> temp = new ArrayList<>();
+                for (int i=0; i<clientList.size();i++){
+                    temp.add(clientList.get(i).getPlayer());
+                }
+                gameLogic.setPlayers(temp);
             }else{
                 RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI, current_client.isGui());
                 gameLogic = controllerR.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
+                ArrayList<Player> temp = new ArrayList<>();
+                for (int i=0; i<clientList.size();i++){
+                    temp.add(clientList.get(i).getPlayer());
+                }
+                gameLogic.setPlayers(temp);
             }
             // check the objectives of the current player at the end of the turn
             checkObjectives();
