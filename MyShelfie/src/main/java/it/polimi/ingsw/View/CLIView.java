@@ -366,8 +366,14 @@ public class CLIView implements ViewClient, Serializable {
     @Override
     public void setController(ControllerGui controllerGui) {    }
 
-    @Override
-    public void updatePoints(String msg) {    }
+
+    public void viewPoints(ArrayList<Player> playerList){
+        String string = "POINTS\n";
+        for(int i = 0; i < playerList.size(); i++){
+            string = string + playerList.get(i).getNickname() + " : " + playerList.get(i).getPoints() + " | ";
+        }
+        System.out.println(string);
+    }
 
 
 }

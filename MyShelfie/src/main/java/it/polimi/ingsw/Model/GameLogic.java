@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class GameLogic implements Serializable{
     private GameTable gameTable;
 
-
+    private ArrayList<Player> players = new ArrayList<>();
     private Game game1;
 
 
@@ -207,6 +207,23 @@ public class GameLogic implements Serializable{
             }
         }
         return false;
+    }
+
+    public void addPlayer(Player player){
+        players.add(player);
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
+
+    public void setPlayers(Player player){
+        for(int i = 0; i < players.size(); i++){
+            if(players.get(i).getNickname().equals(player.getNickname())){
+                players.get(i).setLibrary(player.getLibrary());
+                players.get(i).setPoints(player.getPoints());
+            }
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.View.ControllerGui;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface GameClientInterface extends Remote{
 
@@ -29,5 +30,7 @@ public interface GameClientInterface extends Remote{
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception;
 
     public void ping() throws RemoteException;
+
+    void receivePoint(ArrayList<Player> playerList) throws RemoteException;
 
 }

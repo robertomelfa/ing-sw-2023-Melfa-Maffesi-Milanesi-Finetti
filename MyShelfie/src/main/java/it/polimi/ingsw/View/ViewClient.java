@@ -19,5 +19,6 @@ public interface ViewClient {
 
     void setController(ControllerGui controllerGui);
 
-    void updatePoints(String msg);
+
+    public void viewPoints(ArrayList<Player> playerList);
 }

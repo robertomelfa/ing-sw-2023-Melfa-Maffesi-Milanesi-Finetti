@@ -18,6 +18,11 @@ public class ControllerLibrary implements Serializable {
     @FXML
     private GridPane grid;
 
+    @FXML
+    private ImageView[][] libraryImageView = new ImageView[5][6];
+
+    private boolean first = true;
+
 // TODO una volta verificato che funziona eliminare metodo e bottone prova
 
     // test per verificare che funzioni, da rimpiazzare con click su librerie giocatori
@@ -43,29 +48,96 @@ public class ControllerLibrary implements Serializable {
 
     public void updateLibrary(Library library) {
 
-        if (library != null) {
-            Image image;
-            ImageView card;
-            grid.setPadding(new Insets(4, 4, 4, 4));
-            grid.setHgap(10);
+        if(first){
+            for (int j = 0; j < 5; j++) {
+                for (int i = 0; i < 6; i++) {
+                    ImageView card = new ImageView();
+                    card.setFitHeight(26);
+                    card.setFitWidth(24);
+                    libraryImageView[j][i] = card;
+                    grid.add(card, j, i);
+                }
+            }
+            first = false;
+        }
 
-            ControllerGui c = new ControllerGui();
+        for (int j=0; j<5; j++){
+            for (int i=0; i<6; i++){
 
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 5; j++) {
+                String url = urlCard(library.getPos(i,j));
 
-                    String url = c.urlCard(library.getPos(i, j));
-                    image = new Image(url);
-
-                    if (image != null) {
-                        card = new ImageView(image);
-                        card.setFitHeight(35);
-                        card.setFitWidth(36);
-                        grid.add(card, j, i);
-                    }
+                if(libraryImageView[j][i].getImage()==null && url != null){
+                    Image image = new Image(url);
+                    libraryImageView[j][i].setImage(image);
                 }
             }
         }
+    }
+
+    private String urlCard(Card card) {
+        Random rand = new Random();
+        int r = rand.nextInt(3)+1;
+        String url = null;
+        switch (card){
+            case LIGHTBLUE1 -> {
+                url = PathImageCards.TROFEI1;
+
+            }
+            case LIGHTBLUE2 -> {
+                url = PathImageCards.TROFEI2;
+
+            }
+            case LIGHTBLUE3 -> {
+                url = PathImageCards.TROFEI3;
+
+            }
+            case BLUE1 ->{
+                url = PathImageCards.CORNICI1;
+            }
+            case BLUE2 ->{
+                url = PathImageCards.CORNICI2;
+            }
+            case BLUE3 ->{
+                url = PathImageCards.CORNICI3;
+            }
+            case YELLOW1 ->{
+                url = PathImageCards.GIOCHI1;
+            }
+            case YELLOW2 ->{
+                url = PathImageCards.GIOCHI2;
+            }
+            case YELLOW3 ->{
+                url = PathImageCards.GIOCHI3;
+            }
+            case GREEN1 ->{
+                url = PathImageCards.GATTI1;
+            }
+            case GREEN2 ->{
+                url = PathImageCards.GATTI2;
+            }
+            case GREEN3 ->{
+                url = PathImageCards.GATTI3;
+            }
+            case WHITE1 ->{
+                url = PathImageCards.LIBRI1;
+            }
+            case WHITE2 ->{
+                url = PathImageCards.LIBRI2;
+            }
+            case WHITE3 ->{
+                url = PathImageCards.LIBRI3;
+            }
+            case PURPLE1 ->{
+                url = PathImageCards.PIANTE1;
+            }
+            case PURPLE2 ->{
+                url = PathImageCards.PIANTE2;
+            }
+            case PURPLE3 ->{
+                url = PathImageCards.PIANTE3;
+            }
+        }
+        return url;
     }
 
 

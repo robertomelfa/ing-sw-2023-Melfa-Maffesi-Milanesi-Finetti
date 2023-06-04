@@ -22,7 +22,6 @@ public class SocketController implements Serializable {
     private GameLogic gameLogic;
     private ClientClass current_client;
 
-    private ArrayList<ClientClass> clientList = new ArrayList<>();
 
     private boolean gui;
 
@@ -32,12 +31,11 @@ public class SocketController implements Serializable {
      * @throws Exception
      */
 
-    public SocketController(Server_Socket server, ClientClass current_client, GameLogic gameLogic, boolean gui, ArrayList<ClientClass> clientList) throws Exception{
+    public SocketController(Server_Socket server, ClientClass current_client, GameLogic gameLogic, boolean gui) throws Exception{
         this.server = server;
         this.current_client = current_client;
         this.gameLogic = gameLogic;
         this.gui = gui;
-        this.clientList = clientList;
     }
 
     /**
@@ -71,11 +69,11 @@ public class SocketController implements Serializable {
                             i = 1;
                         }
                         case "3" -> {
-                            for(int j = 0; j < clientList.size(); j++){
-                                if(!clientList.get(j).getPlayer().getNickname().equals(gameLogic.getGame().getCurrentPlayer().getNickname())){
-                                    Message msg = new Message(MessageType.printMessage, "\n" + clientList.get(j).getPlayer().getNickname() + "'s library");
+                            for(int j = 0; j < gameLogic.getPlayers().size(); j++){
+                                if(!gameLogic.getPlayers().get(j).getNickname().equals(gameLogic.getGame().getCurrentPlayer().getNickname())){
+                                    Message msg = new Message(MessageType.printMessage, "\n" + gameLogic.getPlayers().get(j).getNickname() + "'s library");
                                     server.sendMessage(msg, current_client.getSocket());
-                                    server.sendLibrary(current_client.getSocket(), clientList.get(j).getPlayer().getLibrary());
+                                    server.sendLibrary(current_client.getSocket(), gameLogic.getPlayers().get(j).getLibrary());
                                 }
                             }
                         }

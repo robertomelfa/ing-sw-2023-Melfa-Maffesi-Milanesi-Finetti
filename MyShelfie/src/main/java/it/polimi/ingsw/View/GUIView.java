@@ -122,20 +122,13 @@ private byte initLibrary = 0;
 
     public void setController(ControllerGui controllerGui) { this.controllerGui = controllerGui; }
 
-    @Override
-    public void updatePoints(String msg) {
-        if (firstName){
-            String message = msg;
-            Platform.runLater(()->controllerGui.setNamePlayers(message));
-            firstName=false;
-        }
 
-        msg = msg.replaceAll("\\D+","");
-        for (int i=0; i<msg.length(); i++){
-            int point = msg.charAt(i) -48;
-            int temp = i+1;
-            Platform.runLater(()-> controllerGui.updatePoits(point, temp));
+    public void viewPoints(ArrayList<Player> playerList){
+        if (firstName){
+            Platform.runLater(()->controllerGui.setNamePlayers(playerList));
         }
+        Platform.runLater(()-> controllerGui.updatePoints(playerList));
+        firstName=false;
     }
 
 }

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network.Client.Socket;
 
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.PlayerObj;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
@@ -15,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -150,7 +148,7 @@ public class Client_Socket implements Serializable {
                 String choice=in.nextLine();
                 sendMessage(new Message(MessageType.printMessage,choice));
             }else if(msg.getType() == MessageType.receivePoint){
-                view.viewString(msg.getMessage());
+                view.viewPoints(receivePlayers());
             }else if(msg.getType() == MessageType.closeGame){
                 view.viewString(msg.getMessage());
                 socket.close();
@@ -221,6 +219,11 @@ public class Client_Socket implements Serializable {
     public PlayerObj receivePlayerObj() throws IOException, ClassNotFoundException {
         ois = new ObjectInputStream(socket.getInputStream());
         return (PlayerObj) ois.readObject();
+    }
+
+    public ArrayList<Player> receivePlayers() throws IOException, ClassNotFoundException {
+        ois = new ObjectInputStream(socket.getInputStream());
+        return (ArrayList<Player>) ois.readObject();
     }
 
     /**
@@ -360,8 +363,13 @@ public class Client_Socket implements Serializable {
                             throw new RuntimeException(e);
                         }
                     } else if (msg.getType() == MessageType.receivePoint) {
-                        view.updatePoints(msg.getMessage());
-                        view.viewString(msg.getMessage());
+                        try {
+                            view.viewPoints(receivePlayers());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else if (msg.getType() == MessageType.closeGame) {
                         view.viewString(msg.getMessage());
                         try {

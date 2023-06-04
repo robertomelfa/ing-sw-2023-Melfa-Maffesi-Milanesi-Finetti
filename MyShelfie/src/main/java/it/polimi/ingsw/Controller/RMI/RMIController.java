@@ -20,7 +20,6 @@ public class RMIController implements Serializable {
 
     private GameClientInterface current_client; // RMI Client
 
-    private ArrayList<ClientClass> clientList = new ArrayList<>();
     private boolean gui;
 
 
@@ -32,12 +31,11 @@ public class RMIController implements Serializable {
      * @throws NotBoundException
      * @throws Exception
      */
-    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server, boolean gui, ArrayList<ClientClass> clientList) {
+    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server, boolean gui) {
         this.server = server;
         this.gameLogic = gameLogic;
         this.current_client = current_client.getClient();
         this.gui = gui;
-        this.clientList = clientList;
     }
 
     /**
@@ -68,10 +66,10 @@ public class RMIController implements Serializable {
                             i = 1;
                         }
                         case "3"->{
-                            for(int j = 0; j < clientList.size(); j++){
-                                if(!clientList.get(j).getPlayer().getNickname().equals(gameLogic.getGame().getCurrentPlayer().getNickname())){
-                                    current_client.receiveMessage("\n" + clientList.get(j).getPlayer().getNickname() + "'s library");
-                                    current_client.receiveLibrary(clientList.get(j).getPlayer().getLibrary());
+                            for(int j = 0; j < gameLogic.getPlayers().size(); j++){
+                                if(!gameLogic.getPlayers().get(j).getNickname().equals(gameLogic.getGame().getCurrentPlayer().getNickname())){
+                                    current_client.receiveMessage("\n" + gameLogic.getPlayers().get(j).getNickname() + "'s library");
+                                    current_client.receiveLibrary(gameLogic.getPlayers().get(j).getLibrary());
                                 }
                             }
                         }

@@ -10,6 +10,7 @@ import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 //TODO sistemare le funzioni, specie sendGameLogic dove viene gestito il pescaggio carte
 public  class Server_Socket implements Serializable {
@@ -133,6 +134,13 @@ public  class Server_Socket implements Serializable {
         oos.writeObject(gameTable);
     }
 
+    public void sendPlayers(Socket socket, ArrayList<Player> players) throws IOException, ClassNotFoundException{
+        Message msg = new Message(MessageType.receivePoint, null);
+        sendMessage(msg, socket);
+        ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+        oos.writeObject(players);
+    }
+
     /**
      * Handles part of the process of picking cards from the table. Sever send to the client the gamelogic, his library
      * and a message of the "getCard" type, then receives the updated gamelogic and library from the client
@@ -154,6 +162,7 @@ public  class Server_Socket implements Serializable {
         ObjectInputStream ois = new ObjectInputStream(client.getSocket().getInputStream());
         return (GameLogic) ois.readObject();
     }
+
 
     /**
      *

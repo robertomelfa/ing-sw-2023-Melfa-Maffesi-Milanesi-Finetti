@@ -87,10 +87,15 @@ public class ControllerGui implements Initializable, Serializable {
     private GameLogic gameLogic;
     private boolean confirmCards = false;
     private boolean allCardsInsert = false;
-    private ArrayList<Library> libraries =null;
+    private ArrayList<Library> libraries = new ArrayList<>();
     private int indexCurrPlayer = -1;
 
     private boolean first = true;
+
+    private ControllerLibrary controllerLibrary1 = new ControllerLibrary();
+    private ControllerLibrary controllerLibrary2 = new ControllerLibrary();
+    private ControllerLibrary controllerLibrary3 = new ControllerLibrary();
+    private ControllerLibrary controllerLibrary4 = new ControllerLibrary();
 
     @FXML
     void openDescription1(MouseEvent event) throws IOException {
@@ -154,22 +159,22 @@ public class ControllerGui implements Initializable, Serializable {
 
     @FXML
     void openLibrary1(MouseEvent event) throws IOException {
-        openLibrary(1);
+        openLibrary(1, controllerLibrary1);
     }
 
     @FXML
     void openLibrary2(MouseEvent event) throws IOException {
-        openLibrary(2);
+        openLibrary(2, controllerLibrary2);
     }
 
     @FXML
     void openLibrary3(MouseEvent event) throws IOException {
-        openLibrary(3);
+        openLibrary(3, controllerLibrary3);
     }
 
     @FXML
     void openLibrary4(MouseEvent event) throws IOException {
-        openLibrary(4);
+        openLibrary(4, controllerLibrary4);
     }
 
 
@@ -179,7 +184,7 @@ public class ControllerGui implements Initializable, Serializable {
      * @throws IOException exception for the loader
      */
         @FXML
-    void openLibrary(int numPlayer) throws IOException {
+    void openLibrary(int numPlayer, ControllerLibrary controller) throws IOException {
 
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Library.fxml"));
@@ -190,9 +195,9 @@ public class ControllerGui implements Initializable, Serializable {
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());
-        ControllerLibrary controller = loader.getController();
+        controller = loader.getController();
         try {
-            controller.updateLibrary(libraries.get(numPlayer));
+            controller.updateLibrary(libraries.get(numPlayer-1));
         }catch (NullPointerException e ){
             controller.updateLibrary(null);
         }
@@ -611,53 +616,42 @@ public class ControllerGui implements Initializable, Serializable {
         }
     }
 
-    public void setNamePlayers(String message){
-        String name = "";
+    public void setNamePlayers(ArrayList<Player> players){
 
-        message = message.replace("\n","");             //clear from lines
-        message = message.replaceAll("[0-9]","");       //clear from numbers
-        message = message.replace(" ","");              //clear from spaces
-        message = message.replace("|","");              //clear from |
-        message = message.replace("POINTS","");         //clear POINTS
-
-
-        name = message.substring(0,message.indexOf(":"));               //substring name
-        message = message.replace(name+":","");         //clear old name
-        name = name.replace(":","");                    //clear from :
-        namePlayer1.setText(name);
-
-
-        name = message.substring(0,message.indexOf(":"));
-        message = message.replace(name+":","");
-        namePlayer2.setText(name);
-
-        System.out.println("message 3  -"+message+"-");
-
-        if (message.length()>1) {
-            name = message.substring(0, message.indexOf(":"));
-            message = message.replace(name + ":", "");
-            namePlayer3.setText(name);
-
-            if (message.length() > 1) {
-                name = message.substring(0, message.indexOf(":"));
-
-                namePlayer4.setText(name);
-            }else{
-                CardPlayer4.setVisible(false);
+        int numPlayers = players.size();
+        CardPlayer3.setVisible(false);
+        CardPlayer4.setVisible(false);
+        namePlayer1.setText(players.get(0).getNickname());
+        libraries.add(players.get(0).getLibrary());
+        namePlayer2.setText(players.get(1).getNickname());
+        libraries.add(players.get(1).getLibrary());
+        if(numPlayers > 2){
+            namePlayer3.setText(players.get(2).getNickname());
+            libraries.add(players.get(2).getLibrary());
+            CardPlayer3.setVisible(true);
+            if(numPlayers == 4){
+                namePlayer4.setText(players.get(3).getNickname());
+                libraries.add(players.get(3).getLibrary());
+                CardPlayer3.setVisible(true);
             }
-        }else{
-            CardPlayer3.setVisible(false);
-            CardPlayer4.setVisible(false);
         }
 
     }
 
-    public void updatePoits(int point, int numPlayer){
-        switch (numPlayer){
-            case 1 -> points1.setText("Points : "+point);
-            case 2 -> points2.setText("Points : "+point);
-            case 3 -> points3.setText("Points : "+point);
-            case 4 -> points4.setText("Points : "+point);
+    public void updatePoints(ArrayList<Player> players){
+
+        int numPlayers = players.size();
+        points1.setText("Points : " + players.get(0).getPoints());
+        libraries.set(0, players.get(0).getLibrary());
+        points2.setText("Points : " + players.get(1).getPoints());
+        libraries.set(1, players.get(1).getLibrary());
+        if(numPlayers > 2){
+            points3.setText("Points : " + players.get(2).getPoints());
+            libraries.set(2, players.get(2).getLibrary());
+            if(numPlayers == 4){
+                points4.setText("Points : " + players.get(3).getPoints());
+                libraries.set(3, players.get(3).getLibrary());
+            }
         }
     }
 
@@ -821,12 +815,12 @@ public class ControllerGui implements Initializable, Serializable {
 
         switch (gameLogic.getGame().getCurrentPlayer().getPlayerObj().getNum()){
             case 1 -> url = PathImageCards.PLAYEROBJ2;
-            case 2 -> url = PathImageCards.PLAYEROBJ1;
+            case 2 -> url = PathImageCards.PLAYEROBJ11;
             case 3 -> url = PathImageCards.PLAYEROBJ3;
-            case 4 -> url = PathImageCards.PLAYEROBJ4;
+            case 4 -> url = PathImageCards.PLAYEROBJ7;
             case 5 -> url = PathImageCards.PLAYEROBJ5;
             case 6 -> url = PathImageCards.PLAYEROBJ6;
-            case 7 -> url = PathImageCards.PLAYEROBJ7;
+            case 7 -> url = PathImageCards.PLAYEROBJ1;
             case 8 -> url = PathImageCards.PLAYEROBJ8;
             case 9 -> url = PathImageCards.PLAYEROBJ9;
             case 10 -> url = PathImageCards.PLAYEROBJ10;
@@ -849,17 +843,17 @@ public class ControllerGui implements Initializable, Serializable {
         String url = PathImageCards.COMMONOBJBACK;
         switch (gameLogic.getGame().getCommonObj1().getObjNum()){
 
-            case 1 -> url = PathImageCards.COMMONOBJ1;
-            case 2 -> url = PathImageCards.COMMONOBJ2;
-            case 3 -> url = PathImageCards.COMMONOBJ3;
-            case 4 -> url = PathImageCards.COMMONOBJ4;
-            case 5 -> url = PathImageCards.COMMONOBJ5;
-            case 6 -> url = PathImageCards.COMMONOBJ6;
-            case 7 -> url = PathImageCards.COMMONOBJ7;
-            case 8 -> url = PathImageCards.COMMONOBJ8;
-            case 9 -> url = PathImageCards.COMMONOBJ9;
+            case 1 -> url = PathImageCards.COMMONOBJ4;
+            case 2 -> url = PathImageCards.COMMONOBJ11;
+            case 3 -> url = PathImageCards.COMMONOBJ8;
+            case 4 -> url = PathImageCards.COMMONOBJ7;
+            case 5 -> url = PathImageCards.COMMONOBJ3;
+            case 6 -> url = PathImageCards.COMMONOBJ2;
+            case 7 -> url = PathImageCards.COMMONOBJ1;
+            case 8 -> url = PathImageCards.COMMONOBJ6;
+            case 9 -> url = PathImageCards.COMMONOBJ5;
             case 10 -> url = PathImageCards.COMMONOBJ10;
-            case 11 -> url = PathImageCards.COMMONOBJ11;
+            case 11 -> url = PathImageCards.COMMONOBJ9;
             case 12 -> url = PathImageCards.COMMONOBJ12;
         }
 
@@ -869,17 +863,17 @@ public class ControllerGui implements Initializable, Serializable {
 
         switch (gameLogic.getGame().getCommonObj2().getObjNum()){
 
-            case 1 -> url = PathImageCards.COMMONOBJ1;
-            case 2 -> url = PathImageCards.COMMONOBJ2;
-            case 3 -> url = PathImageCards.COMMONOBJ3;
-            case 4 -> url = PathImageCards.COMMONOBJ4;
-            case 5 -> url = PathImageCards.COMMONOBJ5;
-            case 6 -> url = PathImageCards.COMMONOBJ6;
-            case 7 -> url = PathImageCards.COMMONOBJ7;
-            case 8 -> url = PathImageCards.COMMONOBJ8;
-            case 9 -> url = PathImageCards.COMMONOBJ9;
+            case 1 -> url = PathImageCards.COMMONOBJ4;
+            case 2 -> url = PathImageCards.COMMONOBJ11;
+            case 3 -> url = PathImageCards.COMMONOBJ8;
+            case 4 -> url = PathImageCards.COMMONOBJ7;
+            case 5 -> url = PathImageCards.COMMONOBJ3;
+            case 6 -> url = PathImageCards.COMMONOBJ2;
+            case 7 -> url = PathImageCards.COMMONOBJ1;
+            case 8 -> url = PathImageCards.COMMONOBJ6;
+            case 9 -> url = PathImageCards.COMMONOBJ5;
             case 10 -> url = PathImageCards.COMMONOBJ10;
-            case 11 -> url = PathImageCards.COMMONOBJ11;
+            case 11 -> url = PathImageCards.COMMONOBJ9;
             case 12 -> url = PathImageCards.COMMONOBJ12;
         }
 
