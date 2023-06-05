@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane pickOnBounds="false" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerGui">
+<AnchorPane maxHeight="1.7976931348623157E308" pickOnBounds="false" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerGui">
                <children>
                   <ImageView fitHeight="800.0" fitWidth="1700.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <image>
@@ -55,7 +55,7 @@
                      <top>
                         <AnchorPane>
                            <children>
-                              <HBox alignment="CENTER" spacing="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="CENTER" maxHeight="180.0" spacing="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox alignment="CENTER_RIGHT">
                                        <children>
@@ -156,7 +156,7 @@
                         </AnchorPane>
                      </top>
                      <bottom>
-                        <HBox alignment="CENTER" spacing="120.0">
+                        <HBox alignment="CENTER" maxHeight="180.0" spacing="120.0">
                            <children>
                               <HBox fx:id="CardPlayer4" alignment="CENTER_LEFT">
                                  <children>
@@ -697,7 +697,7 @@
                      <padding>
                         <Insets left="8.0" right="8.0" />
                      </padding></HBox>
-                        <GridPane fx:id="gridLibrary" hgap="4.0" layoutX="28.0" layoutY="149.0" prefHeight="159.0" prefWidth="154.0" vgap="2.0">
+                        <GridPane fx:id="gridLibrary" hgap="4.0" layoutX="27.0" layoutY="150.0" prefHeight="159.0" prefWidth="154.0" vgap="2.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="24.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="24.0" />
@@ -745,6 +745,9 @@
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                            </children>
+                     <padding>
+                        <Insets top="2.0" />
+                     </padding>
                         </GridPane>
                   <HBox fx:id="columnButtonBox" alignment="CENTER" layoutX="9.0" layoutY="358.0" prefHeight="34.0" prefWidth="204.0" spacing="4.0">
                      <children>

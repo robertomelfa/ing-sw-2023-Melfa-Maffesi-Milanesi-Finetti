@@ -92,10 +92,6 @@ public class ControllerGui implements Initializable, Serializable {
 
     private boolean first = true;
 
-    private ControllerLibrary controllerLibrary1 = new ControllerLibrary();
-    private ControllerLibrary controllerLibrary2 = new ControllerLibrary();
-    private ControllerLibrary controllerLibrary3 = new ControllerLibrary();
-    private ControllerLibrary controllerLibrary4 = new ControllerLibrary();
 
     @FXML
     void openDescription1(MouseEvent event) throws IOException {
@@ -159,22 +155,22 @@ public class ControllerGui implements Initializable, Serializable {
 
     @FXML
     void openLibrary1(MouseEvent event) throws IOException {
-        openLibrary(1, controllerLibrary1);
+        openLibrary(1);
     }
 
     @FXML
     void openLibrary2(MouseEvent event) throws IOException {
-        openLibrary(2, controllerLibrary2);
+        openLibrary(2);
     }
 
     @FXML
     void openLibrary3(MouseEvent event) throws IOException {
-        openLibrary(3, controllerLibrary3);
+        openLibrary(3);
     }
 
     @FXML
     void openLibrary4(MouseEvent event) throws IOException {
-        openLibrary(4, controllerLibrary4);
+        openLibrary(4);
     }
 
 
@@ -184,7 +180,7 @@ public class ControllerGui implements Initializable, Serializable {
      * @throws IOException exception for the loader
      */
         @FXML
-    void openLibrary(int numPlayer, ControllerLibrary controller) throws IOException {
+    void openLibrary(int numPlayer) throws IOException {
 
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Library.fxml"));
@@ -195,7 +191,7 @@ public class ControllerGui implements Initializable, Serializable {
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());
-        controller = loader.getController();
+        ControllerLibrary controller = loader.getController();
         try {
             controller.updateLibrary(libraries.get(numPlayer-1));
         }catch (NullPointerException e ){
@@ -234,8 +230,8 @@ public class ControllerGui implements Initializable, Serializable {
             for (int j = 0; j < 5; j++) {
                 for (int i = 0; i < 6; i++) {
                     ImageView card = new ImageView();
-                    card.setFitHeight(26);
-                    card.setFitWidth(24);
+                    card.setFitHeight(25);
+                    card.setFitWidth(26);
                     libraryImageView[j][i] = card;
                     gridLibrary.add(card, j, i);
                 }
