@@ -288,7 +288,7 @@ public class CommonObj implements Serializable{
                 if (lib.getPos(row, column) == NONE) break;
                 for (int i = 0; i < 3; i++) {
                     if (countType[i] == NONE) {
-                        countType[i].isEqualTo(lib.getPos(row, column));
+                        countType[i]=(lib.getPos(row, column));
                         break;
                     } else if (lib.getPos(row, column).isEqualTo(countType[i])) break;
 

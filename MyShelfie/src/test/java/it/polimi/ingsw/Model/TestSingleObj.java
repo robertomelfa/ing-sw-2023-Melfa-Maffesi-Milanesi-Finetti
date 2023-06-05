@@ -24,11 +24,11 @@ public class TestSingleObj {
         int x = random.nextInt(5)+1;
         int y = random.nextInt(6)+1;
 
-        SingleObj tail = new SingleObj(x,y, Card.GREEN);
+        SingleObj tail = new SingleObj(x,y, Card.GREEN1);
         SingleObj copy = tail;
         Assert.assertEquals(x, tail.getXPosition());
         Assert.assertEquals(y, tail.getYPosition());
-        Assert.assertEquals(Card.GREEN, tail.getType());
+        Assert.assertEquals(Card.GREEN1, tail.getType());
         Assert.assertEquals(copy,tail);
     }
 }

@@ -206,9 +206,9 @@ public class TestGameLogic {
         }
         Assert.assertFalse(gameLogic.checkCardsPickable(3));
 
-        gameLogic.getGameTable().setCardfromBoard(5,5,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(5,6,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(4,5,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(5,5,Card.YELLOW1);
+        gameLogic.getGameTable().setCardfromBoard(5,6,Card.YELLOW1);
+        gameLogic.getGameTable().setCardfromBoard(4,5,Card.YELLOW1);
         view.viewGameTable(gameLogic.getGameTable());
 
         Assert.assertFalse(gameLogic.checkCardsPickable(3));
@@ -218,9 +218,9 @@ public class TestGameLogic {
                 gameLogic.getGameTable().setCardfromBoard(i,j, NONE);
             }
         }
-        gameLogic.getGameTable().setCardfromBoard(1,7,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(1,8,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(1,9,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(1,7,Card.YELLOW1);
+        gameLogic.getGameTable().setCardfromBoard(1,8,Card.YELLOW1);
+        gameLogic.getGameTable().setCardfromBoard(1,9,Card.YELLOW1);
         view.viewGameTable(gameLogic.getGameTable());
 
         Assert.assertTrue(gameLogic.checkCardsPickable(3));
@@ -230,9 +230,9 @@ public class TestGameLogic {
                 gameLogic.getGameTable().setCardfromBoard(i,j, NONE);
             }
         }
-        gameLogic.getGameTable().setCardfromBoard(6,3,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(5,3,Card.YELLOW);
-        gameLogic.getGameTable().setCardfromBoard(4,3,Card.YELLOW);
+        gameLogic.getGameTable().setCardfromBoard(6,3,Card.YELLOW1);
+        gameLogic.getGameTable().setCardfromBoard(5,3,Card.YELLOW1);
+        gameLogic.getGameTable().setCardfromBoard(4,3,Card.YELLOW1);
         view.viewGameTable(gameLogic.getGameTable());
 
         Assert.assertTrue(gameLogic.checkCardsPickable(3));
@@ -241,7 +241,7 @@ public class TestGameLogic {
         GameLogic gameLogic1=new GameLogic(g2);
         view.viewGameTable(gameLogic1.getGameTable());
         Assert.assertFalse(gameLogic1.checkCardsPickable(3));
-        gameLogic1.getGameTable().setCardfromBoard(8,7,Card.YELLOW);
+        gameLogic1.getGameTable().setCardfromBoard(8,7,Card.YELLOW1);
         gameLogic1.getGameTable().setCardfromBoard(6,7, NONE);
         view.viewGameTable(gameLogic1.getGameTable());
         Assert.assertFalse(gameLogic1.checkCardsPickable(3));

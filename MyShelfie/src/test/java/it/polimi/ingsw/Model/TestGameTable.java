@@ -77,10 +77,10 @@ public class TestGameTable extends TestCase {
             }
         }
 
-        gameTable.setCardfromBoard(2, 3, YELLOW);
-        gameTable.setCardfromBoard(2, 5, YELLOW);
-        gameTable.setCardfromBoard(3, 6, YELLOW);
-        gameTable.setCardfromBoard(4, 5, YELLOW);
+        gameTable.setCardfromBoard(2, 3, YELLOW1);
+        gameTable.setCardfromBoard(2, 5, YELLOW1);
+        gameTable.setCardfromBoard(3, 6, YELLOW1);
+        gameTable.setCardfromBoard(4, 5, YELLOW1);
 
         gameTable.checkStatus();
 
