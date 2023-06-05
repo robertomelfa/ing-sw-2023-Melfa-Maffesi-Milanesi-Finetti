@@ -232,7 +232,7 @@ public class Library implements Serializable{
      * This recursive method search the groups of same cards
      */
     public void group(int x, int y, int y2, Card color) {
-        if (getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y) == color) {
+        if (getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y).isEqualTo(color)) {
             if (getPos(x, y).isEqualTo(getPos(x + 1, y))) {
                 group(x + 1, y, y, color);
             }
@@ -242,11 +242,11 @@ public class Library implements Serializable{
             if (getPos(x, y2).isEqualTo(getPos(x, y2 - 1))) {
                 group(x, y, y2 - 1, color);
             }
-            if (getPos(x, y) == color) {
+            if (getPos(x, y).isEqualTo(color)) {
                 grid[x][y] = NONE;
                 setI();
             }
-            if (getPos(x, y2) == color) {
+            if (getPos(x, y2).isEqualTo(color)) {
                 grid[x][y2] = NONE;
                 setI();
             }

@@ -820,7 +820,7 @@ public class ControllerGui implements Initializable, Serializable {
             case 8 -> url = PathImageCards.PLAYEROBJ8;
             case 9 -> url = PathImageCards.PLAYEROBJ9;
             case 10 -> url = PathImageCards.PLAYEROBJ10;
-            case 11 -> url = PathImageCards.PLAYEROBJ11;
+            case 11 -> url = PathImageCards.PLAYEROBJ4;
             case 12 -> url = PathImageCards.PLAYEROBJ12;
         }
         // 2 - 1 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 - 11 - 12

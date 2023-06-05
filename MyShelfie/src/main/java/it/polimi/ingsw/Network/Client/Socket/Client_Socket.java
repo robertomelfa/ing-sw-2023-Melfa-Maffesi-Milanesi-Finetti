@@ -163,6 +163,9 @@ public class Client_Socket implements Serializable {
                 break;
             }
         }
+        socket.close();
+        ois.close();
+        oos.close();
     }
 
     /**
@@ -310,83 +313,91 @@ public class Client_Socket implements Serializable {
                     Message msg = null;
                     try {
                         msg = receiveMessage();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+                    } catch (Exception ignored) {}
+                    if(msg != null){
+                        if (msg.getType() == MessageType.receiveGameTable) {
+                            try {
+                                GameTable table = receiveGameTable();
+
+                                view.viewGameTable(table);
+                            } catch (IOException e) {
+                                System.out.println("error receiving gameTable");
+                            } catch (RuntimeException | ClassNotFoundException e) {
+                                System.out.println("error receiving gameTable");
+                            }
+                        } else if (msg.getType() == MessageType.receiveLibrary) {
+                            try {
+                                Library lib = receiveLibrary();
+
+                                view.viewLibrary(lib);
+
+                            } catch (Exception e) {
+                                System.out.println("error");
+                            }
+                        } else if (msg.getType() == MessageType.getCard) {
+                            try {
+                                GameLogic gameLogic = receiveGameLogic();
+                                gameLogic = view.getTurn(gameLogic);
+                                sendGameLogic(gameLogic);
+                            } catch (Exception e) {
+                                System.out.println("Error");
+                            }
+                        } else if (msg.getType() == MessageType.objectiveCompleted) {
+                            view.viewString(msg.getMessage());
+                        } else if (msg.getType() == MessageType.printMessage) {
+                            String message = msg.getMessage();
+                            view.viewString(message);
+                        } else if (msg.getType() == MessageType.receivePlayerObj) {
+                            PlayerObj obj = null;
+                            try {
+                                obj = receivePlayerObj();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (ClassNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                            view.viewPlayerObj(obj);
+
+                        } else if (msg.getType() == MessageType.notifyBeginTurn) {
+                            try {
+                                sendMessage(new Message(MessageType.printMessage, "2"));
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else if (msg.getType() == MessageType.receivePoint) {
+                            try {
+                                view.viewPoints(receivePlayers());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (ClassNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else if (msg.getType() == MessageType.closeGame) {
+                            view.viewString(msg.getMessage());
+                            try {
+                                socket.close();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            i = 1;
+                        } else if (msg.getType() == MessageType.ping) {
+
+                        } else if (msg.getType() == endGame) {
+                            view.viewString("Game is ended");
+                            i = 1;
+                        } else {
+                            view.viewString("Comunication error");
+                            i = 1;
+                        }
                     }
-                    if (msg.getType() == MessageType.receiveGameTable) {
-                        try {
-                            GameTable table = receiveGameTable();
 
-                            view.viewGameTable(table);
-                        } catch (IOException e) {
-                            System.out.println("error receiving gameTable");
-                        } catch (RuntimeException | ClassNotFoundException e) {
-                            System.out.println("error receiving gameTable");
-                        }
-                    } else if (msg.getType() == MessageType.receiveLibrary) {
-                        try {
-                            Library lib = receiveLibrary();
-
-                            view.viewLibrary(lib);
-
-                        } catch (Exception e) {
-                            System.out.println("error");
-                        }
-                    } else if (msg.getType() == MessageType.getCard) {
-                        try {
-                            GameLogic gameLogic = receiveGameLogic();
-                            gameLogic = view.getTurn(gameLogic);
-                            sendGameLogic(gameLogic);
-                        } catch (Exception e) {
-                            System.out.println("Error");
-                        }
-                    } else if (msg.getType() == MessageType.objectiveCompleted) {
-                        view.viewString(msg.getMessage());
-                    } else if (msg.getType() == MessageType.printMessage) {
-                        String message = msg.getMessage();
-                        view.viewString(message);
-                    } else if (msg.getType() == MessageType.receivePlayerObj) {
-                        PlayerObj obj = null;
-                        try {
-                            obj = receivePlayerObj();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (ClassNotFoundException e) {
-                            throw new RuntimeException(e);
-                        }
-                        view.viewPlayerObj(obj);
-
-                    } else if (msg.getType() == MessageType.notifyBeginTurn) {
-                        try {
-                            sendMessage(new Message(MessageType.printMessage, "2"));
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else if (msg.getType() == MessageType.receivePoint) {
-                        try {
-                            view.viewPoints(receivePlayers());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (ClassNotFoundException e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else if (msg.getType() == MessageType.closeGame) {
-                        view.viewString(msg.getMessage());
-                        try {
-                            socket.close();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        i = 1;
-                    } else if (msg.getType() == MessageType.ping) {
-
-                    } else if (msg.getType() == endGame) {
-                        view.viewString("Game is ended");
-                        i = 1;
-                    } else {
-                        view.viewString("Comunication error");
-                        i = 1;
-                    }
+            }
+            try {
+                socket.close();
+                ois.close();
+                oos.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }).start();
     }
