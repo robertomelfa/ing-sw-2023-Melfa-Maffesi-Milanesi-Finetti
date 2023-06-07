@@ -246,18 +246,14 @@ public class ControllerMain implements Serializable {
                     }
                 }
             }
-            this.gameLogic = found.getGamelogic();
-            ArrayList<Player> temp = new ArrayList<>();
-            temp.addAll(found.getGamelogic().getPlayers());
+            this.gameLogic=found.getGamelogic();
             for (int i=0; i<gameLogic.getPlayers().size(); i++){
                 for (int j=0; j<found.getGamelogic().getPlayers().size();j++){
                     if (found.getGamelogic().getPlayers().get(j).getNickname().equals(gameLogic.getPlayers().get(i).getNickname())){
-                        Player sost = temp.set(i,found.getGamelogic().getPlayers().get(j));
-                        temp.set(j,sost);
+                        gameLogic.setPlayers(found.getGamelogic().getPlayers().get(j));
                     }
                 }
             }
-            this.gameLogic.setPlayersList(temp);
             this.chair=found.getChair();
             this.listIterator=found.getListIterator();
             this.backup=found;
@@ -355,6 +351,11 @@ public class ControllerMain implements Serializable {
         }
     }
 
+    public void setGamePlayers(){
+        for(int i = 0; i < clientList.size(); i++){
+            gameLogic.addPlayer(clientList.get(i).getPlayer());
+        }
+    }
 
     /**
      * this method is used to mix the list with the players, before starting the game
@@ -447,12 +448,13 @@ public class ControllerMain implements Serializable {
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
+        setGamePlayers();
         deleteObsoleteJson();
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
         }
-        //setGamePlayers();
+
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         while(!finish){
             // update the players in gamelogic
