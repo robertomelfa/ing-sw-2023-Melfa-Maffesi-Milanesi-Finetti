@@ -9,6 +9,7 @@ import it.polimi.ingsw.View.ControllerGui;
 import it.polimi.ingsw.View.GUIView;
 import it.polimi.ingsw.View.ViewClient;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
@@ -76,6 +77,14 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException
      */
     public void receiveMessage(String msg) throws RemoteException{
+        if (msg.contains("Leaderboard")){
+            try{
+                view.viewLeaderboard(msg);
+                return;
+            }catch (IOException e){
+                System.out.println("IOException in client RMI");
+            }
+        }
         view.viewString(msg);
         if(msg.equals("Stop game")){
             kill();

@@ -888,7 +888,29 @@ public class ControllerGui implements Initializable, Serializable {
         labelMessage.setText(" Welcome !!! \n waiting other players... ");
     }
 
-    public void openLeaderboard(ActionEvent event) {
+    @FXML
+    public void openLeaderboard(){
+        Platform.runLater(() -> {
+            try {
+                System.out.println("Opening Leaderboard");
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/leaderboard.fxml"));
+                Parent root = loader.load();
+                Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+                stage.getIcons().add(icon);
+                stage.setTitle("Leaderboard");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(CommonObj1.getScene().getWindow());
+                ControllerLeaderboard controller = loader.getController();
+                controller.updateLeaderboard(gameLogic.getPlayers());
+                loader.setController(controller);
+                stage.show();
+            }catch (IOException e){
+                System.out.println("Exception in openLeaderboard");
+            }
+
+        });
 
     }
 }

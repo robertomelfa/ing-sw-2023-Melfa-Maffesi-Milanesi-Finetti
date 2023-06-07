@@ -158,7 +158,9 @@ public class Client_Socket implements Serializable {
             }else if (msg.getType()==MessageType.endGame){
                 view.viewString("Game is ended");
                 break;
-            } else {
+            } else if (msg.getType() == showLeaderboard) {
+                view.viewLeaderboard(msg.getMessage());
+            }else {
                 view.viewString("Comunication error");
                 break;
             }
@@ -385,7 +387,13 @@ public class Client_Socket implements Serializable {
                         } else if (msg.getType() == endGame) {
                             view.viewString("Game is ended");
                             i = 1;
-                        } else {
+                        } else if (msg.getType() == showLeaderboard) {
+                            try{
+                                view.viewLeaderboard(msg.getMessage());
+                            }catch (IOException e){
+                                System.out.println("IOException in clientlogicGui");
+                            }
+                        }else {
                             view.viewString("Comunication error");
                             i = 1;
                         }

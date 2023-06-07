@@ -3,6 +3,7 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Model.*;
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -31,6 +32,11 @@ private byte initLibrary = 0;
     @Override
     public void viewString(String message) {
         Platform.runLater(() -> controllerGui.setLabelMessage(message));
+    }
+
+    @Override
+    public void viewLeaderboard(String msg) throws IOException {
+        controllerGui.openLeaderboard();
     }
 
     @Override

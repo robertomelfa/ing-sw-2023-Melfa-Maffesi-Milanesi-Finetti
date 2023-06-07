@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerLeaderboard">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+         <image>
+            <Image url="@assets/misc/sfondo parquet.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="214.0" layoutY="21.0" prefHeight="39.0" prefWidth="172.0" text="Leaderboard" textAlignment="CENTER" textFill="#f4ed80">
+         <font>
+            <Font name="Britannic Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="Label1" layoutX="203.0" layoutY="112.0" text="1°" textFill="#f4ed80">
+         <font>
+            <Font name="Britannic Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1" layoutX="246.0" layoutY="115.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+         <font>
+            <Font name="Britannic Bold" size="15.0" />
+         </font></Label>
+      <Label fx:id="Label2" layoutX="203.0" layoutY="161.0" text="2°" textFill="#f4ed80">
+         <font>
+            <Font name="Britannic Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="Label3" layoutX="203.0" layoutY="211.0" text="3°" textFill="#f4ed80">
+         <font>
+            <Font name="Britannic Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2" layoutX="246.0" layoutY="164.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+         <font>
+            <Font name="Britannic Bold" size="15.0" />
+         </font></Label>
+      <Label fx:id="label4" layoutX="203.0" layoutY="264.0" text="4°" textFill="#f4ed80">
+         <font>
+            <Font name="Britannic Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="player3" layoutX="246.0" layoutY="214.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+         <font>
+            <Font name="Britannic Bold" size="15.0" />
+         </font></Label>
+      <Label fx:id="player4" layoutX="246.0" layoutY="267.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+         <font>
+            <Font name="Britannic Bold" size="15.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

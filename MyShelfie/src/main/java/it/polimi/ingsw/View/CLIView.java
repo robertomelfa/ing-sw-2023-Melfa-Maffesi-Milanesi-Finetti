@@ -2,6 +2,7 @@ package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -81,6 +82,10 @@ public class CLIView implements ViewClient, Serializable {
     @Override
     public void viewString(String message) {
         System.out.println(message);
+    }
+
+    public void viewLeaderboard(String msg) throws IOException{
+        System.out.println(msg);
     }
 
     @Override

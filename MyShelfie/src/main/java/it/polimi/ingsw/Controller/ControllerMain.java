@@ -15,6 +15,7 @@ import it.polimi.ingsw.View.CLIView;
 import java.io.*;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.Model.Card.*;
 
@@ -484,12 +485,17 @@ public class ControllerMain implements Serializable {
             // update backup
             updateBackup();
         }
+        //updating points in endgame
+        gameTableToALL(gameLogic.getGameTable());
+        pointsToAll();
         // print classification
-        sendGeneralMessage(new Message(MessageType.printMessage,getClassification()));
+        sendGeneralMessage(new Message(MessageType.showLeaderboard,getClassification()));
         //delete current backup
         deleteBackup();
         // notify the game is ended
         sendGeneralMessage(new Message(MessageType.endGame,"Game is ended"));
+        TimeUnit.MINUTES.sleep(5);
+
     }
 
     /**
@@ -581,7 +587,7 @@ public class ControllerMain implements Serializable {
      */
     public String getClassification(){
         List<Player> playersList = new ArrayList<>();
-        String string ="\nCLASSIFICATION\n";
+        String string ="\nLeaderboard:\n";
         for(int i = 0; i < clientList.size(); i++){
             playersList.add(clientList.get(i).getPlayer());
         }
