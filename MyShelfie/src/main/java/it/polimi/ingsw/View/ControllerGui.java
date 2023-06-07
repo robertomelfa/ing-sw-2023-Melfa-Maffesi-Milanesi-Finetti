@@ -116,6 +116,7 @@ public class ControllerGui implements Initializable, Serializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/comObjDesc.fxml"));
         Parent root = loader.load();
         stage.setTitle("Description");
+        stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());
@@ -184,6 +185,7 @@ public class ControllerGui implements Initializable, Serializable {
 
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Library.fxml"));
+        stage.setResizable(false);
         Parent root = loader.load();
         Image icon = new Image("assets/Publisher material/icon 50x50px.png");
         stage.getIcons().add(icon);
@@ -899,6 +901,7 @@ public class ControllerGui implements Initializable, Serializable {
             try {
                 System.out.println("Opening Leaderboard");
                 Stage stage = new Stage();
+                stage.setResizable(false);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/leaderboard.fxml"));
                 Parent root = loader.load();
                 Image icon = new Image("assets/Publisher material/icon 50x50px.png");

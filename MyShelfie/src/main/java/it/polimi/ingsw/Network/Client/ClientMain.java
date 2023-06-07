@@ -128,6 +128,7 @@ public class ClientMain extends Application implements Serializable {
         Scene scene = new Scene(root, 1080, 720);
         Image icon = new Image("assets/Publisher material/icon 50x50px.png");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.setTitle("MyShelfie");
         stage.getIcons().add(icon);
         stage.show();

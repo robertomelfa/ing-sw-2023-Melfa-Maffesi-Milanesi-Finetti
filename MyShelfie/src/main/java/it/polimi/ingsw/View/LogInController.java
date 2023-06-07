@@ -78,6 +78,7 @@ public class LogInController implements Serializable {
             loginController.initialize();
             fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
+            stage.setResizable(false);
             stage.setScene(new Scene(root, 1080, 720));
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInNotFirst.fxml"));
@@ -87,6 +88,7 @@ public class LogInController implements Serializable {
             loginController.initialize();
             fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
+            stage.setResizable(false);
             stage.setScene(new Scene(root, 1080, 720));
         }
     }
@@ -104,6 +106,7 @@ public class LogInController implements Serializable {
             loginController.initialize();
             fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
+            stage.setResizable(false);
             stage.setScene(new Scene(root, 1080, 720));
         } else {
             server.setTemp();
@@ -114,6 +117,7 @@ public class LogInController implements Serializable {
             loginController.initialize();
             fxmlLoader.setController(loginController);
             Stage stage = (Stage) RMIButton.getScene().getWindow();
+            stage.setResizable(false);
             stage.setScene(new Scene(root, 1080, 720));
         }
     }
@@ -124,6 +128,7 @@ public class LogInController implements Serializable {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) start.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
+                    stage.setResizable(false);
                     String user = username.getText();
                     GameClientInterface client = new Client();
                     ((Client) client).setControllerView(fxmlLoader.getController());
@@ -143,6 +148,7 @@ public class LogInController implements Serializable {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     //clientSocket.sendInt(num);
                     Stage stage = (Stage) username.getScene().getWindow();
+                    stage.setResizable(false);
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
                     try {
                         clientSocket.setControllerGui(fxmlLoader.getController());
@@ -169,6 +175,7 @@ public class LogInController implements Serializable {
                 if(!server.getController().checkExistingName(user)){
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
+                    stage.setResizable(false);
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
                     ((Client) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), user);
@@ -187,6 +194,7 @@ public class LogInController implements Serializable {
                 if(!server.getController().checkExistingName(user)) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
+                    stage.setResizable(false);
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
                     try {
                         clientSocket.setControllerGui(fxmlLoader.getController());
