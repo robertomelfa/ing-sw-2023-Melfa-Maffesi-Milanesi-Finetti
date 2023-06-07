@@ -217,6 +217,10 @@ public class GameLogic implements Serializable{
         return players;
     }
 
+    public void setPlayersList(ArrayList<Player> players){
+        this.players = players;
+    }
+
     public void setPlayers(Player player){
         for(int i = 0; i < players.size(); i++){
             if(players.get(i).getNickname().equals(player.getNickname())){
