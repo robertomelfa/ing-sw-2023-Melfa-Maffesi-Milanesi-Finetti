@@ -486,7 +486,10 @@ public class ControllerMain implements Serializable {
             updateBackup();
         }
         //updating points in endgame
+        updatePlayers();
+        //send final gametable to all
         gameTableToALL(gameLogic.getGameTable());
+        //updating points to all
         pointsToAll();
         // print classification
         sendGeneralMessage(new Message(MessageType.showLeaderboard,getClassification()));

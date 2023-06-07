@@ -637,6 +637,9 @@ public class ControllerGui implements Initializable, Serializable {
     public void updatePoints(ArrayList<Player> players){
 
         int numPlayers = players.size();
+        for(int i = 0; i < players.size(); i++){
+            gameLogic.setPlayers(players.get(i));
+        }
         points1.setText("Points : " + players.get(0).getPoints());
         libraries.set(0, players.get(0).getLibrary());
         points2.setText("Points : " + players.get(1).getPoints());
