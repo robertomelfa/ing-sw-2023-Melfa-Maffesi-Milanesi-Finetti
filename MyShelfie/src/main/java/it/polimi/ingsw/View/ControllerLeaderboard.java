@@ -31,18 +31,19 @@ public class ControllerLeaderboard implements Serializable {
 
 
     public void updateLeaderboard(ArrayList<Player> players){
+
         if (players!=null){
             if (players.size()==2){
-                //label3.setVisible(false);
-                //label4.setVisible(false);
-                //player3.setVisible(false);
-                //player4.setVisible(false);
+                label3.setVisible(false);
+                label4.setVisible(false);
+                player3.setVisible(false);
+                player4.setVisible(false);
                 Collections.sort(players, new ScoreComparator());
                 player1.setText(players.get(0).getNickname()+" "+players.get(0).getScore()+" points");
                 player2.setText(players.get(1).getNickname()+" "+players.get(1).getScore()+" points");
             } else if (players.size()==3) {
-                //label4.setVisible(false);
-                //player4.setVisible(false);
+                label4.setVisible(false);
+                player4.setVisible(false);
                 player1.setText(players.get(0).getNickname()+" "+players.get(0).getScore()+" points");
                 player2.setText(players.get(1).getNickname()+" "+players.get(1).getScore()+" points");
                 player3.setText(players.get(2).getNickname()+" "+players.get(2).getScore()+" points");

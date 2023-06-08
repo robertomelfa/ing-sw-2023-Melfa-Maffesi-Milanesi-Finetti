@@ -133,8 +133,8 @@ public class ControllerGui implements Initializable, Serializable {
         switch (url){
             case prefix + "4.jpg" ->numObj=1;
             case prefix + "11.jpg" ->numObj=2;
-            case prefix + "3.jpg" ->numObj=3;
-            case prefix + "7.jpg" ->numObj=4;
+            case prefix + "7.jpg" ->numObj=3;
+            case prefix + "3.jpg" ->numObj=4;
             case prefix + "8.jpg" ->numObj=5;
             case prefix + "2.jpg" ->numObj=6;
             case prefix + "1.jpg" ->numObj=7;
@@ -145,7 +145,7 @@ public class ControllerGui implements Initializable, Serializable {
             case prefix + "12.jpg" ->numObj=12;
         }
         // se da problemi con le exception mettere un default
-        // 4 - 11 - 3 - 7 - 8 - 2 - 1 - 6 - 5 - 10 - 9 - 12
+        // 4 - 11 - 7 - 3 - 8 - 2 - 1 - 6 - 5 - 10 - 9 - 12
 
         ControllerComObjDesc controller = loader.getController();
         controller.setLabelText(numObj);
@@ -818,16 +818,16 @@ public class ControllerGui implements Initializable, Serializable {
 
         switch (gameLogic.getGame().getCurrentPlayer().getPlayerObj().getNum()){
             case 1 -> url = PathImageCards.PLAYEROBJ2;
-            case 2 -> url = PathImageCards.PLAYEROBJ11;
+            case 2 -> url = PathImageCards.PLAYEROBJ1;
             case 3 -> url = PathImageCards.PLAYEROBJ3;
-            case 4 -> url = PathImageCards.PLAYEROBJ7;
+            case 4 -> url = PathImageCards.PLAYEROBJ4;
             case 5 -> url = PathImageCards.PLAYEROBJ5;
             case 6 -> url = PathImageCards.PLAYEROBJ6;
-            case 7 -> url = PathImageCards.PLAYEROBJ1;
+            case 7 -> url = PathImageCards.PLAYEROBJ7;
             case 8 -> url = PathImageCards.PLAYEROBJ8;
             case 9 -> url = PathImageCards.PLAYEROBJ9;
             case 10 -> url = PathImageCards.PLAYEROBJ10;
-            case 11 -> url = PathImageCards.PLAYEROBJ4;
+            case 11 -> url = PathImageCards.PLAYEROBJ11;
             case 12 -> url = PathImageCards.PLAYEROBJ12;
         }
         // 2 - 1 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 - 11 - 12
@@ -912,7 +912,7 @@ public class ControllerGui implements Initializable, Serializable {
                 stage.initOwner(CommonObj1.getScene().getWindow());
                 ControllerLeaderboard controller = loader.getController();
                 controller.updateLeaderboard(gameLogic.getPlayers());
-                loader.setController(controller);
+//                loader.setController(controller);
                 stage.show();
             }catch (IOException e){
                 System.out.println("Exception in openLeaderboard");

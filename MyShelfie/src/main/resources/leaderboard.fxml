@@ -18,7 +18,7 @@
             <Font name="Britannic Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="Label1" layoutX="203.0" layoutY="112.0" text="1°" textFill="#f4ed80">
+      <Label fx:id="label1" layoutX="203.0" layoutY="112.0" text="1°" textFill="#f4ed80">
          <font>
             <Font name="Britannic Bold" size="20.0" />
          </font>
@@ -27,12 +27,12 @@
          <font>
             <Font name="Britannic Bold" size="15.0" />
          </font></Label>
-      <Label fx:id="Label2" layoutX="203.0" layoutY="161.0" text="2°" textFill="#f4ed80">
+      <Label fx:id="label2" layoutX="203.0" layoutY="161.0" text="2°" textFill="#f4ed80">
          <font>
             <Font name="Britannic Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="Label3" layoutX="203.0" layoutY="211.0" text="3°" textFill="#f4ed80">
+      <Label fx:id="label3" layoutX="203.0" layoutY="211.0" text="3°" textFill="#f4ed80">
          <font>
             <Font name="Britannic Bold" size="20.0" />
          </font>
