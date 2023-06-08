@@ -7,6 +7,33 @@ public enum Card {
 
             return "\033[0;97mWHITE\033[0m";
         }
+    }, BLUE1 {
+        @Override
+        public String toString() {
+
+            return "\033[0;34mBLUE\033[0m";
+        }
+    }, LIGHTBLUE1 {
+        @Override
+        public String toString() {
+            return "\033[0;96mLIGHTBLUE\033[0m";
+        }
+    }, YELLOW1 {
+        @Override
+        public String toString() {
+            return "\033[0;93mYELLOW\033[0m";
+        }
+    }, GREEN1 {
+        @Override
+        public String toString() {
+            return "\033[0;92mGREEN\033[0m";
+        }
+
+    }, PURPLE1 {
+        @Override
+        public String toString() {
+            return "\033[0;95mPURPLE\033[0m";
+        }
     }, WHITE2 {
         @Override
         public String toString() {
@@ -18,12 +45,6 @@ public enum Card {
         public String toString() {
 
             return "\033[0;97mWHITE\033[0m";
-        }
-    }, BLUE1 {
-        @Override
-        public String toString() {
-
-            return "\033[0;34mBLUE\033[0m";
         }
     }, BLUE2 {
         @Override
@@ -37,11 +58,6 @@ public enum Card {
 
             return "\033[0;34mBLUE\033[0m";
         }
-    }, LIGHTBLUE1 {
-        @Override
-        public String toString() {
-            return "\033[0;96mLIGHTBLUE\033[0m";
-        }
     }, LIGHTBLUE2 {
         @Override
         public String toString() {
@@ -51,11 +67,6 @@ public enum Card {
         @Override
         public String toString() {
             return "\033[0;96mLIGHTBLUE\033[0m";
-        }
-    }, YELLOW1 {
-        @Override
-        public String toString() {
-            return "\033[0;93mYELLOW\033[0m";
         }
     }, YELLOW2 {
         @Override
@@ -67,12 +78,6 @@ public enum Card {
         public String toString() {
             return "\033[0;93mYELLOW\033[0m";
         }
-    }, GREEN1 {
-        @Override
-        public String toString() {
-            return "\033[0;92mGREEN\033[0m";
-        }
-
     }, GREEN2 {
         @Override
         public String toString() {
@@ -85,11 +90,6 @@ public enum Card {
             return "\033[0;92mGREEN\033[0m";
         }
 
-    }, PURPLE1 {
-        @Override
-        public String toString() {
-            return "\033[0;95mPURPLE\033[0m";
-        }
     }, PURPLE2 {
         @Override
         public String toString() {
