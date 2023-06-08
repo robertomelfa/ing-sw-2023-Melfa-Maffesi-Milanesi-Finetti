@@ -10,10 +10,12 @@ import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.GameBackup;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
+import it.polimi.ingsw.View.CLIView;
 
 import java.io.*;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.Model.Card.*;
 
@@ -57,7 +59,7 @@ public class ControllerMain implements Serializable {
         this.thread = new Thread(() ->{
             while(!finish){
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -245,6 +247,13 @@ public class ControllerMain implements Serializable {
                 }
             }
             this.gameLogic=found.getGamelogic();
+            for (int i=0; i<gameLogic.getPlayers().size(); i++){
+                for (int j=0; j<found.getGamelogic().getPlayers().size();j++){
+                    if (found.getGamelogic().getPlayers().get(j).getNickname().equals(gameLogic.getPlayers().get(i).getNickname())){
+                        gameLogic.setPlayers(found.getGamelogic().getPlayers().get(j));
+                    }
+                }
+            }
             this.chair=found.getChair();
             this.listIterator=found.getListIterator();
             this.backup=found;
@@ -336,13 +345,16 @@ public class ControllerMain implements Serializable {
      *
      * @return the string which the points of each player
      */
-    public String setPointsString(){
-        String string = "POINTS\n";
+    public void updatePlayers(){
         for(int i = 0; i < clientList.size(); i++){
-            string = string + clientList.get(i).getPlayer().getNickname() + ": " + clientList.get(i).getPlayer().getPoints() + " | ";
+            gameLogic.setPlayers(clientList.get(i).getPlayer());
         }
-        string = string + "\n\n";
-        return string;
+    }
+
+    public void setGamePlayers(){
+        for(int i = 0; i < clientList.size(); i++){
+            gameLogic.addPlayer(clientList.get(i).getPlayer());
+        }
     }
 
     /**
@@ -413,17 +425,16 @@ public class ControllerMain implements Serializable {
 
     /**
      *
-     * @param string the list of points to send to each client
+     * Send points to all the clients
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public void pointsToAll(String string) throws IOException, ClassNotFoundException{
+    public void pointsToAll() throws IOException, ClassNotFoundException{
         for(int i = 0; i < clientList.size(); i++){
             if(clientList.get(i).getClient() == null){
-                Message msg = new Message(MessageType.receivePoint, string);
-                serverSocket.sendMessage(msg, clientList.get(i).getSocket());
+                serverSocket.sendPlayers(clientList.get(i).getSocket(), gameLogic.getPlayers());
             }else{
-                serverRMI.messageToClient(string, clientList.get(i).getClient());
+                clientList.get(i).getClient().receivePoint(gameLogic.getPlayers());
             }
         }
     }
@@ -437,15 +448,19 @@ public class ControllerMain implements Serializable {
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
+        setGamePlayers();
         deleteObsoleteJson();
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
         }
+
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         while(!finish){
-            // print the points list to all the clients
-            pointsToAll(setPointsString());
+            // update the players in gamelogic
+            updatePlayers();
+            //send points to all the players
+            pointsToAll();
             // advise the current player
             sendGeneralMessage(new Message(MessageType.printMessage, current_client.getPlayer().getNickname() + " is your turn!"));
             // set the current player in gameLogic
@@ -454,11 +469,11 @@ public class ControllerMain implements Serializable {
             gameTableToALL(gameLogic.getGameTable());
             // handle the turn in base of RMI or Socket clients
             if(current_client.getClient() == null){
-                SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic, current_client.isGui(), clientList);
+                SocketController controllerS = new SocketController(serverSocket, current_client, gameLogic, current_client.isGui());
                 gameLogic = controllerS.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
             }else{
-                RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI, current_client.isGui(), clientList);
+                RMIController controllerR = new RMIController(gameLogic, current_client, serverRMI, current_client.isGui());
                 gameLogic = controllerR.takeTurn();
                 current_client.getPlayer().setLibrary(gameLogic.getGame().getCurrentPlayer().getLibrary());
             }
@@ -469,12 +484,20 @@ public class ControllerMain implements Serializable {
             // update backup
             updateBackup();
         }
+        //updating points in endgame
+        updatePlayers();
+        //send final gametable to all
+        gameTableToALL(gameLogic.getGameTable());
+        //updating points to all
+        pointsToAll();
         // print classification
-        sendGeneralMessage(new Message(MessageType.printMessage,getClassification()));
+        sendGeneralMessage(new Message(MessageType.showLeaderboard,getClassification()));
         //delete current backup
         deleteBackup();
         // notify the game is ended
         sendGeneralMessage(new Message(MessageType.endGame,"Game is ended"));
+        TimeUnit.MINUTES.sleep(5);
+
     }
 
     /**
@@ -482,6 +505,7 @@ public class ControllerMain implements Serializable {
      * @throws Exception
      */
     public void checkObjectives() throws Exception{
+
         // check common object 1
         if(!current_client.getPlayer().getCommonObj1Completed()){
             if(gameLogic.getGame().getCommonObj1().checkObj(current_client.getPlayer().getLibrary())){
@@ -565,7 +589,7 @@ public class ControllerMain implements Serializable {
      */
     public String getClassification(){
         List<Player> playersList = new ArrayList<>();
-        String string ="\nCLASSIFICATION\n";
+        String string ="\nLeaderboard:\n";
         for(int i = 0; i < clientList.size(); i++){
             playersList.add(clientList.get(i).getPlayer());
         }

@@ -110,4 +110,8 @@ public class Player implements Serializable{
         return this.points;
     }
 
+    public void setPoints(int points){
+        this.points = points;
+    }
+
 }

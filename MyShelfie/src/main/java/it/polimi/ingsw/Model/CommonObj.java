@@ -231,10 +231,10 @@ public class CommonObj implements Serializable{
         }
         for (int k=1;k<7;k++){
             for (int h=1;h<6;h++){
-                temp[k][h].isEqualTo(lib.getPos(k-1,h-1));
+                temp[k][h] = lib.getPos(k-1,h-1);
             }
         }
-        for(Card i : EnumSet.range(WHITE1, PURPLE1)){
+        for(Card i : EnumSet.range(WHITE1, PURPLE3)){
             for (int k=1;k<7;k++){
                 for (int h=1;h<6;h++){
                     if(temp[k][h].isEqualTo(i) && temp[k][h+1].isEqualTo(i) && temp[k+1][h].isEqualTo(i) && temp[k+1][h+1].isEqualTo(i)){
@@ -288,7 +288,7 @@ public class CommonObj implements Serializable{
                 if (lib.getPos(row, column) == NONE) break;
                 for (int i = 0; i < 3; i++) {
                     if (countType[i] == NONE) {
-                        countType[i].isEqualTo(lib.getPos(row, column));
+                        countType[i]=(lib.getPos(row, column));
                         break;
                     } else if (lib.getPos(row, column).isEqualTo(countType[i])) break;
 

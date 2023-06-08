@@ -73,7 +73,6 @@ public class Server implements Serializable {
 
         serverSocket.close();
 
-        System.exit(0);
 
     }
 

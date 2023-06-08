@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Network;
 
-import static it.polimi.ingsw.Model.Card.BLUE;
-import static it.polimi.ingsw.Model.Card.YELLOW;
+import static it.polimi.ingsw.Model.Card.BLUE1;
+import static it.polimi.ingsw.Model.Card.YELLOW1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -80,8 +80,8 @@ public class TestSocketMessages {
         Thread.sleep(500);
 
         GameTable gameTable = new GameTable(2);
-        gameTable.setCardfromBoard(5,5,BLUE);
-        gameTable.setCardfromBoard(7,4,YELLOW);
+        gameTable.setCardfromBoard(5,5,BLUE1);
+        gameTable.setCardfromBoard(7,4,YELLOW1);
 
         server.getServerSocket().sendGameTable(server.getLobby().getController().getClientList().get(0).getSocket(), gameTable);
         Message msg=client.receiveMessage();

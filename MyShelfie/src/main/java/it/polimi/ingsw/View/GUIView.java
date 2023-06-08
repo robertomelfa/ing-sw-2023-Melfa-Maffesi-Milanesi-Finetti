@@ -3,6 +3,7 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Model.*;
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -31,6 +32,11 @@ private byte initLibrary = 0;
     @Override
     public void viewString(String message) {
         Platform.runLater(() -> controllerGui.setLabelMessage(message));
+    }
+
+    @Override
+    public void viewLeaderboard(String msg) throws IOException {
+        controllerGui.openLeaderboard();
     }
 
     @Override
@@ -115,25 +121,20 @@ private byte initLibrary = 0;
         list = getCardFromTable(this.gameLogic);
         insert(list, this.gameLogic);
 
+        gameLogic.getGameTable().checkStatus();
+
         return gameLogic;
     }
 
     public void setController(ControllerGui controllerGui) { this.controllerGui = controllerGui; }
 
-    @Override
-    public void updatePoints(String msg) {
-        if (firstName){
-            String message = msg;
-            Platform.runLater(()->controllerGui.setNamePlayers(message));
-            firstName=false;
-        }
 
-        msg = msg.replaceAll("\\D+","");
-        for (int i=0; i<msg.length(); i++){
-            int point = msg.charAt(i) -48;
-            int temp = i+1;
-            Platform.runLater(()-> controllerGui.updatePoits(point, temp));
+    public void viewPoints(ArrayList<Player> playerList){
+        if (firstName){
+            Platform.runLater(()->controllerGui.setNamePlayers(playerList));
         }
+        Platform.runLater(()-> controllerGui.updatePoints(playerList));
+        firstName=false;
     }
 
 }

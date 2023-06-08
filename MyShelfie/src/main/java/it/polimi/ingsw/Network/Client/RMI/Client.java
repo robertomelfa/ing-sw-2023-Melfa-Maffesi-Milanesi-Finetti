@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Network.Client.RMI;
 
 import it.polimi.ingsw.Controller.ControllerMain;
-import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Model.GameTable;
-import it.polimi.ingsw.Model.Library;
-import it.polimi.ingsw.Model.PlayerObj;
+import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Server.RMI.GameInterface;
 import it.polimi.ingsw.View.CLIView;
@@ -12,6 +9,7 @@ import it.polimi.ingsw.View.ControllerGui;
 import it.polimi.ingsw.View.GUIView;
 import it.polimi.ingsw.View.ViewClient;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
@@ -19,6 +17,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -78,8 +77,15 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException
      */
     public void receiveMessage(String msg) throws RemoteException{
+        if (msg.contains("Leaderboard")){
+            try{
+                view.viewLeaderboard(msg);
+                return;
+            }catch (IOException e){
+                System.out.println("IOException in client RMI");
+            }
+        }
         view.viewString(msg);
-        if (msg.contains("POINTS")) view.updatePoints(msg);
         if(msg.equals("Stop game")){
             kill();
         }
@@ -188,6 +194,14 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
             System.out.println("Exit");
         }
 
+    }
+
+    public void viewPoints() throws RemoteException{
+        viewPoints();
+    }
+
+    public void receivePoint(ArrayList<Player> playerList) throws RemoteException{
+        view.viewPoints(playerList);
     }
 
 }

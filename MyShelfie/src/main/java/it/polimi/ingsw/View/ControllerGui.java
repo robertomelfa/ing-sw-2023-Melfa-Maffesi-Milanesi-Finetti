@@ -87,10 +87,11 @@ public class ControllerGui implements Initializable, Serializable {
     private GameLogic gameLogic;
     private boolean confirmCards = false;
     private boolean allCardsInsert = false;
-    private ArrayList<Library> libraries =null;
+    private ArrayList<Library> libraries = new ArrayList<>();
     private int indexCurrPlayer = -1;
 
     private boolean first = true;
+
 
     @FXML
     void openDescription1(MouseEvent event) throws IOException {
@@ -115,6 +116,7 @@ public class ControllerGui implements Initializable, Serializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/comObjDesc.fxml"));
         Parent root = loader.load();
         stage.setTitle("Description");
+        stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(CommonObj1.getScene().getWindow());
@@ -131,8 +133,8 @@ public class ControllerGui implements Initializable, Serializable {
         switch (url){
             case prefix + "4.jpg" ->numObj=1;
             case prefix + "11.jpg" ->numObj=2;
-            case prefix + "3.jpg" ->numObj=3;
-            case prefix + "7.jpg" ->numObj=4;
+            case prefix + "7.jpg" ->numObj=3;
+            case prefix + "3.jpg" ->numObj=4;
             case prefix + "8.jpg" ->numObj=5;
             case prefix + "2.jpg" ->numObj=6;
             case prefix + "1.jpg" ->numObj=7;
@@ -143,7 +145,7 @@ public class ControllerGui implements Initializable, Serializable {
             case prefix + "12.jpg" ->numObj=12;
         }
         // se da problemi con le exception mettere un default
-        // 4 - 11 - 3 - 7 - 8 - 2 - 1 - 6 - 5 - 10 - 9 - 12
+        // 4 - 11 - 7 - 3 - 8 - 2 - 1 - 6 - 5 - 10 - 9 - 12
 
         ControllerComObjDesc controller = loader.getController();
         controller.setLabelText(numObj);
@@ -183,6 +185,7 @@ public class ControllerGui implements Initializable, Serializable {
 
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Library.fxml"));
+        stage.setResizable(false);
         Parent root = loader.load();
         Image icon = new Image("assets/Publisher material/icon 50x50px.png");
         stage.getIcons().add(icon);
@@ -192,7 +195,7 @@ public class ControllerGui implements Initializable, Serializable {
         stage.initOwner(CommonObj1.getScene().getWindow());
         ControllerLibrary controller = loader.getController();
         try {
-            controller.updateLibrary(libraries.get(numPlayer));
+            controller.updateLibrary(libraries.get(numPlayer-1));
         }catch (NullPointerException e ){
             controller.updateLibrary(null);
         }
@@ -229,8 +232,8 @@ public class ControllerGui implements Initializable, Serializable {
             for (int j = 0; j < 5; j++) {
                 for (int i = 0; i < 6; i++) {
                     ImageView card = new ImageView();
-                    card.setFitHeight(26);
-                    card.setFitWidth(24);
+                    card.setFitHeight(25);
+                    card.setFitWidth(26);
                     libraryImageView[j][i] = card;
                     gridLibrary.add(card, j, i);
                 }
@@ -278,7 +281,14 @@ public class ControllerGui implements Initializable, Serializable {
                     imageView.setFitHeight(40);
                 }
 
-
+                String temp = imageView.getImage().getUrl().substring(imageView.getImage().getUrl().lastIndexOf("assets"));
+                temp = temp. replace("%20"," ");
+                if (!Objects.equals(temp,url)){
+                    imageView.setImage(null);
+                    Image image = new Image(url);
+                    imageView.setImage(image);
+                    image.cancel();
+                }
             }else{
                 button.setDisable(true);
                 button.selectedProperty().set(false);
@@ -290,8 +300,6 @@ public class ControllerGui implements Initializable, Serializable {
 
             k++;
         }
-        if (gameLogic != null) gameLogic.getGameTable().checkStatus();
-
     }
 
     /**
@@ -428,7 +436,8 @@ public class ControllerGui implements Initializable, Serializable {
         confirm.setDisable(true);
         for(int i=0; i<gridTable.getChildren().size(); i++) {
             button = (ToggleButton) gridTable.getChildren().get(i);
-            if (button.getGraphic()!=null) {
+            ImageView imageView = (ImageView) button.getGraphic();
+            if (imageView.getImage() !=null) {
                 button.setDisable(false);
             }else{
                 button.setDisable(true);
@@ -605,53 +614,47 @@ public class ControllerGui implements Initializable, Serializable {
         }
     }
 
-    public void setNamePlayers(String message){
-        String name = "";
+    public void setNamePlayers(ArrayList<Player> players){
 
-        message = message.replace("\n","");             //clear from lines
-        message = message.replaceAll("[0-9]","");       //clear from numbers
-        message = message.replace(" ","");              //clear from spaces
-        message = message.replace("|","");              //clear from |
-        message = message.replace("POINTS","");         //clear POINTS
-
-
-        name = message.substring(0,message.indexOf(":"));               //substring name
-        message = message.replace(name+":","");         //clear old name
-        name = name.replace(":","");                    //clear from :
-        namePlayer1.setText(name);
-
-
-        name = message.substring(0,message.indexOf(":"));
-        message = message.replace(name+":","");
-        namePlayer2.setText(name);
-
-        System.out.println("message 3  -"+message+"-");
-
-        if (message.length()>1) {
-            name = message.substring(0, message.indexOf(":"));
-            message = message.replace(name + ":", "");
-            namePlayer3.setText(name);
-
-            if (message.length() > 1) {
-                name = message.substring(0, message.indexOf(":"));
-
-                namePlayer4.setText(name);
-            }else{
-                CardPlayer4.setVisible(false);
+        int numPlayers = players.size();
+        CardPlayer3.setVisible(false);
+        CardPlayer4.setVisible(false);
+        namePlayer1.setText(players.get(0).getNickname());
+        libraries.add(players.get(0).getLibrary());
+        namePlayer2.setText(players.get(1).getNickname());
+        libraries.add(players.get(1).getLibrary());
+        if(numPlayers > 2){
+            namePlayer3.setText(players.get(2).getNickname());
+            libraries.add(players.get(2).getLibrary());
+            CardPlayer3.setVisible(true);
+            if(numPlayers == 4){
+                namePlayer4.setText(players.get(3).getNickname());
+                libraries.add(players.get(3).getLibrary());
+                CardPlayer3.setVisible(true);
             }
-        }else{
-            CardPlayer3.setVisible(false);
-            CardPlayer4.setVisible(false);
         }
 
     }
 
-    public void updatePoits(int point, int numPlayer){
-        switch (numPlayer){
-            case 1 -> points1.setText("Points : "+point);
-            case 2 -> points2.setText("Points : "+point);
-            case 3 -> points3.setText("Points : "+point);
-            case 4 -> points4.setText("Points : "+point);
+    public void updatePoints(ArrayList<Player> players){
+
+        int numPlayers = players.size();
+        for(int i = 0; i < players.size(); i++){
+            if(gameLogic!=null){
+                gameLogic.setPlayers(players.get(i));
+            }
+        }
+        points1.setText("Points : " + players.get(0).getPoints());
+        libraries.set(0, players.get(0).getLibrary());
+        points2.setText("Points : " + players.get(1).getPoints());
+        libraries.set(1, players.get(1).getLibrary());
+        if(numPlayers > 2){
+            points3.setText("Points : " + players.get(2).getPoints());
+            libraries.set(2, players.get(2).getLibrary());
+            if(numPlayers == 4){
+                points4.setText("Points : " + players.get(3).getPoints());
+                libraries.set(3, players.get(3).getLibrary());
+            }
         }
     }
 
@@ -843,17 +846,17 @@ public class ControllerGui implements Initializable, Serializable {
         String url = PathImageCards.COMMONOBJBACK;
         switch (gameLogic.getGame().getCommonObj1().getObjNum()){
 
-            case 1 -> url = PathImageCards.COMMONOBJ1;
-            case 2 -> url = PathImageCards.COMMONOBJ2;
-            case 3 -> url = PathImageCards.COMMONOBJ3;
-            case 4 -> url = PathImageCards.COMMONOBJ4;
-            case 5 -> url = PathImageCards.COMMONOBJ5;
-            case 6 -> url = PathImageCards.COMMONOBJ6;
-            case 7 -> url = PathImageCards.COMMONOBJ7;
-            case 8 -> url = PathImageCards.COMMONOBJ8;
-            case 9 -> url = PathImageCards.COMMONOBJ9;
+            case 1 -> url = PathImageCards.COMMONOBJ4;
+            case 2 -> url = PathImageCards.COMMONOBJ11;
+            case 3 -> url = PathImageCards.COMMONOBJ8;
+            case 4 -> url = PathImageCards.COMMONOBJ7;
+            case 5 -> url = PathImageCards.COMMONOBJ3;
+            case 6 -> url = PathImageCards.COMMONOBJ2;
+            case 7 -> url = PathImageCards.COMMONOBJ1;
+            case 8 -> url = PathImageCards.COMMONOBJ6;
+            case 9 -> url = PathImageCards.COMMONOBJ5;
             case 10 -> url = PathImageCards.COMMONOBJ10;
-            case 11 -> url = PathImageCards.COMMONOBJ11;
+            case 11 -> url = PathImageCards.COMMONOBJ9;
             case 12 -> url = PathImageCards.COMMONOBJ12;
         }
 
@@ -863,17 +866,17 @@ public class ControllerGui implements Initializable, Serializable {
 
         switch (gameLogic.getGame().getCommonObj2().getObjNum()){
 
-            case 1 -> url = PathImageCards.COMMONOBJ1;
-            case 2 -> url = PathImageCards.COMMONOBJ2;
-            case 3 -> url = PathImageCards.COMMONOBJ3;
-            case 4 -> url = PathImageCards.COMMONOBJ4;
-            case 5 -> url = PathImageCards.COMMONOBJ5;
-            case 6 -> url = PathImageCards.COMMONOBJ6;
-            case 7 -> url = PathImageCards.COMMONOBJ7;
-            case 8 -> url = PathImageCards.COMMONOBJ8;
-            case 9 -> url = PathImageCards.COMMONOBJ9;
+            case 1 -> url = PathImageCards.COMMONOBJ4;
+            case 2 -> url = PathImageCards.COMMONOBJ11;
+            case 3 -> url = PathImageCards.COMMONOBJ8;
+            case 4 -> url = PathImageCards.COMMONOBJ7;
+            case 5 -> url = PathImageCards.COMMONOBJ3;
+            case 6 -> url = PathImageCards.COMMONOBJ2;
+            case 7 -> url = PathImageCards.COMMONOBJ1;
+            case 8 -> url = PathImageCards.COMMONOBJ6;
+            case 9 -> url = PathImageCards.COMMONOBJ5;
             case 10 -> url = PathImageCards.COMMONOBJ10;
-            case 11 -> url = PathImageCards.COMMONOBJ11;
+            case 11 -> url = PathImageCards.COMMONOBJ9;
             case 12 -> url = PathImageCards.COMMONOBJ12;
         }
 
@@ -892,7 +895,30 @@ public class ControllerGui implements Initializable, Serializable {
         labelMessage.setText(" Welcome !!! \n waiting other players... ");
     }
 
-    public void openLeaderboard(ActionEvent event) {
+    @FXML
+    public void openLeaderboard(){
+        Platform.runLater(() -> {
+            try {
+                System.out.println("Opening Leaderboard");
+                Stage stage = new Stage();
+                stage.setResizable(false);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/leaderboard.fxml"));
+                Parent root = loader.load();
+                Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+                stage.getIcons().add(icon);
+                stage.setTitle("Leaderboard");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(CommonObj1.getScene().getWindow());
+                ControllerLeaderboard controller = loader.getController();
+                controller.updateLeaderboard(gameLogic.getPlayers());
+//                loader.setController(controller);
+                stage.show();
+            }catch (IOException e){
+                System.out.println("Exception in openLeaderboard");
+            }
+
+        });
 
     }
 }

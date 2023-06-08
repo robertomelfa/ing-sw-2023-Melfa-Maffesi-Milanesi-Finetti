@@ -16,7 +16,7 @@ public class TestCardBox extends TestCase {
     public void testgetCard_cardboxempty_NONE(){
         CardBox cardbox = new CardBox();
         Card card;
-        for (int i=0;i<132;i++){
+        for (int i=0;i<200;i++){
             card=cardbox.getCard();
         }
         card=cardbox.getCard();

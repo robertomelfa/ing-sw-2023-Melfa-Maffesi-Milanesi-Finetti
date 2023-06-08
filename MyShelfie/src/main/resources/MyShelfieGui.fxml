@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
@@ -16,16 +19,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerGui">
+<AnchorPane maxHeight="1.7976931348623157E308" pickOnBounds="false" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.ControllerGui">
                <children>
-                  <ImageView fitHeight="800.0" fitWidth="1200.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fitHeight="800.0" fitWidth="1700.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <image>
                         <Image url="@assets/misc/sfondo parquet.jpg" />
                      </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
                   </ImageView>
-                  <BorderPane prefHeight="800.0" prefWidth="1200.0">
+                  <BorderPane layoutX="170.0" prefHeight="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <left>
-                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+                        <VBox spacing="20.0">
                            <children>
                               <Region prefHeight="200.0" prefWidth="200.0" />
                               <ImageView fx:id="PlayerObj" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -42,14 +48,14 @@
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </padding>
                            <BorderPane.margin>
-                              <Insets left="10.0" />
+                              <Insets left="16.0" />
                            </BorderPane.margin>
                         </VBox>
                      </left>
                      <top>
-                        <AnchorPane BorderPane.alignment="CENTER">
+                        <AnchorPane>
                            <children>
-                              <HBox alignment="CENTER" prefHeight="180.0" prefWidth="1200.0" spacing="16.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="CENTER" maxHeight="180.0" spacing="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox alignment="CENTER_RIGHT">
                                        <children>
@@ -150,7 +156,7 @@
                         </AnchorPane>
                      </top>
                      <bottom>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="120.0" BorderPane.alignment="CENTER">
+                        <HBox alignment="CENTER" maxHeight="180.0" spacing="120.0">
                            <children>
                               <HBox fx:id="CardPlayer4" alignment="CENTER_LEFT">
                                  <children>
@@ -253,366 +259,431 @@
                         <Insets />
                      </opaqueInsets>
                      <center>
-                        <AnchorPane BorderPane.alignment="CENTER">
+                        <AnchorPane>
                            <children>
-                              <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="225.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@assets/boards/livingroom.png" />
-                                 </image>
-                              </ImageView>
-                              <GridPane fx:id="gridTable" layoutX="245.0" layoutY="43.0" maxHeight="377.0" maxWidth="386.0" onMouseClicked="#selectedCard" prefHeight="362.0" prefWidth="359.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
+                  <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="40.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="03" textFill="TRANSPARENT" GridPane.columnIndex="3">
-                           <graphic>
-                               <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="04" textFill="TRANSPARENT" GridPane.columnIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="13" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="14" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="15" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="22" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="23" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="24" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="25" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="2">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="26" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="31" textFill="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="32" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="33" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="34" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="35" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="36" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="37" textFill="TRANSPARENT" GridPane.columnIndex="7" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="38" textFill="TRANSPARENT" GridPane.columnIndex="8" GridPane.rowIndex="3">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="40" textFill="TRANSPARENT" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="41" textFill="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="42" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="43" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="44" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="45" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="46" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="47" textFill="TRANSPARENT" GridPane.columnIndex="7" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="48" textFill="TRANSPARENT" GridPane.columnIndex="8" GridPane.rowIndex="4">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="50" textFill="TRANSPARENT" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="51" textFill="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="52" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="53" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="54" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="55" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="56" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="57" textFill="TRANSPARENT" GridPane.columnIndex="7" GridPane.rowIndex="5">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="62" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="63" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="64" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="65" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="66" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="6">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="73" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="74" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="7">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="75" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="84" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="8">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="85" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="8">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                           <font>
-                              <Font size="1.0" />
-                           </font></ToggleButton>
+                        <Region prefHeight="400.0" prefWidth="300.0" />
+                        <AnchorPane>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                           <children>
+                              <Button fx:id="confirm" alignment="CENTER" contentDisplay="CENTER" disable="true" minWidth="90.0" mnemonicParsing="false" onAction="#controlCard" prefHeight="60.0" styleClass="button1" stylesheets="@CSS.css" text="Confirm" visible="false" AnchorPane.bottomAnchor="180.0" AnchorPane.topAnchor="180.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <Group>
+                           <children>
+                                          <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="152.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/boards/livingroom.png" />
+                                             </image>
+                                          </ImageView>
+                                          <GridPane fx:id="gridTable" layoutX="172.0" layoutY="19.0" maxHeight="377.0" maxWidth="386.0" onMouseClicked="#selectedCard" prefHeight="362.0" prefWidth="359.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                 <children>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="40.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="03" textFill="TRANSPARENT" GridPane.columnIndex="3">
+                                       <graphic>
+                                           <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="04" textFill="TRANSPARENT" GridPane.columnIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="13" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="14" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="15" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="22" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="23" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="24" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="25" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="26" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="31" textFill="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="32" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="33" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="34" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="35" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="36" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="37" textFill="TRANSPARENT" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="38" textFill="TRANSPARENT" GridPane.columnIndex="8" GridPane.rowIndex="3">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="40" textFill="TRANSPARENT" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="41" textFill="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="42" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="43" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="44" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="45" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="46" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="47" textFill="TRANSPARENT" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="48" textFill="TRANSPARENT" GridPane.columnIndex="8" GridPane.rowIndex="4">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="50" textFill="TRANSPARENT" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="51" textFill="TRANSPARENT" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="52" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="53" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="54" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="55" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="56" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="57" textFill="TRANSPARENT" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="62" textFill="TRANSPARENT" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="63" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="64" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="65" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="66" textFill="TRANSPARENT" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="73" textFill="TRANSPARENT" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="74" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="75" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="84" textFill="TRANSPARENT" GridPane.columnIndex="4" GridPane.rowIndex="8">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                    <ToggleButton mnemonicParsing="false" onAction="#selectedCard" prefHeight="80.0" prefWidth="35.0" styleClass="togglebutton" stylesheets="@CSS.css" text="85" textFill="TRANSPARENT" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                                       <graphic>
+                                          <ImageView fitHeight="40.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                       <font>
+                                          <Font size="1.0" />
+                                       </font>
+                                    </ToggleButton>
+                                 </children>
+                                          </GridPane>
+                           </children>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </Group>
+                        <Region prefHeight="400.0" prefWidth="400.0" />
                      </children>
-                              </GridPane>
-                  <Button fx:id="confirm" disable="true" layoutX="73.0" layoutY="182.0" mnemonicParsing="false" onAction="#controlCard" prefHeight="55.0" prefWidth="84.0" styleClass="button1" stylesheets="@CSS.css" text="Confirm" visible="false">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
+                  </HBox>
                            </children>
                         </AnchorPane>
                      </center>
                      <right>
-                  <AnchorPane prefHeight="472.0" prefWidth="230.0">
+                  <AnchorPane>
                      <children>
-                                    <ImageView fitHeight="201.0" fitWidth="205.0" layoutX="7.0" layoutY="137.0" pickOnBounds="true">
+                                    <ImageView fitHeight="201.0" fitWidth="205.0" layoutX="7.0" layoutY="137.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0">
                                        <image>
                                           <Image url="@assets/boards/bookshelf.png" />
                                        </image>
@@ -626,7 +697,7 @@
                      <padding>
                         <Insets left="8.0" right="8.0" />
                      </padding></HBox>
-                        <GridPane fx:id="gridLibrary" hgap="4.0" layoutX="33.0" layoutY="151.0" prefHeight="159.0" prefWidth="154.0" vgap="2.0">
+                        <GridPane fx:id="gridLibrary" hgap="4.0" layoutX="27.0" layoutY="150.0" prefHeight="159.0" prefWidth="154.0" vgap="2.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="24.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="24.0" />
@@ -674,6 +745,9 @@
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                               <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                            </children>
+                     <padding>
+                        <Insets top="2.0" />
+                     </padding>
                         </GridPane>
                   <HBox fx:id="columnButtonBox" alignment="CENTER" layoutX="9.0" layoutY="358.0" prefHeight="34.0" prefWidth="204.0" spacing="4.0">
                      <children>

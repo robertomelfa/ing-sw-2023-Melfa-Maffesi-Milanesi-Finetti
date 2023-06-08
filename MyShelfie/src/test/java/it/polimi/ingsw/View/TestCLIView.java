@@ -23,9 +23,9 @@ public class TestCLIView {
     @Test
     public void viewLibraryTest(){
         Library library = new Library();
-        library.setCard(2,2, Card.YELLOW);
-        library.setCard(3,2, Card.YELLOW);
-        library.setCard(2,4, Card.YELLOW);
+        library.setCard(2,2, Card.YELLOW1);
+        library.setCard(3,2, Card.YELLOW1);
+        library.setCard(2,4, Card.YELLOW1);
 
         view.viewLibrary(library);
     }
@@ -33,10 +33,10 @@ public class TestCLIView {
     @Test
     public void viewTableTest(){
         GameTable gameTable = new GameTable(2);
-        gameTable.setCardfromBoard(3,3,Card.YELLOW);
-        gameTable.setCardfromBoard(5,4,Card.YELLOW);
-        gameTable.setCardfromBoard(5,3,Card.YELLOW);
-        gameTable.setCardfromBoard(6,3,Card.YELLOW);
+        gameTable.setCardfromBoard(3,3,Card.YELLOW1);
+        gameTable.setCardfromBoard(5,4,Card.YELLOW1);
+        gameTable.setCardfromBoard(5,3,Card.YELLOW1);
+        gameTable.setCardfromBoard(6,3,Card.YELLOW1);
 
         view.viewGameTable(gameTable);
     }
@@ -66,8 +66,8 @@ public class TestCLIView {
         GameTable gameTable1 = gameLogic.getGameTable();
         Card card = gameTable1.getCardfromBoard(2,4);
         Player player = new Player("bob");
-        player.getLibrary().setCard(5, 0, BLUE);
-        player.getLibrary().setCard(4, 0, BLUE);
+        player.getLibrary().setCard(5, 0, BLUE1);
+        player.getLibrary().setCard(4, 0, BLUE1);
         gameLogic.getGame().setCurrentPlayer(player);
         // one card
 
@@ -157,7 +157,7 @@ public class TestCLIView {
     @Test
     public void insertOneCardTest() throws Exception{
         ArrayList<Card> list = new ArrayList<>();
-        list.add(YELLOW);
+        list.add(YELLOW1);
 
         Game game = new Game(2);
         GameLogic gameLogic = new GameLogic(game);
@@ -170,14 +170,14 @@ public class TestCLIView {
 
         view.insert(list, gameLogic);
 
-        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(5,0), YELLOW);
+        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(5,0), YELLOW1);
     }
 
     @Test
     public void insertTwoCardTest() throws Exception{
         ArrayList<Card> list = new ArrayList<>();
-        list.add(YELLOW);
-        list.add(BLUE);
+        list.add(YELLOW2);
+        list.add(BLUE1);
 
         Game game = new Game(2);
         GameLogic gameLogic = new GameLogic(game);
@@ -190,16 +190,16 @@ public class TestCLIView {
 
         view.insert(list, gameLogic);
 
-        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(5,1), BLUE);
-        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(4,1), YELLOW);
+        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(5,1), BLUE1);
+        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(4,1), YELLOW2);
     }
 
     @Test
     public void insertThreeCardTest() throws Exception{
         ArrayList<Card> list = new ArrayList<>();
-        list.add(YELLOW);
-        list.add(BLUE);
-        list.add(LIGHTBLUE);
+        list.add(YELLOW1);
+        list.add(BLUE3);
+        list.add(LIGHTBLUE2);
 
         Game game = new Game(2);
         GameLogic gameLogic = new GameLogic(game);
@@ -212,8 +212,8 @@ public class TestCLIView {
 
         view.insert(list, gameLogic);
 
-        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(5,4), LIGHTBLUE);
-        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(4,4), YELLOW);
-        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(3,4), BLUE);
+        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(5,4), LIGHTBLUE2);
+        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(4,4), YELLOW1);
+        Assert.assertEquals(gameLogic.getGame().getCurrentPlayer().getLibrary().getPos(3,4), BLUE3);
     }
 }

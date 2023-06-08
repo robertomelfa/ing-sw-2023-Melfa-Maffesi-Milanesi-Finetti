@@ -111,7 +111,7 @@ public enum Card {
                 ((this == PURPLE1 || this == PURPLE2 || this == PURPLE3) && (other == PURPLE1 || other == PURPLE2 || other == PURPLE3))) {
             return true;
         }
-        return this == other;
+        return false;
 
     }
 }
