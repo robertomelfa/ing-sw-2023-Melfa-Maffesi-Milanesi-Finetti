@@ -22,6 +22,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LogInController implements Serializable {
 
@@ -50,6 +52,7 @@ public class LogInController implements Serializable {
     Button button4;
     private int num = 0;
     private boolean rmi = true;
+    private static Timer timer;
 
     @FXML
     public void initialize() {
@@ -64,11 +67,11 @@ public class LogInController implements Serializable {
             }
         });
 
-
     }
     @FXML
     private void RMIconnection() throws Exception {
         server.block();
+        scheduleTimer();
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
@@ -96,6 +99,7 @@ public class LogInController implements Serializable {
     @FXML
     private void SocketConnection() throws Exception{
         server.block();
+        scheduleTimer();
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             server.setTemp();
@@ -122,18 +126,20 @@ public class LogInController implements Serializable {
         }
     }
     public void submit(ActionEvent event) throws Exception{
+        timer.cancel();
         if(!server.getTemp()){
             try {
-                if ( num > 1 && num < 5){
+                String user = username.getText();
+                if ( num > 1 && num < 5 && user.length() > 0){
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) start.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
                     stage.setResizable(false);
-                    String user = username.getText();
                     GameClientInterface client = new Client();
                     ((Client) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), num, user);
                 } else {
+                    scheduleTimer();
                     labelNumPlayers.setOpacity(1);
                 }
             } catch (Exception e) {
@@ -142,9 +148,9 @@ public class LogInController implements Serializable {
         }else{
             System.out.println("New socket client");
             try{
-                if (num > 1 && num < 5) {
+                String user = username.getText();
+                if (num > 1 && num < 5 && user.length() > 0) {
                     Client_Socket clientSocket = new Client_Socket();
-                    String user = username.getText();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     //clientSocket.sendInt(num);
                     Stage stage = (Stage) username.getScene().getWindow();
@@ -158,6 +164,7 @@ public class LogInController implements Serializable {
                     }
                 }else {
                     labelNumPlayers.setOpacity(1);
+                    scheduleTimer();
                 }
             }catch (Exception e){
 
@@ -167,12 +174,13 @@ public class LogInController implements Serializable {
     }
 
     public void submitNotFirst(ActionEvent event) throws RemoteException, Exception {
+        timer.cancel();
         if(!server.getTemp()){
             // rmi
             try {
                 String user = username2.getText();
                 GameClientInterface client = new Client();
-                if(!server.getController().checkExistingName(user)){
+                if(!server.getController().checkExistingName(user) && user.length() >= 0){
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
                     stage.setResizable(false);
@@ -181,6 +189,7 @@ public class LogInController implements Serializable {
                     client.connectionGUI(server, client, server.getController(), user);
                 } else {
                     label.setOpacity(1);
+                    scheduleTimer();
                 }
             }catch (Exception e){
                 System.out.println(e);
@@ -191,7 +200,7 @@ public class LogInController implements Serializable {
             try {
                 Client_Socket clientSocket = new Client_Socket();
                 String user = username2.getText();
-                if(!server.getController().checkExistingName(user)) {
+                if(!server.getController().checkExistingName(user) && user.length() >= 0) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
                     stage.setResizable(false);
@@ -204,6 +213,7 @@ public class LogInController implements Serializable {
                     }
                 } else {
                     label.setOpacity(1);
+                    scheduleTimer();
                 }
             } catch (Exception e){
                 System.out.println(e);
@@ -236,5 +246,23 @@ public class LogInController implements Serializable {
 
     public void setIP(String ip){
         this.ip = ip;
+    }
+
+    private void scheduleTimer(){
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    server.release();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.exit(0);
+            }
+        };
+        timer.schedule(task, 30000);
     }
 }
