@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.View.CLIView;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -195,6 +196,56 @@ public class TestLibrary {
         Assert.assertFalse(p1.getLibrary().checkNumCardsRemain(3));
         Assert.assertTrue(p1.getLibrary().checkNumCardsRemain(1));
 
+    }
+
+    /**
+     * Check library with 18 points of final groups. It is a particular case for the six group of purple and yellow cards
+     * @throws Exception
+     */
+    @Test
+    public void testCheckFinal2() throws Exception{
+        Player p1 = new Player("bob");
+
+        p1.getLibrary().setCard(0, 0, GREEN2);
+        p1.getLibrary().setCard(0, 1, YELLOW1);
+        p1.getLibrary().setCard(0, 2, YELLOW3);
+        p1.getLibrary().setCard(0, 3, PURPLE1);
+        p1.getLibrary().setCard(0, 4, LIGHTBLUE1);
+
+        p1.getLibrary().setCard(1, 0, YELLOW2);
+        p1.getLibrary().setCard(1, 1, YELLOW1);
+        p1.getLibrary().setCard(1, 2, YELLOW3);
+        p1.getLibrary().setCard(1, 3, BLUE1);
+        p1.getLibrary().setCard(1, 4, WHITE2);
+
+        p1.getLibrary().setCard(2, 0, YELLOW2);
+        p1.getLibrary().setCard(2, 1, PURPLE1);
+        p1.getLibrary().setCard(2, 2, BLUE2);
+        p1.getLibrary().setCard(2, 3, PURPLE1);
+        p1.getLibrary().setCard(2, 4, YELLOW2);
+
+        p1.getLibrary().setCard(3, 0, LIGHTBLUE1);
+        p1.getLibrary().setCard(3, 1, GREEN2);
+        p1.getLibrary().setCard(3, 2, PURPLE3);
+        p1.getLibrary().setCard(3, 3, GREEN3);
+        p1.getLibrary().setCard(3, 4, PURPLE3);
+
+        p1.getLibrary().setCard(4, 0, YELLOW2);
+        p1.getLibrary().setCard(4, 1, BLUE3);
+        p1.getLibrary().setCard(4, 2, PURPLE3);
+        p1.getLibrary().setCard(4, 3, PURPLE1);
+        p1.getLibrary().setCard(4, 4, PURPLE2);
+
+        p1.getLibrary().setCard(5, 0, YELLOW3);
+        p1.getLibrary().setCard(5, 1, YELLOW1);
+        p1.getLibrary().setCard(5, 2, PURPLE3);
+        p1.getLibrary().setCard(5, 3, WHITE1);
+        p1.getLibrary().setCard(5, 4, YELLOW3);
+
+        CLIView view = new CLIView();
+        view.viewLibrary(p1.getLibrary());
+
+        Assert.assertEquals(p1.getLibrary().checkFinal() , 18);
     }
     @After
     public void teardown(){
