@@ -23,7 +23,7 @@
             <Font name="Britannic Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="player1" layoutX="246.0" layoutY="115.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+      <Label fx:id="player1" layoutX="246.0" layoutY="115.0" prefHeight="17.0" prefWidth="327.0" text="Label" textFill="#fffefe">
          <font>
             <Font name="Britannic Bold" size="15.0" />
          </font></Label>
@@ -37,7 +37,7 @@
             <Font name="Britannic Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="player2" layoutX="246.0" layoutY="164.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+      <Label fx:id="player2" layoutX="246.0" layoutY="164.0" prefHeight="17.0" prefWidth="327.0" text="Label" textFill="#fffefe">
          <font>
             <Font name="Britannic Bold" size="15.0" />
          </font></Label>
@@ -46,11 +46,11 @@
             <Font name="Britannic Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="player3" layoutX="246.0" layoutY="214.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+      <Label fx:id="player3" layoutX="246.0" layoutY="214.0" prefHeight="17.0" prefWidth="327.0" text="Label" textFill="#fffefe">
          <font>
             <Font name="Britannic Bold" size="15.0" />
          </font></Label>
-      <Label fx:id="player4" layoutX="246.0" layoutY="267.0" prefHeight="17.0" prefWidth="140.0" text="Label" textFill="#fffefe">
+      <Label fx:id="player4" layoutX="246.0" layoutY="267.0" prefHeight="17.0" prefWidth="327.0" text="Label" textFill="#fffefe">
          <font>
             <Font name="Britannic Bold" size="15.0" />
          </font></Label>

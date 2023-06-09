@@ -1,6 +1,6 @@
 
 .togglebutton {
-    -fx-border-radius : 5;
+    -fx-border-radius : 5px;
     visibility : true;
     -fx-opacity : 1;
     -fx-background-color : transparent;
@@ -8,16 +8,16 @@
 }
 
 .togglebutton:hover {
-    -fx-border-radius : 5;
+    -fx-border-radius : 5px;
     visibility : true;
     -fx-opacity : 1;
-    -fx-background-color : #708ad9;
+    -fx-background-color : #f4ed80;
     -fx-text-fill : transparent;
 
 }
 
 .togglebutton:pressed {
-    -fx-border-radius : 5;
+    -fx-border-radius : 5px;
     visibility : true;
     -fx-background-color : green;
     -fx-opacity : 0.60;
@@ -28,7 +28,7 @@
 }
 
 .togglebutton:selected {
-    -fx-border-radius : 5;
+    -fx-border-radius : 5px;
     -fx-background-color : transparent;
     -fx-opacity : 1;
     -fx-border-width : 2;
@@ -42,19 +42,19 @@
     -fx-background-color : transparent;
     -fx-border-width : 1;
     -fx-border-color : gray;
-    -fx-border-radius : 5;
+    -fx-border-radius : 5px;
 }
 
 .button2:hover {
 
-    -fx-border-radius : 5;
-    -fx-background-color : #817ec7;
+    -fx-border-radius : 5px;
+    -fx-background-color :#f4ed80;
 }
 
 .button2:pressed {
 
-    -fx-border-radius : 5;
-    -fx-background-color : #4456c9;
+    -fx-border-radius : 5px;
+    -fx-background-color : #f4ed80;
 }
 
 .button1 {
@@ -62,19 +62,19 @@
     -fx-background-color : transparent;
     -fx-border-color : #2a2a2a;
     -fx-border-width : 3;
-    -fx-border-radius : 5;
+    -fx-border-radius : 5px;
 }
 
 .button1:hover {
 
-    -fx-background-color : #817ec7;
-    -fx-border-radius : 5;
+    -fx-background-color : #f4ed80;
+    -fx-border-radius : 5px;
 }
 
 .button1:pressed{
 
-    -fx-background-color : #2e2b86;
-    -fx-border-radius : 5;
+    -fx-background-color : #f4ed80;
+    -fx-border-radius : 5px;
 }
 
 .label {

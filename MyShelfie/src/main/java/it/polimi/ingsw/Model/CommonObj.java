@@ -111,7 +111,7 @@ public class CommonObj implements Serializable{
             for (int j = 0; j < 5; j++) {
                 if (temp.getPos(i, j) != NONE) {
                     temp.resetI();
-                    temp.group(i, j, j, temp.getPos(i, j));
+                    temp.group(i, j, temp.getPos(i, j));
                     if (temp.getI() >= 2) {
                         count++;
                     }
@@ -190,7 +190,7 @@ public class CommonObj implements Serializable{
             for (int j = 0; j < 5; j++) {
                 if (temp.getPos(i, j) != NONE) {
                     temp.resetI();
-                    temp.group(i, j, j, temp.getPos(i, j));
+                    temp.group(i, j, temp.getPos(i, j));
                     if (temp.getI() >= 4) {
                         count++;
                     }

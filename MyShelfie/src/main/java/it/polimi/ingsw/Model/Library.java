@@ -227,29 +227,25 @@ public class Library implements Serializable{
     /**
      * @param x:     x position of the Card
      * @param y:     y position of the Card to check the right side
-     * @param y2:    y position to check the left side
      * @param color: color of the group of cards
      * This recursive method search the groups of same cards
      */
-    public void group(int x, int y, int y2, Card color) {
-        if (getPos(x, y) != NONE && getPos(x, y) != NOT && getPos(x, y).isEqualTo(color)) {
-            if (getPos(x, y).isEqualTo(getPos(x + 1, y))) {
-                group(x + 1, y, y, color);
-            }
-            if (getPos(x, y).isEqualTo(getPos(x, y + 1))) {
-                group(x, y + 1, y, color);
-            }
-            if (getPos(x, y2).isEqualTo(getPos(x, y2 - 1))) {
-                group(x, y, y2 - 1, color);
-            }
-            if (getPos(x, y).isEqualTo(color)) {
-                grid[x][y] = NONE;
-                setI();
-            }
-            if (getPos(x, y2).isEqualTo(color)) {
-                grid[x][y2] = NONE;
-                setI();
-            }
+    public void group(int x, int y, Card color) {
+
+        grid[x][y] = NONE;
+        setI();
+
+        if (getPos(x+1, y).isEqualTo(color)) {
+            group(x + 1, y, color);
+        }
+        if (getPos(x-1, y).isEqualTo(color)) {
+            group(x - 1, y, color);
+        }
+        if (getPos(x, y+1).isEqualTo(color)) {
+            group(x, y+1, color);
+        }
+        if (getPos(x, y-1).isEqualTo(color)) {
+            group(x, y-1, color);
         }
     }
 
@@ -262,7 +258,7 @@ public class Library implements Serializable{
             for (int j = 0; j < 5; j++) {
                 if (getPos(i, j) != NONE) {
                     resetI();
-                    group(i, j, j, getPos(i, j));
+                    group(i, j, getPos(i, j));
                     if (getI() >= 3) {
                         if (getI() >= 6) {    // if i have more than 6 cards, 8 points
                             points = points + 8;
