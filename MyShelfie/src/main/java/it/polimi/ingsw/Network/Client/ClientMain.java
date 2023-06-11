@@ -14,11 +14,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.Serializable;
-import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,9 +46,6 @@ public class ClientMain extends Application implements Serializable {
         Scanner scanner = new Scanner(System.in);
         String input;
         //input = scanner.next();
-        if (server.isLocked()) {
-            System.out.println("Another client is connecting");
-        }
 
         TimerTask task = new TimerTask() {
             @Override
@@ -87,18 +82,22 @@ public class ClientMain extends Application implements Serializable {
                             input = scanner.next();
                             switch (input.toUpperCase()) {
                                 case "A":
-                                    server.block();
                                     timer.cancel();
+                                    if (server.isLocked()) {
+                                        System.out.println("Another client is connecting");
+                                    }
+                                    server.block();
                                     System.out.println("Starting Socket");
                                     Client_Socket clientS = new Client_Socket();
                                     clientS.start(server,port);
                                     break;
                                 case "B":
+                                    timer.cancel();
+                                    if (server.isLocked()) {
+                                        System.out.println("Another client is connecting");
+                                    }
                                     server.block();
                                     try {
-                                        timer.cancel();
-
-
                                         GameClientInterface clientR = new Client();
                                         clientR.connection(server, clientR, server.getController());
                                         server.release();

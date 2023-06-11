@@ -192,6 +192,7 @@ public  class Server_Socket implements Serializable {
             String gui = receiveMessage(socket).getMessage();
             if(gui.equals("true")){
                 client.setGui();
+                serverRMI.release();
             }
             controller.addClient(client);
         }catch (IOException e){

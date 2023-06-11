@@ -72,6 +72,7 @@ public class LogInController implements Serializable {
     private void RMIconnection() throws Exception {
         server.block();
         scheduleTimer();
+        server.setTemp(false);
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
@@ -100,9 +101,9 @@ public class LogInController implements Serializable {
     private void SocketConnection() throws Exception{
         server.block();
         scheduleTimer();
+        server.setTemp(true);
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
-            server.setTemp();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             LogInController loginController = fxmlLoader.<LogInController>getController();
@@ -113,7 +114,6 @@ public class LogInController implements Serializable {
             stage.setResizable(false);
             stage.setScene(new Scene(root, 1080, 720));
         } else {
-            server.setTemp();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInNotFirst.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             LogInController loginController = fxmlLoader.<LogInController>getController();
@@ -138,6 +138,7 @@ public class LogInController implements Serializable {
                     GameClientInterface client = new Client();
                     ((Client) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), num, user);
+                    server.release();
                 } else {
                     scheduleTimer();
                     labelNumPlayers.setOpacity(1);
@@ -170,7 +171,6 @@ public class LogInController implements Serializable {
 
             }
         }
-        server.release();
     }
 
     public void submitNotFirst(ActionEvent event) throws RemoteException, Exception {
@@ -187,6 +187,7 @@ public class LogInController implements Serializable {
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
                     ((Client) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), user);
+                    server.release();
                 } else {
                     label.setOpacity(1);
                     scheduleTimer();
@@ -219,7 +220,6 @@ public class LogInController implements Serializable {
                 System.out.println(e);
             }
         }
-        server.release();
     }
 
     public void set2(ActionEvent event){
@@ -248,7 +248,7 @@ public class LogInController implements Serializable {
         this.ip = ip;
     }
 
-    private void scheduleTimer(){
+    private synchronized void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override

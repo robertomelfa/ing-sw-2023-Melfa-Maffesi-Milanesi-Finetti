@@ -42,7 +42,7 @@ public interface GameInterface extends Remote{
 
     public void newClient(GameClientInterface client) throws RemoteException;
 
-    public void setTemp() throws RemoteException;
+    public void setTemp(boolean set) throws RemoteException;
 
     public boolean getTemp() throws RemoteException;
 }

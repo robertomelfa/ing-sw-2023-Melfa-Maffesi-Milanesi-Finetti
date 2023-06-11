@@ -1,9 +1,14 @@
 package it.polimi.ingsw.Network;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Lock implements Serializable {
     private boolean isLocked = false;
+
+    private Timer lockTimer = new Timer();
 
     /**
      *
@@ -20,14 +25,27 @@ public class Lock implements Serializable {
             wait();
         }
         isLocked = true;
+        setLockTimer();
     }
 
     /**
      * release the lock
      */
     public synchronized void release() {
+        lockTimer.cancel();
         isLocked = false;
         notify();
+    }
+
+    public synchronized void setLockTimer() {
+        lockTimer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                release();
+            }
+        };
+        lockTimer.schedule(task, 30000);
     }
 
 }

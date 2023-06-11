@@ -85,19 +85,19 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         this.controller.addClient(client);
     }
 
-    public Lock getLock() throws RemoteException{
+    public synchronized Lock getLock() throws RemoteException{
         return lock;
     }
 
-    public void block() throws RemoteException, InterruptedException{
+    public synchronized void block() throws RemoteException, InterruptedException{
         lock.acquire();
     }
 
-    public void release() throws RemoteException, InterruptedException{
+    public synchronized void release() throws RemoteException, InterruptedException{
         lock.release();
     }
 
-    public boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
+    public synchronized boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
 
     public void newClient(GameClientInterface client) throws RemoteException{
         isConnecting = true;
@@ -125,8 +125,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         thread.start();
     }
 
-    public void setTemp() throws RemoteException{
-        temp = true;
+    public void setTemp(boolean set) throws RemoteException{
+        temp = set;
     }
 
     public boolean getTemp() throws RemoteException{

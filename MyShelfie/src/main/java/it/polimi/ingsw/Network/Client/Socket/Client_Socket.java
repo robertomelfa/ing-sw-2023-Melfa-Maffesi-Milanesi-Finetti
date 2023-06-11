@@ -12,8 +12,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static it.polimi.ingsw.Network.Messages.MessageType.*;
@@ -24,11 +27,15 @@ public class Client_Socket implements Serializable {
 
     private Socket socket;
 
+    private GameInterface serverRMI;
+
     private ViewClient view;
 
     private ObjectInputStream ois;
 
     private ObjectOutputStream oos;
+
+    private Timer timer;
 
     private boolean gui = false;
 
@@ -61,11 +68,12 @@ public class Client_Socket implements Serializable {
         try {
             Socket socket = new Socket(host, port);
             this.socket = socket;
+            serverRMI = server;
             view.viewString("Client is running...");
             Message msg;
             Scanner in = new Scanner(System.in);
             msg=receiveMessage();
-
+            scheduleTimer();
             if(server.getController().getClientList().size()==0){
                 if(msg.getType()==MessageType.requestNumPlayer){
                     int numPlayers = 0;
@@ -100,6 +108,7 @@ public class Client_Socket implements Serializable {
                 sendMessage(msg);
                 server.release();
             }
+            timer.cancel();
         }catch(IOException e){
             view.viewString("Client fatal error");
         }
@@ -293,8 +302,8 @@ public class Client_Socket implements Serializable {
                 sendMessage(msg);
                 msg = new Message(MessageType.sendBoolean, "true");
                 sendMessage(msg);
-                server.release();
             }
+            server.release();
         } catch (IOException e) {
             view.viewString("client fatal error");
         } catch (ClassNotFoundException e) {
@@ -413,5 +422,23 @@ public class Client_Socket implements Serializable {
     //@Test
     public void setView(){
         view = new CLIView();
+    }
+
+    private synchronized void scheduleTimer() throws RemoteException {
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    serverRMI.release();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.exit(0);
+            }
+        };
+        timer.schedule(task, 30000);
     }
 }

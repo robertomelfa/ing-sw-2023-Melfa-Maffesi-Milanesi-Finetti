@@ -19,12 +19,18 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
 
 //    private CLIView view=new CLIView(); // view
     private ViewClient view;
+
+    private GameInterface serverRMI;
+
+    private Timer timer;
     public Client() throws RemoteException{
         super();
     }
@@ -101,10 +107,12 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      */
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         view = new CLIView();
+        serverRMI = server;
         Scanner in = new Scanner(System.in);
         ClientClass client1;
         int num;
         server.newClient(client);
+        scheduleTimer();
         if(controller.getClientList().size() == 0) {
             try{
                 String tempNum;
@@ -143,6 +151,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
                 }
             }
         }
+        timer.cancel();
         server.stopConnecting();
         view.viewString("[System] connected!");
     }
@@ -202,6 +211,24 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
 
     public void receivePoint(ArrayList<Player> playerList) throws RemoteException{
         view.viewPoints(playerList);
+    }
+
+    private synchronized void scheduleTimer() throws RemoteException {
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    serverRMI.release();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.exit(0);
+            }
+        };
+        timer.schedule(task, 30000);
     }
 
 }
