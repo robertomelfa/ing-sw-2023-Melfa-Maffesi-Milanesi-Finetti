@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class PathImageCards implements Serializable {
 
+    //class where is saved the path to every image
+
     public static final String CORNICI1 = "assets/item tiles/Cornici1.1.png";
     public static final String CORNICI2 = "assets/item tiles/Cornici1.2.png";
     public static final String CORNICI3 = "assets/item tiles/Cornici1.3.png";

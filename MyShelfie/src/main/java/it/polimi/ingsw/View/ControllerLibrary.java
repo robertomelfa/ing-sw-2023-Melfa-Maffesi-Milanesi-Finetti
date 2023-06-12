@@ -23,6 +23,10 @@ public class ControllerLibrary implements Serializable {
 
     private boolean first = true;
 
+    /**
+     * updates the library shown in the gui using the updated library received as a parameter
+     * @param library : the updated library
+     */
     public void updateLibrary(Library library) {
 
         if(first){

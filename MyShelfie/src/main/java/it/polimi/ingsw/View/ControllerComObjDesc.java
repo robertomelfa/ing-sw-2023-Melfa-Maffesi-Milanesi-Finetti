@@ -13,6 +13,10 @@ public class ControllerComObjDesc implements Serializable {
     @FXML
     private Label labelText;
 
+    /**
+     * sets the description of the common object shown in the GUI
+     * @param numObj : the number of the common object
+     */
     public void setLabelText(int numObj){
 
         CommonObj obj = new CommonObj(2,1);

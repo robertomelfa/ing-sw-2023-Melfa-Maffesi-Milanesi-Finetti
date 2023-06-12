@@ -28,8 +28,10 @@ public class ControllerLeaderboard implements Serializable {
     @FXML
     private Label player4;
 
-
-
+    /**
+     * updates the leaderboard shown in the window using ScoreComparator to order the players list
+     * @param players : the arrayList of player
+     */
     public void updateLeaderboard(ArrayList<Player> players){
 
         if (players!=null){
@@ -56,8 +58,9 @@ public class ControllerLeaderboard implements Serializable {
         }
     }
 
-
-
+    /**
+     * Compare the score of the players. Used to sort the players list when updating the leaderboard
+     */
     class ScoreComparator implements Comparator<Player>{
 
         @Override

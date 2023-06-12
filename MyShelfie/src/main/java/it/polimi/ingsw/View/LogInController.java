@@ -54,6 +54,9 @@ public class LogInController implements Serializable {
     private boolean rmi = true;
     private static Timer timer;
 
+    /**
+     * connects the client to a player's selected server using the ip variable
+     */
     @FXML
     public void initialize() {
         Platform.runLater(() -> {
@@ -68,9 +71,17 @@ public class LogInController implements Serializable {
         });
 
     }
+
+    /**
+     * This method is called by pressing the RMI button in the LogIn interface.
+     * Establishes the RMI connection between the client and the server then switches the stage to the next scene.
+     * Uses a timer to handle inactive users, if a users doesn't perform an action in 30 seconds he's automatically
+     * disconnected.
+     * @throws Exception
+     */
     @FXML
     private void RMIconnection() throws Exception {
-        server.block();
+        server.block();  //lock the server
         scheduleTimer();
         server.setTemp(false);
         if (server.getController().getClientList().size() == 0) {
@@ -97,6 +108,13 @@ public class LogInController implements Serializable {
         }
     }
 
+    /**
+     * This method is called by pressing the Socket button in the LogIn interface.
+     * Establishes the socket connection between the client and the server then switches the stage to the next scene.
+     * Uses a timer to handle inactive users, if a users doesn't perform an action in 30 seconds he's automatically
+     * disconnected.
+     * @throws Exception
+     */
     @FXML
     private void SocketConnection() throws Exception{
         server.block();
@@ -125,6 +143,14 @@ public class LogInController implements Serializable {
             stage.setScene(new Scene(root, 1080, 720));
         }
     }
+
+    /**
+     * Used only by the first player of each game to decide the player's number of the game and
+     * to set his username, then switches scene to the game scene.
+     * Implements a timer to handle inactive players by disconnecting them after 30 seconds with no actions
+     * @param event : pressing the submit button
+     * @throws Exception
+     */
     public void submit(ActionEvent event) throws Exception{
         timer.cancel();
         if(!server.getTemp()){
@@ -173,6 +199,15 @@ public class LogInController implements Serializable {
         }
     }
 
+    /**
+     * Used by users that connects to a game already created.
+     * Take the username of the player from the TextField and if it's not already it connects the player to the
+     * game using that username.
+     * Implements a timer to handle inactive players by disconnecting them after 30 seconds with no actions
+     *  @param event : pressing the submit button
+     * @throws RemoteException
+     * @throws Exception
+     */
     public void submitNotFirst(ActionEvent event) throws RemoteException, Exception {
         timer.cancel();
         if(!server.getTemp()){
@@ -222,6 +257,11 @@ public class LogInController implements Serializable {
         }
     }
 
+    /**
+     * sets the num variable to 2.
+     * The num variable it's used to select the player's number of a game
+     * @param event : pressing the "2" button
+     */
     public void set2(ActionEvent event){
         num = 2;
         button2.setOpacity(0.8);
@@ -229,6 +269,11 @@ public class LogInController implements Serializable {
         button4.setOpacity(1);
 
     }
+
+    /**
+     * sets the num variable to 3
+     * @param event : pressing the "3" button
+     */
     public void set3(ActionEvent event){
         num = 3;
         button2.setOpacity(1);
@@ -236,6 +281,11 @@ public class LogInController implements Serializable {
         button4.setOpacity(1);
 
     }
+
+    /**
+     * sets the num variable to 4
+     * @param event : pressing the "4" button
+     */
     public void set4(ActionEvent event){
         num = 4;
         button2.setOpacity(1);
@@ -244,10 +294,20 @@ public class LogInController implements Serializable {
 
     }
 
+    /**
+     * sets the ip
+     * @param ip : ip we want to set
+     */
     public void setIP(String ip){
         this.ip = ip;
     }
 
+    /**
+     * Timer that is called when we have to wait for a player's input.
+     * After 30 seconds the TimerTask runs releasing the lock on the server and disconnecting the player.
+     * It's used to handle inactive player and avoid a possible deadlock
+     * @throws RemoteException
+     */
     private synchronized void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {

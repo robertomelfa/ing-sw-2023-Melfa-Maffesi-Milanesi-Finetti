@@ -411,6 +411,9 @@ public class ControllerGui implements Initializable, Serializable {
         }
     }
 
+    /**
+     * enable the ImageViews in the arrayCards HBOX
+     */
     public void enableArrayCards(){
         for (int i=0; i<3; i++) {
             ImageView image = (ImageView) arrayCards.getChildren().get(i);
@@ -616,6 +619,11 @@ public class ControllerGui implements Initializable, Serializable {
         }
     }
 
+    /**
+     * sets all the players name in the Interface and add their libraries to the
+     * ArrayList libraries
+     * @param players
+     */
     public void setNamePlayers(ArrayList<Player> players){
 
         int numPlayers = players.size();
@@ -638,6 +646,10 @@ public class ControllerGui implements Initializable, Serializable {
 
     }
 
+    /**
+     * updates the points and the libraries of every player
+     * @param players
+     */
     public void updatePoints(ArrayList<Player> players){
 
         int numPlayers = players.size();
@@ -660,6 +672,9 @@ public class ControllerGui implements Initializable, Serializable {
         }
     }
 
+    /**
+     * updates the shown number of points given by the two common object
+     */
     public void updateCommonObjPoints(){
         int point = gameLogic.getGame().getCommonObj1().getPointCount(true);
         String url = "";
@@ -689,6 +704,10 @@ public class ControllerGui implements Initializable, Serializable {
 
     }
 
+    /**
+     * sets the message received as parameter to the label
+     * @param message : message we want to show
+     */
     @FXML
     public void setLabelMessage(String message) {
         labelMessage.setAlignment(Pos.CENTER);
@@ -702,6 +721,7 @@ public class ControllerGui implements Initializable, Serializable {
     public GameLogic getGameLogic() {
         return gameLogic;
     }
+
 
     public void updateCurrPlayer(){
         indexCurrPlayer++;
@@ -815,6 +835,10 @@ public class ControllerGui implements Initializable, Serializable {
         return card;
     }
 
+    /**
+     * sets the players object in the window
+     * @param gameLogic the game logic of the game
+     */
     public void setPlayerObj(GameLogic gameLogic){
 
         String url = PathImageCards.PLAYEROBJEMPTY;
@@ -898,6 +922,9 @@ public class ControllerGui implements Initializable, Serializable {
         labelMessage.setText(" Welcome !!! \n waiting other players... ");
     }
 
+    /**
+     * opens a new window that shows the current leaderboard
+     */
     @FXML
     public void openLeaderboard(){
         Platform.runLater(() -> {
