@@ -3,6 +3,7 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -466,38 +468,41 @@ public class ControllerGui implements Initializable, Serializable {
      * @param event card selected / unselected
      */
     @FXML
-    void selectedCard(javafx.event.ActionEvent event) {
+    void selectedCard(Event event) {
 
-        this.button = (ToggleButton) event.getSource();
+        if (!event.getSource().toString().equals("Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT")){
+            this.button = (ToggleButton) event.getSource();
 
-        //controllare se invertiti x & y
-        String pos = button.getText();
-        int x = (int) pos.charAt(0)-48+1;
-        int y = (int) pos.charAt(1)-48+1;
+            //controllare se invertiti x & y
+            String pos = button.getText();
+            int x = (int) pos.charAt(0)-48+1;
+            int y = (int) pos.charAt(1)-48+1;
 
-        if (button.isSelected()) {
-            System.out.println("clicked " +(x-1)+ " , " +(y-1));
-            addCountCard();
-            posCard.add(new Integer[]{x,y});
-        }
-        else {
-            System.out.println("unclicked " +(x-1)+ ", " +(y-1));
-            subCountCard();
-
-            for (Integer[] pair : posCard){
-                if ((pair[0] == x) && (pair[1] == y)) {
-                    posCard.remove(pair);
-                    break;
-                }
+            if (button.isSelected()) {
+                System.out.println("clicked " +(x-1)+ " , " +(y-1));
+                addCountCard();
+                posCard.add(new Integer[]{x,y});
             }
+            else {
+                System.out.println("unclicked " +(x-1)+ ", " +(y-1));
+                subCountCard();
+
+                for (Integer[] pair : posCard){
+                    if ((pair[0] == x) && (pair[1] == y)) {
+                        posCard.remove(pair);
+                        break;
+                    }
+                }
 //            posCard.remove(new Integer[]{x,y});
+            }
+
+
+            confirm.setDisable((countCard > 3) || (countCard<1) ||
+                    (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(countCard)));
+
+            System.out.println("you have selected : " +countCard+ " cards");
         }
 
-
-        confirm.setDisable((countCard > 3) || (countCard<1) ||
-                           (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(countCard)));
-
-        System.out.println("you have selected : " +countCard+ " cards");
     }
 
 
@@ -919,7 +924,8 @@ public class ControllerGui implements Initializable, Serializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        labelMessage.setText(" Welcome !!! \n waiting other players... ");
+        labelMessage.setAlignment(Pos.CENTER);
+        labelMessage.setText("Welcome !!! \n waiting other players... ");
     }
 
     /**
