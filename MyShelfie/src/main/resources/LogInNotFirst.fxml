@@ -16,7 +16,7 @@
             <ImageView fitHeight="721.0" fitWidth="1078.0" layoutX="-1.0" pickOnBounds="true" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="719.0" fitWidth="1079.0" pickOnBounds="true">
+      <ImageView fitHeight="722.0" fitWidth="1080.0" pickOnBounds="true">
          <image>
             <Image url="@assets/misc/sfondo parquet.jpg" />
          </image>
@@ -33,7 +33,7 @@
       </ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="820.0" layoutY="544.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="943.0" AnchorPane.topAnchor="562.0">
          <image>
-            <Image url="@/assets/Publisher material/Publisher.png" />
+            <Image url="@assets/Publisher material/Publisher.png" />
          </image>
       </ImageView>
       <Text fill="#f4ed80" layoutX="118.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insert Your Username:" AnchorPane.leftAnchor="180.0">

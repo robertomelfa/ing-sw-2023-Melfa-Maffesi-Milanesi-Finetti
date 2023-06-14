@@ -28,17 +28,17 @@
       </Text>
       <ImageView fitHeight="736.0" fitWidth="540.0" layoutX="440.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="287.0" AnchorPane.topAnchor="-152.0">
          <image>
-            <Image url="@/assets/Publisher material/Title 2000x2000px.png" />
+            <Image url="@assets/Publisher material/Title 2000x2000px.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="195.0" fitWidth="213.0" layoutX="749.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-14.0" AnchorPane.topAnchor="532.0">
          <image>
-            <Image url="@/assets/Publisher material/Box 280x280px.png" />
+            <Image url="@assets/Publisher material/Box 280x280px.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="211.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="943.0" AnchorPane.topAnchor="562.0">
          <image>
-            <Image url="@/assets/Publisher material/Publisher.png" />
+            <Image url="@assets/Publisher material/Publisher.png" />
          </image>
       </ImageView>
       <Button fx:id="start" layoutX="472.0" layoutY="514.0" mnemonicParsing="false" onAction="#submit" styleClass="button1" stylesheets="@CSS.css" text="Start Game">

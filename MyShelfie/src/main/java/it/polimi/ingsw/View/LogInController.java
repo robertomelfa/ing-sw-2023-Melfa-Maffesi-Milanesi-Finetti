@@ -264,9 +264,9 @@ public class LogInController implements Serializable {
      */
     public void set2(ActionEvent event){
         num = 2;
-        button2.setOpacity(0.8);
-        button3.setOpacity(1);
-        button4.setOpacity(1);
+        button2.setOpacity(1);
+        button3.setOpacity(0.5);
+        button4.setOpacity(0.5);
 
     }
 
@@ -276,9 +276,9 @@ public class LogInController implements Serializable {
      */
     public void set3(ActionEvent event){
         num = 3;
-        button2.setOpacity(1);
-        button3.setOpacity(0.8);
-        button4.setOpacity(1);
+        button2.setOpacity(0.5);
+        button3.setOpacity(1);
+        button4.setOpacity(0.5);
 
     }
 
@@ -288,9 +288,9 @@ public class LogInController implements Serializable {
      */
     public void set4(ActionEvent event){
         num = 4;
-        button2.setOpacity(1);
-        button3.setOpacity(1);
-        button4.setOpacity(0.8);
+        button2.setOpacity(0.5);
+        button3.setOpacity(0.5);
+        button4.setOpacity(1);
 
     }
 
