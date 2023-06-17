@@ -14,7 +14,7 @@ assets/*
 MyShelfie/src/main/resources/assets/**
 
 # Ignore Game saves
-/saves/**
+MyShelfie/saves/**
 
 # User-specific stuff
 .idea/**/workspace.xml
