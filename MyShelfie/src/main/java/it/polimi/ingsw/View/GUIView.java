@@ -134,6 +134,7 @@ private byte initLibrary = 0;
             Platform.runLater(()-> {
                 controllerGui.setPlayerObj(gameLogic);
                 controllerGui.setCommonObj(gameLogic);
+                controllerGui.setChair();
             });
             first = false;
         }

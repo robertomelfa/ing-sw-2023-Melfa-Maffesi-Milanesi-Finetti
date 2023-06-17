@@ -69,15 +69,12 @@
                                                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@assets/scoring tokens/scoring.jpg" />
-                                                   </image>
-                                                   <VBox.margin>
-                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                                   </VBox.margin>
-                                                </ImageView>
                                     <Label fx:id="points1" text="Points : 0" />
+                                    <ImageView fx:id="chair" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <VBox.margin>
+                                          <Insets top="16.0" />
+                                       </VBox.margin>
+                                    </ImageView>
                                              </children>
                                           </VBox>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#openLibrary1" pickOnBounds="true" preserveRatio="true">
@@ -128,14 +125,6 @@
                                                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@assets/scoring tokens/scoring.jpg" />
-                                                   </image>
-                                                   <VBox.margin>
-                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                                   </VBox.margin>
-                                                </ImageView>
                                     <Label fx:id="points2" text="Points : 0" />
                                              </children>
                                           </VBox>
@@ -163,14 +152,6 @@
                                     <VBox alignment="BOTTOM_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
                                        <children>
                               <Label fx:id="points4" text="Points : 0" />
-                                          <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@assets/scoring tokens/scoring.jpg" />
-                                             </image>
-                                             <VBox.margin>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                             </VBox.margin>
-                                          </ImageView>
                                           <Label fx:id="namePlayer4" text="Player" textAlignment="CENTER">
                                              <font>
                                                 <Font size="14.0" />
@@ -229,14 +210,6 @@
                                     <VBox alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="150.0">
                                        <children>
                               <Label fx:id="points3" text="Points : 0" />
-                                          <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@assets/scoring tokens/scoring.jpg" />
-                                             </image>
-                                             <VBox.margin>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                             </VBox.margin>
-                                          </ImageView>
                                           <Label fx:id="namePlayer3" text="Player">
                                              <font>
                                                 <Font size="14.0" />

@@ -79,7 +79,8 @@ public class ControllerGui implements Initializable, Serializable {
     private ImageView scoreObj1;
     @FXML
     private ImageView scoreObj2;
-
+    @FXML
+    private ImageView chair;
     @FXML
     private ImageView[][] libraryImageView = new ImageView[5][6];
 
@@ -915,6 +916,13 @@ public class ControllerGui implements Initializable, Serializable {
         CommonObj2.setImage(new Image(url));
         CommonObj2.setFitWidth(200);
         CommonObj2.setFitHeight(150);
+    }
+
+    /**
+     * set the image of the chair
+     */
+    void setChair(){
+        chair.setImage(new Image(PathImageCards.CHAIR));
     }
 
     /**

@@ -59,4 +59,5 @@ public class PathImageCards implements Serializable {
     public static final String SCORE6 = "assets/scoring tokens/scoring_6.jpg";
     public static final String SCORE8 = "assets/scoring tokens/scoring_8.jpg";
 
+    public static final String CHAIR = "assets/misc/firstplayertoken.png";
 }
