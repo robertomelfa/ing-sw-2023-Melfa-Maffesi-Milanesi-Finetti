@@ -78,7 +78,6 @@ public class ControllerMain implements Serializable {
         });
         thread.start();
     }
-
     /**
      * This method reset the clientList of the controller when a client crash
      */
@@ -448,13 +447,12 @@ public class ControllerMain implements Serializable {
         // create game
         Game game = new Game(numPlayers);
         gameLogic = new GameLogic(game);
-        setGamePlayers();
         deleteObsoleteJson();
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
         }
-
+        setGamePlayers();
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         while(!finish){
             // update the players in gamelogic
@@ -595,7 +593,7 @@ public class ControllerMain implements Serializable {
         }
         playersList.sort(Comparator.comparingInt(Player::getScore).reversed());
         for(int i = 0; i < playersList.size(); i++){
-            string = string + (i+1) + "° : " + playersList.get(i).getNickname() + " with " + playersList.get(i).getScore() + "\n";
+            string = string + (i+1) + "° : " + playersList.get(i).getNickname() + " " + playersList.get(i).getScore() + " points\n";
         }
         return string;
     }
