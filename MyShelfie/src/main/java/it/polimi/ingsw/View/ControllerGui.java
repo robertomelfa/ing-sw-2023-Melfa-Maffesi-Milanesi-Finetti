@@ -316,7 +316,6 @@ public class ControllerGui implements Initializable, Serializable {
 
         Button b = (Button) event.getSource();
         column = (int) b.getText().charAt(0) -48;
-        System.out.println("hai scelto la colonna : " + column);
         controlColumn();
 
     }
@@ -397,9 +396,7 @@ public class ControllerGui implements Initializable, Serializable {
      */
     public void showArrayCards(ArrayList<Card> list){
         String url;
-        System.out.println("in showCards...");
         for (int i=0; i<list.size(); i++){
-            System.out.println("Card :  " +list.get(i));
             ImageView image = (ImageView) arrayCards.getChildren().get(i);
             url = urlCard(list.get(i));
             image.setImage(new Image(url));
@@ -480,12 +477,10 @@ public class ControllerGui implements Initializable, Serializable {
             int y = (int) pos.charAt(1)-48+1;
 
             if (button.isSelected()) {
-                System.out.println("clicked " +(x-1)+ " , " +(y-1));
                 addCountCard();
                 posCard.add(new Integer[]{x,y});
             }
             else {
-                System.out.println("unclicked " +(x-1)+ ", " +(y-1));
                 subCountCard();
 
                 for (Integer[] pair : posCard){
@@ -501,7 +496,6 @@ public class ControllerGui implements Initializable, Serializable {
             confirm.setDisable((countCard > 3) || (countCard<1) ||
                     (!gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(countCard)));
 
-            System.out.println("you have selected : " +countCard+ " cards");
         }
 
     }
@@ -524,11 +518,9 @@ public class ControllerGui implements Initializable, Serializable {
 
                     listCard.add(gameLogic.getGameTable().getCardfromBoard(posCard.get(0)[0],posCard.get(0)[1]));
 
-                    System.out.println("add Card at list");
 
                     gameLogic.getGameTable().setCardfromBoard(posCard.get(0)[0], posCard.get(0)[1], NONE);
 
-                    System.out.println("set NONE in gameTable");
 
                 }else{
                     String message = "Cards selected are not drawable. Choose other cards";
@@ -599,7 +591,6 @@ public class ControllerGui implements Initializable, Serializable {
     public void clearPosCard(){
         try {
             while(posCard != null){
-                System.out.println("clear pos : " + posCard.get(posCard.size()-1)[0] + " - " +posCard.get(posCard.size()-1)[1] );
                 posCard.remove(posCard.size()-1);
                 subCountCard();
             }
@@ -943,7 +934,6 @@ public class ControllerGui implements Initializable, Serializable {
     public void openLeaderboard(){
         Platform.runLater(() -> {
             try {
-                System.out.println("Opening Leaderboard");
                 Stage stage = new Stage();
                 stage.setResizable(false);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/leaderboard.fxml"));

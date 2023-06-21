@@ -72,13 +72,11 @@ private byte initLibrary = 0;
     @Override
     public void insert(ArrayList<Card> list, GameLogic gameLogic) {
 
-        System.out.println("in insert, GuiView");
         Platform.runLater(() -> {
             controllerGui.showArrayCards(list);
             controllerGui.setLabelMessage("Choose the column");
             controllerGui.enableColumnButton();
         });
-        System.out.println("refresh gui done, showCards");
 
         while (!controllerGui.getAllCardsInsert()){
             // wait until all cards are insert
@@ -99,7 +97,6 @@ private byte initLibrary = 0;
     @Override
     public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
 
-        System.out.println("in getCardFromTable, GuiView ...");
 
         while(!controllerGui.getConfirmCards()){
             //wait until get confirm is true
@@ -139,7 +136,6 @@ private byte initLibrary = 0;
             first = false;
         }
 
-        System.out.println("turn started ");
 
         Platform.runLater(() -> {
             controllerGui.setGameLogic(gameLogic); // updates the game logic in the controllerGUI

@@ -273,7 +273,6 @@ public class Client_Socket implements Serializable {
     }
 
     public void startGUI(GameInterface server,String guiIp,int num, String username) throws Exception {
-        System.out.println("socket");
         connectGUI(guiIp, 8080, server, num, username);
         try {
             //start the logic of the client

@@ -173,7 +173,6 @@ public class LogInController implements Serializable {
                 System.out.println(e);
             }
         }else{
-            System.out.println("New socket client");
             try{
                 String user = username.getText();
                 if (num > 1 && num < 5 && user.length() > 0) {
@@ -232,7 +231,6 @@ public class LogInController implements Serializable {
             }
         }else{
             //socket
-            System.out.println("sono in socket");
             try {
                 Client_Socket clientSocket = new Client_Socket();
                 String user = username2.getText();
