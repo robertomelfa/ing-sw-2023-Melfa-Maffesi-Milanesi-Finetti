@@ -451,8 +451,8 @@ public class ControllerMain implements Serializable {
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
+            setGamePlayers();
         }
-        setGamePlayers();
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         while(!finish){
             // update the players in gamelogic

@@ -315,7 +315,6 @@ public class Client_Socket implements Serializable {
     }
 
         public void clientLogicGui(GameInterface server) throws Exception {
-        System.out.println("started gui logic");
 
         new Thread(()->{
             int i = 0;

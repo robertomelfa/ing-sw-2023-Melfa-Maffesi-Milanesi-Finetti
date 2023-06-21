@@ -120,13 +120,6 @@ private byte initLibrary = 0;
     public GameLogic getTurn(GameLogic gameLogic) {
 
 
-//        da capire come fare a inizializzare con gli altri player
-//        controllerGui.updateCurrPlayer();
-//        if (initLibrary < gameLogic.getGame().getNumOfPlayers()){
-//            controllerGui.setLibraries(gameLogic.getGame().getCurrentPlayer().getLibrary());
-//            initLibrary++;
-//        }
-
         if (first){
             Platform.runLater(()-> {
                 controllerGui.setPlayerObj(gameLogic);
