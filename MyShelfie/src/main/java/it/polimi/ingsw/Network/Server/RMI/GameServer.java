@@ -2,7 +2,6 @@ package it.polimi.ingsw.Network.Server.RMI;
 
 import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.RMI.Client;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
 import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 import it.polimi.ingsw.Network.Lock;
@@ -41,8 +40,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
      * send the game table only to a specific client
      * @param board the game table we want to send to the client
 
-     * @throws RemoteException
-     * @throws Exception
+     * @throws RemoteException Exception
+     * @throws Exception Exception
      */
     public void gameTableToClient(GameTable board, GameClientInterface client) throws RemoteException,Exception{
         client.receiveGameTable(board);
@@ -50,9 +49,8 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
 
     /**
-     * return the value of the firstPlayer variable, used to understand who's the player who need to perform
+     * @return the value of the firstPlayer variable, used to understand who's the player who need to perform
      * the action of choosing the number of players allowed in the game
-     * @return
      */
     public boolean isFirstPlayer(){
         return this.firstPlayer;
@@ -65,7 +63,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
     /**
      * used to send string message that will be displayed on all the clients terminal
      * @param msg string that we want to send to all the clients
-     * @throws RemoteException
+     * @throws RemoteException Exception
      */
 
     public void messageToClient(String msg, GameClientInterface client) throws RemoteException{
@@ -113,9 +111,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
                 } catch (Exception e) {
                     try {
                         release();
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (InterruptedException ex) {
+                    } catch (RemoteException | InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
@@ -134,7 +130,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
             temp = false;
             return true;
         }
-        return temp;
+        return false;
     }
 
 

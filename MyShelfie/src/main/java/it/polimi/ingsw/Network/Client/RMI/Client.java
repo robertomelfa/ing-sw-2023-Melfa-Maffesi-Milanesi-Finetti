@@ -12,10 +12,7 @@ import it.polimi.ingsw.View.ViewClient;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.NoSuchObjectException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -25,7 +22,6 @@ import java.util.TimerTask;
 
 public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
 
-//    private CLIView view=new CLIView(); // view
     private ViewClient view;
 
     private GameInterface serverRMI;
@@ -39,7 +35,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     /**
      * call the viewTable() method to print the game table on the client command line
      * @param board the game table we want to display
-     * @throws RemoteException
+     * @throws RemoteException Exception
      */
     public void receiveGameTable(GameTable board) throws RemoteException{
         view.viewGameTable(board);
@@ -48,7 +44,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     /**
      * call the viewGrid() method to print the library on the client command line
      * @param library the library we want to display
-     * @throws RemoteException
+     * @throws RemoteException Exception
      */
     public void receiveLibrary(Library library) throws RemoteException{
         view.viewLibrary(library);
@@ -57,7 +53,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     /**
      *
      * @param obj the player object
-     * @throws RemoteException
+     * @throws RemoteException Exception
      */
     public void receivePlayerObj(PlayerObj obj) throws RemoteException{
         view.viewPlayerObj(obj);
@@ -68,8 +64,8 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * use the getCardFromTable() and insert() methods defined in the model
      * @param gameLogic to perform the getCardFromTable method
      * @param server who the client is connected to
-     * @throws RemoteException
-     * @throws Exception
+     * @throws RemoteException Exception
+     * @throws Exception Exception
      */
     public GameLogic receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
         gameLogic = view.getTurn(gameLogic);
@@ -80,7 +76,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
     /**
      * print a string message
      * @param msg string we want to print
-     * @throws RemoteException
+     * @throws RemoteException Exception
      */
     public void receiveMessage(String msg) throws RemoteException{
         if (msg.contains("Leaderboard")){
@@ -102,8 +98,8 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @param server RMI server where the client will connect
      * @param client client wants to connect to the server
      * @param controller controller of the game
-     * @throws RemoteException
-     * @throws Exception
+     * @throws RemoteException Exception
+     * @throws Exception Exception
      */
     public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
         view = new CLIView();
@@ -131,7 +127,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
                 client1 = new ClientClass(client);
                 client1.setPlayer(name);
                 server.updatePlayers(client1);
-            }catch(Exception e){
+            }catch(Exception ignored){
             }
         }else{
             if(controller.getClientList().size() < controller.getNumPlayers()){
@@ -147,7 +143,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
                     client1 = new ClientClass(client);
                     client1.setPlayer(name);
                     server.updatePlayers(client1);
-                }catch(Exception e){
+                }catch(Exception ignored){
                 }
             }
         }
@@ -162,15 +158,25 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * print a string to CLI and return a string taken from input
      * @param viewMessage string we want to print
      * @return the string taken from input
-     * @throws RemoteException
+     * @throws RemoteException Exception
      */
-
     public String getStringFromClient(String viewMessage) throws RemoteException{
         Scanner in = new Scanner(System.in);
         view.viewString(viewMessage);
         return in.nextLine();
     }
 
+    /**
+     * method that connect the player to the gui view (first)
+     *
+     * @param server RMI server where the client will connect
+     * @param client client wants to connect to the server
+     * @param controller controller of the game
+     * @param num num of players in the game
+     * @param username name of the player connecting
+     * @throws RemoteException Exception
+     * @throws Exception Exception
+     */
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
         ClientClass client1;
         server.updateNumPlayers(num);
@@ -180,7 +186,16 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         server.updatePlayers(client1);
     }
 
-
+    /**
+     * method that connect the player to the gui view (not first)
+     *
+     * @param server RMI server where the client will connect
+     * @param client client wants to connect to the server
+     * @param controller controller of the game
+     * @param username name of the player connecting
+     * @throws RemoteException Exception
+     * @throws Exception Exception
+     */
     public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception {
         ClientClass client1;
         client1 = new ClientClass(client);
@@ -189,6 +204,10 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         server.updatePlayers(client1);
     }
 
+    /**
+     * method that sets the controller of the gui to the view
+     * @param controllerGui controller of the gui
+     */
     public void setControllerView(ControllerGui controllerGui){
         view = new GUIView();
         view.setController(controllerGui);
@@ -196,6 +215,10 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
 
     public void ping() throws RemoteException{}
 
+    /**
+     * kill the program
+     * @throws NoSuchObjectException Exception
+     */
     public void kill() throws NoSuchObjectException {
         try{
             UnicastRemoteObject.unexportObject(this, true);
@@ -205,14 +228,19 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
 
     }
 
-    public void viewPoints() throws RemoteException{
-        viewPoints();
-    }
-
+    /**
+     * display the points of the players
+     * @param playerList list of player in the game
+     * @throws RemoteException Exception
+     */
     public void receivePoint(ArrayList<Player> playerList) throws RemoteException{
         view.viewPoints(playerList);
     }
 
+    /**
+     * timer
+     * @throws RemoteException Exception
+     */
     private synchronized void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -220,9 +248,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
             public void run() {
                 try {
                     serverRMI.release();
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
+                } catch (RemoteException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 System.exit(0);

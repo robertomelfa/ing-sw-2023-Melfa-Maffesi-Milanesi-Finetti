@@ -2,13 +2,9 @@ package it.polimi.ingsw.Network.Client.Socket;
 
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
-import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.Messages.MessageType;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class ClientClass implements Serializable {
     private Player player; // player match to the client
@@ -44,7 +40,7 @@ public class ClientClass implements Serializable {
     /**
      * initialize a new Player and set it to the local player variable
      * @param name the username of the player in this client
-     * @throws Exception
+     * @throws Exception Exception
      */
     public void setPlayer(String name) throws Exception{
         player = new Player(name);
@@ -53,7 +49,7 @@ public class ClientClass implements Serializable {
     /**
      *
      * @param player the player we want to set in the client
-     * @throws Exception
+     * @throws Exception Exception
      */
     public void setPlayer(Player player) throws Exception{
         this.player = player;

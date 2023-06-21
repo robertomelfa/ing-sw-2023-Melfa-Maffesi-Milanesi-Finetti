@@ -7,6 +7,11 @@ public class Message implements Serializable {
     private MessageType type;
     private String message;
 
+    /**
+     * constructor
+     * @param type type message
+     * @param message string message
+     */
     public  Message(MessageType type, String message){
         this.type=type;
         this.message=message;
