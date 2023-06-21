@@ -22,22 +22,31 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ClientMain extends Application implements Serializable {
+
+
+    /**
+     * main that start the game for clients
+     * @param args args main
+     * @throws Exception Exception
+     */
     public static void main(String[] args) throws Exception {
 
-        System.out.printf(" ██████   ██████             █████████  █████               ████     ██████   ███          \n" +
-                          "░░██████ ██████             ███░░░░░███░░███               ░░███    ███░░███ ░░░           \n" +
-                          " ░███░█████░███  █████ ████░███    ░░░  ░███████    ██████  ░███   ░███ ░░░  ████   ██████ \n" +
-                          " ░███░░███ ░███ ░░███ ░███ ░░█████████  ░███░░███  ███░░███ ░███  ███████   ░░███  ███░░███\n" +
-                          " ░███ ░░░  ░███  ░███ ░███  ░░░░░░░░███ ░███ ░███ ░███████  ░███ ░░░███░     ░███ ░███████ \n" +
-                          " ░███      ░███  ░███ ░███  ███    ░███ ░███ ░███ ░███░░░   ░███   ░███      ░███ ░███░░░  \n" +
-                          " █████     █████ ░░███████ ░░█████████  ████ █████░░██████  █████  █████     █████░░██████ \n" +
-                          "░░░░░     ░░░░░   ░░░░░███  ░░░░░░░░░  ░░░░ ░░░░░  ░░░░░░  ░░░░░  ░░░░░     ░░░░░  ░░░░░░  \n" +
-                          "                  ███ ░███                                                                 \n" +
-                          "                 ░░██████                                                                  \n" +
-                          "                  ░░░░░░                                                                   \n");
+        System.out.print("""
+                 ██████   ██████             █████████  █████               ████     ██████   ███         \s
+                ░░██████ ██████             ███░░░░░███░░███               ░░███    ███░░███ ░░░          \s
+                 ░███░█████░███  █████ ████░███    ░░░  ░███████    ██████  ░███   ░███ ░░░  ████   ██████\s
+                 ░███░░███ ░███ ░░███ ░███ ░░█████████  ░███░░███  ███░░███ ░███  ███████   ░░███  ███░░███\s
+                 ░███ ░░░  ░███  ░███ ░███  ░░░░░░░░███ ░███ ░███ ░███████  ░███ ░░░███░     ░███ ░███████\s
+                 ░███      ░███  ░███ ░███  ███    ░███ ░███ ░███ ░███░░░   ░███   ░███      ░███ ░███░░░ \s
+                 █████     █████ ░░███████ ░░█████████  ████ █████░░██████  █████  █████     █████░░██████\s
+                ░░░░░     ░░░░░   ░░░░░███  ░░░░░░░░░  ░░░░ ░░░░░  ░░░░░░  ░░░░░  ░░░░░     ░░░░░  ░░░░░░ \s
+                                  ███ ░███                                                                \s
+                                 ░░██████                                                                 \s
+                                  ░░░░░░                                                                  \s
+                """);
 
 
-        Boolean selection = false;
+        boolean selection = false;
         System.out.println("[CLIENT] is running");
         CLIView view = new CLIView();
         String port = view.requestIP();
@@ -53,9 +62,7 @@ public class ClientMain extends Application implements Serializable {
                 System.out.println("Input not received within 30 seconds. Disconnecting from server ..-");
                 try {
                     server.release();
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
+                } catch (RemoteException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 System.exit(0);
@@ -67,21 +74,21 @@ public class ClientMain extends Application implements Serializable {
             System.out.println("Do you want to use UI? [yes/no]");
             input = scanner.next();
             switch (input) {
-                case "yes":
+                case "yes" -> {
                     timer.cancel();
                     selection = true;
-                    launch("--ipport="+port);
-                    break;
-                case "no":
+                    launch("--ipport=" + port);
+                }
+                case "no" -> {
                     selection = true;
                     server.setFirstPlayer();
-                    do{
+                    do {
                         System.out.println("Choose A to start a Socket client\nChoose B to start a RMI client");
 
                         if (scanner.hasNext()) {
                             input = scanner.next();
                             switch (input.toUpperCase()) {
-                                case "A":
+                                case "A" -> {
                                     timer.cancel();
                                     if (server.isLocked()) {
                                         System.out.println("Another client is connecting");
@@ -89,9 +96,9 @@ public class ClientMain extends Application implements Serializable {
                                     server.block();
                                     System.out.println("Starting Socket");
                                     Client_Socket clientS = new Client_Socket();
-                                    clientS.start(server,port);
-                                    break;
-                                case "B":
+                                    clientS.start(server, port);
+                                }
+                                case "B" -> {
                                     timer.cancel();
                                     if (server.isLocked()) {
                                         System.out.println("Another client is connecting");
@@ -101,26 +108,30 @@ public class ClientMain extends Application implements Serializable {
                                         GameClientInterface clientR = new Client();
                                         clientR.connection(server, clientR, server.getController());
                                         server.release();
-                                    } catch (Exception e) {
+                                    } catch (Exception ignored) {
                                     }
-                                    break;
-
+                                }
                             }
                         }
                     }
-                    while (!input.toUpperCase().equals("A") && !input.toUpperCase().equals("B"));
-
+                    while (!input.equalsIgnoreCase("A") && !input.equalsIgnoreCase("B"));
+                }
             }
         }
     }
 
+    /**
+     * method that start the gui
+     * @param stage stage
+     * @throws Exception Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogInScreen.fxml"));
-        Parent root = (Parent)fxmlLoader.load();
+        Parent root = fxmlLoader.load();
         Parameters parameters = getParameters();
         String ip = parameters.getNamed().get("ipport");
-        LogInController loginController = fxmlLoader.<LogInController>getController();
+        LogInController loginController = fxmlLoader.getController();
         loginController.setIP(ip);
         loginController.initialize();
         fxmlLoader.setController(loginController);
