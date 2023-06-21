@@ -246,13 +246,6 @@ public class ControllerMain implements Serializable {
                 }
             }
             this.gameLogic=found.getGamelogic();
-            for (int i=0; i<gameLogic.getPlayers().size(); i++){
-                for (int j=0; j<found.getGamelogic().getPlayers().size();j++){
-                    if (found.getGamelogic().getPlayers().get(j).getNickname().equals(gameLogic.getPlayers().get(i).getNickname())){
-                        gameLogic.setPlayers(found.getGamelogic().getPlayers().get(j));
-                    }
-                }
-            }
             this.chair=found.getChair();
             this.listIterator=found.getListIterator();
             this.backup=found;
@@ -451,8 +444,8 @@ public class ControllerMain implements Serializable {
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
-            setGamePlayers();
         }
+        setGamePlayers();
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         while(!finish){
             // update the players in gamelogic
