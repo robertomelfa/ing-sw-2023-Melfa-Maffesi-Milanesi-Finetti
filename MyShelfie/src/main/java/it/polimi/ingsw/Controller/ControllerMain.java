@@ -195,10 +195,14 @@ public class ControllerMain implements Serializable {
                     System.out.println("Checking "+file.getName());
                     reader.close();
                     boolean resetGame=true;
-                    for (int i=0; i<clientList.size(); i++){
-                        if(!temp.getNicknames().contains(clientList.get(i).getPlayer().getNickname())){
-                            resetGame=false;
+                    if (clientList.size()==temp.getPlayers().size()){
+                        for (int i=0; i<clientList.size(); i++){
+                            if(!temp.getNicknames().contains(clientList.get(i).getPlayer().getNickname())){
+                                resetGame=false;
+                            }
                         }
+                    }else {
+                        resetGame=false;
                     }
                     if(resetGame){
                         found=temp;
@@ -444,8 +448,8 @@ public class ControllerMain implements Serializable {
         resumeBackup();
         if(!isResumedGame){
             shufflePlayers();
+            setGamePlayers();
         }
-        setGamePlayers();
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         while(!finish){
             // update the players in gamelogic

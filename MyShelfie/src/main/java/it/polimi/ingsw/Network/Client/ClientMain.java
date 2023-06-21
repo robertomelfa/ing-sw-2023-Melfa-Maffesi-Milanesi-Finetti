@@ -64,7 +64,7 @@ public class ClientMain extends Application implements Serializable {
         Timer timer = new Timer(true);
         timer.schedule(task, 30000);
         while (!selection){
-            System.out.println("Do you want to use UI?");
+            System.out.println("Do you want to use UI? [yes/no]");
             input = scanner.next();
             switch (input) {
                 case "yes":
