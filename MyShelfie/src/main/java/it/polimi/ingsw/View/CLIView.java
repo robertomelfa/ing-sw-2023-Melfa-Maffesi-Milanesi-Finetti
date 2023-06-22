@@ -227,12 +227,12 @@ public class CLIView implements ViewClient, Serializable {
             do{
                 String tempX,tempY;
                 do {
-                    System.out.println("Coordinate x Card 1");
+                    System.out.println("Row Card 1");
                     tempX = in.nextLine();
                 }while (!tempX.matches("\\d"));
                 x1 = Integer.parseInt(tempX);
                 do {
-                    System.out.println("Coordinate y Card 1");
+                    System.out.println("Column y Card 1");
                     tempY = in.nextLine();
                 }while (!tempY.matches("\\d"));
                 y1 = Integer.parseInt(tempY);
@@ -251,25 +251,25 @@ public class CLIView implements ViewClient, Serializable {
             do{
                 String tempX,tempY;
                 do {
-                    System.out.println("Coordinate x Card 1");
+                    System.out.println("Row Card 1");
                     tempX = in.nextLine();
                 }while (!tempX.matches("\\d"));
                 x1 = Integer.parseInt(tempX);
 
                 do {
-                    System.out.println("Coordinate y Card 1");
+                    System.out.println("Column Card 1");
                     tempY = in.nextLine();
                 }while (!tempY.matches("\\d"));
                 y1 = Integer.parseInt(tempY);
 
                 do {
-                    System.out.println("Coordinate x Card 2");
+                    System.out.println("Row Card 2");
                     tempX = in.nextLine();
                 }while (!tempX.matches("\\d"));
                 x2 = Integer.parseInt(tempX);
 
                 do {
-                    System.out.println("Coordinate y Card 2");
+                    System.out.println("Column Card 2");
                     tempY = in.nextLine();
                 }while (!tempY.matches("\\d"));
                 y2 = Integer.parseInt(tempY);
@@ -291,37 +291,37 @@ public class CLIView implements ViewClient, Serializable {
             do{
                 String tempX,tempY;
                 do {
-                    System.out.println("Coordinate x Card 1");
+                    System.out.println("Row Card 1");
                     tempX = in.nextLine();
                 }while (!tempX.matches("\\d"));
                 x1 = Integer.parseInt(tempX);
 
                 do {
-                    System.out.println("Coordinate y Card 1");
+                    System.out.println("Column Card 1");
                     tempY = in.nextLine();
                 }while (!tempY.matches("\\d"));
                 y1 = Integer.parseInt(tempY);
 
                 do {
-                    System.out.println("Coordinate x Card 2");
+                    System.out.println("Row Card 2");
                     tempX = in.nextLine();
                 }while (!tempX.matches("\\d"));
                 x2 = Integer.parseInt(tempX);
 
                 do {
-                    System.out.println("Coordinate y Card 2");
+                    System.out.println("Column Card 2");
                     tempY = in.nextLine();
                 }while (!tempY.matches("\\d"));
                 y2 = Integer.parseInt(tempY);
 
                 do {
-                    System.out.println("Coordinate x Card 3");
+                    System.out.println("Row Card 3");
                     tempX = in.nextLine();
                 }while (!tempX.matches("\\d"));
                 x3 = Integer.parseInt(tempX);
 
                 do {
-                    System.out.println("Coordinate y Card 3");
+                    System.out.println("Column Card 3");
                     tempY = in.nextLine();
                 }while (!tempY.matches("\\d"));
                 y3 = Integer.parseInt(tempY);
