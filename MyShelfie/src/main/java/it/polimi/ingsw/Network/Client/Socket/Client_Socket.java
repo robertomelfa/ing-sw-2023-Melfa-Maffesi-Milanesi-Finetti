@@ -3,9 +3,11 @@ package it.polimi.ingsw.Network.Client.Socket;
 import it.polimi.ingsw.Model.*;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.View.*;
-import javafx.application.Platform;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
+import it.polimi.ingsw.View.CLI.CLIView;
+import it.polimi.ingsw.View.GUI.ControllerGui;
+import it.polimi.ingsw.View.GUI.GUIView;
+import it.polimi.ingsw.View.ViewClient_Interface;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,9 +28,9 @@ public class Client_Socket implements Serializable {
 
     private Socket socket;
 
-    private GameInterface serverRMI;
+    private ServerRMI_Interface serverRMI;
 
-    private ViewClient view;
+    private ViewClient_Interface view;
 
     private ObjectInputStream ois;
 
@@ -41,10 +43,10 @@ public class Client_Socket implements Serializable {
     /**
      * The client choose the game he wants to connect to choosing the corresponding port
      *
-     * @throws Exception Exception
+     * @throws Exception
      */
 
-    public  void start(GameInterface server, String port) throws Exception{
+    public  void start(ServerRMI_Interface server, String port) throws Exception{
         view = new CLIView();
         connect(port,8080, server);
         try {
@@ -63,11 +65,11 @@ public class Client_Socket implements Serializable {
      * @param host server we want to connect
      * @param port port of the server
      */
-    public  void connect(String host,int port, GameInterface server) throws ClassNotFoundException, Exception{
+    public  void connect(String host,int port, ServerRMI_Interface server) throws ClassNotFoundException, Exception{
         try {
-            this.socket = new Socket(host, port);
+            Socket socket = new Socket(host, port);
+            this.socket = socket;
             serverRMI = server;
-            view.viewString("Client is running...");
             Message msg;
             Scanner in = new Scanner(System.in);
             msg=receiveMessage();
@@ -104,6 +106,7 @@ public class Client_Socket implements Serializable {
                 sendMessage(msg);
                 msg = new Message(MessageType.sendBoolean, "false");
                 sendMessage(msg);
+                view.viewString("Waiting other players...\n");
                 server.release();
             }
             timer.cancel();
@@ -124,9 +127,9 @@ public class Client_Socket implements Serializable {
      * handles the turn from the client side. The client recive a message from the server and perform a different
      * action based on the typer of the message received. The action the client can perform are receiving the game table
      * receiving the library, picking the cards from the table.
-     * @throws Exception Exception
+     * @throws Exception
      */
-    public void clientlogic(GameInterface server) throws Exception{
+    public void clientlogic(ServerRMI_Interface server) throws Exception{
         // get message from server
         Message msg;
         Scanner in = new Scanner(System.in);
@@ -180,9 +183,9 @@ public class Client_Socket implements Serializable {
     /**
      *
      * @return the Message received from the socket input
-     * @throws IOException Exception
-     * @throws ClassNotFoundException Exception
-     * @throws Exception Exception
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws Exception
      */
     public Message receiveMessage() throws IOException, ClassNotFoundException, Exception {
         ois = new ObjectInputStream(socket.getInputStream());
@@ -193,9 +196,9 @@ public class Client_Socket implements Serializable {
      * send a message to the server
      *
      * @param msg the message we want to send
-     * @throws IOException Exception
-     * @throws ClassNotFoundException Exception
-     * @throws Exception Exception
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws Exception
      */
     public void sendMessage(Message msg) throws IOException, ClassNotFoundException, Exception {
         oos = new ObjectOutputStream(socket.getOutputStream());
@@ -204,8 +207,8 @@ public class Client_Socket implements Serializable {
 
     /**
      * @return the library we received in socket input
-     * @throws IOException Exception
-     * @throws ClassNotFoundException Exception
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     public Library receiveLibrary() throws IOException, ClassNotFoundException {
         ois = new ObjectInputStream(socket.getInputStream());
@@ -214,8 +217,8 @@ public class Client_Socket implements Serializable {
     /**
      *
      * @return the gameLogic received in socket input
-     * @throws IOException Exception
-     * @throws ClassNotFoundException Exception
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     public GameLogic receiveGameLogic() throws IOException, ClassNotFoundException {
         ois = new ObjectInputStream(socket.getInputStream());
@@ -225,8 +228,8 @@ public class Client_Socket implements Serializable {
     /**
      *
      * @return the player's object
-     * @throws IOException Exception
-     * @throws ClassNotFoundException Exception
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     public PlayerObj receivePlayerObj() throws IOException, ClassNotFoundException {
         ois = new ObjectInputStream(socket.getInputStream());
@@ -241,8 +244,8 @@ public class Client_Socket implements Serializable {
     /**
      *
      * @param num number we want to send
-     * @throws IOException Exception
-     * @throws ClassNotFoundException Exception
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     public void sendInt(int num) throws IOException, ClassNotFoundException {
         // dovro aggiungere tipologia messaggio
@@ -255,8 +258,8 @@ public class Client_Socket implements Serializable {
      * send the gamelogic to the server
      *
      * @param gameLogic the gamelogic we want to send
-     * @throws IOException Exception
-     * @throws ClassNotFoundException Exception
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     public void sendGameLogic(GameLogic gameLogic) throws IOException, ClassNotFoundException {
         // dovro aggiungere tipologia messaggio
@@ -264,25 +267,13 @@ public class Client_Socket implements Serializable {
         oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(gameLogic);
     }
-    /**
-     * method that sets the controller of the gui to the view
-     * @param controllerGui controller of the gui
-     */
+
     public void setControllerGui(ControllerGui controllerGui){
         view = new GUIView();
         view.setController(controllerGui);
     }
 
-    /**
-     * method that start the client socket with gui
-     *
-     * @param server RMI server where the client will connect
-     * @param guiIp ip of the gui
-     * @param num num of players in the game
-     * @param username name of the player
-     * @throws Exception Exception
-     */
-    public void startGUI(GameInterface server,String guiIp,int num, String username) throws Exception {
+    public void startGUI(ServerRMI_Interface server, String guiIp, int num, String username) throws Exception {
         connectGUI(guiIp, 8080, server, num, username);
         try {
             //start the logic of the client
@@ -296,19 +287,10 @@ public class Client_Socket implements Serializable {
         }
     }
 
-    /**
-     * method that connect the player to the gui view
-     *
-     * @param host name of the host
-     * @param port port of the host
-     * @param server RMI server where the client will connect
-     * @param num num of players
-     * @param username name of the player
-     * @throws IOException Exception
-     */
-    public void connectGUI(String host, int port, GameInterface server, int num, String username) throws IOException {
+    public void connectGUI(String host, int port, ServerRMI_Interface server, int num, String username) throws IOException {
         try {
-            this.socket = new Socket(host, port);
+            Socket socket = new Socket(host, port);
+            this.socket = socket;
             Message msg;
             msg = receiveMessage();
             if (msg.getType() == requestNumPlayer) {
@@ -324,19 +306,16 @@ public class Client_Socket implements Serializable {
             server.release();
         } catch (IOException e) {
             view.viewString("client fatal error");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    /**
-     * handles the turn from the client side. The client recive a message from the server and perform a different
-     * action based on the typer of the message received. The action the client can perform are receiving the game table
-     * receiving the library, picking the cards from the table. (gui)
-     * @throws Exception Exception
-     */
-    public void clientLogicGui(GameInterface server) throws Exception {
-        System.out.println("started gui logic");
+        public void clientLogicGui(ServerRMI_Interface server) throws Exception {
 
         new Thread(()->{
             int i = 0;
@@ -351,7 +330,9 @@ public class Client_Socket implements Serializable {
                                 GameTable table = receiveGameTable();
 
                                 view.viewGameTable(table);
-                            } catch (IOException | RuntimeException | ClassNotFoundException e) {
+                            } catch (IOException e) {
+                                System.out.println("error receiving gameTable");
+                            } catch (RuntimeException | ClassNotFoundException e) {
                                 System.out.println("error receiving gameTable");
                             }
                         } else if (msg.getType() == MessageType.receiveLibrary) {
@@ -380,7 +361,9 @@ public class Client_Socket implements Serializable {
                             PlayerObj obj = null;
                             try {
                                 obj = receivePlayerObj();
-                            } catch (IOException | ClassNotFoundException e) {
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (ClassNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
                             view.viewPlayerObj(obj);
@@ -394,7 +377,9 @@ public class Client_Socket implements Serializable {
                         } else if (msg.getType() == MessageType.receivePoint) {
                             try {
                                 view.viewPoints(receivePlayers());
-                            } catch (IOException | ClassNotFoundException e) {
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (ClassNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
                         } else if (msg.getType() == MessageType.closeGame) {
@@ -438,10 +423,6 @@ public class Client_Socket implements Serializable {
         view = new CLIView();
     }
 
-    /**
-     * timer
-     * @throws RemoteException Exception
-     */
     private synchronized void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -449,7 +430,9 @@ public class Client_Socket implements Serializable {
             public void run() {
                 try {
                     serverRMI.release();
-                } catch (RemoteException | InterruptedException e) {
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 System.exit(0);

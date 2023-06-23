@@ -1,6 +1,8 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.CLI;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.GUI.ControllerGui;
+import it.polimi.ingsw.View.ViewClient_Interface;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 import static it.polimi.ingsw.Model.Card.NONE;
 import static it.polimi.ingsw.Model.Card.NOT;
 
-public class CLIView implements ViewClient, Serializable {
+public class CLIView implements ViewClient_Interface, Serializable {
 
     String username;
     GameLogic gameLogic;

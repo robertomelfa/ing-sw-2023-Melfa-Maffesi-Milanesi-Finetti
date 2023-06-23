@@ -1,13 +1,14 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.ViewClient_Interface;
 import javafx.application.Platform;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GUIView implements ViewClient, Serializable {
+public class GUIView implements ViewClient_Interface, Serializable {
 
 private ControllerGui controllerGui = new ControllerGui();
 private GameLogic gameLogic;

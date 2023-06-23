@@ -14,7 +14,7 @@ import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.Server;
 
-import it.polimi.ingsw.View.CLIView;
+import it.polimi.ingsw.View.CLI.CLIView;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

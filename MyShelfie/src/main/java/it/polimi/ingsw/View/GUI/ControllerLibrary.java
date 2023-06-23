@@ -1,17 +1,13 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.GUI;
 
-import it.polimi.ingsw.View.PathImageCards;
-import it.polimi.ingsw.Model.Card;
 import it.polimi.ingsw.Model.Library;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.Serializable;
-import java.util.Random;
 
 public class ControllerLibrary implements Serializable {
 

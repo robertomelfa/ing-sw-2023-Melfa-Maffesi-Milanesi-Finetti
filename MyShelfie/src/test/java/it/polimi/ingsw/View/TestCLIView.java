@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.CLI.CLIView;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

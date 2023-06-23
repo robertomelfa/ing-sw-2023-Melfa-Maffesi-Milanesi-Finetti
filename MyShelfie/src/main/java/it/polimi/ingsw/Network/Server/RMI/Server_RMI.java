@@ -2,15 +2,15 @@ package it.polimi.ingsw.Network.Server.RMI;
 
 import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
-import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+import it.polimi.ingsw.Network.Client.RMI.ClientRMI_Interface;
+import it.polimi.ingsw.Network.Client.ClientHandler;
 import it.polimi.ingsw.Network.Lock;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class GameServer extends UnicastRemoteObject implements GameInterface, Serializable {
+public class Server_RMI extends UnicastRemoteObject implements ServerRMI_Interface, Serializable {
 
     private ControllerMain controller;
     private boolean firstPlayer = true;
@@ -21,7 +21,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     private boolean temp = false;
 
-    public GameServer() throws RemoteException{
+    public Server_RMI() throws RemoteException{
         super();
     }
 
@@ -43,7 +43,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
      * @throws RemoteException Exception
      * @throws Exception Exception
      */
-    public void gameTableToClient(GameTable board, GameClientInterface client) throws RemoteException,Exception{
+    public void gameTableToClient(GameTable board, ClientRMI_Interface client) throws RemoteException,Exception{
         client.receiveGameTable(board);
     }
 
@@ -66,7 +66,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
      * @throws RemoteException Exception
      */
 
-    public void messageToClient(String msg, GameClientInterface client) throws RemoteException{
+    public void messageToClient(String msg, ClientRMI_Interface client) throws RemoteException{
         client.receiveMessage(msg);
     }
 
@@ -79,7 +79,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
         this.controller.setNumPlayers(num);
     }
 
-    public void updatePlayers(ClientClass client) throws RemoteException{
+    public void updatePlayers(ClientHandler client) throws RemoteException{
         this.controller.addClient(client);
     }
 
@@ -97,7 +97,7 @@ public class GameServer extends UnicastRemoteObject implements GameInterface, Se
 
     public synchronized boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
 
-    public void newClient(GameClientInterface client) throws RemoteException{
+    public void newClient(ClientRMI_Interface client) throws RemoteException{
         isConnecting = true;
         Thread thread = new Thread(()->{
             while(isConnecting){

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Network.Server;
 
 import it.polimi.ingsw.Controller.ControllerMain;
-import it.polimi.ingsw.Controller.Lobby;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.Network.Server.RMI.GameServer;
+import it.polimi.ingsw.Controller.LobbyInterface;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
+import it.polimi.ingsw.Network.Server.RMI.Server_RMI;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
 
 import java.io.IOException;
@@ -19,9 +19,9 @@ public class Server implements Serializable {
 
     private static Server_Socket serverSocket;
 
-    private static GameInterface serverRMI;
+    private static ServerRMI_Interface serverRMI;
 
-    private static Lobby lobby;
+    private static LobbyInterface lobby;
 
     private static Registry registry;
 
@@ -35,9 +35,9 @@ public class Server implements Serializable {
 
     public Server_Socket getServerSocket() {return this.serverSocket;}
 
-    public GameInterface getServerRMI() throws RemoteException{return  this.serverRMI;}
+    public ServerRMI_Interface getServerRMI() throws RemoteException{return  this.serverRMI;}
 
-    public Lobby getLobby(){
+    public LobbyInterface getLobby(){
         return this.lobby;
     }
 
@@ -48,10 +48,10 @@ public class Server implements Serializable {
 
     public static void start() throws RemoteException, Exception {
         serverSocket = new Server_Socket();
-        serverRMI = new GameServer();
+        serverRMI = new Server_RMI();
         registry = LocateRegistry.createRegistry(1099);
         registry.rebind("GameInterface", serverRMI);
-        lobby = new Lobby(serverSocket, serverRMI);
+        lobby = new LobbyInterface(serverSocket, serverRMI);
         Runnable task1 = new startSocketServer();
         Runnable task2 = new startRMIServer();
         thread1 = new Thread(task1);
@@ -94,7 +94,7 @@ class startRMIServer extends Server implements Runnable{
     @Override
     public void run(){
         try{
-            GameInterface server = getServerRMI();
+            ServerRMI_Interface server = getServerRMI();
             try{
                 server.start(getLobby().getController());
             }catch (Exception e){}

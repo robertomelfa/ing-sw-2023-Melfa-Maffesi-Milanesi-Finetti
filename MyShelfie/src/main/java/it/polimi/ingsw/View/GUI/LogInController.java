@@ -1,12 +1,9 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.GUI;
 
-import it.polimi.ingsw.Network.Client.RMI.Client;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.RMI.ClientRMI_Interface;
+import it.polimi.ingsw.Network.Client.RMI.Client_RMI;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
-import it.polimi.ingsw.Network.Messages.Message;
-import it.polimi.ingsw.Network.Messages.MessageType;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import javafx.application.Application;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -28,7 +23,7 @@ import java.util.TimerTask;
 public class LogInController implements Serializable {
 
     private Registry registry;
-    private GameInterface server;
+    private ServerRMI_Interface server;
     private String ip;
 
     @FXML
@@ -62,7 +57,7 @@ public class LogInController implements Serializable {
         Platform.runLater(() -> {
             try {
                 Registry registry = LocateRegistry.getRegistry(ip, 1099);
-                GameInterface server = (GameInterface) registry.lookup("GameInterface");
+                ServerRMI_Interface server = (ServerRMI_Interface) registry.lookup("GameInterface");
                 this.registry = registry;
                 this.server = server;
             }catch (Exception e){
@@ -161,8 +156,8 @@ public class LogInController implements Serializable {
                     Stage stage = (Stage) start.getScene().getWindow();
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
                     stage.setResizable(false);
-                    GameClientInterface client = new Client();
-                    ((Client) client).setControllerView(fxmlLoader.getController());
+                    ClientRMI_Interface client = new Client_RMI();
+                    ((Client_RMI) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), num, user);
                     server.release();
                 } else {
@@ -213,13 +208,13 @@ public class LogInController implements Serializable {
             // rmi
             try {
                 String user = username2.getText();
-                GameClientInterface client = new Client();
+                ClientRMI_Interface client = new Client_RMI();
                 if(!server.getController().checkExistingName(user) && user.length() >= 0){
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/MyShelfieGui.fxml"));
                     Stage stage = (Stage) username2.getScene().getWindow();
                     stage.setResizable(false);
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
-                    ((Client) client).setControllerView(fxmlLoader.getController());
+                    ((Client_RMI) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), user);
                     server.release();
                 } else {

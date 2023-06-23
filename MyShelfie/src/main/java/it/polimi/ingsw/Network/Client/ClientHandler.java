@@ -1,12 +1,12 @@
-package it.polimi.ingsw.Network.Client.Socket;
+package it.polimi.ingsw.Network.Client;
 
 import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.RMI.ClientRMI_Interface;
 
 import java.io.Serializable;
 import java.net.Socket;
 
-public class ClientClass implements Serializable {
+public class ClientHandler implements Serializable {
     private Player player; // player match to the client
 
     private transient Socket socket;  // socket client
@@ -15,13 +15,13 @@ public class ClientClass implements Serializable {
 
     private boolean gui = false;
 
-    private  GameClientInterface RMIclient;  // rmi client
+    private ClientRMI_Interface RMIclient;  // rmi client
 
     /**
      * constructor for the ClientClass
      * @param client the socket the client is connected to
      */
-    public ClientClass(Socket client){
+    public ClientHandler(Socket client){
         this.socket = client;
         this.RMIclient = null;
         connected = true;
@@ -31,7 +31,7 @@ public class ClientClass implements Serializable {
      * constructor for ClientClass
      * @param client the interface the client is connected to
      */
-    public ClientClass(GameClientInterface client){
+    public ClientHandler(ClientRMI_Interface client){
         this.RMIclient = client;
         this.socket = null;
         connected = true;
@@ -75,7 +75,7 @@ public class ClientClass implements Serializable {
      *
      * @return the RMI client
      */
-    public GameClientInterface getClient(){
+    public ClientRMI_Interface getClient(){
         return this.RMIclient;
     }
 

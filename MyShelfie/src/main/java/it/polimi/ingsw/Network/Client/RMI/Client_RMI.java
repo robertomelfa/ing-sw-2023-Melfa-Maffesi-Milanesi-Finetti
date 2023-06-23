@@ -2,12 +2,12 @@ package it.polimi.ingsw.Network.Client.RMI;
 
 import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.Socket.ClientClass;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.View.CLIView;
-import it.polimi.ingsw.View.ControllerGui;
-import it.polimi.ingsw.View.GUIView;
-import it.polimi.ingsw.View.ViewClient;
+import it.polimi.ingsw.Network.Client.ClientHandler;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
+import it.polimi.ingsw.View.CLI.CLIView;
+import it.polimi.ingsw.View.GUI.ControllerGui;
+import it.polimi.ingsw.View.GUI.GUIView;
+import it.polimi.ingsw.View.ViewClient_Interface;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -20,14 +20,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Client extends UnicastRemoteObject implements GameClientInterface, Serializable{
+public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interface, Serializable{
 
-    private ViewClient view;
+    private ViewClient_Interface view;
 
-    private GameInterface serverRMI;
+    private ServerRMI_Interface serverRMI;
 
     private Timer timer;
-    public Client() throws RemoteException{
+    public Client_RMI() throws RemoteException{
         super();
     }
 
@@ -67,7 +67,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException Exception
      * @throws Exception Exception
      */
-    public GameLogic receiveGetCard(GameLogic gameLogic, GameInterface server) throws RemoteException, Exception{
+    public GameLogic receiveGetCard(GameLogic gameLogic, ServerRMI_Interface server) throws RemoteException, Exception{
         gameLogic = view.getTurn(gameLogic);
 
         return gameLogic;
@@ -101,11 +101,11 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException Exception
      * @throws Exception Exception
      */
-    public void connection(GameInterface server, GameClientInterface client, ControllerMain controller) throws RemoteException, Exception{
+    public void connection(ServerRMI_Interface server, ClientRMI_Interface client, ControllerMain controller) throws RemoteException, Exception{
         view = new CLIView();
         serverRMI = server;
         Scanner in = new Scanner(System.in);
-        ClientClass client1;
+        ClientHandler client1;
         int num;
         server.newClient(client);
         scheduleTimer();
@@ -124,7 +124,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
                 view.viewString("Enter the player's name");
                 String name;
                 name = in.next();
-                client1 = new ClientClass(client);
+                client1 = new ClientHandler(client);
                 client1.setPlayer(name);
                 server.updatePlayers(client1);
             }catch(Exception ignored){
@@ -140,7 +140,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
                             System.out.println("This name is used. Try again");
                         }
                     }while(controller.checkExistingName(name));
-                    client1 = new ClientClass(client);
+                    client1 = new ClientHandler(client);
                     client1.setPlayer(name);
                     server.updatePlayers(client1);
                 }catch(Exception ignored){
@@ -149,7 +149,7 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
         }
         timer.cancel();
         server.stopConnecting();
-        view.viewString("[System] connected!");
+        view.viewString("Waiting other players...\n");
     }
 
 
@@ -177,10 +177,10 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException Exception
      * @throws Exception Exception
      */
-    public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
-        ClientClass client1;
+    public void connectionGUI(ServerRMI_Interface server, ClientRMI_Interface client, ControllerMain controller, int num, String username) throws RemoteException, Exception{
+        ClientHandler client1;
         server.updateNumPlayers(num);
-        client1 = new ClientClass(client);
+        client1 = new ClientHandler(client);
         client1.setGui();
         client1.setPlayer(username);
         server.updatePlayers(client1);
@@ -196,9 +196,9 @@ public class Client extends UnicastRemoteObject implements GameClientInterface, 
      * @throws RemoteException Exception
      * @throws Exception Exception
      */
-    public void connectionGUI(GameInterface server, GameClientInterface client, ControllerMain controller, String username) throws RemoteException, Exception {
-        ClientClass client1;
-        client1 = new ClientClass(client);
+    public void connectionGUI(ServerRMI_Interface server, ClientRMI_Interface client, ControllerMain controller, String username) throws RemoteException, Exception {
+        ClientHandler client1;
+        client1 = new ClientHandler(client);
         client1.setPlayer(username);
         client1.setGui();
         server.updatePlayers(client1);

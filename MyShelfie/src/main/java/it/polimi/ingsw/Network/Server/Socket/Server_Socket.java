@@ -2,10 +2,10 @@ package it.polimi.ingsw.Network.Server.Socket;
 
 import it.polimi.ingsw.Controller.ControllerMain;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+import it.polimi.ingsw.Network.Client.ClientHandler;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -21,7 +21,7 @@ public  class Server_Socket implements Serializable {
      * @param controller the controller who handle the game
      * @throws Exception
      */
-    public  void start(ControllerMain controller, GameInterface serverRMI) throws Exception{
+    public  void start(ControllerMain controller, ServerRMI_Interface serverRMI) throws Exception{
         try {
             int port=8080;
             serversocket = new ServerSocket(port); // create the server
@@ -33,7 +33,7 @@ public  class Server_Socket implements Serializable {
                     controller = firstClient(serversocket, socket, controller, serverRMI);
                 }else{
                     try{
-                        ClientClass client = new ClientClass(socket);   // associo il client ad un player
+                        ClientHandler client = new ClientHandler(socket);   // associo il client ad un player
                         Message msg = new Message(MessageType.requestNickname, null);
                         sendMessage(msg, socket);
                         String name = receiveMessage(socket).getMessage();
@@ -150,7 +150,7 @@ public  class Server_Socket implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public GameLogic sendGameLogic(ClientClass client, GameLogic gameLogic) throws IOException, ClassNotFoundException{
+    public GameLogic sendGameLogic(ClientHandler client, GameLogic gameLogic) throws IOException, ClassNotFoundException{
         Message msg = new Message(MessageType.getCard, null);
         sendMessage(msg, client.getSocket());
         // send Gamelogic
@@ -174,9 +174,9 @@ public  class Server_Socket implements Serializable {
      * @throws ClassNotFoundException
      * @throws Exception
      */
-    public ControllerMain firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller, GameInterface serverRMI) throws IOException, ClassNotFoundException, Exception{
+    public ControllerMain firstClient(ServerSocket serversocket, Socket socket, ControllerMain controller, ServerRMI_Interface serverRMI) throws IOException, ClassNotFoundException, Exception{
           // questo è il client
-        ClientClass client = new ClientClass(socket);   // associo il client ad un player
+        ClientHandler client = new ClientHandler(socket);   // associo il client ad un player
         // ask num of players
         try{
             Message msg=new Message(MessageType.requestNumPlayer,null);

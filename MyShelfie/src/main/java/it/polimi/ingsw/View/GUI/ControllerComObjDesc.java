@@ -1,4 +1,4 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.Model.CommonObj;
 import javafx.fxml.FXML;

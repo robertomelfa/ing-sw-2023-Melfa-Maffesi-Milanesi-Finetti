@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.Game;
-import it.polimi.ingsw.View.CLIView;
+import it.polimi.ingsw.View.CLI.CLIView;
 import org.junit.Assert;
 import org.junit.Test;
 

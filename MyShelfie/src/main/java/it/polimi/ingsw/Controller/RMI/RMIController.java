@@ -1,24 +1,23 @@
 package it.polimi.ingsw.Controller.RMI;
 
 import it.polimi.ingsw.Model.GameLogic;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
-import it.polimi.ingsw.Network.Client.Socket.ClientClass;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import it.polimi.ingsw.Network.Client.RMI.ClientRMI_Interface;
+import it.polimi.ingsw.Network.Client.ClientHandler;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 
 public class RMIController implements Serializable {
-    private GameInterface server;   // RMIServer
+    private ServerRMI_Interface server;   // RMIServer
 
     private GameLogic gameLogic;
 
-    private GameClientInterface current_client; // RMI Client
+    private ClientRMI_Interface current_client; // RMI Client
 
     private boolean gui;
 
@@ -31,7 +30,7 @@ public class RMIController implements Serializable {
      * @throws NotBoundException
      * @throws Exception
      */
-    public RMIController(GameLogic gameLogic, ClientClass current_client, GameInterface server, boolean gui) {
+    public RMIController(GameLogic gameLogic, ClientHandler current_client, ServerRMI_Interface server, boolean gui) {
         this.server = server;
         this.gameLogic = gameLogic;
         this.current_client = current_client.getClient();

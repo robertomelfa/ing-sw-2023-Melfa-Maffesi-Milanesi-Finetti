@@ -1,11 +1,11 @@
 package it.polimi.ingsw.Network.Client;
 
-import it.polimi.ingsw.Network.Client.RMI.Client;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.RMI.Client_RMI;
+import it.polimi.ingsw.Network.Client.RMI.ClientRMI_Interface;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
-import it.polimi.ingsw.View.CLIView;
-import it.polimi.ingsw.View.LogInController;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
+import it.polimi.ingsw.View.CLI.CLIView;
+import it.polimi.ingsw.View.GUI.LogInController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,7 +51,7 @@ public class ClientMain extends Application implements Serializable {
         CLIView view = new CLIView();
         String port = view.requestIP();
         Registry registry = LocateRegistry.getRegistry(port, 1099);
-        GameInterface server = (GameInterface) registry.lookup("GameInterface");
+        ServerRMI_Interface server = (ServerRMI_Interface) registry.lookup("GameInterface");
         Scanner scanner = new Scanner(System.in);
         String input;
         //input = scanner.next();
@@ -94,7 +94,6 @@ public class ClientMain extends Application implements Serializable {
                                         System.out.println("Another client is connecting");
                                     }
                                     server.block();
-                                    System.out.println("Starting Socket");
                                     Client_Socket clientS = new Client_Socket();
                                     clientS.start(server, port);
                                 }
@@ -105,7 +104,7 @@ public class ClientMain extends Application implements Serializable {
                                     }
                                     server.block();
                                     try {
-                                        GameClientInterface clientR = new Client();
+                                        ClientRMI_Interface clientR = new Client_RMI();
                                         clientR.connection(server, clientR, server.getController());
                                         server.release();
                                     } catch (Exception ignored) {

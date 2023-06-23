@@ -5,11 +5,10 @@ import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.Socket.*;
-import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+import it.polimi.ingsw.Network.Client.ClientHandler;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 // TODO sistemare la gestione del turno (per ora è una bozza)
 // TODO gestione obiettivi
@@ -20,7 +19,7 @@ public class SocketController implements Serializable {
 
     private Server_Socket server;
     private GameLogic gameLogic;
-    private ClientClass current_client;
+    private ClientHandler current_client;
 
 
     private boolean gui;
@@ -31,7 +30,7 @@ public class SocketController implements Serializable {
      * @throws Exception
      */
 
-    public SocketController(Server_Socket server, ClientClass current_client, GameLogic gameLogic, boolean gui) throws Exception{
+    public SocketController(Server_Socket server, ClientHandler current_client, GameLogic gameLogic, boolean gui) throws Exception{
         this.server = server;
         this.current_client = current_client;
         this.gameLogic = gameLogic;

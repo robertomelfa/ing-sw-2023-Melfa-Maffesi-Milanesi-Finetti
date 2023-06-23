@@ -1,15 +1,12 @@
 package it.polimi.ingsw.Network.Server;
 
 
-import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.GameLogic;
 import it.polimi.ingsw.Model.Player;
-import it.polimi.ingsw.Network.Client.Socket.ClientClass;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 public class GameBackup implements Serializable {
     String name;

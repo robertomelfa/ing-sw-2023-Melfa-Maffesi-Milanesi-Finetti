@@ -1,13 +1,14 @@
 package it.polimi.ingsw.View;
 
 import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.View.GUI.ControllerGui;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
-public interface ViewClient {
+public interface ViewClient_Interface {
     public void viewLibrary(Library library);
     public void viewGameTable(GameTable gameTable);
     public void viewString(String message);

@@ -4,24 +4,21 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.Controller.RMI.RMIController;
 import it.polimi.ingsw.Controller.Socket.SocketController;
 import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Network.Client.Socket.ClientClass;
+import it.polimi.ingsw.Network.Client.ClientHandler;
 import it.polimi.ingsw.Network.Messages.Message;
 import it.polimi.ingsw.Network.Messages.MessageType;
 import it.polimi.ingsw.Network.Server.GameBackup;
-import it.polimi.ingsw.Network.Server.RMI.GameInterface;
+import it.polimi.ingsw.Network.Server.RMI.ServerRMI_Interface;
 import it.polimi.ingsw.Network.Server.Socket.Server_Socket;
-import it.polimi.ingsw.View.CLIView;
 
 import java.io.*;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.Model.Card.*;
-
 
 public class ControllerMain implements Serializable {
-    private ArrayList<ClientClass> clientList = new ArrayList<>();
+    private ArrayList<ClientHandler> clientList = new ArrayList<>();
     private GameBackup backup;
     private boolean backupCreated = false;
     private boolean isResumedGame = false;
@@ -30,7 +27,7 @@ public class ControllerMain implements Serializable {
 
     private Server_Socket serverSocket;
 
-    private GameInterface serverRMI;
+    private ServerRMI_Interface serverRMI;
 
     private boolean endGame = false;
 
@@ -44,7 +41,7 @@ public class ControllerMain implements Serializable {
 
     private GameLogic gameLogic;
 
-    private ClientClass current_client;
+    private ClientHandler current_client;
 
 
     /**
@@ -52,7 +49,7 @@ public class ControllerMain implements Serializable {
      * @param serverSocket Socket Server
      * @param serverRMI RMI Server
      */
-    public ControllerMain(Server_Socket serverSocket, GameInterface serverRMI){
+    public ControllerMain(Server_Socket serverSocket, ServerRMI_Interface serverRMI){
         this.serverSocket = serverSocket;
         this.serverRMI = serverRMI;
         // starting thread check clients disconnection
@@ -244,7 +241,7 @@ public class ControllerMain implements Serializable {
             for(int i=0; i<found.getPlayers().size(); i++){
                 for (int j=0;j<clientList.size();j++){
                     if (found.getPlayers().get(i).getNickname().equals(clientList.get(j).getPlayer().getNickname())){
-                        ClientClass temp = clientList.set(i,clientList.get(j));
+                        ClientHandler temp = clientList.set(i,clientList.get(j));
                         clientList.set(j,temp);
                     }
                 }
@@ -300,7 +297,7 @@ public class ControllerMain implements Serializable {
     }
 
 
-    public ClientClass getCurrentPlayer(){
+    public ClientHandler getCurrentPlayer(){
         return current_client;
     }
 
@@ -371,7 +368,7 @@ public class ControllerMain implements Serializable {
      *
      * @param clientList the client we want to add to the client list
      */
-     public synchronized void addClient(ClientClass clientList){
+     public synchronized void addClient(ClientHandler clientList){
         this.clientList.add(clientList);
         // notify the client list change
         notifyAll();
@@ -381,7 +378,7 @@ public class ControllerMain implements Serializable {
      *
      * @return the client list
      */
-     public synchronized ArrayList<ClientClass> getClientList(){
+     public synchronized ArrayList<ClientHandler> getClientList(){
         return this.clientList;
     }
 
