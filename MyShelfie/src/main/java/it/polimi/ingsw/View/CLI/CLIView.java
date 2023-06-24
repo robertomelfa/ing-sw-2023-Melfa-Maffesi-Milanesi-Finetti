@@ -6,6 +6,7 @@ import it.polimi.ingsw.View.ViewClient_Interface;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -232,6 +233,208 @@ public class CLIView implements ViewClient_Interface, Serializable {
         this.gameLogic = gameLogic;
     }
 
+    /**
+     * handles all the process of selecting a card from the game table.
+     * The player chooses the number of cards he wants to pick and then insert their coordinates.
+     * A check is performed to see if the selection is valid, if so the selected cards are returned in a list.
+     * If the selection is not valid the player can correct the coordinates.
+     * @param gameLogic : the game logic of the game
+     * @return the cards selected from the game table by the player
+     */
+    public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
+        int size = 0;
+        boolean back;
+        Scanner in = new Scanner(System.in);
+        ArrayList<Card> list = new ArrayList<Card>();
+        do{
+            back = false;
+            do {
+                String tempSize;
+                do {
+                    System.out.println("How many cards? At any moment of the selection you can write back to return to this point");
+                    tempSize = in.nextLine();
+                } while (!tempSize.matches("\\d"));
+                size = Integer.parseInt(tempSize);
+
+                if(size < 1 || size >3){
+                    System.out.println("You can pick 1, 2 or 3 cards. Try again!");
+                }
+                if(!gameLogic.checkCardsPickable(size)){
+                    System.out.println("There isn't " + size + " cards avaible");
+                }
+                if(!gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(size)){
+                    System.out.println("There isn't column with " + size + " free spaces");
+                }
+            }while (size < 1 || size >3 || !gameLogic.checkCardsPickable(size) || !gameLogic.getGame().getCurrentPlayer().getLibrary().checkNumCardsRemain(size));
+
+            if(size == 1) {  // case 1 card
+                int x1 = 0, y1 = 0;
+                // ask coordinates until a correct input
+                do {
+                    String tempX, tempY;
+                    do {
+                        System.out.println("Row Card 1");
+                        tempX = in.nextLine();
+                    } while (!tempX.matches("\\d") && !tempX.toLowerCase().equals("back"));
+                    if (!tempX.toLowerCase().equals("back")) {
+                        x1 = Integer.parseInt(tempX);
+                        do {
+                            System.out.println("Column y Card 1");
+                            tempY = in.nextLine();
+                        } while (!tempY.matches("\\d") && !tempY.toLowerCase().equals("back"));
+                        if (!tempY.toLowerCase().equals("back")) {
+                            y1 = Integer.parseInt(tempY);
+                            if (!gameLogic.checkNear(x1, y1)) {
+                                System.out.println("Invalid coordinates, try again!");
+                            }
+                        } else {
+                            back = true;
+                        }
+                    } else {
+                        back = true;
+                    }
+                } while (!gameLogic.checkNear(x1, y1) && !back);
+                if (gameLogic.checkNear(x1, y1) && !back) {
+                    list.add(gameLogic.getGameTable().getCardfromBoard(x1, y1));
+                    System.out.println("Card " + gameLogic.getGameTable().getCardfromBoard(x1, y1) + " drawn!");
+                    gameLogic.getGameTable().setCardfromBoard(x1, y1, NONE);
+                }
+            }else if(size == 2) {        // case 2 cards
+                int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+                // requires coordinates
+                do {
+                    String tempX, tempY;
+                    do {
+                        System.out.println("Row Card 1");
+                        tempX = in.nextLine();
+                    } while (!tempX.matches("\\d") && !tempX.toLowerCase().equals("back"));
+                    if (!tempX.toLowerCase().equals("back")) {
+                        x1 = Integer.parseInt(tempX);
+
+                        do {
+                            System.out.println("Column Card 1");
+                            tempY = in.nextLine();
+                        } while (!tempY.matches("\\d") && !tempY.toLowerCase().equals("back"));
+                        if (!tempY.toLowerCase().equals("back")) {
+                            y1 = Integer.parseInt(tempY);
+
+                            do {
+                                System.out.println("Row Card 2");
+                                tempX = in.nextLine();
+                            } while (!tempX.matches("\\d") && !tempX.toLowerCase().equals("back"));
+                            if (!tempX.toLowerCase().equals("back")) {
+                                x2 = Integer.parseInt(tempX);
+
+                                do {
+                                    System.out.println("Column Card 2");
+                                    tempY = in.nextLine();
+                                } while (!tempY.matches("\\d") && !tempY.toLowerCase().equals("back"));
+                                if (!tempY.toLowerCase().equals("back")) {
+                                    y2 = Integer.parseInt(tempY);
+
+                                    if (!gameLogic.checkNear(x1, y1, x2, y2)) {
+                                        System.out.println("Invalid coordinates, try again!");
+                                    }
+                                } else {
+                                    back = true;
+                                }
+                                ;
+                            } else {
+                                back = true;
+                            }
+                        } else {
+                            back = true;
+                        }
+                    } else {
+                        back = true;
+                    }
+
+                } while (!gameLogic.checkNear(x1, y1, x2, y2) && !back);
+                if (gameLogic.checkNear(x1, y1, x2, y2) && !back) {
+                    list.add(gameLogic.getGameTable().getCardfromBoard(x1, y1));
+                    list.add(gameLogic.getGameTable().getCardfromBoard(x2, y2));
+                    System.out.println("Card " + gameLogic.getGameTable().getCardfromBoard(x1, y1) + " " + gameLogic.getGameTable().getCardfromBoard(x2, y2) + " drawn");
+                    gameLogic.getGameTable().setCardfromBoard(x1, y1, NONE);
+                    gameLogic.getGameTable().setCardfromBoard(x2, y2, NONE);
+                }
+            }else{  // case 3 cards
+                int x1 = 0, y1 = 0, x2 = 0, y2 = 0, x3 = 0, y3 = 0;
+                // requires coordinates
+                do{
+                    String tempX,tempY;
+                    do {
+                        System.out.println("Row Card 1");
+                        tempX = in.nextLine();
+                    }while (!tempX.matches("\\d") && !tempX.toLowerCase().equals("back"));
+                    if (!tempX.toLowerCase().equals("back")) {
+                        x1 = Integer.parseInt(tempX);
+
+                        do {
+                            System.out.println("Column Card 1");
+                            tempY = in.nextLine();
+                        } while (!tempY.matches("\\d") && !tempY.toLowerCase().equals("back"));
+                        if (!tempY.toLowerCase().equals("back")) {
+                            y1 = Integer.parseInt(tempY);
+
+                            do {
+                                System.out.println("Row Card 2");
+                                tempX = in.nextLine();
+                            } while (!tempX.matches("\\d") && !tempX.toLowerCase().equals("back"));
+                            if(!tempX.toLowerCase().equals("back")) {
+                                x2 = Integer.parseInt(tempX);
+
+                                do {
+                                    System.out.println("Column Card 2");
+                                    tempY = in.nextLine();
+                                } while (!tempY.matches("\\d") && !tempY.toLowerCase().equals("back"));
+                                if(!tempY.toLowerCase().equals("back")) {
+                                    y2 = Integer.parseInt(tempY);
+
+                                    do {
+                                        System.out.println("Row Card 3");
+                                        tempX = in.nextLine();
+                                    } while (!tempX.matches("\\d") && !tempX.toLowerCase().equals("back"));
+                                    if(!tempX.toLowerCase().equals("back")) {
+                                        x3 = Integer.parseInt(tempX);
+
+                                        do {
+                                            System.out.println("Column Card 3");
+                                            tempY = in.nextLine();
+                                        } while (!tempY.matches("\\d") && !tempY.toLowerCase().equals("back"));
+                                        if(!tempY.toLowerCase().equals("back")) {
+                                            y3 = Integer.parseInt(tempY);
+
+                                            if (!gameLogic.checkNear(x1, y1, x2, y2, x3, y3)) {
+                                                System.out.println("Invalid coordinates, try again!");
+                                            }
+                                        } else { back = true; }
+                                    } else { back = true; }
+                                } else { back = true; }
+                            } else { back = true; }
+                        } else { back = true; }
+                    } else { back = true; }
+                }while(!gameLogic.checkNear(x1, y1, x2, y2, x3, y3) && !back);
+
+                if(gameLogic.checkNear(x1, y1, x2, y2, x3, y3) && !back){
+                    // add cards on the list
+                    list.add(gameLogic.getGameTable().getCardfromBoard(x1,y1));
+                    list.add(gameLogic.getGameTable().getCardfromBoard(x2,y2));
+                    list.add(gameLogic.getGameTable().getCardfromBoard(x3,y3));
+
+                    System.out.println("Cards " + gameLogic.getGameTable().getCardfromBoard(x1,y1) + " " + gameLogic.getGameTable().getCardfromBoard(x2,y2) + " " + gameLogic.getGameTable().getCardfromBoard(x3,y3) + " drawn");
+                    // set NONE on the table
+                    gameLogic.getGameTable().setCardfromBoard(x1,y1,NONE);
+                    gameLogic.getGameTable().setCardfromBoard(x2,y2,NONE);
+                    gameLogic.getGameTable().setCardfromBoard(x3,y3,NONE);
+                }
+            }
+        }while (back);
+        gameLogic.getGameTable().checkStatus();
+        this.gameLogic = gameLogic;
+        // return gameLogic
+        return list;
+    }
+
 
     /**
      * handles all the process of selecting a card from the game table.
@@ -241,6 +444,7 @@ public class CLIView implements ViewClient_Interface, Serializable {
      * @param gameLogic : the game logic of the game
      * @return the cards selected from the game table by the player
      */
+    /*
     public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
         int size = 0;
         Scanner in = new Scanner(System.in);
@@ -396,6 +600,7 @@ public class CLIView implements ViewClient_Interface, Serializable {
         // return gameLogic
         return list;
     }
+    */
 
     /**
      * perform the turn using getCardFromTable to draw cards from the table and then insert
