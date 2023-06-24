@@ -33,7 +33,7 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
 
 
     /**
-     * call the viewTable() method to print the game table on the client command line
+     * call the viewTable() method to show the game table on the view
      * @param board the game table we want to display
      * @throws RemoteException Exception
      */
@@ -42,7 +42,7 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
     }
 
     /**
-     * call the viewGrid() method to print the library on the client command line
+     * call the viewGrid() method to show the library on the client view
      * @param library the library we want to display
      * @throws RemoteException Exception
      */
@@ -51,7 +51,7 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
     }
 
     /**
-     *
+     * call the viewPlayerObj() method to show the library on the client view
      * @param obj the player object
      * @throws RemoteException Exception
      */
@@ -74,7 +74,7 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
     }
 
     /**
-     * print a string message
+     * shows a string message in the client's view
      * @param msg string we want to print
      * @throws RemoteException Exception
      */
@@ -94,9 +94,10 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
     }
 
     /**
-     *
+     * Establish the connection between the client and the server creating a ClientClass with
+     * the username selected by the player. Implements a timer to handle inactive players
      * @param server RMI server where the client will connect
-     * @param client client wants to connect to the server
+     * @param client client that wants to connect to the server
      * @param controller controller of the game
      * @throws RemoteException Exception
      * @throws Exception Exception
@@ -155,7 +156,7 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
 
 
     /**
-     * print a string to CLI and return a string taken from input
+     * shows a string on the client's view and then return a string taken from input
      * @param viewMessage string we want to print
      * @return the string taken from input
      * @throws RemoteException Exception
@@ -167,13 +168,15 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
     }
 
     /**
-     * method that connect the player to the gui view (first)
-     *
-     * @param server RMI server where the client will connect
-     * @param client client wants to connect to the server
-     * @param controller controller of the game
-     * @param num num of players in the game
-     * @param username name of the player connecting
+     * creates a ClientHandler with the selected username for the client and add it has a player to the server.
+     * Updates the number of players for the game and sets the GUI for the client.
+     * This method is used only by the first player that connects to every game, since he is the one who select
+     * the player's number
+     * @param server : server the client needs to be connected to
+     * @param client : the client
+     * @param controller : the main controller
+     * @param num : the player's number of the game
+     * @param username : the username selected by this client
      * @throws RemoteException Exception
      * @throws Exception Exception
      */
@@ -187,12 +190,12 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
     }
 
     /**
-     * method that connect the player to the gui view (not first)
-     *
-     * @param server RMI server where the client will connect
-     * @param client client wants to connect to the server
-     * @param controller controller of the game
-     * @param username name of the player connecting
+     * Creates a ClientHandler for the client and set the selected username then adds the ClientClass
+     * has a player to the server.
+     * @param server : server the client needs to be connected to
+     * @param client : the client
+     * @param controller : the main controller
+     * @param username : the username selected by this client
      * @throws RemoteException Exception
      * @throws Exception Exception
      */
@@ -213,6 +216,10 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
         view.setController(controllerGui);
     }
 
+    /**
+     * ping message to check if the client is connected to the server
+     * @throws RemoteException
+     */
     public void ping() throws RemoteException{}
 
     /**
@@ -238,8 +245,10 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
     }
 
     /**
-     * timer
-     * @throws RemoteException Exception
+     * Timer that is called when we have to wait for a player's input.
+     * After 30 seconds the TimerTask runs disconnecting the player.
+     * It's used to handle inactive player and avoid a possible deadlock.
+     * @throws RemoteException
      */
     private synchronized void scheduleTimer() throws RemoteException {
         timer = new Timer();

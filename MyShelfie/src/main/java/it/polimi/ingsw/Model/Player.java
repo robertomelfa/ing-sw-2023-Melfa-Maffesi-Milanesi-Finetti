@@ -12,11 +12,10 @@ public class Player implements Serializable{
     private boolean commonObj2Completed;
 
     /**
-     *
-     * @param nickname
      * The method is the constructor for the Player class
      * It sets the nickname, the library and initializes the playerObject.
      * It also initializes yourTurn and points
+     * @param nickname
      */
     public Player(String nickname) throws Exception{
         yourTurn = false;
@@ -29,10 +28,9 @@ public class Player implements Serializable{
     }
 
     /**
-     *
+     * addPoints is used to add points to a player, it throws Exception if points is <=0
      * @param points
      * @throws Exception
-     * addPoints is used for adding points to a player, it trows Exception if points is <=0
      */
     public void addPoints(int points) throws Exception {
         if(points < 0){
@@ -65,6 +63,10 @@ public class Player implements Serializable{
         return library;
     }
 
+    /**
+     * set the player's library
+     * @param library library we want to set as player's library
+     */
     public void setLibrary(Library library){
         this.library = library;
     }
@@ -85,10 +87,9 @@ public class Player implements Serializable{
         this.commonObj2Completed = true;
     }
 
-
     /**
      *
-     * @return commonObj1Completed
+     * @return true if commonObj1 is completed
      */
     public boolean getCommonObj1Completed() {
         return commonObj1Completed;
@@ -96,7 +97,7 @@ public class Player implements Serializable{
 
     /**
      *
-     * @return commonObj2Completed
+     * @return true if commonObj2 is completed
      */
     public boolean getCommonObj2Completed() {
         return commonObj2Completed;
@@ -110,6 +111,10 @@ public class Player implements Serializable{
         return this.points;
     }
 
+    /**
+     * sets the points of the player
+     * @param points we want to set to the player
+     */
     public void setPoints(int points){
         this.points = points;
     }

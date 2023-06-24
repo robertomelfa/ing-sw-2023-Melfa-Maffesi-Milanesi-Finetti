@@ -91,6 +91,11 @@ public class ControllerMain implements Serializable {
         this.numPlayers = clientList.size();
     }
 
+    /**
+     * updates the backup
+     * @throws IOException
+     * @throws StackOverflowError
+     */
     public synchronized void updateBackup() throws IOException, StackOverflowError {
         if(!backupCreated){
             System.out.println("Starting backup");
@@ -132,7 +137,9 @@ public class ControllerMain implements Serializable {
         }
     }
 
-
+    /**
+     * deletes the obsolete Json files
+     */
     public synchronized void deleteObsoleteJson(){
         File folder = new File("MyShelfie/saves/");
         Date date=new Date();
@@ -163,6 +170,9 @@ public class ControllerMain implements Serializable {
 
     }
 
+    /**
+     * deletes the current backup
+     */
     public synchronized void deleteBackup(){
         File folder = new File("MyShelfie/saves/");
         String currName = backup.getName()+".json";
@@ -178,6 +188,11 @@ public class ControllerMain implements Serializable {
         }
     }
 
+    /**
+     * Used to check if there is a backup that match the current game.
+     * If a matching backup is found then that backup is used to resume the game
+     * @throws Exception
+     */
     public synchronized void resumeBackup() throws Exception{
         System.out.println("Checking backups to resume");
         File folder = new File("MyShelfie/saves/");
@@ -260,7 +275,7 @@ public class ControllerMain implements Serializable {
 
     /**
      *
-     * @param name name e want to check
+     * @param name name we want to check
      * @return true if the name is already used in the game, false if not
      */
     public boolean checkExistingName(String name){
@@ -287,7 +302,7 @@ public class ControllerMain implements Serializable {
 
     /**
      *
-     * @return true if all the players are connected and the game will start
+     * @return true if all the players are connected and the game can start
      */
     public synchronized boolean getStart(){
         if(numPlayers == clientList.size() && numPlayers > 1 && numPlayers < 5){
@@ -296,7 +311,10 @@ public class ControllerMain implements Serializable {
         return false;
     }
 
-
+    /**
+     *
+     * @return the current client
+     */
     public ClientHandler getCurrentPlayer(){
         return current_client;
     }
@@ -336,7 +354,7 @@ public class ControllerMain implements Serializable {
 
     /**
      *
-     * @return the string which the points of each player
+     * @return the string with the points of each player
      */
     public void updatePlayers(){
         for(int i = 0; i < clientList.size(); i++){
@@ -344,6 +362,9 @@ public class ControllerMain implements Serializable {
         }
     }
 
+    /**
+     * adds oll the players to the gamelogic
+     */
     public void setGamePlayers(){
         for(int i = 0; i < clientList.size(); i++){
             gameLogic.addPlayer(clientList.get(i).getPlayer());
@@ -384,7 +405,7 @@ public class ControllerMain implements Serializable {
 
     /**
      *
-     * @param numPlayers num of players of the game (asked to the first client)
+     * @param numPlayers num of players of the game (selected by the first client)
      */
     public synchronized void setNumPlayers(int numPlayers){
         this.numPlayers = numPlayers;
@@ -392,7 +413,7 @@ public class ControllerMain implements Serializable {
 
     /**
      *
-     * @return num of game players
+     * @return number of players of the game
      */
     public synchronized int getNumPlayers(){
         return this.numPlayers;
@@ -401,7 +422,7 @@ public class ControllerMain implements Serializable {
     /**
      * This method send the gameTable to all clients (socket and RMI)
      *
-     * @param gameTable the gametable associate with the game
+     * @param gameTable the gametable associated with the game
      * @throws ClassNotFoundException
      * @throws IOException
      * @throws Exception
@@ -433,7 +454,7 @@ public class ControllerMain implements Serializable {
     }
 
     /**
-     * this method control the game
+     * this method control the entire game
      * @throws Exception
      * @throws ArrayIndexOutOfBoundsException
      */
@@ -549,7 +570,7 @@ public class ControllerMain implements Serializable {
     }
 
     /**
-     * this method check the final groups of card of the same colore
+     * this method check the final groups of card of the same color
      * @throws Exception
      */
     public void checkEnd() throws Exception{
@@ -571,6 +592,10 @@ public class ControllerMain implements Serializable {
         isResumedGame = resumedGame;
     }
 
+    /**
+     *
+     * @return the game backup
+     */
     public GameBackup getGameBackup() {
         return backup;
     }

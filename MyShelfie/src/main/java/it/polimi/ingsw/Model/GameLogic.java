@@ -15,28 +15,42 @@ public class GameLogic implements Serializable{
 
 
     /**
-     *
-     * @param game: the current game
-     * The method is the constructor for GameLogic class
+     * Constructor for GameLogic class
      * It takes the gameTable of the game
+     * @param game: the current game
      */
     public GameLogic(Game game){
         this.game1 = game;
         this.gameTable = game.getGameTable();
     }
 
+    /**
+     * @return the game
+     */
     public Game getGame(){
         return this.game1;
     }
 
+    /**
+     * set the game
+     * @param game game we want to set
+     */
     public void setGame(Game game){
         this.game1 = game;
     }
 
+    /**
+     *
+     * @param gameTable we want to set
+     */
     public void setGameTable(GameTable gameTable){
         this.gameTable = gameTable;
     }
 
+    /**
+     *
+     * @return gametable stored in the class
+     */
     public GameTable getGameTable(){
         return this.gameTable;
     }
@@ -209,18 +223,34 @@ public class GameLogic implements Serializable{
         return false;
     }
 
+    /**
+     * add a player to the player's list
+     * @param player player we want to add
+     */
     public void addPlayer(Player player){
         players.add(player);
     }
 
+    /**
+     *
+     * @return player's list
+     */
     public ArrayList<Player> getPlayers(){
         return players;
     }
 
+    /**
+     * @param players list of player we want to set
+     */
     public void setPlayersList(ArrayList<Player> players){
         this.players = players;
     }
 
+    /**
+     * updates library and points of the player in the list with the same
+     * nickname as the player passed as a parameter
+     * @param player player with the updated points and library
+     */
     public void setPlayers(Player player){
         for(int i = 0; i < players.size(); i++){
             if(players.get(i).getNickname().equals(player.getNickname())){

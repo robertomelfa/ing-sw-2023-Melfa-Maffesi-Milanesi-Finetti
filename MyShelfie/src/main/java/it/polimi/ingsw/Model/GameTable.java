@@ -114,11 +114,22 @@ public class GameTable implements Serializable{
         }
     }
 
+    /**
+     * put the card received as a parameter in the x,y position of the board
+     * @param x x parameter
+     * @param y y parameter
+     * @param card card we want to put into the board
+     */
     public void setCardfromBoard(int x, int y, Card card){
         board[x][y]=card;
     }
 
-
+    /**
+     *
+     * @param x x parameter
+     * @param y y parameter
+     * @return the Card in the x,y position of the board
+     */
     public Card getCardfromBoard(int x,int y) {
         return board[x][y];
     }

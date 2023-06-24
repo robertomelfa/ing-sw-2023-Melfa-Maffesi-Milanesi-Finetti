@@ -16,10 +16,10 @@ public class PlayerObj implements Serializable{
     private int num;
 
     /**
-     * @param player, player to check
-     * @param library, library to check
-     * @return POINT, difference between the points reached and the points already taken
      * Method that check the status of the personal goal and return the points
+     * @param player player to check
+     * @param library library to check
+     * @return POINT, difference between the points reached and the points already taken
      */
     public int checkObj(Player player, Library library){
 
@@ -211,16 +211,28 @@ public class PlayerObj implements Serializable{
         return temp;
     }
 
+    /**
+     *
+     * @return Point array
+     */
     //@test
     public int[] getPOINT() {
         return POINT;
     }
 
+    /**
+     *
+     * @return available personal goal
+     */
     //@test
     public static ArrayList<Integer> getAvailable() {
         return available;
     }
 
+    /**
+     *
+     * @return personal goal already used
+     */
     //@test
     public ArrayList<SingleObj> getPlayerObjs() {
         return playerObjs;
@@ -251,6 +263,9 @@ public class PlayerObj implements Serializable{
         return num;
     }
 
+    /**
+     * resets the available playerObj
+     */
     public void resetAvailable(){
         available = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12));
     }

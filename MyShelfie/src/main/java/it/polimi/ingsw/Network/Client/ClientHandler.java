@@ -79,8 +79,15 @@ public class ClientHandler implements Serializable {
         return this.RMIclient;
     }
 
+    /**
+     * gui is true if the client is using the GUI
+     * @return the boolean gui
+     */
     public boolean isGui(){ return gui; }
 
+    /**
+     * set the boolean gui to true
+     */
     public void setGui(){  gui = true; }
 
 }

@@ -38,8 +38,8 @@ public class RMIController implements Serializable {
     }
 
     /**
-     * This method handler the turn of a socket client
-     * @return  gameLogic updated
+     * Used to perform the turn by a client connected with RMI
+     * @return the updated gameLogic
      * @throws IOException
      * @throws Exception
      */

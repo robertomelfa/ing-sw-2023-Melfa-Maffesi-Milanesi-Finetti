@@ -459,7 +459,7 @@ public class ControllerGui implements Initializable, Serializable {
     }
 
     /**
-     * register the card selected / unselected an the number of cards selected
+     * register the card selected / unselected and the number of cards selected
      * @param event card selected / unselected
      */
     @FXML
@@ -596,6 +596,10 @@ public class ControllerGui implements Initializable, Serializable {
         }
     }
 
+    /**
+     *
+     * @return the list of selected cards
+     */
     public ArrayList<Card> getListCard(){
         return listCard;
     }

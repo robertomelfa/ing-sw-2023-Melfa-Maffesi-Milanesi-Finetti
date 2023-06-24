@@ -55,8 +55,8 @@ public  class Server_Socket implements Serializable {
 
 
     /**
-     * Received a message in input from the socket passed as a parameter
-     * @param socket the socket we wanto to recive the Message from
+     * the server start listening and wait to receive a message from the specified socket
+     * @param socket the socket we want to receive the Message from
      * @return Message
      * @throws IOException
      * @throws ClassNotFoundException
@@ -83,7 +83,7 @@ public  class Server_Socket implements Serializable {
     /**
      * send a specific message to the socket. Both the message and the socket are specified when the method is called
      * @param msg the Message we want to send to the socket passed to the method as a parameter
-     * @param socket
+     * @param socket socket we want to send the message to
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -93,8 +93,8 @@ public  class Server_Socket implements Serializable {
     }
 
     /**
-     *
-     * @param socket the server
+     * send the player's object to the client of the specific socket
+     * @param socket the client
      * @param obj player's object
      * @throws IOException
      * @throws ClassNotFoundException
@@ -134,6 +134,13 @@ public  class Server_Socket implements Serializable {
         oos.writeObject(gameTable);
     }
 
+    /**
+     * send the player's list to a specified socket
+     * @param socket socket we want to send the player's List to
+     * @param players the player's list
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void sendPlayers(Socket socket, ArrayList<Player> players) throws IOException, ClassNotFoundException{
         Message msg = new Message(MessageType.receivePoint, null);
         sendMessage(msg, socket);
@@ -165,11 +172,13 @@ public  class Server_Socket implements Serializable {
 
 
     /**
-     *
+     * called only if the client is the first to connect to the game.
+     * The server ask the client the player's number for the game and the client's username, updates the controller
+     * and then returns it
      * @param serversocket server
      * @param socket client
      * @param controller controller of the game
-     * @return number of players
+     * @return the updated controller
      * @throws IOException
      * @throws ClassNotFoundException
      * @throws Exception
@@ -202,6 +211,10 @@ public  class Server_Socket implements Serializable {
         return controller;
     }
 
+    /**
+     * close server socket
+     * @throws IOException
+     */
     public void close() throws IOException{
         serversocket.close();
     }

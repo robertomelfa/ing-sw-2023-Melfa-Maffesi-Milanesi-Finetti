@@ -26,7 +26,10 @@ public class SocketController implements Serializable {
 
     /**
      * constructor for the controller
-     * @param server
+     * @param server socket server
+     * @param current_client client that needs to perform the turn
+     * @param gui is true if the client is using a GUI
+     * @param gameLogic the gameLogic of the game
      * @throws Exception
      */
 
@@ -39,7 +42,7 @@ public class SocketController implements Serializable {
 
     /**
      * This method handler the turn of a socket client
-     * @return  gameLogic updated
+     * @return the updated gameLogic
      * @throws IOException
      * @throws Exception
      */

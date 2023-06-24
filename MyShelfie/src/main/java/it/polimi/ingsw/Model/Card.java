@@ -102,6 +102,11 @@ public enum Card {
         }
     }, NONE, NOT;
 
+    /**
+     * Used to compare the cards.
+     * @param other
+     * @return true if the cards are of the same color
+     */
     public boolean isEqualTo(Card other) {
         if (((this == WHITE1 || this == WHITE2 || this == WHITE3) && (other == WHITE1 || other == WHITE2 || other == WHITE3)) ||
                 ((this == BLUE1 || this == BLUE2 || this == BLUE3) && (other == BLUE1 || other == BLUE2 || other == BLUE3)) ||

@@ -17,7 +17,9 @@ public class CLIView implements ViewClient_Interface, Serializable {
     String username;
     GameLogic gameLogic;
 
-
+    /**
+     * @return the ip chosen by the user
+     */
     public String requestIP(){
         String port;
         Scanner input = new Scanner(System.in);
@@ -32,6 +34,10 @@ public class CLIView implements ViewClient_Interface, Serializable {
         return port;
     }
 
+    /**
+     * print the received library
+     * @param library : library we want to print
+     */
     @Override
     public void viewLibrary(Library library) {
         System.out.print("   ");
@@ -56,6 +62,10 @@ public class CLIView implements ViewClient_Interface, Serializable {
         System.out.print("\n");
     }
 
+    /**
+     * print the received game table
+     * @param gameTable : game table we want to print
+     */
     @Override
     public void viewGameTable(GameTable gameTable) {
         System.out.print("   ");
@@ -81,15 +91,28 @@ public class CLIView implements ViewClient_Interface, Serializable {
         System.out.print("\n");
     }
 
+    /**
+     * print the received message
+     * @param message : the message we want to view
+     */
     @Override
     public void viewString(String message) {
         System.out.println(message);
     }
 
+    /**
+     * prints leaderboard
+     * @param msg : string containing the leaderboard
+     * @throws IOException
+     */
     public void viewLeaderboard(String msg) throws IOException{
         System.out.println(msg);
     }
 
+    /**
+     *
+     * @param playerObj : the player object we want to show
+     */
     @Override
     public void viewPlayerObj(PlayerObj playerObj) {
         Card[][] temp= new Card[6][5];
@@ -122,6 +145,11 @@ public class CLIView implements ViewClient_Interface, Serializable {
         System.out.print("\n");
     }
 
+    /**
+     *  prints each common object description
+     * @param obj1 : first common object
+     * @param obj2 : second common object
+     */
     @Override
     public void viewCommonObj(CommonObj obj1, CommonObj obj2) {
         viewString("Common Object 1 : ");
@@ -130,7 +158,12 @@ public class CLIView implements ViewClient_Interface, Serializable {
         viewString(obj2.getDescription());
     }
 
-
+    /**
+     * insert the received list of cards into a column of the library chosen by the player.
+     * The player also chooses the order of the cards
+     * @param list : list of cards that needs to be inserted in the library
+     * @param gameLogic : the game logic of the game
+     */
     public void insert(ArrayList<Card> list, GameLogic gameLogic) {
         int column = 0;
         String tempColumn;
@@ -200,6 +233,14 @@ public class CLIView implements ViewClient_Interface, Serializable {
     }
 
 
+    /**
+     * handles all the process of selecting a card from the game table.
+     * The player chooses the number of cards he wants to pick and then insert their coordinates.
+     * A check is performed to see if the selection is valid, if so the selected cards are returned in a list.
+     * If the selection is not valid the player can correct the coordinates.
+     * @param gameLogic : the game logic of the game
+     * @return the cards selected from the game table by the player
+     */
     public ArrayList<Card> getCardFromTable(GameLogic gameLogic){
         int size = 0;
         Scanner in = new Scanner(System.in);
@@ -357,8 +398,9 @@ public class CLIView implements ViewClient_Interface, Serializable {
     }
 
     /**
-     *
-     * @param gameLogic the object where we want to work
+     * perform the turn using getCardFromTable to draw cards from the table and then insert
+     * to place them in the library
+     * @param gameLogic : the game logic of the game
      * @return the updated gamelogic
      */
     public GameLogic getTurn(GameLogic gameLogic) {
@@ -370,10 +412,17 @@ public class CLIView implements ViewClient_Interface, Serializable {
         return this.gameLogic;
     }
 
+    /**
+     *
+     * @param controllerGui : controller that needs to be set
+     */
     @Override
     public void setController(ControllerGui controllerGui) {    }
 
-
+    /**
+     * prints the point of each player
+     * @param playerList : list of all the player
+     */
     public void viewPoints(ArrayList<Player> playerList){
         String string = "POINTS\n";
         for(int i = 0; i < playerList.size(); i++){

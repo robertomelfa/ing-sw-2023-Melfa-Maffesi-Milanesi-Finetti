@@ -62,7 +62,10 @@ public class Client_Socket implements Serializable {
     }
 
     /**
-     * @param host server we want to connect
+     * creates a socket with host and port and uses it to connect the player to the game.
+     * Requests the player's number only if the client is the first to connect to the game, then asks the nickname
+     * also if the player is not the first connected.
+     * @param host server the client wants to connect to
      * @param port port of the server
      */
     public  void connect(String host,int port, ServerRMI_Interface server) throws ClassNotFoundException, Exception{
@@ -124,9 +127,11 @@ public class Client_Socket implements Serializable {
     }
 
     /**
-     * handles the turn from the client side. The client recive a message from the server and perform a different
-     * action based on the typer of the message received. The action the client can perform are receiving the game table
-     * receiving the library, picking the cards from the table.
+     * handles the turn from the client side. The client receive a message from the server and perform a different
+     * action based on the type of the message received. The action the client can perform are: receiving the game table
+     * receiving the library, picking the cards from the table. Then there are other message used to communicated game actions
+     * to the client such as if a goal is achieved or notifying the client on the current turn player.
+     * There are also message to handle the end of the game and to show the final leaderboard.
      * @throws Exception
      */
     public void clientlogic(ServerRMI_Interface server) throws Exception{
@@ -181,6 +186,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     * the client start listening and wait for the server to send him a message
      *
      * @return the Message received from the socket input
      * @throws IOException
@@ -206,6 +212,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     * the client start listening and waits for the server to send him a library
      * @return the library we received in socket input
      * @throws IOException
      * @throws ClassNotFoundException
@@ -214,8 +221,9 @@ public class Client_Socket implements Serializable {
         ois = new ObjectInputStream(socket.getInputStream());
         return (Library) ois.readObject();
     }
+
     /**
-     *
+     * the client start listening and waits for the server to send him the game logic
      * @return the gameLogic received in socket input
      * @throws IOException
      * @throws ClassNotFoundException
@@ -226,6 +234,7 @@ public class Client_Socket implements Serializable {
     }
 
     /**
+     * the client start listening and waits for the server to send him the player object
      *
      * @return the player's object
      * @throws IOException
@@ -236,13 +245,19 @@ public class Client_Socket implements Serializable {
         return (PlayerObj) ois.readObject();
     }
 
+    /**
+     * the client start listening and waits for the server to send him the player's list
+     * @return the player's list
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public ArrayList<Player> receivePlayers() throws IOException, ClassNotFoundException {
         ois = new ObjectInputStream(socket.getInputStream());
         return (ArrayList<Player>) ois.readObject();
     }
 
     /**
-     *
+     * send an int to the server
      * @param num number we want to send
      * @throws IOException
      * @throws ClassNotFoundException
@@ -268,11 +283,24 @@ public class Client_Socket implements Serializable {
         oos.writeObject(gameLogic);
     }
 
+    /**
+     * set the controller for the GUIView
+     * @param controllerGui the controller we want to set for the GUIView
+     */
     public void setControllerGui(ControllerGui controllerGui){
         view = new GUIView();
         view.setController(controllerGui);
     }
 
+    /**
+     * calls connect gui to connect the client to the server and then starts the client logic to handle
+     * all the interactions with the server
+     * @param server server used to establish the connection
+     * @param guiIp IP address we need to connect to
+     * @param num player's number for the game
+     * @param username username of the player
+     * @throws Exception
+     */
     public void startGUI(ServerRMI_Interface server, String guiIp, int num, String username) throws Exception {
         connectGUI(guiIp, 8080, server, num, username);
         try {
@@ -287,6 +315,17 @@ public class Client_Socket implements Serializable {
         }
     }
 
+    /**
+     * creates a socket with host and port to communicate with the server, then sends to the server the player's number
+     * and the username of the player. The requestNumPlayer message is sent from the server only if the player is the
+     * first connected to the game.
+     * @param host server the client wants to connect to
+     * @param port port of the server
+     * @param server server used to establish the connection
+     * @param num player's number
+     * @param username username selected by the player
+     * @throws IOException
+     */
     public void connectGUI(String host, int port, ServerRMI_Interface server, int num, String username) throws IOException {
         try {
             Socket socket = new Socket(host, port);
@@ -315,7 +354,14 @@ public class Client_Socket implements Serializable {
         }
     }
 
-        public void clientLogicGui(ServerRMI_Interface server) throws Exception {
+    /**
+     * creates a new thread to handle all the communication between client and server.
+     * The clients listen to the server messages and performs a different action based
+     * on the server message.
+     * @param server //non è più usato
+     * @throws Exception
+     */
+    public void clientLogicGui(ServerRMI_Interface server) throws Exception {
 
         new Thread(()->{
             int i = 0;
@@ -423,6 +469,12 @@ public class Client_Socket implements Serializable {
         view = new CLIView();
     }
 
+    /**
+     * Timer that is called when we have to wait for a player's input.
+     * After 30 seconds the TimerTask runs disconnecting the player.
+     * It's used to handle inactive player and avoid a possible deadlock
+     * @throws RemoteException
+     */
     private synchronized void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {

@@ -24,6 +24,10 @@ public class Library implements Serializable{
         }
     }
 
+    /**
+     * constructor for the library that copy the library passed as a parameter
+     * @param lib library we want to copy
+     */
     public Library(Library lib) {
         i = 0;
         for (int i = 0; i < 6; i++) {
@@ -33,6 +37,10 @@ public class Library implements Serializable{
         }
     }
 
+    /**
+     *
+     * @return the library
+     */
     public Card[][] getGrid(){
         return this.grid;
     }
@@ -225,6 +233,7 @@ public class Library implements Serializable{
     }
 
     /**
+     * This recursive method search the groups of same cards
      * @param x:     x position of the Card
      * @param y:     y position of the Card to check the right side
      * @param color: color of the group of cards
@@ -276,14 +285,21 @@ public class Library implements Serializable{
         return points;
     }
 
-
+    /**
+     * put the received card in the x,y position of the library
+     * @param x x parameter
+     * @param y y parameter
+     * @param type card we want to put into the library
+     */
     //@test
     public void setCard(int x, int y, Card type) {
         this.grid[x][y] = type;
     }
 
+    /**
+     * reset the library
+     */
     //@test
-
     public void reset_lib(){
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 5; j ++){

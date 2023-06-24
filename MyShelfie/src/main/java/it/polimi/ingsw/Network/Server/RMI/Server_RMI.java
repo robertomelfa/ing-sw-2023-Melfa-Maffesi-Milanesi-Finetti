@@ -25,12 +25,20 @@ public class Server_RMI extends UnicastRemoteObject implements ServerRMI_Interfa
         super();
     }
 
-
+    /**
+     * link the controllerMain to the server and then initialize the lock
+     * @param controller controllerMain of the game
+     * @throws RemoteException
+     */
     public void start(ControllerMain controller) throws RemoteException{
         this.controller = controller;
         lock = new Lock();
     }
 
+    /**
+     * Used to stop the check of the method newClient
+     * @throws RemoteException
+     */
     public void stopConnecting() throws RemoteException{
         this.isConnecting = false;
     }
@@ -56,47 +64,90 @@ public class Server_RMI extends UnicastRemoteObject implements ServerRMI_Interfa
         return this.firstPlayer;
     }
 
+    /**
+     * set the boolean firstPlayer when the first player connects to the server
+     */
     public void setFirstPlayer(){
         this.firstPlayer = false;
     }
 
     /**
-     * used to send string message that will be displayed on all the clients terminal
-     * @param msg string that we want to send to all the clients
-     * @throws RemoteException Exception
+     * send a message only to a specific client
+     * @param msg the message we want to send to the client
+     * @param client the client that will receive the message
+     * @throws RemoteException
      */
-
     public void messageToClient(String msg, ClientRMI_Interface client) throws RemoteException{
         client.receiveMessage(msg);
     }
 
-
+    /**
+     *
+     * @return the controllerMain linked to the server
+     * @throws RemoteException
+     */
     public ControllerMain getController() throws RemoteException{
         return this.controller;
     }
 
+    /**
+     * updates the number of players of the game
+     * @param num the number of players
+     * @throws RemoteException
+     */
     public void updateNumPlayers(int num) throws RemoteException{
         this.controller.setNumPlayers(num);
     }
 
+    /**
+     * adds the client to the game
+     * @param client the client that want to join the game
+     * @throws RemoteException
+     */
     public void updatePlayers(ClientHandler client) throws RemoteException{
         this.controller.addClient(client);
     }
 
+    /**
+     *
+     * @return the value of the lock
+     * @throws RemoteException
+     */
     public synchronized Lock getLock() throws RemoteException{
         return lock;
     }
 
+    /**
+     * set the lock
+     * @throws RemoteException
+     * @throws InterruptedException
+     */
     public synchronized void block() throws RemoteException, InterruptedException{
         lock.acquire();
     }
 
+    /**
+     * releases the lock
+     * @throws RemoteException
+     * @throws InterruptedException
+     */
     public synchronized void release() throws RemoteException, InterruptedException{
         lock.release();
     }
 
+    /**
+     *
+     * @return the boolean value of the lock
+     * @throws RemoteException
+     * @throws InterruptedException
+     */
     public synchronized boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
 
+    /**
+     * start a thread that checks if the connection between the server and the client persist
+     * @param client client connecting to the server
+     * @throws RemoteException
+     */
     public void newClient(ClientRMI_Interface client) throws RemoteException{
         isConnecting = true;
         Thread thread = new Thread(()->{

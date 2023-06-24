@@ -29,23 +29,54 @@ public class Server implements Serializable {
 
     private static Thread thread2;
 
+    /**
+     *
+     * @return the controllerMain
+     */
     public synchronized ControllerMain getController(){
         return this.controller;
     }
 
+    /**
+     *
+     * @return Server Socket
+     */
     public Server_Socket getServerSocket() {return this.serverSocket;}
 
+    /**
+     *
+     * @return server RMI
+     * @throws RemoteException
+     */
     public ServerRMI_Interface getServerRMI() throws RemoteException{return  this.serverRMI;}
 
+    /**
+     *
+     * @return the lobby
+     */
     public LobbyInterface getLobby(){
         return this.lobby;
     }
 
+    /**
+     *
+     * @return the thread1( thread that runs the socket server)
+     */
     public Thread getThread1(){return thread1;}
 
+    /**
+     *
+     * @return the thread2( thread that runs the server RMI)
+     */
     public Thread getThread2(){return thread2;}
 
 
+    /**
+     * runs the server socket and the server RMI in 2 different threads and then runs the controller in
+     * a third thread
+     * @throws RemoteException
+     * @throws Exception
+     */
     public static void start() throws RemoteException, Exception {
         serverSocket = new Server_Socket();
         serverRMI = new Server_RMI();
@@ -63,6 +94,11 @@ public class Server implements Serializable {
         thread3.start();
     }
 
+    /**
+     * shutdown the server
+     * @throws RemoteException
+     * @throws IOException
+     */
     public void close() throws RemoteException, IOException {
         // Unexport the remote object
         UnicastRemoteObject.unexportObject(serverRMI, true);
@@ -80,6 +116,9 @@ public class Server implements Serializable {
 
 class startSocketServer extends Server implements Runnable{
 
+    /**
+     * run the socket server
+     */
     @Override
     public void run() {
         Server_Socket server = getServerSocket();
@@ -91,6 +130,10 @@ class startSocketServer extends Server implements Runnable{
 }
 
 class startRMIServer extends Server implements Runnable{
+
+    /**
+     * run the RMI server
+     */
     @Override
     public void run(){
         try{
@@ -103,6 +146,10 @@ class startRMIServer extends Server implements Runnable{
 }
 
 class startController extends Server implements Runnable{
+
+    /**
+     * run the controller
+     */
     @Override
     public void run(){
         try{

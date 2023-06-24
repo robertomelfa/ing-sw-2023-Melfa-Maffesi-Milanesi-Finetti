@@ -12,8 +12,9 @@ public class CommonObj implements Serializable{
     private String description;
 
     /**
-     * @param numOfPlayer, the number of Player, is usefully for the Point set
-     *                     Constructor of common goal: take a random number of goal and set the array-Point and the description
+     * Constructor of CommonObj
+     * @param numOfPlayer the number of Player ( useful to set the points )
+     * @param objNum number that indicates the commonObj we will select
      */
     public CommonObj(int numOfPlayer, int objNum) {
 
@@ -56,35 +57,41 @@ public class CommonObj implements Serializable{
     }
 
     /**
-     * @return objNum, the identification number of the goal
+     * @return the identification number of the goal
      */
     public int getObjNum() {
         return objNum;
     }
 
     /**
-     * @return descrizione, the description of the goal
+     * @return the description of the goal
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * @return Points, the points to give for complete the goal
+     * @return the points to give to the players when the goal is completed
      */
     public int getPointCount() {
         indexPoint ++;
         return pointCount[indexPoint - 1];
     }
 
+    /**
+     *
+     * @param gui
+     * @return the number of points a player will receive when the goal is achieved
+     */
     public int getPointCount(boolean gui) {
         return pointCount[indexPoint];
     }
 
     /**
-     * @param lib, library to check for the goal
-     * @return result, the result of the check of the goal
-     * Method that checks in a personalized way every goal and returns the result
+     * Method that calls a specific check on the library based on which goal
+     * the player have
+     * @param lib library to check for the goal
+     * @return result the result of the check of the goal
      */
     public boolean checkObj(Library lib) throws Exception {
         switch (this.objNum) {
@@ -370,6 +377,11 @@ public class CommonObj implements Serializable{
         return false;
     }
 
+    /**
+     *
+     * @param objNum the number of the goal
+     * @return the description of the goal corresponding to the number passed as a parameter
+     */
     public String getDescription(int objNum){
         switch (objNum) {
             case 1 -> {

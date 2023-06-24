@@ -120,7 +120,7 @@ public class ClientMain extends Application implements Serializable {
     }
 
     /**
-     * method that start the gui
+     * starts the gui opening the LogInScreen
      * @param stage stage
      * @throws Exception Exception
      */

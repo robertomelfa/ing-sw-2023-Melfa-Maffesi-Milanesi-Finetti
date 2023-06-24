@@ -13,7 +13,7 @@ public class Game implements Serializable{
 
     /**
      *
-     * Constructor for the Game class: it sets the gametable, it initializes the players list, sets the cardbox and it calls
+     * Constructor for the Game class: it sets the gametable, it initializes the players list, sets the cardbox and calls
      * setBothCommonObj
      *
      */
@@ -25,16 +25,17 @@ public class Game implements Serializable{
     }
 
     /**
-     *
-     * @param
+     * @return the current player
      * @throws Exception
-     * The method adds a new player into the players list called players.
-     * It throws Exception if the size of the list equals the number of players in the game, meaning that the game is full
      */
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
+    /**
+     * set both the commonObj using two different random numbers
+     * @param numOfPlayers number of players
+     */
     private void setBothCommonObj(int numOfPlayers){
         Random rn = new Random();
         int rand = rn.nextInt(12)+1;
@@ -45,15 +46,13 @@ public class Game implements Serializable{
     }
 
     /**
-     * This method prints the leaderboard, that is the list of players and their points scored sorted by score
-     * This method will be in the view
+     * @return the gameTable
      */
     public GameTable getGameTable(){
         return  this.gameTable;
     }
 
     /**
-     *
      * @return commonObj1
      */
     public CommonObj getCommonObj1(){
@@ -61,15 +60,13 @@ public class Game implements Serializable{
     }
 
     /**
-     *
-     * @return NumOfPlayers
+     * @return the number of players
      */
     public int getNumOfPlayers() {
         return numOfPlayers;
     }
 
     /**
-     *
      * @return commonObj2
      */
     public CommonObj getCommonObj2(){
@@ -77,8 +74,8 @@ public class Game implements Serializable{
     }
 
     /**
-     *
-     * @param player the current player in the game
+     * set a player as the current player
+     * @param player player we want to set as the current player
      */
     public void setCurrentPlayer(Player player){
         this.currentPlayer = player;

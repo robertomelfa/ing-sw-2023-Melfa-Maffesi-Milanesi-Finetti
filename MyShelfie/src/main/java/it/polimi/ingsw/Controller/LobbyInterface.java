@@ -54,12 +54,16 @@ public class LobbyInterface {
 class startingGame implements Runnable{
 
     private ControllerMain controller;
+    /**
+     * constructor for the startingGame class
+     * @param controller the controllerMain
+     */
     public startingGame(ControllerMain controller) {
         this.controller = controller;
     }
 
     /**
-     * starting the game
+     * start the game
      */
     public void run() {
         try{

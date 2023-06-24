@@ -37,6 +37,10 @@ public class Lock implements Serializable {
         notify();
     }
 
+    /**
+     * start a 30 seconds timer with a task that will release the lock
+     * when the timer ends
+     */
     public synchronized void setLockTimer() {
         lockTimer = new Timer();
         TimerTask task = new TimerTask() {
