@@ -2,8 +2,8 @@ package it.polimi.ingsw.Network;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import it.polimi.ingsw.Network.Client.RMI.Client;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.RMI.Client_RMI;
+import it.polimi.ingsw.Network.Client.RMI.ClientRMI_Interface;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 import it.polimi.ingsw.Network.Server.Server;
 
@@ -54,7 +54,7 @@ public class TestServer {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
-        GameClientInterface client = new Client();
+        ClientRMI_Interface client = new Client_RMI();
         client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
         Assert.assertEquals(4, server.getLobby().getController().getNumPlayers());
@@ -67,7 +67,7 @@ public class TestServer {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
-        GameClientInterface client = new Client();
+        ClientRMI_Interface client = new Client_RMI();
         client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
 
@@ -108,7 +108,7 @@ public class TestServer {
         System.setIn(inputStream1);
 
 
-        GameClientInterface client = new Client();
+        ClientRMI_Interface client = new Client_RMI();
         client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
         // wait the controller updating
@@ -128,7 +128,7 @@ public class TestServer {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
-        GameClientInterface client = new Client();
+        ClientRMI_Interface client = new Client_RMI();
         client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
         System.out.println(server.getLobby().getController().getClientList().get(0).getPlayer().getNickname());

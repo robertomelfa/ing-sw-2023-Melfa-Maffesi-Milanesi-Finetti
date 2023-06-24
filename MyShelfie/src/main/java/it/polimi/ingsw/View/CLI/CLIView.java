@@ -193,6 +193,7 @@ public class CLIView implements ViewClient_Interface, Serializable {
         int card = 0;
         int listSize = list.size();
         for (int i = 0; i < listSize; i++) {
+            Card cardtoRemove = null;
             System.out.println("Which card do you want to insert?" + list.toString());
             do {
                 flag = 0;
@@ -206,11 +207,17 @@ public class CLIView implements ViewClient_Interface, Serializable {
                 } else {
                     type = in.nextLine().toUpperCase();
                     if (type.equals("YELLOW") || type.equals("PURPLE") || type.equals("WHITE") || type.equals("BLUE") || type.equals("LIGHTBLUE") || type.equals("GREEN")) {
-                        if (list.contains(Card.valueOf(type))) {
-                            flag = 2;
-                        } else {
+                        for(int j=0; j<list.size(); j++){
+                            if (list.get(j).compare(type)){
+                                cardtoRemove = list.get(j);
+                                flag = 2;
+                                break;
+                            }
+                        }
+                        if (cardtoRemove == null){
                             System.out.println("This card does not exist, try again!");
                         }
+
                     } else {
                         System.out.println("This card does not exist, try again!");
                     }
@@ -221,8 +228,8 @@ public class CLIView implements ViewClient_Interface, Serializable {
                 gameLogic.getGame().getCurrentPlayer().getLibrary().getGrid()[gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column)][column] = list.get(card);
                 list.remove(card);
             } else if (flag == 2) {
-                list.remove(Card.valueOf(type));
-                gameLogic.getGame().getCurrentPlayer().getLibrary().getGrid()[gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column)][column] = Card.valueOf(type);
+                list.remove(cardtoRemove);
+                gameLogic.getGame().getCurrentPlayer().getLibrary().getGrid()[gameLogic.getGame().getCurrentPlayer().getLibrary().lastRowFree(column)][column] = cardtoRemove;
             } else {
                 System.out.println("This card does not exist, try again!");notify();
             }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Network.Client.RMI.Client;
-import it.polimi.ingsw.Network.Client.RMI.GameClientInterface;
+import it.polimi.ingsw.Network.Client.RMI.Client_RMI;
+import it.polimi.ingsw.Network.Client.RMI.ClientRMI_Interface;
 import it.polimi.ingsw.Network.Client.Socket.Client_Socket;
 import it.polimi.ingsw.Network.Server.Server;
 import org.junit.After;
@@ -31,7 +31,7 @@ public class TestControllerMain {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
-        GameClientInterface client = new Client();
+        ClientRMI_Interface client = new Client_RMI();
         client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
         Assert.assertTrue(server.getLobby().getController().checkExistingName("bob"));
@@ -45,7 +45,7 @@ public class TestControllerMain {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
         System.setIn(inputStream);
 
-        GameClientInterface client = new Client();
+        ClientRMI_Interface client = new Client_RMI();
         client.connection(server.getServerRMI(), client, server.getLobby().getController());
 
 

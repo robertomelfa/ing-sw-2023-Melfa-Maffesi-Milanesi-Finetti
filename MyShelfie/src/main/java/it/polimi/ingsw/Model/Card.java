@@ -119,4 +119,22 @@ public enum Card {
         return false;
 
     }
+
+    /**
+     * Used to compare a card with a string that contains the card color
+     * @param string
+     * @return true if string is equals to the color of the card
+     */
+
+    public boolean compare(String string){
+        boolean res= (string.equals("YELLOW") &&(this == YELLOW1 || this == YELLOW2 ||this == YELLOW3))||
+                (string.equals("LIGHTBLUE") &&(this == LIGHTBLUE1 || this == LIGHTBLUE2 ||this == LIGHTBLUE3))||
+                        (string.equals("PURPLE") &&(this == PURPLE1 || this == PURPLE2 ||this == PURPLE3))||
+                                (string.equals("BLUE") &&(this == BLUE1 || this == BLUE2 ||this == BLUE3))||
+                                        (string.equals("WHITE") &&(this == WHITE1 || this == WHITE2 ||this == WHITE3))||
+                                                (string.equals("GREEN") &&(this == GREEN1 || this == GREEN2 ||this == GREEN3));
+        return res;
+
+    }
+
 }
