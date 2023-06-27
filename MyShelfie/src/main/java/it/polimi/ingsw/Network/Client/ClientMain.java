@@ -51,7 +51,7 @@ public class ClientMain extends Application implements Serializable {
         CLIView view = new CLIView();
         String port = view.requestIP();
         Registry registry = LocateRegistry.getRegistry(port, 1099);
-        ServerRMI_Interface server = (ServerRMI_Interface) registry.lookup("GameInterface");
+        ServerRMI_Interface server = (ServerRMI_Interface) registry.lookup("ServerRMI_Interface");
         Scanner scanner = new Scanner(System.in);
         String input;
         //input = scanner.next();

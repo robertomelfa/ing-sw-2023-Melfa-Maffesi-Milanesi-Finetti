@@ -81,7 +81,7 @@ public class Server implements Serializable {
         serverSocket = new Server_Socket();
         serverRMI = new Server_RMI();
         registry = LocateRegistry.createRegistry(1099);
-        registry.rebind("GameInterface", serverRMI);
+        registry.rebind("ServerRMI_Interface", serverRMI);
         lobby = new LobbyInterface(serverSocket, serverRMI);
         Runnable task1 = new startSocketServer();
         Runnable task2 = new startRMIServer();

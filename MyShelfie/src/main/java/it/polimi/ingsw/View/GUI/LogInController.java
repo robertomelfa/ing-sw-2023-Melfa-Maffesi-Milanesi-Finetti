@@ -57,7 +57,7 @@ public class LogInController implements Serializable {
         Platform.runLater(() -> {
             try {
                 Registry registry = LocateRegistry.getRegistry(ip, 1099);
-                ServerRMI_Interface server = (ServerRMI_Interface) registry.lookup("GameInterface");
+                ServerRMI_Interface server = (ServerRMI_Interface) registry.lookup("ServerRMI_Interface");
                 this.registry = registry;
                 this.server = server;
             }catch (Exception e){
