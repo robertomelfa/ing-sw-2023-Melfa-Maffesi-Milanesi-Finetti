@@ -151,7 +151,7 @@ public class ControllerGui implements Initializable, Serializable {
 
         ControllerComObjDesc controller = loader.getController();
         controller.setLabelText(numObj);
-        Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+        Image icon = new Image("assets/Publisher material/Icon 50x50px.png");
         stage.getIcons().add(icon);
         stage.show();
     }
@@ -189,7 +189,7 @@ public class ControllerGui implements Initializable, Serializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Library.fxml"));
         stage.setResizable(false);
         Parent root = loader.load();
-        Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+        Image icon = new Image("assets/Publisher material/Icon 50x50px.png");
         stage.getIcons().add(icon);
         stage.setTitle("Library");
         stage.setScene(new Scene(root));
@@ -214,7 +214,7 @@ public class ControllerGui implements Initializable, Serializable {
 
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/RuleBook.fxml")));
-        Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+        Image icon = new Image("assets/Publisher material/Icon 50x50px.png");
         stage.getIcons().add(icon);
         stage.setTitle("RuleBook");
         stage.setScene(new Scene(root));
@@ -939,7 +939,7 @@ public class ControllerGui implements Initializable, Serializable {
                 stage.setResizable(false);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/leaderboard.fxml"));
                 Parent root = loader.load();
-                Image icon = new Image("assets/Publisher material/icon 50x50px.png");
+                Image icon = new Image("assets/Publisher material/Icon 50x50px.png");
                 stage.getIcons().add(icon);
                 stage.setTitle("Leaderboard");
                 stage.setScene(new Scene(root));
