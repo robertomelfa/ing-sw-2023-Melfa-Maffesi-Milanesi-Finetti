@@ -25,7 +25,7 @@ public class CLIView implements ViewClient_Interface, Serializable {
         String port;
         Scanner input = new Scanner(System.in);
         do{
-            System.out.println("Insert server IP:");
+            System.out.println("Insert server IP:   (Leave blank to automatically connect to localhost)");
             port = input.nextLine();
         }while (!port.matches("\\d+.\\d+.\\d+.\\d+") && !port.matches("localhost") && !port.matches(""));
 
