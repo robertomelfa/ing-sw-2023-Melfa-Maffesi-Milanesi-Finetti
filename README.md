@@ -39,7 +39,7 @@
     ```shell
     > java -jar Client.jar
     ```
-    - IMPORTANT: before starting the client is important to create two new folders (MyShlefie\saves) in the same directory of jar files.
+    - IMPORTANT: before starting the client is important to create two new folders (MyShlefie\saves) in the same directory of jar files. The game files will be saved in this folder.
     - The Server's IP to connect to can be specified during the execution.
     - The choice whether to use the Grafical User Interface (GUI) or the Command Line Interface (CLI) can be specified during the execution.
     
