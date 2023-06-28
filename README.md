@@ -3,9 +3,9 @@
 ## Team
 
 - ###  Roberto Melfa  ([@robertomelfa](https://github.com/robertomelfa)) <br> roberto.melfa@mail.polimi.it
-- ###  Matteo Maffesi ([@matteomaffesi](https://github.com/matteomaffesi)) <br> matteo.maffesi@mail.polimi.it
-- ###  Simone Milanesi ([@simonemilanesi](https://github.com/simonemilanesi)) <br> simone.milanesi@mail.polimi.it
-- ###  Christian Finetti ([@christianfinetti](https://github.com/christianfinetti)) <br> christian.finetti@mail.polimi.it
+- ###  Matteo Maffesi ([@MaffesiMatteo](https://github.com/MaffesiMatteo)) <br> matteo.maffesi@mail.polimi.it
+- ###  Simone Milanesi ([@Simone-Milanesi](https://github.com/Simone-Milanesi)) <br> simone.milanesi@mail.polimi.it
+- ###  Christian Finetti ([@ChrisF001](https://github.com/ChrisF001)) <br> christian.finetti@mail.polimi.it
 
 ## Requirements
 
@@ -42,14 +42,14 @@
     ```shell
     > java -jar Client.jar
     ```
-    - IMPORTANT: before starting the client is important to create two new folders (MyShlefie\saves) in the same directory of jar files. The game files will be saved in this folder.
+    - **IMPORTANT**: before starting the client is important to create two new folders (MyShlefie\saves) in the same directory of jar files. The game files will be saved in this folder.
     - The Server's IP to connect to can be specified during the execution.
     - The choice whether to use the Grafical User Interface (GUI) or the Command Line Interface (CLI) can be specified during the execution.
     
 
 ## Tools
 
-* [astahUML](https://astah.net) - UML Diagram
+* [astahUML](https://astah.net), [StarUML](https://staruml.io/) - UML Diagram
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [IntelliJ](https://www.jetbrains.com/idea/) - IDE
 * [JavaFX](https://openjfx.io) - Graphical Framework
