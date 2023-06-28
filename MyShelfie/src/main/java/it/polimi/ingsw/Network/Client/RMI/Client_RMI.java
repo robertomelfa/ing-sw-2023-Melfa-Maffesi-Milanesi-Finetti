@@ -88,7 +88,7 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
             }
         }
         view.viewString(msg);
-        if(msg.equals("Stop game")){
+        if(msg.equals("Game ended due to a client  disconnection")){
             kill();
         }
     }

@@ -625,7 +625,7 @@ public class ControllerMain implements Serializable {
      * @throws InterruptedException
      */
     public void checkConnection() throws IOException, ClassNotFoundException, InterruptedException {
-        Message msg1 = new Message(MessageType.closeGame, "Stop game");
+        Message msg1 = new Message(MessageType.closeGame, "Game ended due to a client  disconnection");
         for(int i = 0; i < clientList.size(); i++){
             if(clientList.get(i).getSocket() == null){
                 try {
