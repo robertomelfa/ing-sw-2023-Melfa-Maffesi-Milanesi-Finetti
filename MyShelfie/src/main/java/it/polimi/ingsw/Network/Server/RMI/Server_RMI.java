@@ -35,14 +35,6 @@ public class Server_RMI extends UnicastRemoteObject implements ServerRMI_Interfa
         lock = new Lock();
     }
 
-    /**
-     * Used to stop the check of the method newClient
-     * @throws RemoteException
-     */
-    public void stopConnecting() throws RemoteException{
-        this.isConnecting = false;
-    }
-
 
     /**
      * send the game table only to a specific client
@@ -122,7 +114,7 @@ public class Server_RMI extends UnicastRemoteObject implements ServerRMI_Interfa
      * @throws RemoteException
      * @throws InterruptedException
      */
-    public synchronized void block() throws RemoteException, InterruptedException{
+    public void block() throws RemoteException, InterruptedException{
         lock.acquire();
     }
 
@@ -131,7 +123,7 @@ public class Server_RMI extends UnicastRemoteObject implements ServerRMI_Interfa
      * @throws RemoteException
      * @throws InterruptedException
      */
-    public synchronized void release() throws RemoteException, InterruptedException{
+    public void release() throws RemoteException, InterruptedException{
         lock.release();
     }
 
@@ -141,36 +133,7 @@ public class Server_RMI extends UnicastRemoteObject implements ServerRMI_Interfa
      * @throws RemoteException
      * @throws InterruptedException
      */
-    public synchronized boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
-
-    /**
-     * start a thread that checks if the connection between the server and the client persist
-     * @param client client connecting to the server
-     * @throws RemoteException
-     */
-    public void newClient(ClientRMI_Interface client) throws RemoteException{
-        isConnecting = true;
-        Thread thread = new Thread(()->{
-            while(isConnecting){
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    client.ping();
-                } catch (Exception e) {
-                    try {
-                        release();
-                    } catch (RemoteException | InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-
-        });
-        thread.start();
-    }
+    public boolean isLocked() throws RemoteException, InterruptedException{ return lock.getLock(); }
 
     public void setTemp(boolean set) throws RemoteException{
         temp = set;
