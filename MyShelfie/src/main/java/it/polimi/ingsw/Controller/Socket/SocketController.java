@@ -10,10 +10,6 @@ import it.polimi.ingsw.Network.Client.ClientHandler;
 import java.io.IOException;
 import java.io.Serializable;
 
-// TODO sistemare la gestione del turno (per ora è una bozza)
-// TODO gestione obiettivi
-// TODO scambio messaggi server-client per inizio/fine turno ed eventualmente per la gestione delle carte
-// TODO ping al client per disconnessioni
 
 public class SocketController implements Serializable {
 

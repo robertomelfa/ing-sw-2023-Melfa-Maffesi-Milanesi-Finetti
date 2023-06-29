@@ -22,7 +22,7 @@ import java.util.TimerTask;
 
 import static it.polimi.ingsw.Network.Messages.MessageType.*;
 
-//TODO sistemare le varie funzioni (troppo lunghe)
+
 public class Client_Socket implements Serializable {
 
 

@@ -258,7 +258,7 @@ public class CLIView implements ViewClient_Interface, Serializable {
             do {
                 String tempSize;
                 do {
-                    System.out.println("How many cards? At any moment of the selection you can write back to return to this point");
+                    System.out.println("How many cards? [At any moment of the selection you can write \"back\" to return to this point]");
                     tempSize = in.nextLine();
                 } while (!tempSize.matches("\\d"));
                 size = Integer.parseInt(tempSize);

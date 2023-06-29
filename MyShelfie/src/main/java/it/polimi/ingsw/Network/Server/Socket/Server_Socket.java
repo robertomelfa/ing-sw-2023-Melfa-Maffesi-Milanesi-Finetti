@@ -12,7 +12,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-//TODO sistemare le funzioni, specie sendGameLogic dove viene gestito il pescaggio carte
 public  class Server_Socket implements Serializable {
 
     private static ServerSocket serversocket;
