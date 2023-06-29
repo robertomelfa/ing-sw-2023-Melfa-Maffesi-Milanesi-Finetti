@@ -108,7 +108,6 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
         Scanner in = new Scanner(System.in);
         ClientHandler client1;
         int num;
-        server.newClient(client);
         scheduleTimer();
         if(controller.getClientList().size() == 0) {
             try{
@@ -140,6 +139,7 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
                         if(controller.checkExistingName(name)){
                             System.out.println("This name is used. Try again");
                         }
+                        view.viewString("Waiting other players...\n");
                     }while(controller.checkExistingName(name));
                     client1 = new ClientHandler(client);
                     client1.setPlayer(name);
@@ -148,9 +148,8 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
                 }
             }
         }
+        server.release();
         timer.cancel();
-        server.stopConnecting();
-        view.viewString("Waiting other players...\n");
     }
 
 
@@ -250,16 +249,11 @@ public class Client_RMI extends UnicastRemoteObject implements ClientRMI_Interfa
      * It's used to handle inactive player and avoid a possible deadlock.
      * @throws RemoteException
      */
-    private synchronized void scheduleTimer() throws RemoteException {
+    private void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                try {
-                    serverRMI.release();
-                } catch (RemoteException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
                 System.exit(0);
             }
         };

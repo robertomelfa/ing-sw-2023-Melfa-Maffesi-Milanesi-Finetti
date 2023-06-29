@@ -16,30 +16,21 @@ public interface ServerRMI_Interface extends Remote{
     public void gameTableToClient(GameTable board, ClientRMI_Interface client) throws RemoteException,Exception;
 
 
-    public boolean isFirstPlayer() throws RemoteException;
 
     public void setFirstPlayer() throws RemoteException; //useful while we manage only one game at time to avoid
                                                         //overlapping games
 
     public void messageToClient(String msg, ClientRMI_Interface client) throws RemoteException;
 
-
-    public void stopConnecting() throws RemoteException;
-
-
     public ControllerMain getController() throws RemoteException;
     public void updateNumPlayers(int num) throws RemoteException;
 
     public void updatePlayers(ClientHandler client) throws RemoteException;
 
-    public Lock getLock() throws RemoteException;
-
     public void block() throws RemoteException, InterruptedException;
 
     public void release() throws RemoteException, InterruptedException;
     public boolean isLocked() throws RemoteException, InterruptedException;
-
-    public void newClient(ClientRMI_Interface client) throws RemoteException;
 
     public void setTemp(boolean set) throws RemoteException;
 

@@ -80,7 +80,7 @@ public class SocketController implements Serializable {
                             }
                         }
                         default ->
-                                server.sendMessage(new Message(MessageType.printMessage, "The input is not valid, please insert 1 or 2\n"), current_client.getSocket());
+                                server.sendMessage(new Message(MessageType.printMessage, "The input is not valid, please insert 1, 2 or 3\n"), current_client.getSocket());
                     }
                 }else {
                     gameLogic = server.sendGameLogic(current_client, gameLogic);

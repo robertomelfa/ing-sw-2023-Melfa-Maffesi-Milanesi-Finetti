@@ -44,7 +44,6 @@ public  class Server_Socket implements Serializable {
                         }
                         controller.addClient(client);
                     }catch(IOException e){
-                        serverRMI.release();
                     }
                 }
             }
@@ -193,7 +192,6 @@ public  class Server_Socket implements Serializable {
             // receive num of players
             int num = receiveInt(socket);
             controller.setNumPlayers(num);
-            System.out.println("Players: " + num);
             // ask name of player
             msg=new Message(MessageType.requestNickname,null);
             sendMessage(msg, socket);
@@ -201,11 +199,9 @@ public  class Server_Socket implements Serializable {
             String gui = receiveMessage(socket).getMessage();
             if(gui.equals("true")){
                 client.setGui();
-                serverRMI.release();
             }
             controller.addClient(client);
         }catch (IOException e){
-            serverRMI.release();
         }
 
         return controller;

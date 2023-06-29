@@ -8,7 +8,8 @@ import java.util.TimerTask;
 public class Lock implements Serializable {
     private boolean isLocked = false;
 
-    private Timer lockTimer = new Timer();
+    private Timer timer = new Timer();
+
 
     /**
      *
@@ -20,36 +21,32 @@ public class Lock implements Serializable {
      * while is locked, wait
      * @throws InterruptedException
      */
-    public synchronized void acquire() throws InterruptedException {
+    public synchronized void acquire() throws InterruptedException, RemoteException {
         while (isLocked) {
             wait();
         }
         isLocked = true;
-        setLockTimer();
-    }
-
-    /**
-     * release the lock
-     */
-    public synchronized void release() {
-        lockTimer.cancel();
-        isLocked = false;
-        notify();
-    }
-
-    /**
-     * start a 30 seconds timer with a task that will release the lock
-     * when the timer ends
-     */
-    public synchronized void setLockTimer() {
-        lockTimer = new Timer();
+        timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 release();
             }
         };
-        lockTimer.schedule(task, 30000);
+        timer.schedule(task, 30000);
+    }
+
+    /**
+     * release the lock
+     */
+    public synchronized void release() {
+        timer.cancel();
+        isLocked = false;
+        // wait to update the server
+        try{
+            Thread.sleep(500);
+        }catch(InterruptedException e){}
+        notify();
     }
 
 }

@@ -106,7 +106,6 @@ public class ClientMain extends Application implements Serializable {
                                     try {
                                         ClientRMI_Interface clientR = new Client_RMI();
                                         clientR.connection(server, clientR, server.getController());
-                                        server.release();
                                     } catch (Exception ignored) {
                                     }
                                 }

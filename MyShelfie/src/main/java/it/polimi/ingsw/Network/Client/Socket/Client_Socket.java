@@ -105,11 +105,11 @@ public class Client_Socket implements Serializable {
                         view.viewString("This name is used, try again");
                     }
                 } while (server.getController().checkExistingName(name));
+                view.viewString("Waiting other players...\n");
                 msg = new Message(MessageType.sendNickname, name);
                 sendMessage(msg);
                 msg = new Message(MessageType.sendBoolean, "false");
                 sendMessage(msg);
-                view.viewString("Waiting other players...\n");
                 server.release();
             }
             timer.cancel();
@@ -342,7 +342,6 @@ public class Client_Socket implements Serializable {
                 msg = new Message(MessageType.sendBoolean, "true");
                 sendMessage(msg);
             }
-            server.release();
         } catch (IOException e) {
             view.viewString("client fatal error");
         } catch (ClassNotFoundException e) {
@@ -475,18 +474,11 @@ public class Client_Socket implements Serializable {
      * It's used to handle inactive player and avoid a possible deadlock
      * @throws RemoteException
      */
-    private synchronized void scheduleTimer() throws RemoteException {
+    private void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                try {
-                    serverRMI.release();
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
                 System.exit(0);
             }
         };

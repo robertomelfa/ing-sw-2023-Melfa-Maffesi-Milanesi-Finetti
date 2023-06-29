@@ -38,6 +38,7 @@ public class LobbyInterface {
         while(true){
             // waiting for the starting of the game
             controller.waitStart();
+            System.out.println("Creating new game");
 
             ControllerMain controller2 = new ControllerMain(serverSocket, serverRMI);
             controller2.copy(controller);

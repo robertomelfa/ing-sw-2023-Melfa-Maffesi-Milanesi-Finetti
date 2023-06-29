@@ -98,7 +98,7 @@ public class ControllerMain implements Serializable {
      */
     public synchronized void updateBackup() throws IOException, StackOverflowError {
         if(!backupCreated){
-            System.out.println("Starting backup");
+
             ArrayList<String> nick = new ArrayList<>();
             ArrayList<Player> ply = new ArrayList<>();
             for (int i=0; i<clientList.size();i++){
@@ -110,15 +110,14 @@ public class ControllerMain implements Serializable {
             backup=new GameBackup(ply,gameLogic,current_client.getPlayer(),nick,listIterator,chair);
             Gson gson = new Gson();
             backup.setName(String.valueOf(backup.getDate().hashCode()));
+            System.out.println("Created new backup: " + backup.getName() + ".json");
             FileWriter writer = new FileWriter("MyShelfie/saves/"+backup.getName()+".json");
             gson.toJson(backup,writer);
             writer.flush();
             writer.close();
-            System.out.println("Backup created");
             setBackupCreated(true);
 
         }else {
-            System.out.println("Updating backup");
             backup.setCurrent_client(current_client.getPlayer());
             backup.setGamelogic(gameLogic);
             ArrayList<Player> ply = new ArrayList<>();
@@ -133,7 +132,6 @@ public class ControllerMain implements Serializable {
             gson.toJson(backup,writer);
             writer.flush();
             writer.close();
-            System.out.println("Backup saved");
         }
     }
 
@@ -468,6 +466,7 @@ public class ControllerMain implements Serializable {
             shufflePlayers();
             setGamePlayers();
         }
+        System.out.println("Game is starting");
         sendGeneralMessage(new Message(MessageType.printMessage, "Game is starting..."));
         while(!finish){
             // update the players in gamelogic

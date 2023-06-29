@@ -77,8 +77,8 @@ public class LogInController implements Serializable {
     @FXML
     private void RMIconnection() throws Exception {
         server.block();  //lock the server
-        scheduleTimer();
         server.setTemp(false);
+        scheduleTimer();
         if (server.getController().getClientList().size() == 0) {
             server.setFirstPlayer();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LogIn2.fxml"));
@@ -159,9 +159,7 @@ public class LogInController implements Serializable {
                     ClientRMI_Interface client = new Client_RMI();
                     ((Client_RMI) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), num, user);
-                    server.release();
                 } else {
-                    scheduleTimer();
                     labelNumPlayers.setOpacity(1);
                 }
             } catch (Exception e) {
@@ -185,12 +183,12 @@ public class LogInController implements Serializable {
                     }
                 }else {
                     labelNumPlayers.setOpacity(1);
-                    scheduleTimer();
                 }
             }catch (Exception e){
 
             }
         }
+        server.release();
     }
 
     /**
@@ -216,10 +214,8 @@ public class LogInController implements Serializable {
                     stage.setScene(new Scene(fxmlLoader.load(),1200,800));
                     ((Client_RMI) client).setControllerView(fxmlLoader.getController());
                     client.connectionGUI(server, client, server.getController(), user);
-                    server.release();
                 } else {
                     label.setOpacity(1);
-                    scheduleTimer();
                 }
             }catch (Exception e){
                 System.out.println(e);
@@ -242,12 +238,12 @@ public class LogInController implements Serializable {
                     }
                 } else {
                     label.setOpacity(1);
-                    scheduleTimer();
                 }
             } catch (Exception e){
                 System.out.println(e);
             }
         }
+        server.release();
     }
 
     /**
@@ -297,22 +293,15 @@ public class LogInController implements Serializable {
 
     /**
      * Timer that is called when we have to wait for a player's input.
-     * After 30 seconds the TimerTask runs releasing the lock on the server and disconnecting the player.
-     * It's used to handle inactive player and avoid a possible deadlock
+     * After 30 seconds the TimerTask runs disconnecting the player.
+     * It's used to handle inactive player and avoid a possible deadlock.
      * @throws RemoteException
      */
-    private synchronized void scheduleTimer() throws RemoteException {
+    private void scheduleTimer() throws RemoteException {
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                try {
-                    server.release();
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
                 System.exit(0);
             }
         };
