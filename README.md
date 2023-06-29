@@ -33,7 +33,7 @@
 ## Setup
 
 - In the [deliverables/final/jar](deliverables/final/jar) folder there are two multi-platform jar files, one to set the Server up, and the other one to start the Client.
-- The Server can be run with the following command, as default it runs on port 8080:
+- The Server can be run with the following command, as default it runs on ports 8080 (Socket) and 1099 (RMI):
     ```shell
     > java -jar Server-shaded.jar
     ```
