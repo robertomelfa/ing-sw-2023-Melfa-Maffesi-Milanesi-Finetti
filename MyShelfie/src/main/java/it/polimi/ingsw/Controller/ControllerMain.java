@@ -560,11 +560,13 @@ public class ControllerMain implements Serializable {
      */
     public void sendGeneralMessage(Message msg) throws IOException, ClassNotFoundException {
         for (int i=0; i<clientList.size();i++){
-            if(clientList.get(i).getClient() == null){
-                serverSocket.sendMessage(msg,clientList.get(i).getSocket());
-            }else{
-                serverRMI.messageToClient(msg.getMessage(),clientList.get(i).getClient());
-            }
+            try{
+                if(clientList.get(i).getClient() == null){
+                    serverSocket.sendMessage(msg,clientList.get(i).getSocket());
+                }else{
+                    serverRMI.messageToClient(msg.getMessage(),clientList.get(i).getClient());
+                }
+            }catch (Exception e){}
         }
     }
 
